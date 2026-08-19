@@ -1,133 +1,198 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ehsan Plant &amp; Property — We Build For Your Needs</title>
-<meta name="description" content="Ehsan Plant &amp; Property Sdn Bhd — Bumiputera property developer and G7 contractor. A cinematic scroll-driven showcase of our craft.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,340;0,9..144,460;0,9..144,560;1,9..144,420&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ehsan Towers — Seri Kembangan</title>
+<link rel="preload" as="image" href="frames-hd/00001.webp">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <div class="loader" aria-hidden="true">
-    <span class="loader__mark">EHSAN</span>
-    <span class="loader__bar"><span class="loader__fill" id="loaderFill"></span></span>
+<!--
+  Ring numbers below are hand-tuned from where each element LANDS on screen,
+  swept diagonally out from the top-left — not from DOM order. Ring 3 is the
+  clearest case: the body copy, BOTH buttons and only the FIRST stat share it,
+  because they sit on the same diagonal band even though the stat is in a
+  separate list further down the markup. Stats 2 and 3 fall to ring 4 purely
+  because they sit further right. Every element in a ring fires on the same
+  100ms beat, so it reads as six waves, not ten individual counters.
+-->
+
+<div class="stage">
+
+  <!-- ========== BACKGROUND MEDIA (effect 2, and nothing else gets it) ========== -->
+  <div class="stage__media">
+    <canvas class="hero-media" id="sequence" width="1920" height="1080" aria-hidden="true"></canvas>
+    <div class="stage__scrim" aria-hidden="true"></div>
   </div>
 
-  <header class="nav">
-    <a href="#top" class="nav__mark ripple" data-ring="0" data-nav-target="0">EHSAN</a>
-    <nav class="nav__links" aria-label="Primary">
-      <button type="button" class="ripple" data-ring="0" data-nav-target="0.02">Property</button>
-      <button type="button" class="ripple" data-ring="0" data-nav-target="0.20">About</button>
-      <button type="button" class="ripple" data-ring="0" data-nav-target="0.58">Portfolio</button>
-      <button type="button" class="ripple" data-ring="0" data-nav-target="0.965">Contact</button>
-    </nav>
-    <a href="#contact" class="nav__contact ripple" data-ring="0" data-nav-target="0.965">Get in Touch</a>
-  </header>
+  <!-- ========== CONTENT (effect 1) ========== -->
+  <div class="stage__fixed">
 
-  <aside class="rail" aria-hidden="true">
-    <span class="rail__label">01</span>
-    <div class="rail__track"><span class="rail__fill" id="railFill"></span></div>
-    <span class="rail__label" id="railEnd">240</span>
-  </aside>
+    <main class="hero">
+      <p class="hero__eyebrow" data-ripple data-ring="0">
+        <span class="dot" aria-hidden="true"></span> Now releasing · Tower B
+      </p>
 
-  <div class="telemetry" aria-hidden="true">
-    <span class="telemetry__frame" id="telemetryFrame">001</span>
-    <span class="telemetry__of">/ 240</span>
-  </div>
+      <h1 class="hero__title">
+        <span class="line" data-ripple data-ring="1">Two towers.</span>
+        <span class="line line--accent" data-ripple data-ring="2">One address.</span>
+      </h1>
 
-  <main>
-    <section id="top" class="cinematic-section">
-      <div class="stage">
+      <p class="hero__copy" data-ripple data-ring="3">
+        Thirty-eight storeys above Seri Kembangan, wrapped in a retail podium and
+        four levels of amenity deck. Built for the way Klang Valley actually lives.
+      </p>
 
-        <div class="stage-reveal" id="stageReveal">
-          <canvas id="stageCanvas" class="frames-canvas"></canvas>
-        </div>
-
-        <div class="vignette"></div>
-        <div class="grain"></div>
-
-        <div class="content">
-
-          <!-- 0. HERO -->
-          <div class="panel panel--hero" data-panel data-start="-1" data-in="0" data-out="0.05" data-end="0.08">
-            <p class="eyebrow ripple" data-ring="1">Ehsan Plant &amp; Property Sdn Bhd</p>
-            <h1 class="hero-title ripple" data-ring="2">EHSAN<span>We Build For Your Needs</span></h1>
-            <p class="hero-category ripple" data-ring="3">Bumiputera Property Developer &amp; G7 Contractor</p>
-            <div class="scroll-cue ripple" data-ring="4">
-              <span>Scroll to explore</span>
-              <i></i>
-            </div>
-          </div>
-
-          <!-- 1. STATEMENT -->
-          <div class="panel panel--statement" data-panel data-start="0.08" data-in="0.12" data-out="0.16" data-end="0.20">
-            <h2>The Art of<br>Development</h2>
-            <p>We come from a place of creativity, knowledge and expertise, superior communication, and an ability to deliver extraordinary results&nbsp;— consistently.</p>
-          </div>
-
-          <!-- 2. WHO WE ARE -->
-          <div class="panel panel--development" data-panel data-start="0.20" data-in="0.25" data-out="0.34" data-end="0.38">
-            <span class="panel-index">Who We Are</span>
-            <p class="panel-lead">Registered on 15 May 2008, Ehsan Plant &amp; Property traces back to 1992, when founder Dato' Haji Abdul Hamid Bin P.V Abdu established Ehsan Auctioneers — Malaysia's largest auction house, having auctioned over 100,000 properties in partnership with every bank in the country.</p>
-          </div>
-
-          <!-- 3. AT A GLANCE -->
-          <div class="panel panel--glance" data-panel data-start="0.38" data-in="0.43" data-out="0.53" data-end="0.57">
-            <span class="panel-index">Ehsan Plant &amp; Property, at a Glance</span>
-            <ul class="glance-grid">
-              <li><strong>2008</strong><span>Established, Reg. No. 817795&#8209;X</span></li>
-              <li><strong>3,442</strong><span>Housing Units in the Pipeline</span></li>
-              <li><strong>RM1.307B</strong><span>Total Gross Development Value</span></li>
-              <li><strong>G7</strong><span>Bumiputera Contractor Grade</span></li>
-            </ul>
-          </div>
-
-          <!-- 4. PORTFOLIO -->
-          <div class="panel panel--amenities" data-panel data-start="0.57" data-in="0.62" data-out="0.75" data-end="0.79">
-            <span class="panel-index">Our Portfolio</span>
-            <ul class="amenity-list">
-              <li><em>Completed</em>Ehsan Residence, Sepang — 320 units</li>
-              <li><em>Completed</em>Taman Mawar Ehsan, Rembau — 238 units</li>
-              <li><em>Ongoing</em>Residensi Mutiara Austin, JB — 650 units</li>
-              <li><em>Ongoing</em>Taman Universiti Bestari, Kedah — 535 units</li>
-              <li><em>Future</em>Ehsan Widuri, Bandar Baru Nilai — 488 units</li>
-              <li><em>Future</em>Taman Seri Emas, Kampar — 1,800 units</li>
-            </ul>
-          </div>
-
-          <!-- 5. RECOGNITION -->
-          <div class="panel panel--location" data-panel data-start="0.79" data-in="0.84" data-out="0.93" data-end="0.965">
-            <span class="panel-index">Recognition</span>
-            <ul class="location-list">
-              <li><span>Global Leadership Award</span><em>2014 &amp; 2018</em></li>
-              <li><span>ASEAN Outstanding Business Award</span><em>2015</em></li>
-              <li><span>Malaysia Top Achiever Award</span><em>2017</em></li>
-              <li><span>Bumiputera Business Excellence Award</span><em>2022</em></li>
-              <li><span>Nambikkai Business Icon Award</span><em>2023</em></li>
-            </ul>
-          </div>
-
-          <!-- 6. FINAL CTA -->
-          <div id="contact" class="panel panel--final" data-panel data-start="0.965" data-in="0.978" data-out="1" data-end="1">
-            <p class="eyebrow">We Build For Your Needs</p>
-            <h2 class="final-title">EHSAN<span>Plant &amp; Property Sdn Bhd</span></h2>
-            <div class="cta-row">
-              <a class="btn btn--primary" href="mailto:info@ehsanproperty.com">View Property</a>
-              <a class="btn btn--ghost" href="tel:0321626649">Contact Us</a>
-            </div>
-            <p class="final-contact">03&#8209;2162&nbsp;6649 &nbsp;·&nbsp; info@ehsanproperty.com &nbsp;·&nbsp; ehsanproperty.com</p>
-            <p class="final-address">Suite C&#8209;20&#8209;3A, Level 20, Block C, Megan Avenue II, Jalan Yap Kwan Seng, 50450 Kuala Lumpur</p>
-          </div>
-
-        </div>
+      <div class="hero__actions">
+        <a class="btn btn--solid" href="#" data-ripple data-ring="3">Book a viewing</a>
+        <a class="btn btn--ghost" href="#" data-ripple data-ring="3">Download brochure</a>
       </div>
-    </section>
-  </main>
 
-  <script src="script.js"></script>
+      <ul class="stats">
+        <li class="stat" data-ripple data-ring="3">
+          <span class="stat__num">38</span>
+          <span class="stat__label">Storeys</span>
+        </li>
+        <li class="stat" data-ripple data-ring="4">
+          <span class="stat__num">1,240</span>
+          <span class="stat__label">Residences</span>
+        </li>
+        <li class="stat" data-ripple data-ring="4">
+          <span class="stat__num">4.2</span>
+          <span class="stat__label">Acre podium</span>
+        </li>
+      </ul>
+    </main>
+
+    <p class="scrollcue" data-ripple data-ring="5" aria-hidden="true">
+      Scroll
+    </p>
+
+  </div>
+
+  <!-- Spacer that gives the sticky canvas its scrub distance. Sized in CSS to
+       resolve frames 1..30 within about a quarter viewport of scrolling. -->
+  <div class="stage__scrub" aria-hidden="true"></div>
+</div>
+
+<!--
+  Everything below scrolls OVER the fixed hero. It sits at a higher z-index on
+  an opaque ground so it occludes the canvas rather than compositing with it.
+
+  These carry [data-reveal] (EFFECT 3), not [data-ripple]. Same motion language,
+  different trigger: the ripple is a one-shot load-in off the `is-ready` gate,
+  which for below-fold content would play off-screen and be long settled before
+  anyone scrolled here. The reveal fires per element on viewport entry instead.
+  Reveal rings are banded by position WITHIN each section, so the amenities grid
+  bands by row rather than by list order.
+-->
+<div class="content">
+
+  <section class="section" id="residences">
+    <p class="section__label" data-reveal data-reveal-ring="0">01 — Residences</p>
+    <h2 class="section__title" data-reveal data-reveal-ring="0">Five layouts, two towers.</h2>
+    <p class="section__lede" data-reveal data-reveal-ring="1">
+      Every unit is a corner or end lot. No internal-facing bedrooms, and cross
+      ventilation on all but the dual-key layout.
+    </p>
+
+    <ul class="units">
+      <li class="unit" data-reveal data-reveal-ring="1">
+        <p class="unit__type">Type A</p>
+        <p class="unit__size">850 sq ft</p>
+        <dl class="unit__spec">
+          <dt>Bedrooms</dt><dd>2</dd>
+          <dt>Bathrooms</dt><dd>2</dd>
+          <dt>Parking</dt><dd>1 bay</dd>
+          <dt>Facing</dt><dd>Pool deck</dd>
+        </dl>
+        <p class="unit__price">from <strong>RM 420,000</strong></p>
+      </li>
+      <li class="unit unit--featured" data-reveal data-reveal-ring="2">
+        <p class="unit__type">Type B <span class="unit__tag">Most taken</span></p>
+        <p class="unit__size">1,150 sq ft</p>
+        <dl class="unit__spec">
+          <dt>Bedrooms</dt><dd>3</dd>
+          <dt>Bathrooms</dt><dd>2</dd>
+          <dt>Parking</dt><dd>2 bays</dd>
+          <dt>Facing</dt><dd>KL skyline</dd>
+        </dl>
+        <p class="unit__price">from <strong>RM 585,000</strong></p>
+      </li>
+      <li class="unit" data-reveal data-reveal-ring="3">
+        <p class="unit__type">Type C</p>
+        <p class="unit__size">1,420 sq ft</p>
+        <dl class="unit__spec">
+          <dt>Bedrooms</dt><dd>3 + 1</dd>
+          <dt>Bathrooms</dt><dd>3</dd>
+          <dt>Parking</dt><dd>2 bays</dd>
+          <dt>Facing</dt><dd>Dual key</dd>
+        </dl>
+        <p class="unit__price">from <strong>RM 720,000</strong></p>
+      </li>
+    </ul>
+  </section>
+
+  <section class="section" id="amenities">
+    <p class="section__label" data-reveal data-reveal-ring="0">02 — Amenities</p>
+    <h2 class="section__title" data-reveal data-reveal-ring="0">Four decks of it.</h2>
+    <p class="section__lede" data-reveal data-reveal-ring="1">
+      Levels 6 through 9 are given over entirely to shared space, with the gym
+      and sky lounge lifted to the top of Tower B.
+    </p>
+
+    <ul class="amenities">
+      <li data-reveal data-reveal-ring="1"><span class="amenity__lv">L6</span> 50m infinity pool</li>
+      <li data-reveal data-reveal-ring="1"><span class="amenity__lv">L6</span> Children's wading pool</li>
+      <li data-reveal data-reveal-ring="1"><span class="amenity__lv">L7</span> Yoga and stretch deck</li>
+      <li data-reveal data-reveal-ring="2"><span class="amenity__lv">L7</span> BBQ pavilions ×4</li>
+      <li data-reveal data-reveal-ring="2"><span class="amenity__lv">L8</span> Co-working lounge</li>
+      <li data-reveal data-reveal-ring="2"><span class="amenity__lv">L8</span> Multipurpose hall</li>
+      <li data-reveal data-reveal-ring="3"><span class="amenity__lv">L9</span> Playscape and lawn</li>
+      <li data-reveal data-reveal-ring="3"><span class="amenity__lv">L38</span> Sky gym and lounge</li>
+    </ul>
+  </section>
+
+  <section class="section" id="location">
+    <p class="section__label" data-reveal data-reveal-ring="0">03 — Location</p>
+    <h2 class="section__title" data-reveal data-reveal-ring="0">Serdang, properly connected.</h2>
+    <p class="section__lede" data-reveal data-reveal-ring="1">
+      Six minutes on foot to the MRT, and three highway entries within a
+      kilometre of the podium ramp.
+    </p>
+
+    <ul class="times">
+      <li data-reveal data-reveal-ring="1"><span class="times__t">6 min</span><span class="times__p">MRT Serdang Raya Utara</span><span class="times__m">walk</span></li>
+      <li data-reveal data-reveal-ring="1"><span class="times__t">3 min</span><span class="times__p">SILK Highway entry</span><span class="times__m">drive</span></li>
+      <li data-reveal data-reveal-ring="2"><span class="times__t">8 min</span><span class="times__p">The Mines</span><span class="times__m">drive</span></li>
+      <li data-reveal data-reveal-ring="2"><span class="times__t">10 min</span><span class="times__p">UPM &amp; Serdang Hospital</span><span class="times__m">drive</span></li>
+      <li data-reveal data-reveal-ring="3"><span class="times__t">25 min</span><span class="times__p">KL city centre</span><span class="times__m">drive</span></li>
+      <li data-reveal data-reveal-ring="3"><span class="times__t">32 min</span><span class="times__p">KLIA</span><span class="times__m">drive</span></li>
+    </ul>
+  </section>
+
+  <section class="section section--cta">
+    <p class="section__label" data-reveal data-reveal-ring="0">04 — Enquire</p>
+    <h2 class="section__title" data-reveal data-reveal-ring="0">Book a private viewing.</h2>
+    <p class="section__lede" data-reveal data-reveal-ring="1">
+      The show unit on level 6 is open daily, 10am to 6pm. Leave your details and
+      the sales team will arrange a slot.
+    </p>
+    <div class="cta__actions" data-reveal data-reveal-ring="2">
+      <a class="btn btn--solid" href="#">Register interest</a>
+      <a class="btn btn--ghost" href="#">Download brochure (PDF)</a>
+    </div>
+    <p class="cta__note" data-reveal data-reveal-ring="3">Placeholder content — no form is wired up.</p>
+  </section>
+
+</div>
+
+<footer class="outro">
+  <p>Ehsan Property · Seri Kembangan, Selangor</p>
+</footer>
+
+<script src="app.js"></script>
 </body>
 </html>
