@@ -1,0 +1,197 @@
+{
+  "event-1": {
+    "id": "event-1",
+    "title": "Residensi Mutiara Austin Grand Launch",
+    "category": "Property Launch",
+    "date": "September 15, 2024",
+    "dateTime": "Sep 15, 2024 · 2:00 PM",
+    "location": "Johor Bahru, Malaysia",
+    "image": "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1200&auto=format&fit=crop",
+    "price": "FREE",
+    "attendees": "150 Attendees",
+    "capacity": 200,
+    "registered": 87,
+    "description": "Join us for the grand launch of Residensi Mutiara Austin, a premium 650-unit high-rise residential development in Johor Bahru. Experience the architecture, meet our team, and discover exclusive investment opportunities in one of the region's most anticipated property launches.",
+    "agenda": [
+      { "time": "2:00 PM", "title": "Welcome & Arrival", "description": "Registration and networking" },
+      { "time": "2:30 PM", "title": "Project Presentation", "description": "Overview of Residensi Mutiara Austin" },
+      { "time": "3:15 PM", "title": "Site Tour & Display", "description": "Guided tour of show units" },
+      { "time": "4:00 PM", "title": "Q&A Session", "description": "Direct conversation with developers" },
+      { "time": "4:30 PM", "title": "Light Refreshments", "description": "Networking opportunity" }
+    ],
+    "speakers": [
+      { "name": "Tan Sri Ehsan", "title": "Founder & Chairman", "image": "https://i.pravatar.cc/150?u=ehsan-founder", "bio": "20+ years in property development" },
+      { "name": "Dato' Development Director", "title": "Project Director", "image": "https://i.pravatar.cc/150?u=ehsan-director", "bio": "Lead developer of Mutiara Austin" }
+    ],
+    "highlights": [
+      "Exclusive preview of show units",
+      "Discounted pre-launch pricing",
+      "Special financing options",
+      "Networking with investors",
+      "Complimentary refreshments",
+      "Exclusive event goody bag"
+    ],
+    "relatedEvents": ["event-2", "event-3"]
+  },
+  "event-2": {
+    "id": "event-2",
+    "title": "Ehsan Widuri Putra Nilai Open House",
+    "category": "Open House",
+    "date": "October 8, 2024",
+    "dateTime": "Oct 8, 2024 · 10:00 AM",
+    "location": "Nilai, Negeri Sembilan",
+    "image": "https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=1200&auto=format&fit=crop",
+    "price": "FREE",
+    "attendees": "200 Attendees",
+    "capacity": 300,
+    "registered": 145,
+    "description": "Explore Ehsan Widuri Putra Nilai, a 490-unit mixed-use development in the heart of Nilai. Tour completed units, meet current residents, and learn about upcoming phases. This open house is your chance to experience the community and lifestyle we've built.",
+    "agenda": [
+      { "time": "10:00 AM", "title": "Registration & Welcome", "description": "Check-in and welcome briefing" },
+      { "time": "10:30 AM", "title": "Completed Units Tour", "description": "Walk through finished residences" },
+      { "time": "11:30 AM", "title": "Resident Meet & Greet", "description": "Chat with current residents" },
+      { "time": "12:00 PM", "title": "Phase 2 Preview", "description": "Upcoming development plans" },
+      { "time": "12:30 PM", "title": "Lunch & Networking", "description": "Casual dining and discussions" }
+    ],
+    "speakers": [
+      { "name": "Project Manager", "title": "Ehsan Widuri Lead", "image": "https://i.pravatar.cc/150?u=ehsan-pm", "bio": "Overseeing Widuri's development" },
+      { "name": "Resident Ambassador", "title": "Happy Resident", "image": "https://i.pravatar.cc/150?u=ehsan-resident", "bio": "2-year Widuri resident" }
+    ],
+    "highlights": [
+      "Tour 3 different unit types",
+      "Meet current residents",
+      "Preview Phase 2 designs",
+      "Investment consultation",
+      "Free lunch provided",
+      "Parking available"
+    ],
+    "relatedEvents": ["event-1", "event-3"]
+  },
+  "event-3": {
+    "id": "event-3",
+    "title": "Property Investment Seminar 2024",
+    "category": "Seminar",
+    "date": "October 22, 2024",
+    "dateTime": "Oct 22, 2024 · 6:00 PM",
+    "location": "Kuala Lumpur, Malaysia",
+    "image": "https://images.unsplash.com/photo-1591115765373-5207764f72e7?q=80&w=1200&auto=format&fit=crop",
+    "price": "FREE",
+    "attendees": "300 Attendees",
+    "capacity": 400,
+    "registered": 256,
+    "description": "Learn investment strategies for Malaysian property from industry experts. Ehsan will present market insights, ROI strategies, and how to identify high-potential developments. Perfect for both seasoned investors and those new to property investment.",
+    "agenda": [
+      { "time": "6:00 PM", "title": "Welcome & Keynote", "description": "Market overview 2024-2025" },
+      { "time": "6:30 PM", "title": "Investment Strategies", "description": "Maximizing property ROI" },
+      { "time": "7:00 PM", "title": "Panel Discussion", "description": "Q&A with industry experts" },
+      { "time": "7:45 PM", "title": "Networking Breaks", "description": "Meet investors & developers" },
+      { "time": "8:30 PM", "title": "Closing Remarks", "description": "Next steps & opportunities" }
+    ],
+    "speakers": [
+      { "name": "Chief Investment Officer", "title": "Ehsan CIO", "image": "https://i.pravatar.cc/150?u=ehsan-cio", "bio": "Investment strategy expert" },
+      { "name": "Market Analyst", "title": "Real Estate Specialist", "image": "https://i.pravatar.cc/150?u=ehsan-analyst", "bio": "Market trends analyst" }
+    ],
+    "highlights": [
+      "Market insights & trends",
+      "Investment case studies",
+      "ROI calculation methods",
+      "Risk management strategies",
+      "Exclusive offers",
+      "Networking dinner"
+    ],
+    "relatedEvents": ["event-1", "event-2"]
+  },
+  "event-4": {
+    "id": "event-4",
+    "title": "Taman Mawar Ehsan Phase 4 Preview",
+    "category": "Property Launch",
+    "date": "November 9, 2024",
+    "dateTime": "Nov 9, 2024 · 11:00 AM",
+    "location": "Rembau, Negeri Sembilan",
+    "image": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1200&auto=format&fit=crop",
+    "price": "FREE",
+    "attendees": "120 Attendees",
+    "capacity": 160,
+    "registered": 64,
+    "description": "A first look at the final phase of Taman Mawar Ehsan — 57 units of single and two-storey terrace houses on 99-year leasehold land, from RM 299,800. Phases 1 to 3 are complete and occupied, so you can walk a finished street before you commit.",
+    "agenda": [
+      { "time": "11:00 AM", "title": "Registration", "description": "Check-in and site briefing" },
+      { "time": "11:30 AM", "title": "Phase 4 Masterplan", "description": "Layouts, pricing and handover schedule" },
+      { "time": "12:15 PM", "title": "Completed Street Walk", "description": "Tour Phases 1 to 3" },
+      { "time": "1:00 PM", "title": "Lunch & Booking Desk", "description": "Meet the sales and loan panel" }
+    ],
+    "speakers": [
+      { "name": "Sales Director", "title": "Negeri Sembilan Region", "image": "https://i.pravatar.cc/150?u=ehsan-sales", "bio": "Led the Mawar Ehsan rollout" }
+    ],
+    "highlights": [
+      "Walk finished Phase 1–3 streets",
+      "Phase 4 launch pricing",
+      "On-site loan panel",
+      "Bumiputera unit allocation",
+      "Lunch provided"
+    ],
+    "relatedEvents": ["event-1", "event-2"]
+  },
+  "event-5": {
+    "id": "event-5",
+    "title": "Taman Universiti Bestari Site Day",
+    "category": "Open House",
+    "date": "November 23, 2024",
+    "dateTime": "Nov 23, 2024 · 9:30 AM",
+    "location": "Sungai Petani, Kedah",
+    "image": "https://images.unsplash.com/photo-1448630360428-65456885c650?q=80&w=1200&auto=format&fit=crop",
+    "price": "FREE",
+    "attendees": "180 Attendees",
+    "capacity": 250,
+    "registered": 98,
+    "description": "Spend a morning on the 53-acre Taman Universiti Bestari site in Kedah. Phases 1 to 4 are handed over, Phase 5 is under construction, and Phases 6 to 8 are open for registration of interest. Hard hats provided for the construction walk.",
+    "agenda": [
+      { "time": "9:30 AM", "title": "Arrival & Safety Briefing", "description": "Hard hats and site rules" },
+      { "time": "10:00 AM", "title": "Phase 5 Construction Walk", "description": "See the build in progress" },
+      { "time": "11:00 AM", "title": "Show Unit Viewing", "description": "1,140 to 2,800 sq ft layouts" },
+      { "time": "12:00 PM", "title": "Phases 6–8 Briefing", "description": "Register your interest early" }
+    ],
+    "speakers": [
+      { "name": "Site Manager", "title": "Bestari Phase 5", "image": "https://i.pravatar.cc/150?u=ehsan-site", "bio": "On-site since groundbreaking" }
+    ],
+    "highlights": [
+      "Live construction walk",
+      "Four show unit layouts",
+      "Phases 6–8 early registration",
+      "Hard hats and safety gear provided",
+      "Free shuttle from Sungai Petani town"
+    ],
+    "relatedEvents": ["event-2", "event-4"]
+  },
+  "event-6": {
+    "id": "event-6",
+    "title": "First-Time Buyer Financing Clinic",
+    "category": "Seminar",
+    "date": "December 7, 2024",
+    "dateTime": "Dec 7, 2024 · 10:00 AM",
+    "location": "Kuala Lumpur, Malaysia",
+    "image": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1200&auto=format&fit=crop",
+    "price": "FREE",
+    "attendees": "90 Attendees",
+    "capacity": 120,
+    "registered": 71,
+    "description": "A working session for first-time buyers, not a sales pitch. Bring your payslips and we will walk you through loan eligibility, the LPPSA and bank panels, government schemes, and the real cost of buying beyond the sticker price.",
+    "agenda": [
+      { "time": "10:00 AM", "title": "What You Can Actually Borrow", "description": "DSR, CCRIS and CTOS explained" },
+      { "time": "10:45 AM", "title": "Schemes & Subsidies", "description": "What is available and who qualifies" },
+      { "time": "11:30 AM", "title": "The Hidden Costs", "description": "Legal fees, stamp duty, MOT" },
+      { "time": "12:15 PM", "title": "One-to-One Desk", "description": "Bring documents for a personal review" }
+    ],
+    "speakers": [
+      { "name": "Mortgage Advisor", "title": "Panel Bank Liaison", "image": "https://i.pravatar.cc/150?u=ehsan-mortgage", "bio": "Handles Ehsan's loan panel" }
+    ],
+    "highlights": [
+      "Personal eligibility check",
+      "Bring your own documents",
+      "Government scheme walkthrough",
+      "Full cost breakdown worksheet",
+      "No obligation to buy"
+    ],
+    "relatedEvents": ["event-3", "event-4"]
+  }
+}

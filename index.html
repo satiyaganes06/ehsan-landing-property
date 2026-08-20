@@ -6,8 +6,29 @@
 <title>Ehsan Towers — Seri Kembangan</title>
 <link rel="preload" as="image" href="frames-hd/00001.webp">
 <link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600&family=Azeret+Mono:wght@300;400;500&family=Fraunces:ital,opsz,wght@0,9..144,300..500;1,9..144,300..500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="content.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 fill=%27%230a0b0d%27/%3E%3Cpath d=%27M6 24V8h20v4H11v3h12v4H11v3h15v2z%27 fill=%27%23d18829%27/%3E%3C/svg%3E">
+<meta name="description" content="Ehsan Plant &amp; Property Sdn Bhd — Bumiputera property developer and CIDB G7 contractor. Sixteen projects, RM 1.307 billion GDV, 3,442 units across Malaysia.">
 </head>
 <body>
+
+<header class="topnav" id="topnav">
+  <a class="topnav__brand" href="index.html">
+    <img src="assets/logo/epp_logo.png" alt="Ehsan Plant &amp; Property logo" width="32" height="32" decoding="async" loading="lazy">
+    <!-- <span class="topnav__brand-mark" aria-hidden="true">EP&amp;P</span> -->
+    <span class="topnav__brand-full">Ehsan Plant &amp; Property</span> 
+  </a>
+  <nav class="topnav__links" aria-label="Primary">
+    <a href="index.html" class="is-current">Home</a>
+    <a href="about.html">About</a>
+    <a href="index.html#record">Work record</a>
+    <a href="index.html#contact">Contact</a>
+  </nav>
+  <a class="topnav__cta" href="index.html#contact">Enquire</a>
+</header>
 
 <!--
   Ring numbers below are hand-tuned from where each element LANDS on screen,
@@ -78,121 +99,961 @@
 </div>
 
 <!--
-  Everything below scrolls OVER the fixed hero. It sits at a higher z-index on
-  an opaque ground so it occludes the canvas rather than compositing with it.
+  Everything below scrolls OVER the fixed hero, on an opaque ground at a
+  higher z-index so it occludes the canvas rather than compositing with it.
 
-  These carry [data-reveal] (EFFECT 3), not [data-ripple]. Same motion language,
-  different trigger: the ripple is a one-shot load-in off the `is-ready` gate,
-  which for below-fold content would play off-screen and be long settled before
-  anyone scrolled here. The reveal fires per element on viewport entry instead.
-  Reveal rings are banded by position WITHIN each section, so the amenities grid
-  bands by row rather than by list order.
+  These carry [data-reveal] (EFFECT 3), not [data-ripple]. Same motion
+  language, different trigger: the ripple is a one-shot load-in off the
+  `is-ready` gate, which for below-fold content would play off-screen and be
+  long settled before anyone scrolled here. The reveal fires per element on
+  viewport entry instead, banded by position WITHIN each section — so grids
+  band by row rather than by source order.
+
+  Everything here is drawn from EPP COMPANY PROFILE 3.7.25.pdf in assets/.
 -->
-<div class="content">
 
-  <section class="section" id="residences">
-    <p class="section__label" data-reveal data-reveal-ring="0">01 — Residences</p>
-    <h2 class="section__title" data-reveal data-reveal-ring="0">Five layouts, two towers.</h2>
-    <p class="section__lede" data-reveal data-reveal-ring="1">
-      Every unit is a corner or end lot. No internal-facing bedrooms, and cross
-      ventilation on all but the dual-key layout.
+<div class="grain" aria-hidden="true"></div>
+
+<div class="progress" aria-hidden="true"><div class="progress__bar"></div></div>
+
+<nav class="rail" aria-label="Section navigation">
+  <a href="#doctrine"><span>Doctrine</span></a>
+  <a href="#commitment"><span>Commitment</span></a>
+  <a href="#gallery"><span>Gallery</span></a>
+  <a href="#record"><span>Work record</span></a>
+  <a href="#events"><span>Events</span></a>
+  <a href="#awards"><span>Recognition</span></a>
+  <a href="#testimonials"><span>Voices</span></a>
+  <a href="#contact"><span>Contact</span></a>
+</nav>
+
+<div class="content" id="content">
+
+  <!-- ================= PRELUDE ================= -->
+  <section class="section prelude">
+    <p class="prelude__mark" data-reveal data-reveal-ring="0">
+      <b>Ehsan Plant &amp; Property Sdn Bhd</b>
+      <span>817795-X</span>
+      <span>Est. 15 May 2008</span>
+      <span>Bumiputera Developer &middot; CIDB G7</span>
     </p>
 
-    <ul class="units">
-      <li class="unit" data-reveal data-reveal-ring="1">
-        <p class="unit__type">Type A</p>
-        <p class="unit__size">850 sq ft</p>
-        <dl class="unit__spec">
-          <dt>Bedrooms</dt><dd>2</dd>
-          <dt>Bathrooms</dt><dd>2</dd>
-          <dt>Parking</dt><dd>1 bay</dd>
-          <dt>Facing</dt><dd>Pool deck</dd>
-        </dl>
-        <p class="unit__price">from <strong>RM 420,000</strong></p>
+    <h2 class="motto">
+      <span data-reveal data-reveal-ring="0">We build</span>
+      <span class="i" data-reveal data-reveal-ring="1">for your needs.</span>
+    </h2>
+
+    <p class="prelude__sub" data-reveal data-reveal-ring="2">
+      Seventeen years of Bumiputera property development across Selangor, Negeri
+      Sembilan, Melaka, Johor and Kedah — from a single detached house in Kota
+      Warisan to a 3,442-unit pipeline carried on a gross development value of
+      RM 1.307 billion.
+    </p>
+
+    <ul class="scale">
+      <li data-reveal data-reveal-ring="2">
+        <span class="scale__n"><span data-count="1.307" data-dp="3">1.307</span><sup>RM BIL</sup></span>
+        <span class="scale__l">Gross development<br>value</span>
       </li>
-      <li class="unit unit--featured" data-reveal data-reveal-ring="2">
-        <p class="unit__type">Type B <span class="unit__tag">Most taken</span></p>
-        <p class="unit__size">1,150 sq ft</p>
-        <dl class="unit__spec">
-          <dt>Bedrooms</dt><dd>3</dd>
-          <dt>Bathrooms</dt><dd>2</dd>
-          <dt>Parking</dt><dd>2 bays</dd>
-          <dt>Facing</dt><dd>KL skyline</dd>
-        </dl>
-        <p class="unit__price">from <strong>RM 585,000</strong></p>
+      <li data-reveal data-reveal-ring="3">
+        <span class="scale__n"><span data-count="3442">3,442</span></span>
+        <span class="scale__l">Housing units<br>developed &amp; planned</span>
       </li>
-      <li class="unit" data-reveal data-reveal-ring="3">
-        <p class="unit__type">Type C</p>
-        <p class="unit__size">1,420 sq ft</p>
-        <dl class="unit__spec">
-          <dt>Bedrooms</dt><dd>3 + 1</dd>
-          <dt>Bathrooms</dt><dd>3</dd>
-          <dt>Parking</dt><dd>2 bays</dd>
-          <dt>Facing</dt><dd>Dual key</dd>
-        </dl>
-        <p class="unit__price">from <strong>RM 720,000</strong></p>
+      <li data-reveal data-reveal-ring="3">
+        <span class="scale__n"><span data-count="16">16</span></span>
+        <span class="scale__l">Projects on the<br>work record</span>
+      </li>
+      <li data-reveal data-reveal-ring="4">
+        <span class="scale__n"><span data-count="15">15</span></span>
+        <span class="scale__l">Companies in the<br>Ehsan Group</span>
+      </li>
+      <li data-reveal data-reveal-ring="4">
+        <span class="scale__n"><span data-count="12">12</span></span>
+        <span class="scale__l">National &amp; regional<br>awards</span>
       </li>
     </ul>
   </section>
 
-  <section class="section" id="amenities">
-    <p class="section__label" data-reveal data-reveal-ring="0">02 — Amenities</p>
-    <h2 class="section__title" data-reveal data-reveal-ring="0">Four decks of it.</h2>
-    <p class="section__lede" data-reveal data-reveal-ring="1">
-      Levels 6 through 9 are given over entirely to shared space, with the gym
-      and sky lounge lifted to the top of Tower B.
-    </p>
+  <!-- ================= 01 · DOCTRINE ================= -->
+  <section class="section" id="doctrine">
+    <header class="section__head">
+      <span class="ghost" aria-hidden="true">01</span>
+      <p class="section__label" data-reveal data-reveal-ring="0">01 — Doctrine</p>
+      <h2 class="section__title" data-reveal data-reveal-ring="0">Objective, mission, <em>vision</em>.</h2>
+    </header>
 
-    <ul class="amenities">
-      <li data-reveal data-reveal-ring="1"><span class="amenity__lv">L6</span> 50m infinity pool</li>
-      <li data-reveal data-reveal-ring="1"><span class="amenity__lv">L6</span> Children's wading pool</li>
-      <li data-reveal data-reveal-ring="1"><span class="amenity__lv">L7</span> Yoga and stretch deck</li>
-      <li data-reveal data-reveal-ring="2"><span class="amenity__lv">L7</span> BBQ pavilions ×4</li>
-      <li data-reveal data-reveal-ring="2"><span class="amenity__lv">L8</span> Co-working lounge</li>
-      <li data-reveal data-reveal-ring="2"><span class="amenity__lv">L8</span> Multipurpose hall</li>
-      <li data-reveal data-reveal-ring="3"><span class="amenity__lv">L9</span> Playscape and lawn</li>
-      <li data-reveal data-reveal-ring="3"><span class="amenity__lv">L38</span> Sky gym and lounge</li>
-    </ul>
-  </section>
+    <div class="doctrine">
+      <div class="vision" data-reveal data-reveal-ring="1">
+        <p class="blockhead" style="border:0;padding:0;margin-bottom:1.25rem"><i>Company vision</i></p>
+        <p>
+          Ehsan Plant &amp; Property Sdn Bhd aims to provide services and products
+          according to established standards and produce work results with the
+          highest quality, while also contributing to the country's economic
+          development — and aspires to be a progressive and advanced Bumiputera
+          company in property construction.
+        </p>
+      </div>
 
-  <section class="section" id="location">
-    <p class="section__label" data-reveal data-reveal-ring="0">03 — Location</p>
-    <h2 class="section__title" data-reveal data-reveal-ring="0">Serdang, properly connected.</h2>
-    <p class="section__lede" data-reveal data-reveal-ring="1">
-      Six minutes on foot to the MRT, and three highway entries within a
-      kilometre of the podium ramp.
-    </p>
+      <div class="duo">
+        <div data-reveal data-reveal-ring="2">
+          <h3 class="blockhead"><i>A</i> Company objective</h3>
+          <ol class="creed">
+            <li>To create environmentally friendly and contemporary modern property constructions.</li>
+            <li>To establish affordable properties.</li>
+            <li>To generate more job opportunities.</li>
+          </ol>
+        </div>
 
-    <ul class="times">
-      <li data-reveal data-reveal-ring="1"><span class="times__t">6 min</span><span class="times__p">MRT Serdang Raya Utara</span><span class="times__m">walk</span></li>
-      <li data-reveal data-reveal-ring="1"><span class="times__t">3 min</span><span class="times__p">SILK Highway entry</span><span class="times__m">drive</span></li>
-      <li data-reveal data-reveal-ring="2"><span class="times__t">8 min</span><span class="times__p">The Mines</span><span class="times__m">drive</span></li>
-      <li data-reveal data-reveal-ring="2"><span class="times__t">10 min</span><span class="times__p">UPM &amp; Serdang Hospital</span><span class="times__m">drive</span></li>
-      <li data-reveal data-reveal-ring="3"><span class="times__t">25 min</span><span class="times__p">KL city centre</span><span class="times__m">drive</span></li>
-      <li data-reveal data-reveal-ring="3"><span class="times__t">32 min</span><span class="times__p">KLIA</span><span class="times__m">drive</span></li>
-    </ul>
-  </section>
-
-  <section class="section section--cta">
-    <p class="section__label" data-reveal data-reveal-ring="0">04 — Enquire</p>
-    <h2 class="section__title" data-reveal data-reveal-ring="0">Book a private viewing.</h2>
-    <p class="section__lede" data-reveal data-reveal-ring="1">
-      The show unit on level 6 is open daily, 10am to 6pm. Leave your details and
-      the sales team will arrange a slot.
-    </p>
-    <div class="cta__actions" data-reveal data-reveal-ring="2">
-      <a class="btn btn--solid" href="#">Register interest</a>
-      <a class="btn btn--ghost" href="#">Download brochure (PDF)</a>
+        <div data-reveal data-reveal-ring="3">
+          <h3 class="blockhead"><i>B</i> Company mission</h3>
+          <ol class="creed">
+            <li><span>To provide affordable asset ownership facilities to the public — <q>Everyone Can Own A House</q> — together with Ehsan Property.</span></li>
+            <li>To become a competitive leader in the real estate industry in Malaysia.</li>
+            <li><span>To always consider the company motto <q>We Build For Your Needs</q>.</span></li>
+            <li>To produce high-quality work results.</li>
+            <li>To ensure customer satisfaction.</li>
+            <li>To carry out work professionally and ethically.</li>
+          </ol>
+        </div>
+      </div>
     </div>
-    <p class="cta__note" data-reveal data-reveal-ring="3">Placeholder content — no form is wired up.</p>
+  </section>
+
+
+  <!-- ================= 02 · COMMITMENT ================= -->
+  <section class="section" id="commitment">
+    <header class="section__head">
+      <span class="ghost" aria-hidden="true">02</span>
+      <p class="section__label" data-reveal data-reveal-ring="0">02 — Commitment</p>
+      <h2 class="section__title" data-reveal data-reveal-ring="0">What we <em>commit</em> to.</h2>
+    </header>
+
+    <ol class="vows">
+      <li style="--i:0" data-reveal data-reveal-ring="1"><span class="vows__n">01</span><span class="vows__t">To become a visionary and competitive company</span></li>
+      <li style="--i:1" data-reveal data-reveal-ring="2"><span class="vows__n">02</span><span class="vows__t">To have efficient and effective operational time management</span></li>
+      <li style="--i:2" data-reveal data-reveal-ring="3"><span class="vows__n">03</span><span class="vows__t">To be innovative and maintain integrity</span></li>
+      <li style="--i:3" data-reveal data-reveal-ring="4"><span class="vows__n">04</span><span class="vows__t">To instil a team spirit that values sincerity</span></li>
+      <li style="--i:4" data-reveal data-reveal-ring="5"><span class="vows__n">05</span><span class="vows__t">To provide the best quality and satisfaction to our customers</span></li>
+    </ol>
+  </section>
+
+
+  <!-- ================= 03 · GALLERY =================
+       Two horizontal marquees running against each other. Each track holds
+       ONE .hscroll__half; the shared [data-clone] handler in content.js
+       appends the duplicate that makes the -50% loop seamless. With JS off
+       the rows simply sit still showing the first half — still a gallery. -->
+  <section class="section" id="gallery">
+    <header class="section__head">
+      <span class="ghost" aria-hidden="true">03</span>
+      <p class="section__label" data-reveal data-reveal-ring="0">03 — Gallery</p>
+      <h2 class="section__title" data-reveal data-reveal-ring="0">The spaces we <em>hand over</em>.</h2>
+      <p class="section__lede" data-reveal data-reveal-ring="1">
+        Lobbies, decks, gyms and pools from completed Ehsan developments.<span class="hint"> Hover to hold the rows.</span>
+      </p>
+    </header>
+
+    <div class="gallery-rows hgroup" data-reveal data-reveal-ring="2">
+
+      <div class="hscroll" style="--hs-dur:64s">
+        <div class="hscroll__track" data-clone>
+          <div class="hscroll__half">
+            <figure class="gallery-shot"><img src="assets/img/gallery/BusinessEntrance-DESKTOP-OB2275O-1.webp" alt="Business entrance lobby" loading="lazy" decoding="async"></figure>
+            <figure class="gallery-shot"><img src="assets/img/gallery/SwimmingPool2_A-DESKTOP-OB2275O-scaled.webp" alt="Swimming pool deck" loading="lazy" decoding="async"></figure>
+            <figure class="gallery-shot"><img src="assets/img/gallery/IndoorGym_1-DESKTOP-OB2275O-scaled.webp" alt="Indoor gymnasium" loading="lazy" decoding="async"></figure>
+            <figure class="gallery-shot"><img src="assets/img/gallery/OfficeLiftLobby-DESKTOP-OB2275O-scaled.webp" alt="Office lift lobby" loading="lazy" decoding="async"></figure>
+            <figure class="gallery-shot"><img src="assets/img/gallery/GazeboAndBBQ-DESKTOP-OB2275O-scaled.webp" alt="Gazebo and barbecue deck" loading="lazy" decoding="async"></figure>
+          </div>
+        </div>
+      </div>
+
+      <div class="hscroll" style="--hs-dur:74s; --hs-dir:reverse">
+        <div class="hscroll__track" data-clone>
+          <div class="hscroll__half">
+            <figure class="gallery-shot"><img src="assets/img/gallery/OfficeSpace-DESKTOP-OB2275O-scaled.webp" alt="Office space" loading="lazy" decoding="async"></figure>
+            <figure class="gallery-shot"><img src="assets/img/gallery/OutdoorGym-DESKTOP-OB2275O-scaled.webp" alt="Outdoor gym" loading="lazy" decoding="async"></figure>
+            <figure class="gallery-shot"><img src="assets/img/gallery/TableGame-DESKTOP-OB2275O-scaled.webp" alt="Games room" loading="lazy" decoding="async"></figure>
+            <figure class="gallery-shot"><img src="assets/img/gallery/GuessWaiting-DESKTOP-OB2275O-scaled.webp" alt="Guest waiting lounge" loading="lazy" decoding="async"></figure>
+            <figure class="gallery-shot"><img src="assets/img/gallery/IndoorGym2-DESKTOP-OB2275O-scaled.webp" alt="Indoor gym, second view" loading="lazy" decoding="async"></figure>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ================= 04 · WORK RECORD =================
+       The ledger. Rows carry data-val (RM millions) for the running tally and
+       --w for the proportional bar, scaled against the largest project in the
+       book (RM 270m, Residensi Mutiara Austin). Each row's <img> serves two
+       jobs: on a fine pointer it is lifted into the .peek panel that tracks
+       the cursor; below 680px the same element is shown inline instead. -->
+  <section class="section" id="record">
+    <header class="section__head">
+      <span class="ghost" aria-hidden="true">04</span>
+      <p class="section__label" data-reveal data-reveal-ring="0">04 — Work record</p>
+      <h2 class="section__title" data-reveal data-reveal-ring="0">Sixteen projects, <em>one book</em>.</h2>
+      <p class="section__lede" data-reveal data-reveal-ring="1">
+        Every project on the company work record, in order of commencement —
+        completed, on-going and future.<span class="hint"> Hover a row to see it.</span>
+      </p>
+    </header>
+
+    <div class="summary" data-reveal data-reveal-ring="1">
+      <div><span class="summary__n"><span data-count="12">12</span></span><span class="summary__l">Completed<br>with CF / CCC</span></div>
+      <div><span class="summary__n"><span data-count="3">3</span></span><span class="summary__l">On-going<br>developments</span></div>
+      <div><span class="summary__n"><span data-count="1">1</span></span><span class="summary__l">Future<br>project</span></div>
+      <div><span class="summary__n"><span data-count="930.4" data-dp="1">930.4</span><small>RM MIL</small></span><span class="summary__l">Recorded<br>project value</span></div>
+      <div><span class="summary__n"><span data-count="1.307" data-dp="3">1.307</span><small>RM BIL</small></span><span class="summary__l">Gross development<br>value</span></div>
+    </div>
+
+    <div class="ledger">
+
+      <h3 class="phase">Completed <b>2009 — 2024</b></h3>
+
+      <article class="row" data-project-id="proj-1" data-reveal data-reveal-ring="1" data-val="1.8">
+        <span class="row__shot"><img src="assets/img/proj-kota-warisan.jpg" alt="Luxurious bungalow at Kota Warisan, Sepang" loading="lazy" decoding="async"></span>
+        <p class="row__yr">2009<small>2010</small></p>
+        <div>
+          <h4 class="row__name">Luxurious Bungalow, Kota Warisan</h4>
+          <p class="row__loc">Sepang, Selangor</p>
+          <p class="row__desc">A <b>detached house with swimming pool</b> in Kota Warisan. Freehold title, 7,000 square feet.</p>
+        </div>
+        <div class="row__val"><span class="row__rm"><i>RM</i>1,800,000</span><span class="bar" style="--w:.0067"><i></i></span></div>
+        <div class="row__status"><span class="tag tag--done">Completed</span></div>
+      </article>
+
+      <article class="row" data-project-id="proj-2" data-reveal data-reveal-ring="1" data-val="2.3">
+        <span class="row__shot"><img src="assets/img/proj-mosque-kajang.jpg" alt="Assirathul Mustaqeem Mosque, Kajang" loading="lazy" decoding="async"></span>
+        <p class="row__yr">2010<small>2011</small></p>
+        <div>
+          <h4 class="row__name">Assirathul Mustaqeem Mosque</h4>
+          <p class="row__loc">Masjid India Muslim Kajang, Jalan Reko, Kajang, Selangor</p>
+          <p class="row__desc">Existing madrasah demolished and rebuilt into a <b>two-storey surau</b> on government land. Freehold.</p>
+        </div>
+        <div class="row__val"><span class="row__rm"><i>RM</i>2,300,000</span><span class="bar" style="--w:.0085"><i></i></span></div>
+        <div class="row__status"><span class="tag tag--done">Completed</span></div>
+      </article>
+
+      <article class="row" data-project-id="proj-3" data-reveal data-reveal-ring="2" data-val="13">
+        <span class="row__shot"><img src="assets/img/proj-dimensi.jpg" alt="Apartment Dimensi, Alor Gajah, Melaka" loading="lazy" decoding="async"></span>
+        <p class="row__yr">2010<small>2012</small></p>
+        <div>
+          <h4 class="row__name">Apartment Dimensi</h4>
+          <p class="row__loc">Taman Dimensi, Mukim Sungai Petani, Alor Gajah District, Melaka</p>
+          <p class="row__desc"><b>96 units</b> across four blocks of four-storey apartments (Blocks A, B, C &amp; D). Freehold. GDV RM 13 million. An abandoned project taken over and completed with CF.</p>
+        </div>
+        <div class="row__val"><span class="row__rm"><i>RM</i>13,000,000</span><span class="bar" style="--w:.048"><i></i></span></div>
+        <div class="row__status"><span class="tag tag--done">Revived &amp; CF</span></div>
+      </article>
+
+      <article class="row" data-project-id="proj-4" data-reveal data-reveal-ring="2" data-val="4.8">
+        <span class="row__shot"><img src="assets/img/proj-hotel-ehsan.jpg" alt="Hotel Ehsan, Ampang" loading="lazy" decoding="async"></span>
+        <p class="row__yr">2011<small>2012</small></p>
+        <div>
+          <h4 class="row__name">Hotel Ehsan, Ampang</h4>
+          <p class="row__loc">Jalan Memanda 5, Ampang Point, Ampang, Selangor</p>
+          <p class="row__desc">One unit of shop lot converted into a <b>budget hotel</b>. State leasehold, 99-year lease, 1,650 square feet.</p>
+        </div>
+        <div class="row__val"><span class="row__rm"><i>RM</i>4,800,000</span><span class="bar" style="--w:.0178"><i></i></span></div>
+        <div class="row__status"><span class="tag tag--done">Completed</span></div>
+      </article>
+
+      <article class="row" data-project-id="proj-5" data-reveal data-reveal-ring="3" data-val="10">
+        <span class="row__shot"><img src="assets/img/proj-markisa.jpg" alt="Taman Pinggiran Markisa, Nilai" loading="lazy" decoding="async"></span>
+        <p class="row__yr">2012<small>2014</small></p>
+        <div>
+          <h4 class="row__name">Taman Pinggiran Markisa</h4>
+          <p class="row__loc">Kampung Jijan, Mukim Labu, Nilai, Negeri Sembilan</p>
+          <p class="row__desc"><b>27 units</b> on freehold land. GDV RM 10 million. An abandoned project taken over and completed with CF.</p>
+        </div>
+        <div class="row__val"><span class="row__rm"><i>RM</i>10,000,000</span><span class="bar" style="--w:.037"><i></i></span></div>
+        <div class="row__status"><span class="tag tag--done">Revived &amp; CF</span></div>
+      </article>
+
+      <div class="ledger__more" id="ledgerMore" hidden>
+      <article class="row" data-project-id="proj-6" data-reveal data-reveal-ring="3" data-val="42">
+        <span class="row__shot"><img src="assets/img/proj-salam-nadiah.jpg" alt="Taman Salam Nadiah, Bandar Baru Tampin" loading="lazy" decoding="async"></span>
+        <p class="row__yr">2015<small>2017</small></p>
+        <div>
+          <h4 class="row__name">Taman Salam Nadiah</h4>
+          <p class="row__loc">Bandar Baru Tampin, Mukim Gadong, Rembau District, Negeri Sembilan</p>
+          <p class="row__desc"><b>151 units</b> developed on Malay Reserve land across 14.27 acres. GDV RM 42 million. Phase 1 and Phase 2 fully completed with CCC.</p>
+        </div>
+        <div class="row__val"><span class="row__rm"><i>RM</i>42,000,000</span><span class="bar" style="--w:.1556"><i></i></span></div>
+        <div class="row__status"><span class="tag tag--done">CCC issued</span></div>
+      </article>
+
+      <article class="row" data-project-id="proj-7" data-reveal data-reveal-ring="4" data-val="8">
+        <span class="row__shot"><img src="assets/img/proj-shop-tampin.jpg" alt="Two-storey shop office, Bandar Baru Tampin" loading="lazy" decoding="async"></span>
+        <p class="row__yr">2015<small>2017</small></p>
+        <div>
+          <h4 class="row__name">2-Storey Shop Office, Bandar Baru Tampin</h4>
+          <p class="row__loc">Taman Salam Nadiah, Mukim Gadong, Rembau District, Negeri Sembilan</p>
+          <p class="row__desc"><b>13 units</b> of two-storey shop offices on Malay Reserve land and state leasehold. GDV RM 7.6 million.</p>
+        </div>
+        <div class="row__val"><span class="row__rm"><i>RM</i>8,000,000</span><span class="bar" style="--w:.0296"><i></i></span></div>
+        <div class="row__status"><span class="tag tag--done">CCC issued</span></div>
+      </article>
+
+      <article class="row" data-project-id="proj-8" data-reveal data-reveal-ring="4" data-val="140">
+        <span class="row__shot"><img src="assets/img/proj-ehsan-residence.jpg" alt="Ehsan Residence Condominium, Sepang" loading="lazy" decoding="async"></span>
+        <p class="row__yr">2015<small>2018</small></p>
+        <div>
+          <h4 class="row__name">Ehsan Residence Condominium</h4>
+          <p class="row__loc">Mukim Dengkil, Sepang District, Selangor</p>
+          <p class="row__desc"><b>320 units</b> on a 5.4-acre site. GDV RM 140 million. Completed with CCC — the company's first high-rise scheme.</p>
+        </div>
+        <div class="row__val"><span class="row__rm"><i>RM</i>140,000,000</span><span class="bar" style="--w:.5185"><i></i></span></div>
+        <div class="row__status"><span class="tag tag--done">CCC issued</span></div>
+      </article>
+
+      <article class="row" data-project-id="proj-9" data-reveal data-reveal-ring="5" data-val="30">
+        <span class="row__shot"><img src="assets/img/proj-sri-ehsan.jpg" alt="Taman Sri Ehsan, Kluang, Johor" loading="lazy" decoding="async"></span>
+        <p class="row__yr">2017<small>2019</small></p>
+        <div>
+          <h4 class="row__name">Taman Sri Ehsan</h4>
+          <p class="row__loc">Mukim Kluang, Jalan Batu Pahat, Johor Darul Takzim</p>
+          <p class="row__desc"><b>64 units</b> of single-storey semi-detached houses on freehold land. GDV RM 30 million. Fully completed with CCC.</p>
+        </div>
+        <div class="row__val"><span class="row__rm"><i>RM</i>30,000,000</span><span class="bar" style="--w:.1111"><i></i></span></div>
+        <div class="row__status"><span class="tag tag--done">CCC issued</span></div>
+      </article>
+
+      <article class="row" data-project-id="proj-10" data-reveal data-reveal-ring="5" data-val="6.5">
+        <span class="row__shot"><img src="assets/img/proj-shop-residence.jpg" alt="Shop office at Ehsan Waterpark, Port Dickson" loading="lazy" decoding="async"></span>
+        <p class="row__yr">2017<small>2019</small></p>
+        <div>
+          <h4 class="row__name">2-Storey Shop Office, Ehsan Waterpark</h4>
+          <p class="row__loc">Port Dickson, Negeri Sembilan</p>
+          <p class="row__desc">Two-storey shop offices at Ehsan Waterpark on freehold land. Fully completed.</p>
+        </div>
+        <div class="row__val"><span class="row__rm"><i>RM</i>6,500,000</span><span class="bar" style="--w:.0241"><i></i></span></div>
+        <div class="row__status"><span class="tag tag--done">Completed</span></div>
+      </article>
+
+      <article class="row" data-project-id="proj-11" data-reveal data-reveal-ring="6" data-val="12">
+        <span class="row__shot"><img src="assets/img/proj-shop-residence.jpg" alt="Shop office at Ehsan Residence, Sepang" loading="lazy" decoding="async"></span>
+        <p class="row__yr">2019<small>2020</small></p>
+        <div>
+          <h4 class="row__name">Shop Office, Ehsan Residence</h4>
+          <p class="row__loc">Ehsan Residence, Mukim Dengkil, Sepang, Selangor</p>
+          <p class="row__desc"><b>14 units</b> of two-storey shops on freehold land. GDV RM 12 million. Fully completed with CCC.</p>
+        </div>
+        <div class="row__val"><span class="row__rm"><i>RM</i>12,000,000</span><span class="bar" style="--w:.0444"><i></i></span></div>
+        <div class="row__status"><span class="tag tag--done">CCC issued</span></div>
+      </article>
+
+      <article class="row" data-project-id="proj-12" data-reveal data-reveal-ring="6" data-val="90">
+        <span class="row__shot"><img src="assets/img/proj-salam-nadiah.jpg" alt="Taman Mawar Ehsan, Rembau" loading="lazy" decoding="async"></span>
+        <p class="row__yr">Ph 1–4<small>2022–24</small></p>
+        <div>
+          <h4 class="row__name">Taman Mawar Ehsan</h4>
+          <p class="row__loc">Mukim Pedas, Rembau District, Negeri Sembilan</p>
+          <p class="row__desc"><b>238 units</b> of two-storey and single-storey terrace houses over four phases — Phase 1 Type A 20 units, Type B 38 units; Phase 2 70 units; Phase 3 53 units; Phase 4 57 units. 1,100 to 2,000 sq ft, from RM 299,800. 99-year leasehold. GDV RM 90 million.</p>
+        </div>
+        <div class="row__val"><span class="row__rm"><i>RM</i>90,000,000</span><span class="bar" style="--w:.3333"><i></i></span></div>
+        <div class="row__status"><span class="tag tag--done">Phases 1–4 CCC</span></div>
+      </article>
+
+      <h3 class="phase">On-going <b>2020 — 2028</b></h3>
+
+      <article class="row" data-project-id="proj-13" data-reveal data-reveal-ring="1" data-val="120">
+        <span class="row__shot"><img src="assets/img/proj-bestari.jpg" alt="Taman Universiti Bestari, Sungai Petani, Kedah" loading="lazy" decoding="async"></span>
+        <p class="row__yr">2020<small>on-going</small></p>
+        <div>
+          <h4 class="row__name">Taman Universiti Bestari</h4>
+          <p class="row__loc">Sungai Petani, Kedah</p>
+          <p class="row__desc"><b>535 units</b> over eight phases on 53 acres of freehold land. 1,140 to 2,800 sq ft, from RM 249,800. GDV RM 120 million. Phases 1–4 completed, Phase 5 under construction, Phases 6–8 coming soon.</p>
+        </div>
+        <div class="row__val"><span class="row__rm"><i>RM</i>120,000,000</span><span class="bar" style="--w:.4444"><i></i></span></div>
+        <div class="row__status"><span class="tag tag--live">Phase 5 building</span></div>
+      </article>
+
+      <article class="row" data-project-id="proj-14" data-reveal data-reveal-ring="2" data-val="270">
+        <span class="row__shot"><img src="assets/img/proj-widuri.jpg" alt="Residensi Mutiara Austin, Mount Austin, Johor Bahru" loading="lazy" decoding="async"></span>
+        <p class="row__yr">2023<small>2027</small></p>
+        <div>
+          <h4 class="row__name">Residensi Mutiara Austin</h4>
+          <p class="row__loc">Mount Austin, Mukim Tebrau, Johor Bahru District, Johor Darul Takzim</p>
+          <p class="row__desc"><b>650 units</b> of 16-storey serviced apartments across three blocks — Block A 201 units, Block B 209 units, Block C 240 units — over one retail level of 9 units. Phase 1 2023–2026, Phase 2 2024–2027. GDV RM 300 million.</p>
+        </div>
+        <div class="row__val"><span class="row__rm"><i>RM</i>270,000,000</span><span class="bar" style="--w:1"><i></i></span></div>
+        <div class="row__status"><span class="tag tag--live">Under construction</span></div>
+      </article>
+
+      <article class="row" data-project-id="proj-15" data-reveal data-reveal-ring="3" data-val="180">
+        <span class="row__shot"><img src="assets/img/proj-widuri-2.jpg" alt="Ehsan Widuri, Putra Nilai, Negeri Sembilan" loading="lazy" decoding="async"></span>
+        <p class="row__yr">2024<small>2028</small></p>
+        <div>
+          <h4 class="row__name">Ehsan Widuri, Putra Nilai</h4>
+          <p class="row__loc">Bandar Baru Nilai, Mukim Labu, Seremban District, Negeri Sembilan</p>
+          <p class="row__desc"><b>490 units</b> — Block A 242 units and Block B 242 units, levels 9 to 30 — with 6 retail lots at ground level and 7 retail lots on levels 3 to 8. Freehold, 2 acres. Phase 1 launched October 2024, Block A under construction, estimated completion end 2028. GDV RM 200 million.</p>
+        </div>
+        <div class="row__val"><span class="row__rm"><i>RM</i>180,000,000</span><span class="bar" style="--w:.6667"><i></i></span></div>
+        <div class="row__status"><span class="tag tag--live">Block A building</span></div>
+      </article>
+
+      <h3 class="phase">Future <b>pipeline</b></h3>
+
+      <article class="row" data-project-id="proj-16" data-reveal data-reveal-ring="1" data-val="0">
+        <span class="row__shot"><img src="assets/img/proj-bestari.jpg" alt="Taman Seri Emas, Kampar, Perak" loading="lazy" decoding="async"></span>
+        <p class="row__yr">Future<small>planned</small></p>
+        <div>
+          <h4 class="row__name">Taman Seri Emas</h4>
+          <p class="row__loc">Kampar, Perak</p>
+          <p class="row__desc">A <b>mixed development of 1,800 units</b> built around a luxurious lifestyle offer — the largest scheme on the company's book to date.</p>
+        </div>
+        <div class="row__val"><span class="row__rm"><i>RM</i>TBA</span><span class="bar" style="--w:0"><i></i></span></div>
+        <div class="row__status"><span class="tag tag--next">Future project</span></div>
+      </article>
+      </div>
+      <button class="ledger__more-btn" type="button" id="ledgerMoreBtn" aria-expanded="false" aria-controls="ledgerMore">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        <span>View 11 more projects</span>
+        <span>2020 &ndash; future</span>
+      </button>
+
+      <p class="tally" aria-live="off"><span>Value in view</span><b data-tally>RM 0</b></p>
+    </div>
+  </section>
+
+  <div class="peek" aria-hidden="true"><img src="" alt=""><span class="peek__cap"></span></div>
+
+  <!-- ================= 05 · EVENTS ================= -->
+  <section class="section" id="events">
+    <header class="section__head">
+      <span class="ghost" aria-hidden="true">05</span>
+      <p class="section__label" data-reveal data-reveal-ring="0">05 — Events</p>
+      <h2 class="section__title" data-reveal data-reveal-ring="0">Come see it <em>in person</em>.</h2>
+      <p class="section__lede" data-reveal data-reveal-ring="1">
+        Launches, open houses and investment briefings across Malaysia — walk the
+        show units, meet the team, ask the awkward questions.
+      </p>
+    </header>
+
+    <div class="events-grid">
+      <!-- Event 1 -->
+      <a href="event-detail.html?event=event-1" class="event-card" data-reveal data-reveal-ring="1">
+        <div class="event-image-wrapper">
+          <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=800&auto=format&fit=crop" alt="Residensi Mutiara Austin grand launch" loading="lazy" decoding="async" referrerpolicy="no-referrer">
+          <span class="event-category">Property Launch</span>
+        </div>
+        <div class="event-body">
+          <h3 class="event-title">Residensi Mutiara Austin Grand Launch</h3>
+          <div class="event-meta">
+            <div class="event-speaker">
+              <img src="https://i.pravatar.cc/150?u=ehsan-founder" alt="" referrerpolicy="no-referrer">
+              <div>
+                <div class="event-speaker-label">Hosted by</div>
+                <div class="event-speaker-name">Ehsan Team</div>
+              </div>
+            </div>
+            <div class="event-date">
+              <div class="event-date-label">Date</div>
+              <div class="event-date-value">Sep 15, 2024</div>
+            </div>
+          </div>
+          <div class="event-stats">
+            <span>Johor Bahru</span>
+            <span>150 attendees</span>
+            <span>2:00 PM</span>
+          </div>
+          <span class="event-cta">Learn more</span>
+        </div>
+      </a>
+
+      <!-- Event 2 -->
+      <a href="event-detail.html?event=event-2" class="event-card" data-reveal data-reveal-ring="2">
+        <div class="event-image-wrapper">
+          <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=800&auto=format&fit=crop" alt="Ehsan Widuri Putra Nilai open house" loading="lazy" decoding="async" referrerpolicy="no-referrer">
+          <span class="event-category">Open House</span>
+        </div>
+        <div class="event-body">
+          <h3 class="event-title">Ehsan Widuri Putra Nilai Open House</h3>
+          <div class="event-meta">
+            <div class="event-speaker">
+              <img src="https://i.pravatar.cc/150?u=ehsan-pm" alt="" referrerpolicy="no-referrer">
+              <div>
+                <div class="event-speaker-label">Hosted by</div>
+                <div class="event-speaker-name">Ehsan Team</div>
+              </div>
+            </div>
+            <div class="event-date">
+              <div class="event-date-label">Date</div>
+              <div class="event-date-value">Oct 8, 2024</div>
+            </div>
+          </div>
+          <div class="event-stats">
+            <span>Nilai, N. Sembilan</span>
+            <span>200 attendees</span>
+            <span>10:00 AM</span>
+          </div>
+          <span class="event-cta">Learn more</span>
+        </div>
+      </a>
+
+      <!-- Event 3 -->
+      <a href="event-detail.html?event=event-3" class="event-card" data-reveal data-reveal-ring="3">
+        <div class="event-image-wrapper">
+          <img src="https://images.unsplash.com/photo-1591115765373-5207764f72e7?q=80&w=800&auto=format&fit=crop" alt="Property investment seminar" loading="lazy" decoding="async" referrerpolicy="no-referrer">
+          <span class="event-category">Seminar</span>
+        </div>
+        <div class="event-body">
+          <h3 class="event-title">Property Investment Seminar 2024</h3>
+          <div class="event-meta">
+            <div class="event-speaker">
+              <img src="https://i.pravatar.cc/150?u=ehsan-cio" alt="" referrerpolicy="no-referrer">
+              <div>
+                <div class="event-speaker-label">Hosted by</div>
+                <div class="event-speaker-name">Ehsan Team</div>
+              </div>
+            </div>
+            <div class="event-date">
+              <div class="event-date-label">Date</div>
+              <div class="event-date-value">Oct 22, 2024</div>
+            </div>
+          </div>
+          <div class="event-stats">
+            <span>Kuala Lumpur</span>
+            <span>300 attendees</span>
+            <span>6:00 PM</span>
+          </div>
+          <span class="event-cta">Learn more</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="events-footer" data-reveal data-reveal-ring="4">
+      <a href="events.html" class="events-explore-btn">More events</a>
+    </div>
+  </section>
+
+  <!-- ================= 06 · RECOGNITION ================= -->
+  <section class="section" id="awards">
+    <header class="section__head">
+      <span class="ghost" aria-hidden="true">06</span>
+      <p class="section__label" data-reveal data-reveal-ring="0">06 — Recognition</p>
+      <h2 class="section__title" data-reveal data-reveal-ring="0">A decade of <em>awards</em>.</h2>
+      <p class="section__lede" data-reveal data-reveal-ring="1">
+        Twelve national and regional business awards between 2014 and 2023.
+      </p>
+    </header>
+
+    <!-- Award Carousel (Kelo-inspired) -->
+    <div class="awards-carousel" data-reveal data-reveal-ring="2">
+      <!-- Edge gradient masks -->
+      <div class="awards-carousel__mask awards-carousel__mask--left" aria-hidden="true"></div>
+      <div class="awards-carousel__mask awards-carousel__mask--right" aria-hidden="true"></div>
+
+      <!-- Scrollable container -->
+      <div class="awards-carousel__track" id="awardTrack">
+        <!-- Award cards (will be duplicated for seamless loop) -->
+        <div class="award-card" data-award-id="award-1">
+          <img src="assets/img/awards/Award logo vector-01.png" alt="Selangor Excellence Business Awards" class="award-card__icon" loading="lazy" decoding="async">
+          <h3 class="award-card__name">Selangor Excellence Business Awards</h3>
+          <p class="award-card__desc">Recognized for business excellence and contribution to the Selangor community.</p>
+          <div class="award-card__year">2014</div>
+          <!-- <a href="#" class="award-card__link">Learn more <span aria-hidden="true">↗</span></a> -->
+        </div>
+
+        <div class="award-card" data-award-id="award-2">
+          <img src="assets/img/awards/Award logo vector-02.png" alt="ASEAN Outstanding Business Awards" class="award-card__icon" loading="lazy" decoding="async">
+          <h3 class="award-card__name">ASEAN Outstanding Business Awards</h3>
+          <p class="award-card__desc">Acknowledged for outstanding business practices across the ASEAN region.</p>
+          <div class="award-card__year">2015</div>
+          <!-- <a href="#" class="award-card__link">Learn more <span aria-hidden="true">↗</span></a> -->
+        </div>
+
+        <div class="award-card" data-award-id="award-3">
+          <img src="assets/img/awards/Award logo vector-03.png" alt="MIMCOIN SME Congress & Golden Dinar Awards" class="award-card__icon" loading="lazy" decoding="async">
+          <h3 class="award-card__name">MIMCOIN SME Congress & Golden Dinar Awards</h3>
+          <p class="award-card__desc">Honored for SME development and business innovation.</p>
+          <div class="award-card__year">2016</div>
+          <!-- <a href="#" class="award-card__link">Learn more <span aria-hidden="true">↗</span></a> -->
+        </div>
+
+        <div class="award-card" data-award-id="award-4">
+          <img src="assets/img/awards/Award logo vector-04.png" alt="MIMCOIN SME Congress & Golden Dinar Awards" class="award-card__icon" loading="lazy" decoding="async">
+          <h3 class="award-card__name">MIMCOIN SME Congress & Golden Dinar Awards</h3>
+          <p class="award-card__desc">Continued recognition for exceptional SME contributions and growth.</p>
+          <div class="award-card__year">2019</div>
+          <!-- <a href="#" class="award-card__link">Learn more <span aria-hidden="true">↗</span></a> -->
+        </div>
+
+        <div class="award-card" data-award-id="award-5">
+          <img src="assets/img/awards/Award logo vector-05.png" alt="Global Leadership Awards" class="award-card__icon" loading="lazy" decoding="async">
+          <h3 class="award-card__name">Global Leadership Awards</h3>
+          <p class="award-card__desc">Recognized for outstanding leadership in property development.</p>
+          <div class="award-card__year">2014</div>
+          <!-- <a href="#" class="award-card__link">Learn more <span aria-hidden="true">↗</span></a> -->
+        </div>
+
+        <div class="award-card" data-award-id="award-6">
+          <img src="assets/img/awards/Award logo vector-06.png" alt="SME Recognition Awards" class="award-card__icon" loading="lazy" decoding="async">
+          <h3 class="award-card__name">SME Recognition Awards</h3>
+          <p class="award-card__desc">Acknowledged for significant contributions to SME sector growth.</p>
+          <div class="award-card__year">2015</div>
+          <!-- <a href="#" class="award-card__link">Learn more <span aria-hidden="true">↗</span></a> -->
+        </div>
+
+        <div class="award-card" data-award-id="award-7">
+          <img src="assets/img/awards/Award logo vector-07.png" alt="MIMCOIN SME Congress & Golden Dinar Awards" class="award-card__icon" loading="lazy" decoding="async">
+          <h3 class="award-card__name">MIMCOIN SME Congress & Golden Dinar Awards</h3>
+          <p class="award-card__desc">Honored for sustained excellence in SME innovation.</p>
+          <div class="award-card__year">2017</div>
+          <!-- <a href="#" class="award-card__link">Learn more <span aria-hidden="true">↗</span></a> -->
+        </div>
+
+        <div class="award-card" data-award-id="award-8">
+          <img src="assets/img/awards/Award logo vector-08.png" alt="Bumiputera Business Excellence Awards" class="award-card__icon" loading="lazy" decoding="async">
+          <h3 class="award-card__name">Bumiputera Business Excellence Awards</h3>
+          <p class="award-card__desc">Recognized for excellence in Bumiputera business practices.</p>
+          <div class="award-card__year">2022</div>
+          <!-- <a href="#" class="award-card__link">Learn more <span aria-hidden="true">↗</span></a> -->
+        </div>
+
+        <div class="award-card" data-award-id="award-9">
+          <img src="assets/img/awards/Award logo vector-09.png" alt="Malaysia Top Achiever Awards" class="award-card__icon" loading="lazy" decoding="async">
+          <h3 class="award-card__name">Malaysia Top Achiever Awards</h3>
+          <p class="award-card__desc">Acknowledged as a top achiever in property development.</p>
+          <div class="award-card__year">2017</div>
+          <!-- <a href="#" class="award-card__link">Learn more <span aria-hidden="true">↗</span></a> -->
+        </div>
+
+        <div class="award-card" data-award-id="award-10">
+          <img src="assets/img/awards/Award logo vector-10.png" alt="Global Leadership Awards" class="award-card__icon" loading="lazy" decoding="async">
+          <h3 class="award-card__name">Global Leadership Awards</h3>
+          <p class="award-card__desc">Honored for global leadership and innovative strategies.</p>
+          <div class="award-card__year">2018</div>
+          <!-- <a href="#" class="award-card__link">Learn more <span aria-hidden="true">↗</span></a> -->
+        </div>
+
+        <div class="award-card" data-award-id="award-11">
+          <img src="assets/img/awards/Award logo vector-11.png" alt="Nambikhai Business Icon Awards" class="award-card__icon" loading="lazy" decoding="async">
+          <h3 class="award-card__name">Nambikhai Business Icon Awards</h3>
+          <p class="award-card__desc">Recognized as a business icon for excellence and impact.</p>
+          <div class="award-card__year">2023</div>
+          <!-- <a href="#" class="award-card__link">Learn more <span aria-hidden="true">↗</span></a> -->
+        </div>
+
+        <div class="award-card" data-award-id="award-12">
+          <img src="assets/img/awards/Award logo vector-12.png" alt="Consumer's Choice Award" class="award-card__icon" loading="lazy" decoding="async">
+          <h3 class="award-card__name">Consumer's Choice Award</h3>
+          <p class="award-card__desc">Awarded by consumers for outstanding service quality.</p>
+          <div class="award-card__year">2023</div>
+          <!-- <a href="#" class="award-card__link">Learn more <span aria-hidden="true">↗</span></a> -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Award Modal -->
+    <div class="award-modal" id="awardModal" aria-hidden="true" role="dialog">
+      <div class="award-modal__backdrop" id="awardModalBackdrop"></div>
+      <div class="award-modal__content">
+        <button class="award-modal__close" id="awardModalClose" aria-label="Close">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 6L6 18M6 6l12 12"/>
+          </svg>
+        </button>
+        <div class="award-modal__body">
+          <div class="award-modal__icon" id="awardModalIcon"></div>
+          <h3 class="award-modal__year" id="awardModalYear"></h3>
+          <h2 class="award-modal__title" id="awardModalTitle"></h2>
+          <p class="award-modal__desc" id="awardModalDesc"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ================= 07 · TESTIMONIALS =================
+       Not sourced from the PDF — the profile has no testimonials section.
+       Placeholder copy, clearly disclaimed below the cards, standing in for
+       real client quotes until those are collected. Default-active card is
+       set in markup (.story.is-active on the first one); content.js only
+       moves that class on hover/focus, so the section still reads correctly
+       with JS disabled — one card just stays permanently expanded. -->
+  <section class="section" id="testimonials">
+    <header class="section__head">
+      <span class="ghost" aria-hidden="true">07</span>
+      <p class="section__label" data-reveal data-reveal-ring="0">07 — Voices</p>
+      <h2 class="section__title" data-reveal data-reveal-ring="0">What people <em>tell us</em>.</h2>
+      <p class="section__lede" data-reveal data-reveal-ring="1">
+        Placeholder quotes, standing in until real client testimonials are collected.<span class="hint"> Hover a card to read it.</span>
+      </p>
+    </header>
+
+    <div class="stories" data-reveal data-reveal-ring="2">
+
+      <article class="story is-active" data-story tabindex="0">
+        <div class="story__panel">
+          <div class="story__media">
+            <img src="assets/img/placeholders/avatar4.jpeg" alt="Taman Sri Ehsan, Kluang" loading="lazy" decoding="async">
+            <span class="story__badge" style="color:var(--brass-ink)" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v9a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1v-9"/></svg>
+            </span>
+          </div>
+          <div class="story__body" aria-hidden="false">
+            <p class="story__quote">Handover day felt like the finish line of years of saving. The team walked us through every defect check without rushing us once.</p>
+            <p class="story__name">Aisyah &amp; Farid</p>
+            <p class="story__role">First home, Taman Sri Ehsan</p>
+          </div>
+        </div>
+        <p class="story__label">First-time buyers</p>
+      </article>
+
+      <article class="story" data-story tabindex="0">
+        <div class="story__panel">
+          <div class="story__media">
+            <img src="assets/img/placeholders/avatar1.jpg" alt="Ehsan Residence Condominium, Sepang" loading="lazy" decoding="async">
+            <span class="story__badge" style="color:var(--sand)" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="1.5"/><path d="M9 21v-5h6v5M9 8h.01M15 8h.01M9 12h.01M15 12h.01"/></svg>
+            </span>
+          </div>
+          <div class="story__body" aria-hidden="true">
+            <p class="story__quote">Five years in and the estate still feels as maintained as move-in day. That's rarer than people think.</p>
+            <p class="story__name">Mr Tan K.W.</p>
+            <p class="story__role">Resident, Ehsan Residence</p>
+          </div>
+        </div>
+        <p class="story__label">Homeowners</p>
+      </article>
+
+      <article class="story" data-story tabindex="0">
+        <div class="story__panel">
+          <div class="story__media">
+            <img src="assets/img/placeholders/avatar2.jpg" alt="Residensi Mutiara Austin, Johor Bahru" loading="lazy" decoding="async">
+            <span class="story__badge" style="color:var(--brass)" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17 9 11l4 4 8-9"/><path d="M15 6h6v6"/></svg>
+            </span>
+          </div>
+          <div class="story__body" aria-hidden="true">
+            <p class="story__quote">We bought two units off-plan on the strength of the Sepang track record. Construction updates have matched the timeline so far.</p>
+            <p class="story__name">Ravindran S.</p>
+            <p class="story__role">Investor, Ehsan Widuri</p>
+          </div>
+        </div>
+        <p class="story__label">Investors</p>
+      </article>
+
+      <article class="story" data-story tabindex="0">
+        <div class="story__panel">
+          <div class="story__media">
+            <img src="assets/img/placeholders/avatar3.jpeg" alt="Shop office, Ehsan Residence" loading="lazy" decoding="async">
+            <span class="story__badge" style="color:var(--c-dim)" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9V6l2-3h14l2 3v3"/><path d="M5 9v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9"/><path d="M3 9a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0"/></svg>
+            </span>
+          </div>
+          <div class="story__body" aria-hidden="true">
+            <p class="story__quote">Foot traffic built faster than we forecast. Having the developer still active on-site during our fit-out made the handover painless.</p>
+            <p class="story__name">Grace Lim</p>
+            <p class="story__role">Tenant, Shop Office, Ehsan Residence</p>
+          </div>
+        </div>
+        <p class="story__label">Business tenants</p>
+      </article>
+
+    </div>
+
+    <p class="testimonial__note" data-reveal data-reveal-ring="3">Placeholder quotes — real client testimonials pending.</p>
   </section>
 
 </div>
 
-<footer class="outro">
-  <p>Ehsan Property · Seri Kembangan, Selangor</p>
+<!-- ================= 08 · CONTACT ================= -->
+<footer class="outro" id="contact">
+  <div class="outro__in">
+    <p class="section__label" data-reveal data-reveal-ring="0">08 — Contact</p>
+    <h2 class="outro__motto" data-reveal data-reveal-ring="0">Everyone can<br><em>own a house.</em></h2>
+
+    <div class="enquiry" data-reveal data-reveal-ring="1">
+      <div class="enquiry__intro">
+        <h3 class="enquiry__title">Send an enquiry</h3>
+        <p class="enquiry__note">
+          Tell us which development you're interested in and our team will follow
+          up by email or phone. Fields marked with an asterisk are required.
+        </p>
+      </div>
+
+      <form class="enquiry__form" data-enquiry-form novalidate>
+        <div class="field">
+          <label class="field__label" for="enqName">Name <abbr title="required">*</abbr></label>
+          <input class="field__input" id="enqName" name="name" type="text" autocomplete="name" required>
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="enqEmail">Email <abbr title="required">*</abbr></label>
+          <input class="field__input" id="enqEmail" name="email" type="email" autocomplete="email" required>
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="enqPhone">Phone</label>
+          <input class="field__input" id="enqPhone" name="phone" type="tel" autocomplete="tel" placeholder="01x-xxx xxxx">
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="enqInterest">Interested in</label>
+          <select class="field__input field__input--select" id="enqInterest" name="interest">
+            <option value="">Select a development</option>
+            <option>Taman Mawar Ehsan — Rembau</option>
+            <option>Taman Universiti Bestari — Sungai Petani</option>
+            <option>Residensi Mutiara Austin — Johor Bahru</option>
+            <option>Ehsan Widuri — Putra Nilai</option>
+            <option>Taman Seri Emas — Kampar</option>
+            <option>General enquiry</option>
+          </select>
+        </div>
+
+        <div class="field field--wide">
+          <label class="field__label" for="enqMessage">Message <abbr title="required">*</abbr></label>
+          <textarea class="field__input field__input--area" id="enqMessage" name="message" rows="4" required></textarea>
+        </div>
+
+        <div class="enquiry__actions">
+          <button class="enquiry__submit" type="submit">Send enquiry</button>
+          <p class="enquiry__status" data-enquiry-status role="status" aria-live="polite"></p>
+        </div>
+      </form>
+    </div>
+
+    <div class="contact">
+      <div data-reveal data-reveal-ring="1">
+        <h3>HQ Office</h3>
+        <p>Suite C-20-3A, Level 20, Block C,<br>Megan Avenue II, Jalan Yap Kwan Seng,<br>50450 Kuala Lumpur, Malaysia</p>
+      </div>
+      <div data-reveal data-reveal-ring="1">
+        <h3>Telephone</h3>
+        <ul>
+          <li><a href="tel:+60321626649">T &nbsp;03-2162 6649</a></li>
+          <li><a href="tel:+60321626648">T &nbsp;03-2162 6648</a></li>
+          <li>F &nbsp;03-2161 6650</li>
+        </ul>
+      </div>
+      <div data-reveal data-reveal-ring="2">
+        <h3>Online</h3>
+        <ul>
+          <li><a href="mailto:info@ehsanproperty.com">info@ehsanproperty.com</a></li>
+          <li><a href="https://ehsanproperty.com" target="_blank" rel="noopener">ehsanproperty.com</a></li>
+          <li>Facebook &middot; Ehsan Property</li>
+          <li>Instagram &middot; @ehsan_property</li>
+        </ul>
+      </div>
+      <div data-reveal data-reveal-ring="2">
+        <h3>Registration</h3>
+        <ul>
+          <li>Ehsan Plant &amp; Property Sdn Bhd</li>
+          <li>817795-X</li>
+          <li>CIDB G7 Bumiputera Contractor</li>
+          <li>0120130311-WP148971</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <p class="colophon">
+    <span>&copy; Ehsan Plant &amp; Property Sdn Bhd</span>
+    <span>Content sourced from the company profile, 3 July 2025</span>
+    <span>We build for your needs</span>
+  </p>
 </footer>
 
+<!-- ================= FOOTER ================= -->
+<footer class="site-footer">
+  <div class="site-footer__container">
+    <!-- Footer Top: Links & Info -->
+    <div class="site-footer__top">
+      <div class="site-footer__column">
+        <h4 class="site-footer__heading">Company</h4>
+        <ul class="site-footer__links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="index.html#record">Work Record</a></li>
+          <li><a href="index.html#awards">Recognition</a></li>
+        </ul>
+      </div>
+
+      <div class="site-footer__column">
+        <h4 class="site-footer__heading">Properties</h4>
+        <ul class="site-footer__links">
+          <li><a href="#">Taman Mawar Ehsan</a></li>
+          <li><a href="#">Taman Universiti Bestari</a></li>
+          <li><a href="#">Residensi Mutiara Austin</a></li>
+          <li><a href="#">Ehsan Widuri Putra Nilai</a></li>
+        </ul>
+      </div>
+
+      <div class="site-footer__column">
+        <h4 class="site-footer__heading">Contact</h4>
+        <ul class="site-footer__links">
+          <li><a href="tel:+60321626649">03-2162 6649</a></li>
+          <li><a href="mailto:info@ehsanproperty.com">info@ehsanproperty.com</a></li>
+          <li><a href="https://ehsanproperty.com" target="_blank" rel="noopener">ehsanproperty.com</a></li>
+        </ul>
+      </div>
+
+      <div class="site-footer__column">
+        <h4 class="site-footer__heading">Social</h4>
+        <ul class="site-footer__links">
+          <li><a href="#" target="_blank" rel="noopener">Facebook</a></li>
+          <li><a href="#" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="#" target="_blank" rel="noopener">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Footer Divider -->
+    <div class="site-footer__divider"></div>
+
+    <!-- Footer Bottom: Copyright & Legal -->
+    <div class="site-footer__bottom">
+      <div class="site-footer__copyright">
+        <p>&copy; 2025 Ehsan Plant &amp; Property Sdn Bhd (817795-X)</p>
+        <p>CIDB G7 Bumiputera Contractor</p>
+      </div>
+
+      <div class="site-footer__legal">
+        <a href="#" class="site-footer__legal-link">Privacy Policy</a>
+        <span class="site-footer__separator"></span>
+        <a href="#" class="site-footer__legal-link">Terms of Service</a>
+        <span class="site-footer__separator"></span>
+        <a href="#" class="site-footer__legal-link">Disclaimer</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div class="assistant" data-assistant>
+  <button class="assistant__fab" type="button" data-assistant-toggle aria-expanded="false" aria-controls="assistantPanel">
+    <span class="assistant__ring" aria-hidden="true"></span>
+    <svg class="assistant__icon assistant__icon--chat" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+    </svg>
+    <svg class="assistant__icon assistant__icon--close" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M6 6l12 12M18 6L6 18"/>
+    </svg>
+    <span class="sr-only">Open chat assistant</span>
+  </button>
+
+  <div class="assistant__panel" id="assistantPanel" role="dialog" aria-label="Ehsan Property assistant" hidden>
+    <header class="assistant__head">
+      <p class="assistant__title">Ehsan Assistant</p>
+      <p class="assistant__status"><span aria-hidden="true"></span> Placeholder — replies are canned, not live</p>
+    </header>
+    <div class="assistant__log" data-assistant-log>
+      <p class="assistant__msg assistant__msg--bot">Hi — I'm a placeholder assistant standing in for the real thing. Ask about a project, or leave a question and our team will follow up by email.</p>
+    </div>
+    <form class="assistant__form" data-assistant-form>
+      <input class="assistant__input" type="text" placeholder="Type a message…" aria-label="Message" data-assistant-input autocomplete="off">
+      <button class="assistant__send" type="submit" aria-label="Send">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16M13 5l7 7-7 7"/></svg>
+      </button>
+    </form>
+  </div>
+</div>
+
 <script src="app.js"></script>
+<script src="content.js"></script>
 </body>
 </html>

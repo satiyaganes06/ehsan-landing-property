@@ -1,0 +1,165 @@
+/* =========================================================================
+   events.css — the standalone event listing page.
+
+   The cards themselves come from content.css (.events-grid / .event-card),
+   shared with the home page strip. This file only styles the page shell:
+   header, filter bar, count and empty state.
+   ========================================================================= */
+
+.events-page {
+  position: relative;
+  z-index: 1;
+  background: var(--c-ground);
+  min-height: 100vh;
+  padding: clamp(6rem, 14vh, 9rem) var(--gutter) clamp(4rem, 10vh, 7rem);
+}
+
+.events-page__inner {
+  max-width: var(--max);
+  margin-inline: auto;
+}
+
+/* Head ------------------------------------------------------------------ */
+.events-page__head {
+  margin-bottom: clamp(2rem, 5vh, 3rem);
+}
+
+.events-page__back {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  margin-bottom: 2rem;
+  font-family: var(--mono);
+  font-size: .625rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--c-dimmer);
+  text-decoration: none;
+  transition: color .25s ease, transform .25s var(--ease);
+}
+.events-page__back:hover {
+  color: var(--brass-ink);
+  transform: translateX(-3px);
+}
+
+.events-page__label {
+  margin: 0 0 1.25rem;
+  font-family: var(--mono);
+  font-size: .625rem;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--brass-ink);
+}
+
+.events-page__title {
+  margin: 0 0 1.25rem;
+  font-family: var(--serif);
+  font-size: clamp(2rem, 6vw, 3.75rem);
+  font-weight: 300;
+  line-height: .98;
+  letter-spacing: -.03em;
+  color: var(--c-ink);
+}
+.events-page__title em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--brass-hi);
+}
+
+.events-page__lede {
+  margin: 0;
+  max-width: 46ch;
+  font-family: var(--sans);
+  font-size: .9375rem;
+  line-height: 1.7;
+  color: var(--c-dim);
+}
+
+/* Filter ---------------------------------------------------------------- */
+.events-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  padding-top: clamp(1.5rem, 4vh, 2.25rem);
+  border-top: 1px solid var(--c-line);
+}
+
+.events-filter__btn {
+  padding: .5rem 1rem;
+  font-family: var(--mono);
+  font-size: .625rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--c-dim);
+  background: transparent;
+  border: 1px solid var(--c-line-hi);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: color .25s ease, background-color .25s ease, border-color .25s ease;
+}
+
+.events-filter__btn:hover {
+  color: var(--c-ink);
+  border-color: var(--brass-line);
+}
+
+.events-filter__btn.is-active {
+  color: var(--c-ink);
+  background: var(--brass);
+  border-color: var(--brass);
+}
+
+.events-filter__btn:focus-visible {
+  outline: 2px solid var(--brass-line);
+  outline-offset: 2px;
+}
+
+/* Count ----------------------------------------------------------------- */
+.events-count {
+  margin: 1.5rem 0 2rem;
+  font-family: var(--mono);
+  font-size: .625rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--c-dimmer);
+}
+
+/* Grid ------------------------------------------------------------------ */
+/* .events-grid and .event-card are defined in content.css. Only the listing
+   page's own stagger lives here — the cards are injected after load, so the
+   site's [data-reveal] observer never sees them. */
+.events-page .events-grid { margin-bottom: 0; }
+
+.events-grid.is-animated .event-card {
+  opacity: 0;
+  animation: eventCardIn .5s var(--ease) forwards;
+  animation-delay: calc(var(--i, 0) * 70ms);
+}
+
+@keyframes eventCardIn {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* Empty ----------------------------------------------------------------- */
+.events-empty {
+  margin: 3rem 0 0;
+  font-family: var(--sans);
+  font-size: .9375rem;
+  color: var(--c-dim);
+  text-align: center;
+}
+
+/* Responsive ------------------------------------------------------------ */
+@media (max-width: 40rem) {
+  .events-page { padding-top: clamp(5rem, 12vh, 7rem); }
+  .events-page__back { margin-bottom: 1.5rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .events-page__back:hover { transform: none; }
+  .events-grid.is-animated .event-card {
+    opacity: 1;
+    animation: none;
+  }
+}
