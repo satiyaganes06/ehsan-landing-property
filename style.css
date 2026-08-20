@@ -1,537 +1,542 @@
-/* ============================================================
-   EHSAN PLANT & PROPERTY — Cinematic Showcase
-   Tokens
-   ============================================================ */
-:root{
-  --ink:        #121109;
-  --charcoal:   #1b1a14;
-  --cream:      #f2ead9;
-  --cream-dim:  rgba(242,234,217,0.72);
-  --sand:       #ddcfb0;
-  --rust:       #a34630;
-  --rust-light: #c0603f;
-  --gold:       #d9a24d;
-  --teal:       #3c766c;
-  --line:       rgba(242,234,217,0.24);
-  --line-soft:  rgba(242,234,217,0.12);
+/* =========================================================================
+   LOAD-IN ANIMATION — two separate effects, never merged.
 
-  --font-display: 'Fraunces', Georgia, serif;
-  --font-sans: 'Archivo', -apple-system, 'Helvetica Neue', sans-serif;
+   1. .content ripple   fade + rise 24px · 1000ms · cubic-bezier(.25,1,.5,1)
+                        delay = ring x 100ms · leaves only
+   2. background media   fade + scale 1.2 -> 1 · 1800ms · cubic-bezier(.83,0,.17,1)
+                        both properties in ONE keyframe
 
-  --nav-h: 92px;
+   Both gated on a single flag: <html class="is-ready">, flipped once in app.js
+   when frame 1 has decoded. Never off raw mount.
+   ========================================================================= */
+
+/* ---------- effect 1: content ripple ---------- */
+
+@keyframes ripple-in {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0);    }
 }
 
-*{ box-sizing: border-box; }
-html{ background: var(--ink); }
-html,body{ margin:0; padding:0; }
-
-body{
-  font-family: var(--font-sans);
-  color: var(--cream);
-  background: var(--ink);
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
+/* Settled state is the authored default, so nothing depends on JS to look right. */
+[data-ripple] {
+  opacity: 1;
+  transform: none;
 }
 
-img,canvas{ max-width:100%; display:block; }
-a{ color:inherit; }
-ul{ list-style:none; margin:0; padding:0; }
-button{ font-family:inherit; background:none; border:none; color:inherit; cursor:pointer; padding:0; }
-
-::selection{ background: var(--rust); color: var(--cream); }
-
-/* ============================================================
-   Loader
-   ============================================================ */
-.loader{
-  position:fixed; inset:0; z-index:200;
-  background: var(--ink);
-  display:flex; flex-direction:column; align-items:center; justify-content:center;
-  gap:22px;
-  transition: opacity .7s ease, visibility .7s ease;
-}
-.loader__mark{
-  font-family: var(--font-display);
-  font-weight: 460;
-  font-size: 1.6rem;
-  letter-spacing: 0.42em;
-  padding-left: 0.42em;
-  color: var(--cream-dim);
-}
-.loader__bar{
-  width: 180px; height:1px; background: var(--line-soft); position:relative; overflow:hidden;
-}
-.loader__fill{
-  position:absolute; left:0; top:0; bottom:0; width:0%;
-  background: var(--rust-light);
-  transition: width .2s linear;
-}
-html.is-ready .loader{ opacity:0; visibility:hidden; pointer-events:none; }
-html:not(.is-ready) body{ overflow:hidden; }
-
-/* ============================================================
-   Load-in ripple system
-   ------------------------------------------------------------
-   Leaf elements only. Hidden until html.is-ready is set (the
-   single "ready" flag flipped once all 240 frames have decoded).
-   Rings are hand-assigned per element via data-ring and share
-   one delay = ring * 100ms. A session that has already played
-   the intro once jumps straight to the settled state.
-   ============================================================ */
-.ripple{
+/* Held at the start state until the gate resolves — no flash of unstyled copy. */
+html:not(.is-ready) [data-ripple] {
   opacity: 0;
 }
-@keyframes ripple-in{
-  from{ opacity: 0; transform: translateY(24px); }
-  to{ opacity: 1; transform: translateY(0); }
+
+html.is-ready [data-ripple] {
+  /* fill mode `both`: start state during the delay, end state after. */
+  animation: ripple-in 1000ms cubic-bezier(0.25, 1, 0.5, 1) both;
+  /* Delay is re-declared AFTER the shorthand, in the same rule. The shorthand
+     resets animation-delay to 0, and it out-specifies a bare [data-ring="n"]
+     selector — declaring it here is what keeps the stagger from flattening. */
+  animation-delay: calc(var(--ring, 0) * 100ms);
 }
-html.is-ready .ripple{
-  animation: ripple-in 1000ms cubic-bezier(0.25,1,0.5,1) both;
-}
-html.is-ready.no-intro .ripple{
+
+/* Rings. Every element tagged with a ring shares that ring's exact delay. */
+[data-ring="0"] { --ring: 0; }
+[data-ring="1"] { --ring: 1; }
+[data-ring="2"] { --ring: 2; }
+[data-ring="3"] { --ring: 3; }
+[data-ring="4"] { --ring: 4; }
+[data-ring="5"] { --ring: 5; }
+
+/* Persistent chrome: plays once per session, then jumps straight to settled.
+   DORMANT while the page has no [data-chrome] elements (the nav was removed). */
+html.chrome-settled [data-ripple][data-chrome],
+html.chrome-settled.is-ready [data-ripple][data-chrome] {
   animation: none;
   opacity: 1;
   transform: none;
 }
-.ripple[data-ring="0"]{ animation-delay: 0ms; }
-.ripple[data-ring="1"]{ animation-delay: 100ms; }
-.ripple[data-ring="2"]{ animation-delay: 200ms; }
-.ripple[data-ring="3"]{ animation-delay: 300ms; }
-.ripple[data-ring="4"]{ animation-delay: 400ms; }
 
-/* ============================================================
-   Nav
-   ============================================================ */
-.nav{
-  position:fixed; top:0; left:0; right:0; z-index:100;
-  height: var(--nav-h);
-  display:flex; align-items:center; justify-content:space-between;
-  padding: 0 clamp(20px, 4vw, 56px);
-  background: linear-gradient(to bottom, rgba(10,10,8,0.55) 0%, rgba(10,10,8,0) 100%);
-  pointer-events:none;
-}
-.nav > *{ pointer-events:auto; }
+/* ---------- effect 2: background media entrance ---------- */
 
-.nav__mark{
-  font-family: var(--font-display);
-  font-size: 1.05rem;
-  font-weight: 500;
-  letter-spacing: 0.34em;
-  padding-left: 0.34em;
-  text-decoration:none;
-  color: var(--cream);
+@keyframes hero-media-in {
+  /* opacity and scale in the same keyframe, same duration, same curve. */
+  from { opacity: 0; transform: scale(1.2); }
+  to   { opacity: 1; transform: scale(1);   }
 }
 
-.nav__links{
-  display:flex; gap: clamp(20px, 3vw, 40px);
-}
-.nav__links button{
-  font-size: 0.72rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--cream-dim);
-  position:relative;
-  padding-bottom: 4px;
-  transition: color .3s ease;
-}
-.nav__links button::after{
-  content:""; position:absolute; left:0; right:100%; bottom:0; height:1px;
-  background: var(--gold);
-  transition: right .35s ease;
-}
-.nav__links button:hover{ color: var(--cream); }
-.nav__links button:hover::after{ right:0; }
-
-.nav__contact{
-  font-size: 0.72rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  text-decoration:none;
-  border: 1px solid var(--line);
-  padding: 10px 20px;
-  border-radius: 2px;
-  transition: border-color .3s ease, background .3s ease;
-}
-.nav__contact:hover{
-  border-color: var(--cream-dim);
-  background: rgba(242,234,217,0.06);
-}
-
-@media (max-width: 720px){
-  .nav__links{ display:none; }
-  .nav__mark{ font-size: 0.95rem; }
-}
-
-/* ============================================================
-   Progress rail + telemetry
-   ============================================================ */
-.rail{
-  position:fixed; right: clamp(18px, 3vw, 40px); top:50%; transform: translateY(-50%);
-  z-index: 90;
-  display:flex; flex-direction:column; align-items:center; gap:10px;
-  height: 220px;
-  font-family: var(--font-sans);
-  font-size: 0.6rem; letter-spacing: 0.06em;
-  color: rgba(242,234,217,0.4);
-}
-.rail__track{
-  position:relative; flex:1; width:1px; background: var(--line-soft);
-}
-.rail__fill{
-  position:absolute; left:0; top:0; width:1px; height:0%;
-  background: var(--gold);
-}
-@media (max-width: 900px){ .rail{ display:none; } }
-
-.telemetry{
-  position:fixed; left: clamp(18px, 3vw, 40px); bottom: 28px; z-index: 90;
-  display:flex; align-items:baseline; gap:6px;
-  font-family: var(--font-display);
-  color: rgba(242,234,217,0.55);
-  pointer-events:none;
-}
-.telemetry__frame{
-  font-size: 1.7rem; font-weight:400; font-variant-numeric: tabular-nums;
-  color: var(--cream-dim);
-}
-.telemetry__of{
-  font-family: var(--font-sans);
-  font-size: 0.62rem; letter-spacing:0.1em; color: rgba(242,234,217,0.35);
-}
-@media (max-width: 560px){
-  .telemetry{ bottom:18px; }
-  .telemetry__frame{ font-size:1.3rem; }
-}
-
-/* ============================================================
-   Cinematic stage
-   ============================================================ */
-.cinematic-section{
-  position:relative;
-  height: 720vh;
-}
-
-.stage{
-  position:sticky; top:0;
-  width:100%; height:100vh;
-  overflow:hidden;
-  background: var(--ink);
-}
-
-/* Background media entrance — fade + scale 120%→100%, one-shot,
-   gated on the same ready flag as the content ripple. Lives on a
-   dedicated wrapper so it never fights the continuous scroll-drift
-   transform applied to .frames-canvas below. */
-.stage-reveal{
-  position:absolute; inset:0;
-  opacity: 0;
-  transform: scale(1.2);
+.hero-media {
   transform-origin: center center;
-}
-@keyframes stage-in{
-  from{ opacity: 0; transform: scale(1.2); }
-  to{ opacity: 1; transform: scale(1); }
-}
-html.is-ready .stage-reveal{
-  animation: stage-in 1800ms cubic-bezier(0.83,0,0.17,1) both;
-}
-html.is-ready.no-intro .stage-reveal{
-  animation: none;
   opacity: 1;
-  transform: scale(1);
 }
 
-.frames-canvas{
-  position:absolute; inset:0;
-  width:100%; height:100%;
-  will-change: transform;
+html:not(.is-ready) .hero-media {
+  opacity: 0;
 }
 
-.vignette{
-  position:absolute; inset:0;
-  background:
-    linear-gradient(to bottom, rgba(9,9,7,0.62) 0%, rgba(9,9,7,0) 22%, rgba(9,9,7,0) 62%, rgba(9,9,7,0.72) 100%),
-    linear-gradient(to right, rgba(9,9,7,0.30) 0%, rgba(9,9,7,0) 30%, rgba(9,9,7,0) 70%, rgba(9,9,7,0.30) 100%);
-  pointer-events:none;
-}
-.grain{
-  position:absolute; inset:0; pointer-events:none; opacity:0.04; mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+html.is-ready .hero-media {
+  animation: hero-media-in 1800ms cubic-bezier(0.83, 0, 0.17, 1) both;
 }
 
-/* ============================================================
-   Content layer / scroll-linked panels
-   (continuous scroll storytelling — distinct mechanism from the
-   one-shot ripple above; eased with the same quick-start/slow-
-   settle character via panelStyle() easing in script.js)
-   ============================================================ */
-.content{
-  position:absolute; inset:0;
-  display:flex; align-items:center;
-  padding: 0 clamp(24px, 6vw, 96px);
-}
-.panel{
-  position:absolute; left: clamp(24px, 6vw, 96px); right: clamp(24px, 6vw, 96px);
-  opacity:0; pointer-events:none;
-  will-change: opacity, transform;
-}
-.panel.is-visible{ pointer-events:auto; }
+/* ---------- reduced motion: straight to the settled state ---------- */
 
-.eyebrow{
-  font-size: 0.72rem; letter-spacing: 0.28em; text-transform:uppercase;
-  color: var(--gold);
-  margin: 0 0 18px;
+@media (prefers-reduced-motion: reduce) {
+  html [data-ripple],
+  html .hero-media,
+  html:not(.is-ready) [data-ripple],
+  html:not(.is-ready) .hero-media {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }
 
-/* -- Hero -- */
-.panel--hero{
-  top:0; bottom:0; display:flex; flex-direction:column; justify-content:center;
-  max-width: 900px;
+
+/* =========================================================================
+   PAGE
+   ========================================================================= */
+
+:root {
+  --ink:        #f6f4f0;
+  --ink-dim:    #b9b3a9;
+  --accent:     #d8622f;
+  --ground:     #100e0c;
+  --edge:       rgba(246, 244, 240, 0.18);
+
+  --gutter: clamp(1.5rem, 5vw, 5rem);
 }
-.hero-title{
-  font-family: var(--font-display);
-  font-weight: 460;
-  font-size: clamp(3.2rem, 10vw, 7.5rem);
-  line-height: 0.92;
-  margin: 0 0 20px;
-  letter-spacing: -0.01em;
-}
-.hero-title span{
-  display:block;
-  font-style: italic;
-  font-weight: 340;
-  font-size: 0.3em;
-  color: var(--cream-dim);
-  letter-spacing: 0.01em;
-  margin-top: 0.3em;
-}
-.hero-category{
-  font-size: 0.82rem; letter-spacing: 0.2em; text-transform:uppercase;
-  color: var(--cream-dim);
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { background: var(--ground); }
+
+body {
   margin: 0;
-}
-.scroll-cue{
-  position:absolute; left:0; bottom: 64px;
-  display:flex; align-items:center; gap:14px;
-  font-size: 0.68rem; letter-spacing: 0.22em; text-transform:uppercase;
-  color: var(--cream-dim);
-}
-.scroll-cue i{
-  display:block; width:1px; height:38px;
-  background: linear-gradient(to bottom, var(--gold), transparent);
-  position:relative;
-  animation: cue-run 2.2s ease-in-out infinite;
-}
-@keyframes cue-run{
-  0%{ transform: scaleY(0); transform-origin: top; opacity:0; }
-  40%{ transform: scaleY(1); transform-origin: top; opacity:1; }
-  60%{ transform: scaleY(1); transform-origin: bottom; opacity:1; }
-  100%{ transform: scaleY(0); transform-origin: bottom; opacity:0; }
+  background: var(--ground);
+  color: var(--ink);
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* -- Statement -- */
-.panel--statement{
-  top:50%; transform: translateY(-50%);
-  max-width: 680px;
+a { color: inherit; text-decoration: none; }
+
+/* ---------- stage: sticky canvas + fixed content over a tall scrub ---------- */
+
+.stage {
+  position: relative;
 }
-.panel--statement h2{
-  font-family: var(--font-display);
+
+.stage__media,
+.stage__fixed {
+  position: fixed;
+  inset: 0;
+}
+
+.stage__media { z-index: 0; }
+
+.stage__fixed {
+  z-index: 2;
+  display: grid;
+  grid-template-rows: 1fr auto;   /* hero, then the scroll cue */
+  padding: var(--gutter);
+  pointer-events: none;
+}
+.stage__fixed a { pointer-events: auto; }
+
+.hero-media {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.stage__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(100deg, rgba(16,14,12,.88) 0%, rgba(16,14,12,.45) 45%, rgba(16,14,12,0) 72%),
+    linear-gradient(to top,  rgba(16,14,12,.75) 0%, rgba(16,14,12,0) 45%);
+}
+
+/* Deliberately short. The hero plays a brief camera move (frames 1..30) and
+   then hands straight off to the content below — a quarter viewport of
+   scrolling resolves the whole scrub, so the page moves on almost immediately. */
+.stage__scrub { height: 125vh; }
+
+/* ---------- hero ---------- */
+
+.hero {
+  align-self: center;
+  max-width: 34rem;
+}
+
+.hero__eyebrow {
+  margin: 0 0 1.75rem;
+  font-size: .6875rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  display: flex;
+  align-items: center;
+  gap: .625em;
+}
+.dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.hero__title {
+  margin: 0 0 1.5rem;
+  font-size: clamp(2.75rem, 8vw, 5.25rem);
+  font-weight: 300;
+  line-height: .96;
+  letter-spacing: -.03em;
+}
+.hero__title .line { display: block; }
+.line--accent { color: var(--accent); }
+
+.hero__copy {
+  margin: 0 0 2.25rem;
+  max-width: 30rem;
+  font-size: clamp(.9375rem, 1.4vw, 1.0625rem);
+  line-height: 1.65;
+  color: var(--ink-dim);
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .75rem;
+  margin-bottom: 3rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  padding: .8125em 1.5em;
+  border-radius: 999px;
+  font-size: .8125rem;
+  font-weight: 500;
+  letter-spacing: .04em;
+  border: 1px solid transparent;
+  transition: background-color .25s ease, border-color .25s ease, color .25s ease;
+}
+.btn--solid {
+  background: var(--accent);
+  color: #fff;
+}
+.btn--solid:hover { background: #e8763f; }
+.btn--ghost {
+  border-color: var(--edge);
+  color: var(--ink);
+}
+.btn--ghost:hover { border-color: var(--ink); }
+
+/* ---------- stats ---------- */
+
+.stats {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(1.5rem, 4vw, 3rem);
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: .375rem;
+  padding-inline-start: .875rem;
+  border-inline-start: 1px solid var(--edge);
+}
+.stat__num {
+  font-size: 1.5rem;
+  font-weight: 300;
+  letter-spacing: -.02em;
+}
+.stat__label {
+  font-size: .625rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+
+/* ---------- scroll cue ---------- */
+
+.scrollcue {
+  margin: 0;
+  justify-self: center;
+  font-size: .625rem;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+
+/* ---------- outro ---------- */
+
+.outro {
+  position: relative;
+  z-index: 3;
+  background: var(--ground);
+  padding: 6rem var(--gutter);
+  border-top: 1px solid var(--edge);
+}
+.outro p {
+  margin: 0;
+  font-size: .75rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+
+/* =========================================================================
+   EFFECT 3: SECTION REVEAL ON SCROLL
+
+   Same motion language as the load-in ripple (24px rise, 1000ms, same curve,
+   100ms per ring) but a different TRIGGER: a per-element .is-revealed class set
+   by IntersectionObserver, not the one-shot `is-ready` gate.
+
+   The hidden start state is scoped to html.reveal-armed, which app.js only adds
+   when it can actually observe elements. Without JS — or under reduced motion —
+   the class is never added and everything stays in its authored settled state.
+   ========================================================================= */
+
+@keyframes reveal-in {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+[data-reveal] { opacity: 1; transform: none; }
+
+html.reveal-armed [data-reveal]:not(.is-revealed) {
+  opacity: 0;
+}
+
+html.reveal-armed [data-reveal].is-revealed {
+  animation: reveal-in 1000ms cubic-bezier(0.25, 1, 0.5, 1) both;
+  /* Re-declared after the shorthand for the same reason as the ripple: the
+     shorthand resets delay to 0 and out-specifies a bare attribute selector. */
+  animation-delay: calc(var(--rring, 0) * 100ms);
+}
+
+[data-reveal-ring="0"] { --rring: 0; }
+[data-reveal-ring="1"] { --rring: 1; }
+[data-reveal-ring="2"] { --rring: 2; }
+[data-reveal-ring="3"] { --rring: 3; }
+
+@media (prefers-reduced-motion: reduce) {
+  html [data-reveal],
+  html.reveal-armed [data-reveal]:not(.is-revealed) {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+
+/* =========================================================================
+   CONTENT BELOW THE HERO
+
+   Scrolls over the fixed stage. Needs its own stacking context and an opaque
+   ground so the canvas underneath is occluded rather than showing through.
+   ========================================================================= */
+
+.content {
+  position: relative;
+  z-index: 3;
+  background: var(--ground);
+}
+
+.section {
+  padding: clamp(4.5rem, 11vh, 8.5rem) var(--gutter);
+  border-top: 1px solid var(--edge);
+  max-width: 78rem;
+  margin-inline: auto;
+}
+
+.section__label {
+  margin: 0 0 1.5rem;
+  font-size: .625rem;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.section__title {
+  margin: 0 0 1rem;
+  font-size: clamp(1.875rem, 4.2vw, 3rem);
+  font-weight: 300;
+  line-height: 1.04;
+  letter-spacing: -.025em;
+}
+
+.section__lede {
+  margin: 0 0 3rem;
+  max-width: 34rem;
+  font-size: clamp(.9375rem, 1.3vw, 1.0625rem);
+  line-height: 1.65;
+  color: var(--ink-dim);
+}
+
+/* ---------- residences ---------- */
+
+.units {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1px;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  background: var(--edge);       /* 1px gap shows through as hairline rules */
+  border: 1px solid var(--edge);
+}
+
+.unit {
+  background: var(--ground);
+  padding: 1.75rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.unit--featured { background: #16130f; }
+
+.unit__type {
+  margin: 0 0 .25rem;
+  font-size: .8125rem;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: .625em;
+  flex-wrap: wrap;
+}
+
+.unit__tag {
+  font-size: .5625rem;
   font-weight: 400;
-  font-style: italic;
-  font-size: clamp(2.1rem, 5vw, 3.6rem);
-  line-height: 1.08;
-  margin: 0 0 20px;
-  color: var(--cream);
-}
-.panel--statement p{
-  font-size: 0.95rem;
-  color: var(--cream-dim);
-  max-width: 440px;
-  line-height: 1.6;
-  margin:0;
+  letter-spacing: .14em;
+  padding: .25em .6em;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
 }
 
-/* -- Development / Who we are -- */
-.panel--development{
-  bottom: 14%; top:auto;
-  max-width: 640px;
+.unit__size {
+  margin: 0 0 1.5rem;
+  font-size: 1.75rem;
+  font-weight: 300;
+  letter-spacing: -.02em;
 }
-.panel-index{
-  display:block;
-  font-size: 0.72rem; letter-spacing: 0.16em; text-transform:uppercase;
-  color: var(--gold);
-  margin-bottom: 16px;
+
+.unit__spec {
+  margin: 0 0 1.75rem;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: .5rem 1rem;
+  font-size: .8125rem;
 }
-.panel-lead{
-  font-family: var(--font-display);
-  font-size: clamp(1.15rem, 2.3vw, 1.7rem);
+.unit__spec dt { color: var(--ink-dim); }
+.unit__spec dd { margin: 0; text-align: right; }
+
+.unit__price {
+  margin: auto 0 0;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--edge);
+  font-size: .75rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+.unit__price strong {
+  display: block;
+  margin-top: .375rem;
+  font-size: 1.125rem;
   font-weight: 400;
-  line-height: 1.4;
-  color: var(--cream);
-  margin:0;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--ink);
 }
 
-/* -- At a glance -- */
-.panel--glance{
-  top:50%; transform: translateY(-50%);
-  max-width: 780px;
-}
-.glance-grid{
-  display:grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: clamp(20px,3vw,40px);
-  margin-top: 8px;
-}
-.glance-grid li{
-  border-top: 1px solid var(--line);
-  padding-top: 18px;
-}
-.glance-grid strong{
-  display:block;
-  font-family: var(--font-display);
-  font-weight: 460;
-  font-size: clamp(1.4rem, 2.6vw, 2rem);
-  color: var(--cream);
-}
-.glance-grid span{
-  display:block;
-  margin-top:8px;
-  font-size: 0.72rem; letter-spacing: 0.03em;
-  color: var(--cream-dim);
+/* ---------- amenities ---------- */
+
+.amenities {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  column-gap: 2.5rem;
 }
 
-/* -- Portfolio -- */
-.panel--amenities{
-  bottom: 12%; top:auto;
-  max-width: 680px;
-}
-.amenity-list{
-  display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 16px 48px;
-  margin-top: 4px;
-}
-.amenity-list li{
-  font-family: var(--font-display);
-  font-size: clamp(0.98rem, 1.6vw, 1.2rem);
-  font-weight: 400;
-  color: var(--cream);
-  padding-left: 18px;
-  position:relative;
-  line-height:1.4;
-}
-.amenity-list li::before{
-  content:""; position:absolute; left:0; top:0.55em;
-  width:8px; height:1px; background: var(--rust-light);
-}
-.amenity-list em{
-  display:block;
-  font-style:normal;
-  font-family: var(--font-sans);
-  font-size: 0.62rem; letter-spacing: 0.14em; text-transform:uppercase;
-  color: var(--gold);
-  margin-bottom: 4px;
+.amenities li {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--edge);
+  font-size: .9375rem;
 }
 
-/* -- Recognition -- */
-.panel--location{
-  top:50%; transform: translateY(-50%);
-  max-width: 640px;
-}
-.location-list{ margin-top:6px; }
-.location-list li{
-  display:flex; align-items:baseline; justify-content:space-between;
-  padding: 13px 0;
-  border-bottom: 1px solid var(--line-soft);
-  gap: 20px;
-}
-.location-list span{
-  font-family: var(--font-display);
-  font-size: clamp(0.95rem, 1.6vw, 1.2rem);
-  color: var(--cream);
-}
-.location-list em{
-  font-style:normal;
-  font-size: 0.7rem; letter-spacing: 0.1em; text-transform:uppercase;
-  color: var(--cream-dim);
-  white-space:nowrap;
+.amenity__lv {
+  flex: none;
+  min-width: 2.5rem;
+  font-size: .625rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--accent);
 }
 
-/* -- Final CTA -- */
-.panel--final{
-  top:0; bottom:0; display:flex; flex-direction:column; justify-content:center; align-items:flex-start;
-  max-width: 720px;
-}
-.panel--final .eyebrow{ margin-bottom:14px; }
-.final-title{
-  font-family: var(--font-display);
-  font-weight: 460;
-  font-size: clamp(2.4rem, 6.4vw, 4.6rem);
-  line-height: 0.95;
-  margin: 0 0 30px;
-}
-.final-title span{
-  display:block;
-  font-style: italic;
-  font-weight: 340;
-  font-size: 0.32em;
-  color: var(--cream-dim);
-  margin-top: 0.25em;
-}
-.cta-row{ display:flex; gap:16px; flex-wrap:wrap; margin-bottom: 22px; }
-.btn{
-  display:inline-flex; align-items:center; justify-content:center;
-  padding: 15px 30px;
-  font-size: 0.72rem; letter-spacing: 0.16em; text-transform:uppercase;
-  text-decoration:none;
-  border-radius: 2px;
-  transition: transform .35s ease, background .3s ease, border-color .3s ease, color .3s ease;
-}
-.btn--primary{
-  background: var(--rust);
-  color: var(--cream);
-}
-.btn--primary:hover{ background: var(--rust-light); transform: translateY(-2px); }
-.btn--ghost{
-  border: 1px solid var(--line);
-  color: var(--cream);
-}
-.btn--ghost:hover{ border-color: var(--cream-dim); background: rgba(242,234,217,0.06); transform: translateY(-2px); }
-.final-contact{
-  font-size: 0.78rem; letter-spacing: 0.03em;
-  color: var(--cream-dim);
-  margin: 0 0 6px;
-}
-.final-address{
-  font-size: 0.72rem;
-  color: rgba(242,234,217,0.5);
-  margin:0;
+/* ---------- location ---------- */
+
+.times {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-width: 42rem;
 }
 
-/* ============================================================
-   Responsive
-   ============================================================ */
-@media (max-width: 900px){
-  .glance-grid{ grid-template-columns: repeat(2, minmax(0,1fr)); row-gap: 26px; }
-  .amenity-list{ grid-template-columns: 1fr; }
-  .panel--development, .panel--amenities{ bottom: 20%; }
+.times li {
+  display: grid;
+  grid-template-columns: 5rem 1fr auto;
+  align-items: baseline;
+  gap: 1.25rem;
+  padding: 1.125rem 0;
+  border-bottom: 1px solid var(--edge);
 }
 
-@media (max-width: 640px){
-  :root{ --nav-h: 76px; }
-  .panel{ left: 22px; right: 22px; }
-  .hero-title{ font-size: clamp(2.6rem, 13vw, 4rem); }
-  .panel--statement h2{ font-size: clamp(1.7rem, 8vw, 2.4rem); }
-  .panel-lead{ font-size: 1.05rem; }
-  .glance-grid{ grid-template-columns: repeat(2, minmax(0,1fr)); gap: 22px 20px; }
-  .location-list em{ font-size: 0.62rem; }
-  .final-title{ font-size: clamp(2.2rem, 12vw, 3.2rem); }
-  .scroll-cue{ bottom: 40px; }
+.times__t {
+  font-size: 1.25rem;
+  font-weight: 300;
+  letter-spacing: -.01em;
+}
+.times__p { font-size: .9375rem; }
+.times__m {
+  font-size: .625rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
 }
 
-/* ============================================================
-   Reduced motion
-   ============================================================ */
-@media (prefers-reduced-motion: reduce){
-  html.is-ready .ripple{ animation: none; opacity: 1; transform: none; }
-  html.is-ready .stage-reveal{ animation: none; opacity: 1; transform: scale(1); }
-  .scroll-cue i{ animation: none; }
-  .loader{ transition: opacity .3s linear; }
-  .nav__links button::after{ transition:none; }
+/* ---------- cta ---------- */
+
+.section--cta { text-align: left; }
+
+.cta__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .75rem;
+}
+
+.cta__note {
+  margin: 1.75rem 0 0;
+  font-size: .6875rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+
+@media (max-width: 560px) {
+  .times li { grid-template-columns: 4.25rem 1fr; }
+  .times__m { grid-column: 2; }
 }
