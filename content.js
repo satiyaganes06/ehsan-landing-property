@@ -489,32 +489,42 @@
     }
   });
 
-  /* ---------- 11. property events section ----------
-     Scroll-reveal animations for event cards */
+  /* ---------- 11. enquiry form ----------
+     No backend yet, so this validates client-side and reports the outcome in
+     place. `is-validated` gates the :invalid styling so the form is not red on
+     first paint — it only turns red once someone has actually tried to send. */
 
-  const eventCards = document.querySelectorAll('.event-card');
-  if (eventCards.length > 0 && 'IntersectionObserver' in window && !REDUCE.matches) {
-    const eventObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry, idx) => {
-        if (!entry.isIntersecting) return;
+  const enquiry = document.querySelector('[data-enquiry-form]');
 
-        // Stagger animations: each card reveals with a small delay
-        entry.target.style.opacity = '0';
-        entry.target.style.transform = 'translateY(30px)';
+  if (enquiry) {
+    const status = enquiry.querySelector('[data-enquiry-status]');
 
-        setTimeout(() => {
-          entry.target.style.transition = 'all 500ms var(--ease)';
-          entry.target.style.opacity = '1';
-          entry.target.style.transform = 'translateY(0)';
-        }, idx * 100);
+    const report = (msg, kind) => {
+      if (!status) return;
+      status.textContent = msg;
+      status.classList.toggle('is-ok', kind === 'ok');
+      status.classList.toggle('is-err', kind === 'err');
+    };
 
-        eventObserver.unobserve(entry.target);
-      });
-    }, {
-      rootMargin: '0px 0px -10% 0px',
-      threshold: 0.1
+    enquiry.addEventListener('submit', (e) => {
+      e.preventDefault();
+      enquiry.classList.add('is-validated');
+
+      if (!enquiry.checkValidity()) {
+        report('Please complete the required fields.', 'err');
+        const first = enquiry.querySelector(':invalid');
+        if (first) first.focus();
+        return;
+      }
+
+      report('Thanks — this is a placeholder form, so nothing was sent. Email info@ehsanproperty.com to reach us.', 'ok');
+      enquiry.reset();
+      enquiry.classList.remove('is-validated');
     });
 
-    eventCards.forEach(card => eventObserver.observe(card));
+    // Clear a stale message as soon as the visitor starts editing again.
+    enquiry.addEventListener('input', () => {
+      if (status && status.textContent) report('', null);
+    });
   }
 })();

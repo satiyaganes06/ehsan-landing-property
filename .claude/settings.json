@@ -2,7 +2,11 @@
   "permissions": {
     "allow": [
       "Bash(cat > *)",
-      "Bash(python3 -c ' *)"
+      "Bash(python3 -c ' *)",
+      "Bash(grep -n -e \"--c-\\\\|--brass\\\\|--sans\\\\|--serif\\\\|--mono\\\\|--ease\\\\|--max\\\\|--gutter\" /Users/shatthiya.sivakumara/Developer/projects/ehsan-landing-property/style.css)",
+      "Bash(node --check content.js)",
+      "Bash(perl -i -pe 's/04 · RECOGNITION/05 · RECOGNITION/; s/05 · TESTIMONIALS/06 · TESTIMONIALS/; s/06 · CONTACT/07 · CONTACT/' index.html)",
+      "Bash(perl -0777 -i -pe 's{\\(event=event-1\" class=\"event-card\" data-reveal data-reveal-ring=\"\\)2\\(\"\\)}{${1}1${2}}; *)"
     ],
     "additionalDirectories": [
       "/tmp"

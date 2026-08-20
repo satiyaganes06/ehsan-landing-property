@@ -119,7 +119,9 @@
 <nav class="rail" aria-label="Section navigation">
   <a href="#doctrine"><span>Doctrine</span></a>
   <a href="#commitment"><span>Commitment</span></a>
+  <a href="#gallery"><span>Gallery</span></a>
   <a href="#record"><span>Work record</span></a>
+  <a href="#events"><span>Events</span></a>
   <a href="#awards"><span>Recognition</span></a>
   <a href="#testimonials"><span>Voices</span></a>
   <a href="#contact"><span>Contact</span></a>
@@ -236,8 +238,52 @@
   </section>
 
 
+  <!-- ================= 03 · GALLERY =================
+       Two horizontal marquees running against each other. Each track holds
+       ONE .hscroll__half; the shared [data-clone] handler in content.js
+       appends the duplicate that makes the -50% loop seamless. With JS off
+       the rows simply sit still showing the first half — still a gallery. -->
+  <section class="section" id="gallery">
+    <header class="section__head">
+      <span class="ghost" aria-hidden="true">03</span>
+      <p class="section__label" data-reveal data-reveal-ring="0">03 — Gallery</p>
+      <h2 class="section__title" data-reveal data-reveal-ring="0">The spaces we <em>hand over</em>.</h2>
+      <p class="section__lede" data-reveal data-reveal-ring="1">
+        Lobbies, decks, gyms and pools from completed Ehsan developments.<span class="hint"> Hover to hold the rows.</span>
+      </p>
+    </header>
 
-  <!-- ================= 03 · WORK RECORD =================
+    <div class="gallery-rows hgroup" data-reveal data-reveal-ring="2">
+
+      <div class="hscroll" style="--hs-dur:64s">
+        <div class="hscroll__track" data-clone>
+          <div class="hscroll__half">
+            <figure class="gallery-shot"><img src="assets/img/gallery/BusinessEntrance-DESKTOP-OB2275O-1.webp" alt="Business entrance lobby" loading="lazy" decoding="async"></figure>
+            <figure class="gallery-shot"><img src="assets/img/gallery/SwimmingPool2_A-DESKTOP-OB2275O-scaled.webp" alt="Swimming pool deck" loading="lazy" decoding="async"></figure>
+            <figure class="gallery-shot"><img src="assets/img/gallery/IndoorGym_1-DESKTOP-OB2275O-scaled.webp" alt="Indoor gymnasium" loading="lazy" decoding="async"></figure>
+            <figure class="gallery-shot"><img src="assets/img/gallery/OfficeLiftLobby-DESKTOP-OB2275O-scaled.webp" alt="Office lift lobby" loading="lazy" decoding="async"></figure>
+            <figure class="gallery-shot"><img src="assets/img/gallery/GazeboAndBBQ-DESKTOP-OB2275O-scaled.webp" alt="Gazebo and barbecue deck" loading="lazy" decoding="async"></figure>
+          </div>
+        </div>
+      </div>
+
+      <div class="hscroll" style="--hs-dur:74s; --hs-dir:reverse">
+        <div class="hscroll__track" data-clone>
+          <div class="hscroll__half">
+            <figure class="gallery-shot"><img src="assets/img/gallery/OfficeSpace-DESKTOP-OB2275O-scaled.webp" alt="Office space" loading="lazy" decoding="async"></figure>
+            <figure class="gallery-shot"><img src="assets/img/gallery/OutdoorGym-DESKTOP-OB2275O-scaled.webp" alt="Outdoor gym" loading="lazy" decoding="async"></figure>
+            <figure class="gallery-shot"><img src="assets/img/gallery/TableGame-DESKTOP-OB2275O-scaled.webp" alt="Games room" loading="lazy" decoding="async"></figure>
+            <figure class="gallery-shot"><img src="assets/img/gallery/GuessWaiting-DESKTOP-OB2275O-scaled.webp" alt="Guest waiting lounge" loading="lazy" decoding="async"></figure>
+            <figure class="gallery-shot"><img src="assets/img/gallery/IndoorGym2-DESKTOP-OB2275O-scaled.webp" alt="Indoor gym, second view" loading="lazy" decoding="async"></figure>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ================= 04 · WORK RECORD =================
        The ledger. Rows carry data-val (RM millions) for the running tally and
        --w for the proportional bar, scaled against the largest project in the
        book (RM 270m, Residensi Mutiara Austin). Each row's <img> serves two
@@ -245,8 +291,8 @@
        the cursor; below 680px the same element is shown inline instead. -->
   <section class="section" id="record">
     <header class="section__head">
-      <span class="ghost" aria-hidden="true">03</span>
-      <p class="section__label" data-reveal data-reveal-ring="0">03 — Work record</p>
+      <span class="ghost" aria-hidden="true">04</span>
+      <p class="section__label" data-reveal data-reveal-ring="0">04 — Work record</p>
       <h2 class="section__title" data-reveal data-reveal-ring="0">Sixteen projects, <em>one book</em>.</h2>
       <p class="section__lede" data-reveal data-reveal-ring="1">
         Every project on the company work record, in order of commencement —
@@ -475,11 +521,120 @@
 
   <div class="peek" aria-hidden="true"><img src="" alt=""><span class="peek__cap"></span></div>
 
-  <!-- ================= 04 · RECOGNITION ================= -->
+  <!-- ================= 05 · EVENTS ================= -->
+  <section class="section" id="events">
+    <header class="section__head">
+      <span class="ghost" aria-hidden="true">05</span>
+      <p class="section__label" data-reveal data-reveal-ring="0">05 — Events</p>
+      <h2 class="section__title" data-reveal data-reveal-ring="0">Come see it <em>in person</em>.</h2>
+      <p class="section__lede" data-reveal data-reveal-ring="1">
+        Launches, open houses and investment briefings across Malaysia — walk the
+        show units, meet the team, ask the awkward questions.
+      </p>
+    </header>
+
+    <div class="events-grid">
+      <!-- Event 1 -->
+      <a href="event-detail.html?event=event-1" class="event-card" data-reveal data-reveal-ring="1">
+        <div class="event-image-wrapper">
+          <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=800&auto=format&fit=crop" alt="Residensi Mutiara Austin grand launch" loading="lazy" decoding="async" referrerpolicy="no-referrer">
+          <span class="event-category">Property Launch</span>
+        </div>
+        <div class="event-body">
+          <h3 class="event-title">Residensi Mutiara Austin Grand Launch</h3>
+          <div class="event-meta">
+            <div class="event-speaker">
+              <img src="https://i.pravatar.cc/150?u=ehsan-founder" alt="" referrerpolicy="no-referrer">
+              <div>
+                <div class="event-speaker-label">Hosted by</div>
+                <div class="event-speaker-name">Ehsan Team</div>
+              </div>
+            </div>
+            <div class="event-date">
+              <div class="event-date-label">Date</div>
+              <div class="event-date-value">Sep 15, 2024</div>
+            </div>
+          </div>
+          <div class="event-stats">
+            <span>Johor Bahru</span>
+            <span>150 attendees</span>
+            <span>2:00 PM</span>
+          </div>
+          <span class="event-cta">Learn more</span>
+        </div>
+      </a>
+
+      <!-- Event 2 -->
+      <a href="event-detail.html?event=event-2" class="event-card" data-reveal data-reveal-ring="2">
+        <div class="event-image-wrapper">
+          <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=800&auto=format&fit=crop" alt="Ehsan Widuri Putra Nilai open house" loading="lazy" decoding="async" referrerpolicy="no-referrer">
+          <span class="event-category">Open House</span>
+        </div>
+        <div class="event-body">
+          <h3 class="event-title">Ehsan Widuri Putra Nilai Open House</h3>
+          <div class="event-meta">
+            <div class="event-speaker">
+              <img src="https://i.pravatar.cc/150?u=ehsan-pm" alt="" referrerpolicy="no-referrer">
+              <div>
+                <div class="event-speaker-label">Hosted by</div>
+                <div class="event-speaker-name">Ehsan Team</div>
+              </div>
+            </div>
+            <div class="event-date">
+              <div class="event-date-label">Date</div>
+              <div class="event-date-value">Oct 8, 2024</div>
+            </div>
+          </div>
+          <div class="event-stats">
+            <span>Nilai, N. Sembilan</span>
+            <span>200 attendees</span>
+            <span>10:00 AM</span>
+          </div>
+          <span class="event-cta">Learn more</span>
+        </div>
+      </a>
+
+      <!-- Event 3 -->
+      <a href="event-detail.html?event=event-3" class="event-card" data-reveal data-reveal-ring="3">
+        <div class="event-image-wrapper">
+          <img src="https://images.unsplash.com/photo-1591115765373-5207764f72e7?q=80&w=800&auto=format&fit=crop" alt="Property investment seminar" loading="lazy" decoding="async" referrerpolicy="no-referrer">
+          <span class="event-category">Seminar</span>
+        </div>
+        <div class="event-body">
+          <h3 class="event-title">Property Investment Seminar 2024</h3>
+          <div class="event-meta">
+            <div class="event-speaker">
+              <img src="https://i.pravatar.cc/150?u=ehsan-cio" alt="" referrerpolicy="no-referrer">
+              <div>
+                <div class="event-speaker-label">Hosted by</div>
+                <div class="event-speaker-name">Ehsan Team</div>
+              </div>
+            </div>
+            <div class="event-date">
+              <div class="event-date-label">Date</div>
+              <div class="event-date-value">Oct 22, 2024</div>
+            </div>
+          </div>
+          <div class="event-stats">
+            <span>Kuala Lumpur</span>
+            <span>300 attendees</span>
+            <span>6:00 PM</span>
+          </div>
+          <span class="event-cta">Learn more</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="events-footer" data-reveal data-reveal-ring="4">
+      <a href="events.html" class="events-explore-btn">More events</a>
+    </div>
+  </section>
+
+  <!-- ================= 06 · RECOGNITION ================= -->
   <section class="section" id="awards">
     <header class="section__head">
-      <span class="ghost" aria-hidden="true">04</span>
-      <p class="section__label" data-reveal data-reveal-ring="0">04 — Recognition</p>
+      <span class="ghost" aria-hidden="true">06</span>
+      <p class="section__label" data-reveal data-reveal-ring="0">06 — Recognition</p>
       <h2 class="section__title" data-reveal data-reveal-ring="0">A decade of <em>awards</em>.</h2>
       <p class="section__lede" data-reveal data-reveal-ring="1">
         Twelve national and regional business awards between 2014 and 2023.
@@ -496,7 +651,7 @@
       <div class="awards-carousel__track" id="awardTrack">
         <!-- Award cards (will be duplicated for seamless loop) -->
         <div class="award-card" data-award-id="award-1">
-          <div class="award-card__icon">🏆</div>
+          <img src="assets/img/awards/Award logo vector-01.png" alt="Selangor Excellence Business Awards" class="award-card__icon" loading="lazy" decoding="async">
           <h3 class="award-card__name">Selangor Excellence Business Awards</h3>
           <p class="award-card__desc">Recognized for business excellence and contribution to the Selangor community.</p>
           <div class="award-card__year">2014</div>
@@ -504,7 +659,7 @@
         </div>
 
         <div class="award-card" data-award-id="award-2">
-          <div class="award-card__icon">🌏</div>
+          <img src="assets/img/awards/Award logo vector-02.png" alt="ASEAN Outstanding Business Awards" class="award-card__icon" loading="lazy" decoding="async">
           <h3 class="award-card__name">ASEAN Outstanding Business Awards</h3>
           <p class="award-card__desc">Acknowledged for outstanding business practices across the ASEAN region.</p>
           <div class="award-card__year">2015</div>
@@ -512,7 +667,7 @@
         </div>
 
         <div class="award-card" data-award-id="award-3">
-          <div class="award-card__icon">💎</div>
+          <img src="assets/img/awards/Award logo vector-03.png" alt="MIMCOIN SME Congress & Golden Dinar Awards" class="award-card__icon" loading="lazy" decoding="async">
           <h3 class="award-card__name">MIMCOIN SME Congress & Golden Dinar Awards</h3>
           <p class="award-card__desc">Honored for SME development and business innovation.</p>
           <div class="award-card__year">2016</div>
@@ -520,7 +675,7 @@
         </div>
 
         <div class="award-card" data-award-id="award-4">
-          <div class="award-card__icon">💎</div>
+          <img src="assets/img/awards/Award logo vector-04.png" alt="MIMCOIN SME Congress & Golden Dinar Awards" class="award-card__icon" loading="lazy" decoding="async">
           <h3 class="award-card__name">MIMCOIN SME Congress & Golden Dinar Awards</h3>
           <p class="award-card__desc">Continued recognition for exceptional SME contributions and growth.</p>
           <div class="award-card__year">2019</div>
@@ -528,7 +683,7 @@
         </div>
 
         <div class="award-card" data-award-id="award-5">
-          <div class="award-card__icon">🌟</div>
+          <img src="assets/img/awards/Award logo vector-05.png" alt="Global Leadership Awards" class="award-card__icon" loading="lazy" decoding="async">
           <h3 class="award-card__name">Global Leadership Awards</h3>
           <p class="award-card__desc">Recognized for outstanding leadership in property development.</p>
           <div class="award-card__year">2014</div>
@@ -536,7 +691,7 @@
         </div>
 
         <div class="award-card" data-award-id="award-6">
-          <div class="award-card__icon">⭐</div>
+          <img src="assets/img/awards/Award logo vector-06.png" alt="SME Recognition Awards" class="award-card__icon" loading="lazy" decoding="async">
           <h3 class="award-card__name">SME Recognition Awards</h3>
           <p class="award-card__desc">Acknowledged for significant contributions to SME sector growth.</p>
           <div class="award-card__year">2015</div>
@@ -544,7 +699,7 @@
         </div>
 
         <div class="award-card" data-award-id="award-7">
-          <div class="award-card__icon">💎</div>
+          <img src="assets/img/awards/Award logo vector-07.png" alt="MIMCOIN SME Congress & Golden Dinar Awards" class="award-card__icon" loading="lazy" decoding="async">
           <h3 class="award-card__name">MIMCOIN SME Congress & Golden Dinar Awards</h3>
           <p class="award-card__desc">Honored for sustained excellence in SME innovation.</p>
           <div class="award-card__year">2017</div>
@@ -552,7 +707,7 @@
         </div>
 
         <div class="award-card" data-award-id="award-8">
-          <div class="award-card__icon">🏆</div>
+          <img src="assets/img/awards/Award logo vector-08.png" alt="Bumiputera Business Excellence Awards" class="award-card__icon" loading="lazy" decoding="async">
           <h3 class="award-card__name">Bumiputera Business Excellence Awards</h3>
           <p class="award-card__desc">Recognized for excellence in Bumiputera business practices.</p>
           <div class="award-card__year">2022</div>
@@ -560,7 +715,7 @@
         </div>
 
         <div class="award-card" data-award-id="award-9">
-          <div class="award-card__icon">🌟</div>
+          <img src="assets/img/awards/Award logo vector-09.png" alt="Malaysia Top Achiever Awards" class="award-card__icon" loading="lazy" decoding="async">
           <h3 class="award-card__name">Malaysia Top Achiever Awards</h3>
           <p class="award-card__desc">Acknowledged as a top achiever in property development.</p>
           <div class="award-card__year">2017</div>
@@ -568,7 +723,7 @@
         </div>
 
         <div class="award-card" data-award-id="award-10">
-          <div class="award-card__icon">🌟</div>
+          <img src="assets/img/awards/Award logo vector-10.png" alt="Global Leadership Awards" class="award-card__icon" loading="lazy" decoding="async">
           <h3 class="award-card__name">Global Leadership Awards</h3>
           <p class="award-card__desc">Honored for global leadership and innovative strategies.</p>
           <div class="award-card__year">2018</div>
@@ -576,7 +731,7 @@
         </div>
 
         <div class="award-card" data-award-id="award-11">
-          <div class="award-card__icon">👑</div>
+          <img src="assets/img/awards/Award logo vector-11.png" alt="Nambikhai Business Icon Awards" class="award-card__icon" loading="lazy" decoding="async">
           <h3 class="award-card__name">Nambikhai Business Icon Awards</h3>
           <p class="award-card__desc">Recognized as a business icon for excellence and impact.</p>
           <div class="award-card__year">2023</div>
@@ -584,7 +739,7 @@
         </div>
 
         <div class="award-card" data-award-id="award-12">
-          <div class="award-card__icon">🏆</div>
+          <img src="assets/img/awards/Award logo vector-12.png" alt="Consumer's Choice Award" class="award-card__icon" loading="lazy" decoding="async">
           <h3 class="award-card__name">Consumer's Choice Award</h3>
           <p class="award-card__desc">Awarded by consumers for outstanding service quality.</p>
           <div class="award-card__year">2023</div>
@@ -613,7 +768,7 @@
   </section>
 
 
-  <!-- ================= 05 · TESTIMONIALS =================
+  <!-- ================= 07 · TESTIMONIALS =================
        Not sourced from the PDF — the profile has no testimonials section.
        Placeholder copy, clearly disclaimed below the cards, standing in for
        real client quotes until those are collected. Default-active card is
@@ -622,8 +777,8 @@
        with JS disabled — one card just stays permanently expanded. -->
   <section class="section" id="testimonials">
     <header class="section__head">
-      <span class="ghost" aria-hidden="true">05</span>
-      <p class="section__label" data-reveal data-reveal-ring="0">05 — Voices</p>
+      <span class="ghost" aria-hidden="true">07</span>
+      <p class="section__label" data-reveal data-reveal-ring="0">07 — Voices</p>
       <h2 class="section__title" data-reveal data-reveal-ring="0">What people <em>tell us</em>.</h2>
       <p class="section__lede" data-reveal data-reveal-ring="1">
         Placeholder quotes, standing in until real client testimonials are collected.<span class="hint"> Hover a card to read it.</span>
@@ -707,11 +862,61 @@
 
 </div>
 
-<!-- ================= 06 · CONTACT ================= -->
+<!-- ================= 08 · CONTACT ================= -->
 <footer class="outro" id="contact">
   <div class="outro__in">
-    <p class="section__label" data-reveal data-reveal-ring="0">06 — Contact</p>
+    <p class="section__label" data-reveal data-reveal-ring="0">08 — Contact</p>
     <h2 class="outro__motto" data-reveal data-reveal-ring="0">Everyone can<br><em>own a house.</em></h2>
+
+    <div class="enquiry" data-reveal data-reveal-ring="1">
+      <div class="enquiry__intro">
+        <h3 class="enquiry__title">Send an enquiry</h3>
+        <p class="enquiry__note">
+          Tell us which development you're interested in and our team will follow
+          up by email or phone. Fields marked with an asterisk are required.
+        </p>
+      </div>
+
+      <form class="enquiry__form" data-enquiry-form novalidate>
+        <div class="field">
+          <label class="field__label" for="enqName">Name <abbr title="required">*</abbr></label>
+          <input class="field__input" id="enqName" name="name" type="text" autocomplete="name" required>
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="enqEmail">Email <abbr title="required">*</abbr></label>
+          <input class="field__input" id="enqEmail" name="email" type="email" autocomplete="email" required>
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="enqPhone">Phone</label>
+          <input class="field__input" id="enqPhone" name="phone" type="tel" autocomplete="tel" placeholder="01x-xxx xxxx">
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="enqInterest">Interested in</label>
+          <select class="field__input field__input--select" id="enqInterest" name="interest">
+            <option value="">Select a development</option>
+            <option>Taman Mawar Ehsan — Rembau</option>
+            <option>Taman Universiti Bestari — Sungai Petani</option>
+            <option>Residensi Mutiara Austin — Johor Bahru</option>
+            <option>Ehsan Widuri — Putra Nilai</option>
+            <option>Taman Seri Emas — Kampar</option>
+            <option>General enquiry</option>
+          </select>
+        </div>
+
+        <div class="field field--wide">
+          <label class="field__label" for="enqMessage">Message <abbr title="required">*</abbr></label>
+          <textarea class="field__input field__input--area" id="enqMessage" name="message" rows="4" required></textarea>
+        </div>
+
+        <div class="enquiry__actions">
+          <button class="enquiry__submit" type="submit">Send enquiry</button>
+          <p class="enquiry__status" data-enquiry-status role="status" aria-live="polite"></p>
+        </div>
+      </form>
+    </div>
 
     <div class="contact">
       <div data-reveal data-reveal-ring="1">
@@ -752,6 +957,71 @@
     <span>Content sourced from the company profile, 3 July 2025</span>
     <span>We build for your needs</span>
   </p>
+</footer>
+
+<!-- ================= FOOTER ================= -->
+<footer class="site-footer">
+  <div class="site-footer__container">
+    <!-- Footer Top: Links & Info -->
+    <div class="site-footer__top">
+      <div class="site-footer__column">
+        <h4 class="site-footer__heading">Company</h4>
+        <ul class="site-footer__links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="index.html#record">Work Record</a></li>
+          <li><a href="index.html#awards">Recognition</a></li>
+        </ul>
+      </div>
+
+      <div class="site-footer__column">
+        <h4 class="site-footer__heading">Properties</h4>
+        <ul class="site-footer__links">
+          <li><a href="#">Taman Mawar Ehsan</a></li>
+          <li><a href="#">Taman Universiti Bestari</a></li>
+          <li><a href="#">Residensi Mutiara Austin</a></li>
+          <li><a href="#">Ehsan Widuri Putra Nilai</a></li>
+        </ul>
+      </div>
+
+      <div class="site-footer__column">
+        <h4 class="site-footer__heading">Contact</h4>
+        <ul class="site-footer__links">
+          <li><a href="tel:+60321626649">03-2162 6649</a></li>
+          <li><a href="mailto:info@ehsanproperty.com">info@ehsanproperty.com</a></li>
+          <li><a href="https://ehsanproperty.com" target="_blank" rel="noopener">ehsanproperty.com</a></li>
+        </ul>
+      </div>
+
+      <div class="site-footer__column">
+        <h4 class="site-footer__heading">Social</h4>
+        <ul class="site-footer__links">
+          <li><a href="#" target="_blank" rel="noopener">Facebook</a></li>
+          <li><a href="#" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="#" target="_blank" rel="noopener">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Footer Divider -->
+    <div class="site-footer__divider"></div>
+
+    <!-- Footer Bottom: Copyright & Legal -->
+    <div class="site-footer__bottom">
+      <div class="site-footer__copyright">
+        <p>&copy; 2025 Ehsan Plant &amp; Property Sdn Bhd (817795-X)</p>
+        <p>CIDB G7 Bumiputera Contractor</p>
+      </div>
+
+      <div class="site-footer__legal">
+        <a href="#" class="site-footer__legal-link">Privacy Policy</a>
+        <span class="site-footer__separator"></span>
+        <a href="#" class="site-footer__legal-link">Terms of Service</a>
+        <span class="site-footer__separator"></span>
+        <a href="#" class="site-footer__legal-link">Disclaimer</a>
+      </div>
+    </div>
+  </div>
 </footer>
 
 <div class="assistant" data-assistant>

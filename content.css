@@ -352,6 +352,102 @@ html.past-hero .rail { opacity: 1; pointer-events: auto; }
   .vscroll__track { animation: none; }
 }
 
+/* =========================================================================
+   HORIZONTAL AUTO-SCROLL — the same primitive turned on its side.
+
+   Identical contract to .vscroll: the track holds ONE half in the markup and
+   the shared [data-clone] handler in content.js appends the second, so the
+   -50% keyframe lands exactly on the seam. Same half-gap correction, same
+   hover-pause, same reduced-motion escape hatch — only the axis differs.
+   ========================================================================= */
+
+.hscroll {
+  --hs-gap: clamp(.5rem, 1.2vw, .875rem);
+  --hs-dur: 60s;
+  position: relative;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+          mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+}
+
+.hscroll__track,
+.hscroll__half {
+  display: flex;
+  flex-direction: row;
+  gap: var(--hs-gap);
+}
+
+.hscroll__half > * { margin: 0; }
+
+.hscroll__track {
+  width: max-content;
+  animation: hscroll var(--hs-dur) linear infinite;
+  animation-direction: var(--hs-dir, normal);
+  will-change: transform;
+}
+
+@keyframes hscroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(calc(-50% - var(--hs-gap) / 2)); }
+}
+
+/* Hovering anywhere in the group holds both rows, so they never desynchronise
+   relative to each other. */
+.hgroup:hover .hscroll__track,
+.hscroll:focus-within .hscroll__track { animation-play-state: paused; }
+
+.hgroup {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(.5rem, 1.2vw, .875rem);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hscroll {
+    overflow-x: auto;
+    -webkit-mask-image: none;
+            mask-image: none;
+  }
+  .hscroll__track { animation: none; }
+}
+
+/* Gallery ---------------------------------------------------------------
+   Two marquee rows drifting against each other. The rows bleed out to the
+   section's own edge (never the viewport's, so there is no overflow risk at
+   any width) by cancelling the section gutter. */
+
+.gallery-rows {
+  margin-inline: calc(var(--gutter) * -1);
+}
+
+.gallery-shot {
+  flex: 0 0 auto;
+  height: clamp(9rem, 20vw, 15rem);
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--c-panel);
+}
+
+.gallery-shot img {
+  display: block;
+  height: 100%;
+  width: auto;
+  object-fit: cover;
+  /* Muted at rest so the two rows read as texture behind the section rather
+     than competing with the ledger below; full colour on hover. */
+  filter: saturate(.75);
+  transition: filter .4s var(--ease), transform .4s var(--ease);
+}
+
+.hgroup:hover .gallery-shot img { filter: saturate(1); }
+
+.gallery-shot:hover img { transform: scale(1.04); }
+
+@media (prefers-reduced-motion: reduce) {
+  .gallery-shot img { transition: none; }
+  .gallery-shot:hover img { transform: none; }
+}
+
 /* Cards used inside the scrollers -------------------------------------- */
 
 .vcard {
@@ -1587,11 +1683,155 @@ html.reveal-armed .row:not(.is-revealed) .bar i { transform: scaleX(0); }
 }
 .outro__motto em { font-style: italic; color: var(--brass-hi); }
 
+/* Enquiry form ---------------------------------------------------------- */
+.enquiry {
+  display: grid;
+  grid-template-columns: minmax(0, 18rem) minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  padding-top: clamp(2rem, 5vh, 3rem);
+  border-top: 1px solid var(--c-line);
+}
+
+.enquiry__title {
+  margin: 0 0 1rem;
+  font-family: var(--mono);
+  font-size: .5625rem;
+  font-weight: 400;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--brass-ink);
+}
+
+.outro .enquiry__note {
+  margin: 0;
+  font-size: .875rem;
+  line-height: 1.8;
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--c-dim);
+  max-width: 30ch;
+}
+
+.enquiry__form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem 1.5rem;
+  align-content: start;
+}
+
+.field { display: flex; flex-direction: column; gap: .5rem; }
+.field--wide { grid-column: 1 / -1; }
+
+.field__label {
+  font-family: var(--mono);
+  font-size: .5625rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--c-dimmer);
+}
+.field__label abbr {
+  color: var(--brass-ink);
+  text-decoration: none;
+  border: 0;
+}
+
+.field__input {
+  width: 100%;
+  padding: .75rem .875rem;
+  font-family: var(--sans);
+  font-size: .875rem;
+  line-height: 1.4;
+  color: var(--c-ink);
+  background: var(--c-panel);
+  border: 1px solid var(--c-line);
+  border-radius: 4px;
+  transition: border-color .25s ease, background-color .25s ease, box-shadow .25s ease;
+}
+
+.field__input::placeholder { color: var(--c-dimmer); }
+
+.field__input:hover { border-color: var(--c-line-hi); }
+
+.field__input:focus-visible {
+  outline: none;
+  background: var(--c-ground);
+  border-color: var(--brass-line);
+  box-shadow: 0 0 0 3px rgba(235, 242, 18, .28);
+}
+
+.field__input--area { resize: vertical; min-height: 6rem; }
+
+.field__input--select {
+  appearance: none;
+  cursor: pointer;
+  padding-right: 2.25rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2355534a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right .75rem center;
+  background-size: 1rem;
+}
+
+/* Invalid only after a submit attempt, so the form is not red on first paint. */
+.enquiry__form.is-validated .field__input:invalid {
+  border-color: #b4441f;
+  background: rgba(180, 68, 31, .05);
+}
+
+.enquiry__actions {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.25rem;
+}
+
+.enquiry__submit {
+  padding: .8125rem 1.75rem;
+  font-family: var(--mono);
+  font-size: .625rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--c-ink);
+  background: var(--brass);
+  border: 1px solid var(--brass);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color .25s ease, transform .25s var(--ease);
+}
+.enquiry__submit:hover { background: var(--brass-line); transform: translateY(-1px); }
+.enquiry__submit:active { transform: translateY(0); }
+
+.outro p.enquiry__status {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: .625rem;
+  letter-spacing: .12em;
+  text-transform: none;
+  color: var(--c-dimmer);
+}
+.outro p.enquiry__status.is-ok { color: var(--brass-ink); }
+.outro p.enquiry__status.is-err { color: #b4441f; }
+
+@media (max-width: 60rem) {
+  .enquiry { grid-template-columns: minmax(0, 1fr); }
+  .outro .enquiry__note { max-width: none; }
+}
+
+@media (max-width: 34rem) {
+  .enquiry__form { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .enquiry__submit { transition: background-color .25s ease; }
+  .enquiry__submit:hover { transform: none; }
+}
+
 .contact {
   display: grid;
   gap: clamp(1.5rem, 4vw, 3rem);
   grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
   padding-top: clamp(2rem, 5vh, 3rem);
+  margin-top: clamp(2rem, 5vh, 3rem);
   border-top: 1px solid var(--c-line);
 }
 .contact h3 {
@@ -1973,12 +2213,12 @@ html.reveal-armed .row:not(.is-revealed) .bar i { transform: scaleX(0); }
 }
 
 .award-card__icon {
-  font-size: 2rem;
-  line-height: 1;
-  height: 2.5rem;
-  display: flex;
-  align-items: center;
-  margin-bottom: 0.25rem;
+  height: 60px;
+  width: auto;
+  max-width: 100%;
+  display: block;
+  margin-bottom: 0.75rem;
+  object-fit: contain;
 }
 
 .award-card__name {
@@ -2215,50 +2455,12 @@ html.reveal-armed .row:not(.is-revealed) .bar i { transform: scaleX(0); }
 }
 
 /* =========================================================================
-   PROPERTY EVENTS SECTION — Orbit-inspired event catalog
-   Lime accents (#D4FF3F), light palette, rounded cards, responsive grid
+   PROPERTY EVENTS SECTION — the card catalog only.
+
+   The section wrapper, ghost numeral, label, title and lede all come from the
+   shared `.section` / `.section__head` rules above, same as every other
+   section on the page. This block styles nothing but the grid and the cards.
    ========================================================================= */
-
-.events-orbit {
-  background: var(--c-ground);
-  padding: 6rem var(--gutter) !important;
-}
-
-.events-header {
-  text-align: center;
-  margin-bottom: 4rem;
-  max-width: 700px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.events-eyebrow {
-  display: block;
-  font-family: var(--sans);
-  font-size: 0.875rem;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: var(--brass-ink);
-  margin-bottom: 1rem;
-}
-
-.events-title {
-  font-family: var(--serif);
-  font-size: clamp(2rem, 5vw, 3rem);
-  font-weight: 400;
-  line-height: 1.1;
-  color: var(--c-ink);
-  margin: 0 0 1rem 0;
-}
-
-.events-description {
-  font-family: var(--sans);
-  font-size: 0.95rem;
-  line-height: 1.6;
-  color: var(--c-dim);
-  margin: 0;
-}
 
 /* Events Grid */
 .events-grid {
@@ -2285,7 +2487,7 @@ html.reveal-armed .row:not(.is-revealed) .bar i { transform: scaleX(0); }
 .event-card:hover {
   transform: translateY(-8px);
   box-shadow: 0 20px 40px rgba(0,0,0,0.08);
-  border-color: rgba(212, 255, 63, 0.2);
+  border-color: color-mix(in srgb, var(--brass) 20%, transparent);
   background: white;
 }
 
@@ -2311,7 +2513,7 @@ html.reveal-armed .row:not(.is-revealed) .bar i { transform: scaleX(0); }
   position: absolute;
   top: 1.5rem;
   left: 1.5rem;
-  background: #D4FF3F;
+  background: var(--brass);
   color: #000000;
   padding: 0.5rem 1rem;
   border-radius: 100px;
@@ -2418,8 +2620,8 @@ html.reveal-armed .row:not(.is-revealed) .bar i { transform: scaleX(0); }
 }
 
 .event-cta:hover {
-  border-color: #D4FF3F;
-  background: rgba(212, 255, 63, 0.05);
+  border-color: var(--brass);
+  background: color-mix(in srgb, var(--brass) 8%, transparent);
 }
 
 .event-cta::after {
@@ -2427,7 +2629,7 @@ html.reveal-armed .row:not(.is-revealed) .bar i { transform: scaleX(0); }
   display: inline-block;
   width: 32px;
   height: 32px;
-  background: #D4FF3F;
+  background: var(--brass);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -2448,7 +2650,7 @@ html.reveal-armed .row:not(.is-revealed) .bar i { transform: scaleX(0); }
   display: inline-flex;
   align-items: center;
   gap: 1.5rem;
-  background: #D4FF3F;
+  background: var(--brass);
   color: #000000;
   padding: 0.75rem 0.75rem 0.75rem 2rem;
   border-radius: 100px;
@@ -2461,10 +2663,12 @@ html.reveal-armed .row:not(.is-revealed) .bar i { transform: scaleX(0); }
   transition: all 300ms var(--ease);
 }
 
+/* Darkened brass rather than --brass-ink: the label is black, and brass-ink is
+   dark enough that black-on-it fails contrast. This keeps the fill light. */
 .events-explore-btn:hover {
   transform: scale(1.05);
-  background: #C5F030;
-  box-shadow: 0 10px 20px rgba(212, 255, 63, 0.2);
+  background: color-mix(in srgb, var(--brass) 85%, #000);
+  box-shadow: 0 10px 20px color-mix(in srgb, var(--brass) 20%, transparent);
 }
 
 .events-explore-btn::after {
@@ -2476,7 +2680,7 @@ html.reveal-armed .row:not(.is-revealed) .bar i { transform: scaleX(0); }
   height: 44px;
   background: #000000;
   border-radius: 50%;
-  color: #D4FF3F;
+  color: var(--brass);
   font-size: 1.25rem;
   font-weight: bold;
   flex-shrink: 0;
@@ -2494,15 +2698,9 @@ html.reveal-armed .row:not(.is-revealed) .bar i { transform: scaleX(0); }
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }
-  .events-title {
-    font-size: 1.75rem;
-  }
   .event-meta {
     flex-direction: column;
     align-items: flex-start;
-  }
-  .events-orbit {
-    padding: 4rem var(--gutter) !important;
   }
 }
 
@@ -2513,8 +2711,5 @@ html.reveal-armed .row:not(.is-revealed) .bar i { transform: scaleX(0); }
   .event-body {
     padding: 1rem;
     gap: 0.75rem;
-  }
-  .events-header {
-    margin-bottom: 2.5rem;
   }
 }
