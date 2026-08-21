@@ -10,7 +10,7 @@
 
 const ROOT = document.documentElement;
 
-const FRAME_DIR   = 'frames-hd';   // cut by tools/cut-frames.sh from the source mp4
+const FRAME_DIR   = 'assets/frames-hd';   // cut by tools/cut-frames.sh from the source mp4
 const FRAME_EXT   = '.webp';
 const FRAME_FIRST = 1;
 const FRAME_LAST  = 30;   // frames 31..140 exist on disk but are not loaded

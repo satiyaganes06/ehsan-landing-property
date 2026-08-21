@@ -136,7 +136,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   window.addEventListener('scroll', handleScroll, { passive: true });
 
   try {
-    const res = await fetch('events.json');
+    const res = await fetch(SITE.url('data/events.json'));
     if (!res.ok) throw new Error(`events.json → ${res.status}`);
     EVENTS_DATA = await res.json();
   } catch (err) {

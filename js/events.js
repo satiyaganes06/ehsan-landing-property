@@ -90,7 +90,7 @@
 
   /* ---------- load ---------- */
 
-  fetch('events.json')
+  fetch(SITE.url('data/events.json'))
     .then((r) => {
       if (!r.ok) throw new Error(`events.json → ${r.status}`);
       return r.json();

@@ -1,4 +1,4 @@
 .DS_Store
 
 # Superseded 720p PNG frame set (190MB) — regenerate with tools/cut-frames.sh
-frames-png/
+assets/frames-png/

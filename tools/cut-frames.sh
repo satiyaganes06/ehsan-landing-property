@@ -4,7 +4,7 @@
 #   ./tools/cut-frames.sh <video> [outdir] [count] [format] [maxwidth]
 #
 #   video     source file
-#   outdir    default: frames-hd
+#   outdir    default: assets/frames-hd
 #   count     how many frames to end up with. default 240 (matches the
 #             existing sequence). "native" keeps every frame in the video.
 #   format    webp (default) | jpg | png
@@ -17,7 +17,7 @@ set -euo pipefail
 export PATH="/opt/homebrew/bin:$PATH"
 
 VIDEO=${1:?usage: cut-frames.sh <video> [outdir] [count] [format] [maxwidth]}
-OUTDIR=${2:-frames-hd}
+OUTDIR=${2:-assets/frames-hd}
 COUNT=${3:-240}
 FORMAT=${4:-webp}
 MAXW=${5:-1920}

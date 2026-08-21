@@ -9,7 +9,7 @@ let currentMediaType = 'image';
 /* ===== Load Projects from JSON ===== */
 async function loadProjectsData() {
   try {
-    const response = await fetch('projects.json');
+    const response = await fetch(SITE.url('data/projects.json'));
     if (!response.ok) throw new Error('Failed to load projects');
     PROJECTS_DATA = await response.json();
     return true;
@@ -64,7 +64,7 @@ class LightboxGallery {
 
   render() {
     const img = this.images[this.currentIndex];
-    this.lightboxImage.src = `assets/img/${img}`;
+    this.lightboxImage.src = SITE.url(`assets/img/${img}`);
     this.lightboxCurrent.textContent = this.currentIndex + 1;
   }
 
@@ -144,7 +144,7 @@ class Carousel {
 
       if (typeof slide === 'string') {
         const img = document.createElement('img');
-        img.src = `assets/img/${slide}`;
+        img.src = SITE.url(`assets/img/${slide}`);
         img.alt = `Project image ${idx + 1}`;
         slideEl.appendChild(img);
       }
@@ -287,7 +287,7 @@ function renderImageGallery(data, lightbox) {
     const isLast = i === displayCount - 1 && hasMore;
     html += `
       <div class="gallery-item" data-index="${i}">
-        <img class="gallery-item__image" src="assets/img/${images[i]}" alt="Project image ${i + 1}" loading="lazy">
+        <img class="gallery-item__image" src="${SITE.url(`assets/img/${images[i]}`)}" alt="Project image ${i + 1}" loading="lazy">
         ${isLast ? `<div class="gallery-item__overlay"><div class="gallery-item__overlay-text">+${moreCount}</div></div>` : ''}
       </div>
     `;
@@ -322,7 +322,7 @@ function renderBlueprintGallery(data, lightbox) {
     const isLast = i === displayCount - 1 && hasMore;
     html += `
       <div class="gallery-item" data-index="${i}">
-        <img class="gallery-item__image" src="assets/img/${blueprints[i]}" alt="Blueprint ${i + 1}" loading="lazy">
+        <img class="gallery-item__image" src="${SITE.url(`assets/img/${blueprints[i]}`)}" alt="Blueprint ${i + 1}" loading="lazy">
         ${isLast ? `<div class="gallery-item__overlay"><div class="gallery-item__overlay-text">+${moreCount}</div></div>` : ''}
       </div>
     `;
@@ -350,7 +350,7 @@ function renderRelatedProjects(currentProjectKey) {
   relatedContainer.innerHTML = related.map(([key, proj]) => `
     <a href="project-detail.html?project=${key}" class="related-project-card">
       <div class="related-project-card__image">
-        <img src="assets/img/${proj.media.image[0]}" alt="${proj.name}" loading="lazy">
+        <img src="${SITE.url(`assets/img/${proj.media.image[0]}`)}" alt="${proj.name}" loading="lazy">
       </div>
       <div class="related-project-card__body">
         <h3 class="related-project-card__title">${proj.name}</h3>
