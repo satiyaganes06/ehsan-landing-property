@@ -918,6 +918,96 @@ html.past-hero .rail { opacity: 1; pointer-events: auto; }
    DOCTRINE (vision / mission / objective)  (index.html)
    ========================================================================= */
 
+/* The one dark band in an otherwise white document. The photograph is laid in
+   on a ::before at z-index -2 rather than on the section's own background, so
+   the .ghost numeral (z-index -1) still reads on top of it — a background
+   proper would paint over the ghost and swallow it.
+
+   Everything inside is token-driven, so the palette is flipped once here and
+   every child follows. --brass-hi is re-declared even though :root aliases it
+   to --brass-ink: custom properties resolve where they are DECLARED, so the
+   alias froze at the :root value and would not pick this override up. */
+#doctrine {
+  --c-ink:      #f6f4f0;
+  --c-dim:      rgba(246, 244, 240, .72);
+  --c-dimmer:   rgba(246, 244, 240, .5);
+  --c-line:     rgba(255, 255, 255, .14);
+  --c-line-hi:  rgba(255, 255, 255, .32);
+  --brass-ink:  var(--brass);
+  --brass-hi:   var(--brass);
+  --sand:       var(--sand-hi);
+
+  max-width: none;
+  color: var(--c-ink);
+
+  /* The parallax plate is taller than the section and slides; this keeps the
+     overhang from spilling into the sections above and below. `clip` rather
+     than `hidden` so no scroll container is created. */
+  overflow: clip;
+
+  /* .ghost hangs -.34em above .section__head, which at wide-but-short
+     viewports is ~120px — more than the 5rem floor the shared .section rule
+     allows, so the clip above would shear the top off the numeral. Raising
+     only the floor keeps the fluid range identical to every other section. */
+  padding-top: clamp(7.5rem, 12vh, 9.5rem);
+}
+
+#doctrine::before {
+  content: "";
+  position: absolute;
+  z-index: -2;
+  /* 20% of bleed top and bottom: more than the 14% of section height the
+     drift below can travel, so an edge never swings into view. */
+  inset: -20% 0;
+  background:
+    linear-gradient(rgba(8, 8, 6, .82), rgba(8, 8, 6, .82)),
+    url("../assets/img/background/bg-3.jpg") center / cover no-repeat;
+}
+
+/* Parallax. The plate drifts DOWN as the page scrolls up, so the photograph
+   travels less than the section it sits behind and reads as further away.
+
+   Driven by a view() timeline: progress is tied to the section's own passage
+   through the viewport, so the compositor runs it with no scroll handler and
+   no layout reads. @supports keeps it off browsers without scroll-driven
+   animation, where the shorthand-free longhands would otherwise resolve to a
+   0s document-timeline animation and pin the plate at its end state.
+
+   animation-timeline is declared AFTER animation-name for the same reason
+   style.css re-declares animation-delay after its shorthand — had a shorthand
+   been used here it would reset the timeline back to auto. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    #doctrine::before {
+      animation-name: doctrine-drift;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: view();
+    }
+  }
+}
+
+@keyframes doctrine-drift {
+  from { transform: translateY(-10%); }
+  to   { transform: translateY(10%);  }
+}
+
+/* The head and body still line up with every other section's measure. */
+#doctrine > * {
+  max-width: var(--max);
+  margin-inline: auto;
+}
+
+#doctrine .ghost {
+  -webkit-text-stroke-color: rgba(246, 244, 240, .14);
+}
+
+#doctrine .vision {
+  background:
+    linear-gradient(140deg, rgba(235, 242, 18, .16), transparent 55%),
+    rgba(255, 255, 255, .05);
+}
+
 .doctrine { display: grid; gap: clamp(3rem, 8vh, 5rem); }
 
 .vision {
