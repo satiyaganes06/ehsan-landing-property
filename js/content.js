@@ -15,12 +15,17 @@
      6. story cards         one testimonial card expanded at a time, on hover
      7. ledger disclosure   "view more" reveals the rest of the work record
      8. assistant widget    the floating chat launcher, canned replies only
+     9. row navigation      work-record rows open their detail page
+    10. awards carousel     auto-scrolling recognition strip
+    11. enquiry form        client-side validation, placeholder submit
+    12. commitment stage    scattered grid scrubbed through a pinned panel
 
    Every one of these degrades to the authored HTML if it never runs: the
    marquees show one static column, the numbers already read correctly in the
-   markup, the ledger is a plain table, the rail simply stays inert. The
-   topnav needs nothing here at all — it hangs off the same html.past-hero
-   flag #5 already sets.
+   markup, the ledger is a plain table, the rail simply stays inert, and the
+   commitment stage stays a plain grid above a numbered list. The topnav needs
+   nothing here at all — it hangs off the same html.past-hero flag #5 already
+   sets.
    ------------------------------------------------------------------------- */
 
 (() => {
@@ -377,13 +382,22 @@
   }
 
   /* ---------- 9. project row navigation ----------
-     Navigate to project detail page on row click */
+     Navigate to project detail page on row click.
+
+     Through SITE.url, not a bare relative path. The detail page lives in
+     /html/ while the ledger that links to it is at the root, so a plain
+     "project-detail.html" resolved to /project-detail.html and 404'd. A plain
+     "html/project-detail.html" would fix the root case and break everywhere
+     else — this file is loaded by all five pages, four of which are already
+     inside /html/ and would resolve it to /html/html/. SITE.url anchors the
+     path to the project root regardless of which page is asking. */
 
   document.querySelectorAll('.row[data-project-id]').forEach((row) => {
     row.addEventListener('click', () => {
       const projectId = row.dataset.projectId;
       if (projectId) {
-        window.location.href = `project-detail.html?project=${projectId}`;
+        window.location.href =
+          SITE.url(`html/project-detail.html?project=${encodeURIComponent(projectId)}`);
       }
     });
   });
@@ -526,5 +540,193 @@
     enquiry.addEventListener('input', () => {
       if (status && status.textContent) report('', null);
     });
+  }
+
+
+  /* ---------- 12. commitment stage ----------
+     The pinned black panel in section 02. Two jobs:
+
+       a. SCATTER. Every cell is given an explicit grid-row/grid-column, so
+          the ten photographs walk diagonally across the columns (a second one
+          joining every third row) and the five commitments drop into the far
+          side of the rows that carry only one card. Explicit placement is
+          what lets the markup keep the <ol> intact while the visual order
+          zig-zags — grid position is independent of DOM order.
+
+       b. BLOOM. The wrap is translated up through the sticky stage, and each
+          cell is scaled from its own position on screen: up as it enters, back
+          down as it leaves. Cards scale; text fades and rises instead, because
+          type scaled from zero reads as a cheap trick rather than as depth.
+
+     The per-frame pass reads ONE rect (the section's) and then only writes —
+     each cell's offset within the stage is cached at measure time, so the
+     loop never interleaves reads and writes no matter how many cells there
+     are. Everything is gated behind .is-live, which is added here: with this
+     module absent the CSS leaves the stage static and the grid auto-flows. */
+
+  const commit = document.getElementById('commitment');
+  const cGrid  = commit && commit.querySelector('[data-commit-grid]');
+
+  if (commit && cGrid && !REDUCE.matches) {
+    const stage = commit.querySelector('.commit__stage');
+    const wrap  = commit.querySelector('.commit__wrap');
+    const cue   = commit.querySelector('[data-commit-cue]');
+    const cells = [...cGrid.querySelectorAll('.commit__cell')];
+    const shots = cells.filter((c) => c.classList.contains('commit__shot'));
+    const vows  = cells.filter((c) => c.classList.contains('commit__vow'));
+
+    const put = (el, row, col, cols) => {
+      el.style.gridRow    = row + 1;
+      el.style.gridColumn = col + 1;
+      // Cells bloom toward the middle: the origin is pinned to whichever edge
+      // faces the centre of the grid, so the scatter closes inward.
+      el.style.transformOrigin = col < cols / 2 ? 'right bottom' : 'left bottom';
+    };
+
+    const scatter = (cols) => {
+      let s = 0, v = 0;
+      for (let r = 0; (s < shots.length || v < vows.length) && r < 60; r++) {
+        const taken = new Array(cols).fill(false);
+        const a = (r * 2 + (r % 2)) % cols;
+
+        if (s < shots.length) { put(shots[s++], r, a, cols); taken[a] = true; }
+
+        if (r % 3 === 0 && s < shots.length) {
+          let b = (a + 2) % cols;
+          if (b === a) b = (a + 1) % cols;
+          if (!taken[b]) { put(shots[s++], r, b, cols); taken[b] = true; }
+        }
+
+        // A commitment takes the far side of the row from the photograph. It
+        // lands on odd rows while shots remain, then on any row once they run
+        // out. Tightening that to "single-card rows only" was tried and is
+        // worse: it pushes the last three commitments past the final
+        // photograph and the section trails off into a wall of text.
+        if (v < vows.length && (r % 2 === 1 || s >= shots.length)) {
+          const want = (a + Math.floor(cols / 2)) % cols;
+          let pick = -1, best = Infinity;
+          for (let i = 0; i < cols; i++) {
+            if (taken[i]) continue;
+            const d = Math.abs(i - want);
+            if (d < best) { best = d; pick = i; }
+          }
+          if (pick >= 0) { put(vows[v++], r, pick, cols); taken[pick] = true; }
+        }
+      }
+    };
+
+    let travel = 1;
+    let geo    = [];
+    let idle   = false;
+    let qd     = false;
+
+    function paint() {
+      qd = false;
+      const vh  = window.innerHeight;
+      // Distance scrolled INTO the section. One rect read, taken fresh rather
+      // than cached, so nothing above this section resizing can desync it.
+      const rel = -commit.getBoundingClientRect().top;
+
+      // Nothing to do while the section is a full viewport away — but flush
+      // once on the way out so no cell is left frozen mid-scale.
+      if (rel < -vh || rel > travel + vh) {
+        if (idle) return;
+        idle = true;
+      } else {
+        idle = false;
+      }
+
+      const held = Math.max(0, Math.min(rel, travel));
+      const top0 = held - rel;   // stage's own top in the viewport: 0 while pinned
+
+      wrap.style.transform = `translate3d(0, ${-held}px, 0)`;
+
+      // Cue: up as soon as the stage pins, down again before the travel is
+      // spent, so it is never pointing at a section that has nothing left.
+      if (cue) {
+        const p = held / travel;
+        const o = Math.max(0, Math.min(1, Math.min(p / 0.05, (0.92 - p) / 0.1)));
+        cue.style.opacity = o.toFixed(3);
+      }
+
+      for (const g of geo) {
+        const top    = top0 + g.top - held;
+        const bottom = top + g.h;
+
+        let k = 0;
+        if (bottom > 0 && top < vh) {
+          const enter = Math.min(1, (vh - top) / (vh * 0.6));
+          const exit  = Math.min(1, bottom / (vh * 0.4));
+          k = Math.max(0, Math.min(enter, exit));
+        }
+
+        if (g.vow) {
+          g.el.style.opacity   = k.toFixed(3);
+          g.el.style.transform = `translate3d(0, ${((1 - k) * 40).toFixed(2)}px, 0)`;
+        } else {
+          g.el.style.transform = `scale(${k.toFixed(4)})`;
+        }
+      }
+    }
+
+    function measure() {
+      const cols = parseInt(
+        getComputedStyle(cGrid).getPropertyValue('--commit-cols'), 10
+      ) || 2;
+
+      commit.classList.remove('is-live');
+      commit.style.height = '';
+      scatter(cols);
+
+      // Live BEFORE measuring: .is-live is what swaps the wrap's padding for
+      // the taller live one, so measuring first would cache the wrong offsets.
+      commit.classList.add('is-live');
+
+      // Wind every transform back to rest first. Rects are POST-transform, so
+      // a cell still holding scale(0) from the last frame would report a
+      // collapsed box and poison its own cached geometry — which is exactly
+      // what would happen on any resize after the first.
+      wrap.style.transform = 'none';
+      for (const el of cells) { el.style.transform = 'none'; el.style.opacity = ''; }
+
+      travel = Math.max(1, wrap.offsetHeight);
+      // The stall is the section's height minus the stage's, so the stage is
+      // MEASURED rather than assumed to be window.innerHeight: it is sized in
+      // svh, which on mobile is the small viewport and does not match
+      // innerHeight. Assuming would unpin the stage early by the URL-bar's
+      // worth of pixels, right at the end of the scroll.
+      commit.style.height = `${stage.offsetHeight + travel}px`;
+
+      // Offsets are taken against the stage's own box rather than via
+      // offsetTop. offsetParent is defined by `position`, but the wrap carries
+      // will-change/transform, and relying on which of the two a given engine
+      // hands back is the kind of thing that works until it doesn't.
+      const base = stage.getBoundingClientRect().top;
+      geo = cells.map((el) => {
+        const r = el.getBoundingClientRect();
+        return {
+          el,
+          top: r.top - base,
+          h:   r.height,
+          vow: el.classList.contains('commit__vow'),
+        };
+      });
+
+      idle = false;
+      paint();
+    }
+
+    addEventListener('scroll', () => {
+      if (qd) return;
+      qd = true;
+      requestAnimationFrame(paint);
+    }, { passive: true });
+
+    addEventListener('resize', measure, { passive: true });
+    measure();
+
+    // The commitments are set in the serif; until it loads their cells are
+    // the wrong height, which would leave every cached offset stale.
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
   }
 })();

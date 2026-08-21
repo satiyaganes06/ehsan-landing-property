@@ -222,21 +222,73 @@
   </section>
 
 
-  <!-- ================= 02 · COMMITMENT ================= -->
-  <section class="section" id="commitment">
-    <header class="section__head">
-      <span class="ghost" aria-hidden="true">02</span>
-      <p class="section__label" data-reveal data-reveal-ring="0">02 — Commitment</p>
-      <h2 class="section__title" data-reveal data-reveal-ring="0">What we <em>commit</em> to.</h2>
-    </header>
+  <!-- ================= 02 · COMMITMENT =================
+       A pinned black stage. The sticky stall holds the panel still while the
+       scattered grid is scrolled THROUGH it — each card scaling up as it
+       enters the viewport and back down as it leaves, so the section reads as
+       a slow bloom rather than a list.
 
-    <ol class="vows">
-      <li style="--i:0" data-reveal data-reveal-ring="1"><span class="vows__n">01</span><span class="vows__t">To become a visionary and competitive company</span></li>
-      <li style="--i:1" data-reveal data-reveal-ring="2"><span class="vows__n">02</span><span class="vows__t">To have efficient and effective operational time management</span></li>
-      <li style="--i:2" data-reveal data-reveal-ring="3"><span class="vows__n">03</span><span class="vows__t">To be innovative and maintain integrity</span></li>
-      <li style="--i:3" data-reveal data-reveal-ring="4"><span class="vows__n">04</span><span class="vows__t">To instil a team spirit that values sincerity</span></li>
-      <li style="--i:4" data-reveal data-reveal-ring="5"><span class="vows__n">05</span><span class="vows__t">To provide the best quality and satisfaction to our customers</span></li>
-    </ol>
+       Placement is NOT DOM order: content.js (#9) assigns every cell an
+       explicit grid-row/grid-column, which is what lets the five commitments
+       sit scattered among the photographs while staying contiguous in the
+       markup. That is deliberate — a screen reader gets the ten shots, then
+       the ordered list of commitments, which reads better than the visual
+       zig-zag would.
+
+       Degrades completely: the stage only goes sticky once content.js adds
+       .is-live, so with JS off this is a plain grid of shots above a legible
+       numbered list, in flow. -->
+  <section class="section commit" id="commitment">
+    <div class="commit__stage">
+
+      <div class="commit__wrap">
+        <div class="commit__grid" data-commit-grid>
+
+          <figure class="commit__cell commit__shot"><img src="assets/img/family/family1.jpeg" alt="A father carrying his daughter on his shoulders beside her mother, outdoors among trees" loading="lazy" decoding="async"></figure>
+          <figure class="commit__cell commit__shot"><img src="assets/img/family/family3.avif" alt="Parents and their daughter together in a sunlit living room" loading="lazy" decoding="async"></figure>
+          <figure class="commit__cell commit__shot"><img src="assets/img/family/family2.jpeg" alt="Parents and their daughter leaning over the back of a sofa at home" loading="lazy" decoding="async"></figure>
+          <figure class="commit__cell commit__shot"><img src="assets/img/family/family9.avif" alt="Parents and their daughter seated together on a living-room sofa" loading="lazy" decoding="async"></figure>
+          <figure class="commit__cell commit__shot"><img src="assets/img/family/family6.jpeg" alt="A girl riding on her mother's back in the living room, her father seated nearby" loading="lazy" decoding="async"></figure>
+          <figure class="commit__cell commit__shot"><img src="assets/img/family/family5.jpg" alt="Parents cradling their baby together in a park" loading="lazy" decoding="async"></figure>
+          <figure class="commit__cell commit__shot"><img src="assets/img/family/family8.jpg" alt="Parents and their three young children gathered on a doorstep" loading="lazy" decoding="async"></figure>
+          <figure class="commit__cell commit__shot"><img src="assets/img/family/family10.jpg" alt="A couple sitting together on their sofa with a tablet" loading="lazy" decoding="async"></figure>
+          <figure class="commit__cell commit__shot"><img src="assets/img/family/family4.avif" alt="Parents outdoors with their daughter held in her father's arms" loading="lazy" decoding="async"></figure>
+          <figure class="commit__cell commit__shot"><img src="assets/img/family/family7.webp" alt="A family blowing bubbles together on a park lawn" loading="lazy" decoding="async"></figure>
+
+          <!-- role="list" is not redundant: `display: contents` on the <ol>
+               is what promotes these to grid items, and several browsers drop
+               list semantics from a display:contents list without it. -->
+          <ol class="commit__vows" role="list">
+            <li role="listitem" class="commit__cell commit__vow"><b>01</b><p>To become a visionary and competitive company</p></li>
+            <li role="listitem" class="commit__cell commit__vow"><b>02</b><p>To have efficient and effective operational time management</p></li>
+            <li role="listitem" class="commit__cell commit__vow"><b>03</b><p>To be innovative and maintain integrity</p></li>
+            <li role="listitem" class="commit__cell commit__vow"><b>04</b><p>To instil a team spirit that values sincerity</p></li>
+            <li role="listitem" class="commit__cell commit__vow"><b>05</b><p>To provide the best quality and satisfaction to our customers</p></li>
+          </ol>
+
+        </div>
+      </div>
+
+      <header class="commit__fore">
+        <span class="ghost" aria-hidden="true">02</span>
+        <p class="section__label">02 — Commitment</p>
+        <h2 class="section__title" >What we <em>commit</em> to.</h2>
+
+        <!-- Only meaningful while the stage is pinned, which is why it stays
+             hidden until .is-live: with the panel stalled the page reads as
+             frozen, and this is what says there is more below. content.js
+             fades it out as the section runs out of travel. -->
+        <span class="commit__cue" data-commit-cue aria-hidden="true">
+          <i>Keep scrolling</i>
+          <svg viewBox="0 0 24 30" width="13" height="17" fill="none"
+               stroke="currentColor" stroke-width="1.6"
+               stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2v24M4 19l8 8 8-8"/>
+          </svg>
+        </span>
+      </header>
+
+    </div>
   </section>
 
 

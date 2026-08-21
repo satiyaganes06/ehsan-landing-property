@@ -1138,42 +1138,238 @@ html.past-hero .rail { opacity: 1; pointer-events: auto; }
 }
 
 /* =========================================================================
-   COMMITMENT (offset stagger)  (index.html)
+   COMMITMENT (pinned black stage, scattered grid)  (index.html)
+   -------------------------------------------------------------------------
+   The stage is sticky, not fixed. A fixed panel would have to escape .content
+   (which is `overflow: clip` and `isolation: isolate`) and would leave the
+   document height lying about how far there is to scroll — which is exactly
+   what the progress bar and the rail's current-section maths read. Sticky
+   pins identically, stays inside the flow, and keeps both correct for free.
+
+   EVERY animated declaration here is inert until content.js adds .is-live.
+   With JS off the stage never goes sticky, the grid auto-flows in DOM order,
+   and the section is a plain block of photographs above a numbered list.
    ========================================================================= */
 
-.vows { list-style: none; margin: 0; padding: 0; }
-.vows li {
+.commit {
+  max-width: none;
+  padding: 0;
+  border-top: 0;
+}
+
+.commit__stage {
+  position: relative;
+  background: white;
+  /* Keeps ::before's negative z-index inside this box. Without it the grid
+     below would drop behind the panel and never be seen. */
+  isolation: isolate;
+}
+
+/* The blueprint grid, carried in from the prelude. .content::before draws it
+   for the whole page, but this panel's own opaque ground paints over it, so
+   the section has to redraw its own — same token, same 96px module, same .45,
+   so the two stay in step if --c-line is ever retuned.
+
+   z-index: -1 rather than 0 is load-bearing. The wrap and its photographs are
+   static, and static content paints BELOW a positioned box at z-index 0 — at
+   0 the graph paper would sit on top of the pictures.
+
+   Left unmasked, unlike .content::before: that radial mask fades the grid out
+   down the page, which on a stage that holds still would read as the pattern
+   dying halfway through the section rather than as depth. */
+.commit__stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right,  var(--c-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--c-line) 1px, transparent 1px);
+  background-size: 96px 96px;
+  opacity: .45;
+}
+
+.commit.is-live .commit__stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  overflow: clip;
+}
+
+.commit__wrap {
+  padding: clamp(4rem, 12vh, 7rem) var(--gutter);
+}
+
+/* Live, the grid starts below the fold and ends above it, so the first cards
+   scale in from empty space rather than being on screen at rest. */
+.commit.is-live .commit__wrap {
+  padding-top: min(400px, 40vh);
+  padding-bottom: 30vh;
+  will-change: transform;
+}
+
+/* Single source of truth for the column count — content.js reads this back
+   with getComputedStyle rather than repeating the breakpoints in JS, so the
+   two can never drift apart. */
+.commit__grid {
+  --commit-cols: 2;
   display: grid;
-  grid-template-columns: minmax(0, 5rem) minmax(0, 1fr);
-  gap: clamp(1rem, 4vw, 3rem);
-  align-items: center;
-  padding: clamp(1.5rem, 3.5vh, 2.5rem) 0;
-  border-bottom: 1px solid var(--c-line);
-  /* Each row steps further in — the list reads as a ramp, not a stack. */
-  padding-left: calc(var(--i, 0) * clamp(0px, 2.2vw, 2.75rem));
-  transition: padding-left .5s var(--ease), background-color .35s ease;
+  grid-template-columns: repeat(var(--commit-cols), minmax(0, 1fr));
+  gap: clamp(1rem, 3vw, 2.5rem);
+  max-width: var(--max);
+  margin-inline: auto;
 }
-.vows li:first-child { border-top: 1px solid var(--c-line); }
-.vows li:hover { background: rgba(235, 242, 18, .22); }
-.vows__n {
-  font-family: var(--serif);
-  font-size: clamp(1.75rem, 4vw, 2.75rem);
-  font-weight: 300;
-  line-height: 1;
-  letter-spacing: -.03em;
-  color: transparent;
-  -webkit-text-stroke: 1px var(--brass-line);
-  transition: color .4s ease;
+
+@media (min-width: 640px)  { .commit__grid { --commit-cols: 3; } }
+@media (min-width: 1024px) { .commit__grid { --commit-cols: 4; } }
+
+/* display: contents dissolves the <ol> so its items become grid items of
+   .commit__grid directly. See the role="list" note in index.html. */
+.commit__vows {
+  display: contents;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
-.vows li:hover .vows__n { color: var(--brass); }
-.vows__t {
+
+.commit__shot {
+  margin: 0;
+  /* Every source is natively 3:2, so the cell matches it and object-fit has
+     nothing to crop — which matters more here than it did for the earlier
+     architectural shots, since anything trimmed off these is somebody's head.
+     Being landscape also keeps this one section to roughly two viewports. */
+  aspect-ratio: 3 / 2;
+  overflow: clip;
+  background: rgba(18, 17, 13, .06);
+}
+.commit__shot img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.commit__vow {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: .875rem;
+}
+.commit__vow b {
+  font-family: var(--mono);
+  font-size: .625rem;
+  font-weight: 400;
+  letter-spacing: .28em;
+  /* --brass proper is near-white in luminance and would vanish on this cream
+     panel; --brass-ink is the same hue at text contrast. */
+  color: var(--brass-ink);
+}
+.commit__vow p {
+  margin: 0;
   font-family: var(--serif);
-  font-size: clamp(1.0625rem, 2.2vw, 1.625rem);
+  font-size: clamp(1.0625rem, 1.9vw, 1.5rem);
   font-weight: 300;
   line-height: 1.32;
   letter-spacing: -.015em;
   color: var(--c-ink);
 }
+
+.commit.is-live .commit__cell {
+  will-change: transform;
+}
+
+/* Pinned title. This carried mix-blend-mode: exclusion so it stayed readable
+   over any photograph, but exclusion inverts hue as well as luminance and
+   turned the brass label and the italic in the title a muddy blue — so the
+   whole layer had to go monochrome to survive it. Brand colour wins: the
+   blend is gone, the label and em now inherit --brass-ink / --brass-hi from
+   the shared .section rules exactly like every other section, and the scrim
+   below does the legibility job the blend used to. */
+.commit__fore {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: clamp(2rem, 6vh, 4rem) var(--gutter);
+  pointer-events: none;
+  color: var(--c-ink);
+}
+.commit:not(.is-live) .commit__fore {
+  position: static;
+  padding-bottom: 0;
+}
+.commit__fore .section__title { margin-bottom: 0; }
+
+/* The base .ghost hangs at top: -.34em, which inside this pinned fore would
+   put it above the stage and straight into the overflow clip. Its stroke
+   colour needs no override now the panel is cream — the shared rule is
+   already tuned for a light ground. */
+.commit__fore .ghost {
+  top: clamp(2rem, 6vh, 4rem);
+  right: var(--gutter);
+}
+
+/* Scroll cue, bottom-right — clear of the title at bottom-left and of the
+   ghost numeral at top-right. Opacity is owned by content.js, which ramps it
+   in once the stage pins and back out before the travel runs out, so it never
+   points down at a section that has already finished. Hidden outright without
+   JS, where nothing pins and the cue would be a lie. */
+.commit__cue {
+  position: absolute;
+  right: var(--gutter);
+  bottom: clamp(2rem, 6vh, 4rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .75rem;
+  opacity: 0;
+  color: var(--brass-ink);
+}
+.commit:not(.is-live) .commit__cue { display: none; }
+
+.commit__cue i {
+  font-family: var(--mono);
+  font-style: normal;
+  font-size: .5625rem;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+}
+.commit__cue svg {
+  /* The arrow runs its own loop inside the opacity content.js sets on the
+     parent; the two multiply, so the cue can fade out mid-cycle without the
+     travel stuttering. */
+  animation: commit-cue 1.9s var(--ease) infinite;
+}
+
+@keyframes commit-cue {
+  0%   { transform: translateY(-5px); opacity: 0; }
+  35%  { opacity: 1; }
+  65%  { opacity: 1; }
+  100% { transform: translateY(7px);  opacity: 0; }
+}
+
+/* Replaces the blend: a soft lift of the panel colour under the type, so a
+   photograph scrolling through the lower-left corner cannot swallow it.
+   z-index -1 keeps it inside the fore's own stacking context — above the
+   grid, below the words. */
+.commit.is-live .commit__fore::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  z-index: -1;
+  height: 62%;
+  background: linear-gradient(to top, #fff 22%, transparent);
+}
+
+/* Reduced motion needs no rules of its own. content.js checks the same query
+   and returns before adding .is-live, so every :not(.is-live) branch above is
+   already the reduced-motion state: static stage, auto-flowed grid, no pin,
+   no scaling. A @media block here would only be dead weight that reads as
+   load-bearing. */
 
 /* =========================================================================
    STRUCTURE (org chart)  (about.html)
@@ -2358,7 +2554,7 @@ html.reveal-armed .row:not(.is-revealed) .bar i { transform: scaleX(0); }
 }
 
 .award-card__icon {
-  height: 60px;
+  height: 100px;
   width: auto;
   max-width: 100%;
   display: block;
