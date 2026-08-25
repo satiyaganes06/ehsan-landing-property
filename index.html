@@ -338,11 +338,15 @@
 
 
   <!-- ================= 04 · WORK RECORD =================
-       The ledger. Rows carry data-val (RM millions) for the running tally and
-       --w for the proportional bar, scaled against the largest project in the
-       book (RM 270m, Residensi Mutiara Austin). Each row's <img> serves two
-       jobs: on a fine pointer it is lifted into the .peek panel that tracks
-       the cursor; below 680px the same element is shown inline instead. -->
+       The ledger, as a set of specimen cards. Each card carries data-val (RM
+       millions) for the running tally and --w for the measure along its foot,
+       scaled against the largest project in the book (RM 270m, Residensi
+       Mutiara Austin) — so the bars read as one continuous comparison across
+       the whole set rather than sixteen unrelated widths.
+
+       Descriptions are clamped to four lines in CSS. The full text of every
+       one of them lives on the project detail page the card links to, which
+       is where the long-form belongs. -->
   <section class="section" id="record">
     <header class="section__head">
       <span class="ghost" aria-hidden="true">04</span>
@@ -350,7 +354,7 @@
       <h2 class="section__title" data-reveal data-reveal-ring="0">Sixteen projects, <em>one book</em>.</h2>
       <p class="section__lede" data-reveal data-reveal-ring="1">
         Every project on the company work record, in order of commencement —
-        completed, on-going and future.<span class="hint"> Hover a row to see it.</span>
+        completed, on-going and future.<span class="hint"> Open a card for the full record.</span>
       </p>
     </header>
 
@@ -366,201 +370,249 @@
 
       <h3 class="phase">Completed <b>2009 — 2024</b></h3>
 
-      <article class="row" data-project-id="proj-1" data-reveal data-reveal-ring="1" data-val="1.8">
-        <span class="row__shot"><img src="assets/img/proj-kota-warisan.jpg" alt="Luxurious bungalow at Kota Warisan, Sepang" loading="lazy" decoding="async"></span>
-        <p class="row__yr">2009<small>2010</small></p>
-        <div>
-          <h4 class="row__name">Luxurious Bungalow, Kota Warisan</h4>
-          <p class="row__loc">Sepang, Selangor</p>
-          <p class="row__desc">A <b>detached house with swimming pool</b> in Kota Warisan. Freehold title, 7,000 square feet.</p>
+      <article class="pcard" data-project-id="proj-1" data-reveal data-reveal-ring="1" data-val="1.8">
+        <div class="pcard__shot">
+          <img src="assets/img/proj-kota-warisan.jpg" alt="Luxurious bungalow at Kota Warisan, Sepang" loading="lazy" decoding="async">
+          <span class="tag tag--done">Completed</span>
         </div>
-        <div class="row__val"><span class="row__rm"><i>RM</i>1,800,000</span><span class="bar" style="--w:.0067"><i></i></span></div>
-        <div class="row__status"><span class="tag tag--done">Completed</span></div>
+        <p class="pcard__yr">2009<small>2010</small></p>
+        <div class="pcard__body">
+          <h4 class="pcard__name">Luxurious Bungalow, Kota Warisan</h4>
+          <p class="pcard__loc">Sepang, Selangor</p>
+          <p class="pcard__desc">A <b>detached house with swimming pool</b> in Kota Warisan. Freehold title, 7,000 square feet.</p>
+        </div>
+        <p class="pcard__rm"><i>RM</i>1,800,000</p>
+        <span class="bar" style="--w:.0067"><i></i></span>
       </article>
 
-      <article class="row" data-project-id="proj-2" data-reveal data-reveal-ring="1" data-val="2.3">
-        <span class="row__shot"><img src="assets/img/proj-mosque-kajang.jpg" alt="Assirathul Mustaqeem Mosque, Kajang" loading="lazy" decoding="async"></span>
-        <p class="row__yr">2010<small>2011</small></p>
-        <div>
-          <h4 class="row__name">Assirathul Mustaqeem Mosque</h4>
-          <p class="row__loc">Masjid India Muslim Kajang, Jalan Reko, Kajang, Selangor</p>
-          <p class="row__desc">Existing madrasah demolished and rebuilt into a <b>two-storey surau</b> on government land. Freehold.</p>
+      <article class="pcard" data-project-id="proj-2" data-reveal data-reveal-ring="1" data-val="2.3">
+        <div class="pcard__shot">
+          <img src="assets/img/proj-mosque-kajang.jpg" alt="Assirathul Mustaqeem Mosque, Kajang" loading="lazy" decoding="async">
+          <span class="tag tag--done">Completed</span>
         </div>
-        <div class="row__val"><span class="row__rm"><i>RM</i>2,300,000</span><span class="bar" style="--w:.0085"><i></i></span></div>
-        <div class="row__status"><span class="tag tag--done">Completed</span></div>
+        <p class="pcard__yr">2010<small>2011</small></p>
+        <div class="pcard__body">
+          <h4 class="pcard__name">Assirathul Mustaqeem Mosque</h4>
+          <p class="pcard__loc">Masjid India Muslim Kajang, Jalan Reko, Kajang, Selangor</p>
+          <p class="pcard__desc">Existing madrasah demolished and rebuilt into a <b>two-storey surau</b> on government land. Freehold.</p>
+        </div>
+        <p class="pcard__rm"><i>RM</i>2,300,000</p>
+        <span class="bar" style="--w:.0085"><i></i></span>
       </article>
 
-      <article class="row" data-project-id="proj-3" data-reveal data-reveal-ring="2" data-val="13">
-        <span class="row__shot"><img src="assets/img/proj-dimensi.jpg" alt="Apartment Dimensi, Alor Gajah, Melaka" loading="lazy" decoding="async"></span>
-        <p class="row__yr">2010<small>2012</small></p>
-        <div>
-          <h4 class="row__name">Apartment Dimensi</h4>
-          <p class="row__loc">Taman Dimensi, Mukim Sungai Petani, Alor Gajah District, Melaka</p>
-          <p class="row__desc"><b>96 units</b> across four blocks of four-storey apartments (Blocks A, B, C &amp; D). Freehold. GDV RM 13 million. An abandoned project taken over and completed with CF.</p>
+      <article class="pcard" data-project-id="proj-3" data-reveal data-reveal-ring="2" data-val="13">
+        <div class="pcard__shot">
+          <img src="assets/img/proj-dimensi.jpg" alt="Apartment Dimensi, Alor Gajah, Melaka" loading="lazy" decoding="async">
+          <span class="tag tag--done">Revived &amp; CF</span>
         </div>
-        <div class="row__val"><span class="row__rm"><i>RM</i>13,000,000</span><span class="bar" style="--w:.048"><i></i></span></div>
-        <div class="row__status"><span class="tag tag--done">Revived &amp; CF</span></div>
+        <p class="pcard__yr">2010<small>2012</small></p>
+        <div class="pcard__body">
+          <h4 class="pcard__name">Apartment Dimensi</h4>
+          <p class="pcard__loc">Taman Dimensi, Mukim Sungai Petani, Alor Gajah District, Melaka</p>
+          <p class="pcard__desc"><b>96 units</b> across four blocks of four-storey apartments (Blocks A, B, C &amp; D). Freehold. GDV RM 13 million. An abandoned project taken over and completed with CF.</p>
+        </div>
+        <p class="pcard__rm"><i>RM</i>13,000,000</p>
+        <span class="bar" style="--w:.048"><i></i></span>
       </article>
 
-      <article class="row" data-project-id="proj-4" data-reveal data-reveal-ring="2" data-val="4.8">
-        <span class="row__shot"><img src="assets/img/proj-hotel-ehsan.jpg" alt="Hotel Ehsan, Ampang" loading="lazy" decoding="async"></span>
-        <p class="row__yr">2011<small>2012</small></p>
-        <div>
-          <h4 class="row__name">Hotel Ehsan, Ampang</h4>
-          <p class="row__loc">Jalan Memanda 5, Ampang Point, Ampang, Selangor</p>
-          <p class="row__desc">One unit of shop lot converted into a <b>budget hotel</b>. State leasehold, 99-year lease, 1,650 square feet.</p>
+      <article class="pcard" data-project-id="proj-4" data-reveal data-reveal-ring="2" data-val="4.8">
+        <div class="pcard__shot">
+          <img src="assets/img/proj-hotel-ehsan.jpg" alt="Hotel Ehsan, Ampang" loading="lazy" decoding="async">
+          <span class="tag tag--done">Completed</span>
         </div>
-        <div class="row__val"><span class="row__rm"><i>RM</i>4,800,000</span><span class="bar" style="--w:.0178"><i></i></span></div>
-        <div class="row__status"><span class="tag tag--done">Completed</span></div>
+        <p class="pcard__yr">2011<small>2012</small></p>
+        <div class="pcard__body">
+          <h4 class="pcard__name">Hotel Ehsan, Ampang</h4>
+          <p class="pcard__loc">Jalan Memanda 5, Ampang Point, Ampang, Selangor</p>
+          <p class="pcard__desc">One unit of shop lot converted into a <b>budget hotel</b>. State leasehold, 99-year lease, 1,650 square feet.</p>
+        </div>
+        <p class="pcard__rm"><i>RM</i>4,800,000</p>
+        <span class="bar" style="--w:.0178"><i></i></span>
       </article>
 
-      <article class="row" data-project-id="proj-5" data-reveal data-reveal-ring="3" data-val="10">
-        <span class="row__shot"><img src="assets/img/proj-markisa.jpg" alt="Taman Pinggiran Markisa, Nilai" loading="lazy" decoding="async"></span>
-        <p class="row__yr">2012<small>2014</small></p>
-        <div>
-          <h4 class="row__name">Taman Pinggiran Markisa</h4>
-          <p class="row__loc">Kampung Jijan, Mukim Labu, Nilai, Negeri Sembilan</p>
-          <p class="row__desc"><b>27 units</b> on freehold land. GDV RM 10 million. An abandoned project taken over and completed with CF.</p>
+      <article class="pcard" data-project-id="proj-5" data-reveal data-reveal-ring="3" data-val="10">
+        <div class="pcard__shot">
+          <img src="assets/img/proj-markisa.jpg" alt="Taman Pinggiran Markisa, Nilai" loading="lazy" decoding="async">
+          <span class="tag tag--done">Revived &amp; CF</span>
         </div>
-        <div class="row__val"><span class="row__rm"><i>RM</i>10,000,000</span><span class="bar" style="--w:.037"><i></i></span></div>
-        <div class="row__status"><span class="tag tag--done">Revived &amp; CF</span></div>
+        <p class="pcard__yr">2012<small>2014</small></p>
+        <div class="pcard__body">
+          <h4 class="pcard__name">Taman Pinggiran Markisa</h4>
+          <p class="pcard__loc">Kampung Jijan, Mukim Labu, Nilai, Negeri Sembilan</p>
+          <p class="pcard__desc"><b>27 units</b> on freehold land. GDV RM 10 million. An abandoned project taken over and completed with CF.</p>
+        </div>
+        <p class="pcard__rm"><i>RM</i>10,000,000</p>
+        <span class="bar" style="--w:.037"><i></i></span>
       </article>
 
       <div class="ledger__more" id="ledgerMore" hidden>
-      <article class="row" data-project-id="proj-6" data-reveal data-reveal-ring="3" data-val="42">
-        <span class="row__shot"><img src="assets/img/proj-salam-nadiah.jpg" alt="Taman Salam Nadiah, Bandar Baru Tampin" loading="lazy" decoding="async"></span>
-        <p class="row__yr">2015<small>2017</small></p>
-        <div>
-          <h4 class="row__name">Taman Salam Nadiah</h4>
-          <p class="row__loc">Bandar Baru Tampin, Mukim Gadong, Rembau District, Negeri Sembilan</p>
-          <p class="row__desc"><b>151 units</b> developed on Malay Reserve land across 14.27 acres. GDV RM 42 million. Phase 1 and Phase 2 fully completed with CCC.</p>
+      <article class="pcard" data-project-id="proj-6" data-reveal data-reveal-ring="3" data-val="42">
+        <div class="pcard__shot">
+          <img src="assets/img/proj-salam-nadiah.jpg" alt="Taman Salam Nadiah, Bandar Baru Tampin" loading="lazy" decoding="async">
+          <span class="tag tag--done">CCC issued</span>
         </div>
-        <div class="row__val"><span class="row__rm"><i>RM</i>42,000,000</span><span class="bar" style="--w:.1556"><i></i></span></div>
-        <div class="row__status"><span class="tag tag--done">CCC issued</span></div>
+        <p class="pcard__yr">2015<small>2017</small></p>
+        <div class="pcard__body">
+          <h4 class="pcard__name">Taman Salam Nadiah</h4>
+          <p class="pcard__loc">Bandar Baru Tampin, Mukim Gadong, Rembau District, Negeri Sembilan</p>
+          <p class="pcard__desc"><b>151 units</b> developed on Malay Reserve land across 14.27 acres. GDV RM 42 million. Phase 1 and Phase 2 fully completed with CCC.</p>
+        </div>
+        <p class="pcard__rm"><i>RM</i>42,000,000</p>
+        <span class="bar" style="--w:.1556"><i></i></span>
       </article>
 
-      <article class="row" data-project-id="proj-7" data-reveal data-reveal-ring="4" data-val="8">
-        <span class="row__shot"><img src="assets/img/proj-shop-tampin.jpg" alt="Two-storey shop office, Bandar Baru Tampin" loading="lazy" decoding="async"></span>
-        <p class="row__yr">2015<small>2017</small></p>
-        <div>
-          <h4 class="row__name">2-Storey Shop Office, Bandar Baru Tampin</h4>
-          <p class="row__loc">Taman Salam Nadiah, Mukim Gadong, Rembau District, Negeri Sembilan</p>
-          <p class="row__desc"><b>13 units</b> of two-storey shop offices on Malay Reserve land and state leasehold. GDV RM 7.6 million.</p>
+      <article class="pcard" data-project-id="proj-7" data-reveal data-reveal-ring="4" data-val="8">
+        <div class="pcard__shot">
+          <img src="assets/img/proj-shop-tampin.jpg" alt="Two-storey shop office, Bandar Baru Tampin" loading="lazy" decoding="async">
+          <span class="tag tag--done">CCC issued</span>
         </div>
-        <div class="row__val"><span class="row__rm"><i>RM</i>8,000,000</span><span class="bar" style="--w:.0296"><i></i></span></div>
-        <div class="row__status"><span class="tag tag--done">CCC issued</span></div>
+        <p class="pcard__yr">2015<small>2017</small></p>
+        <div class="pcard__body">
+          <h4 class="pcard__name">2-Storey Shop Office, Bandar Baru Tampin</h4>
+          <p class="pcard__loc">Taman Salam Nadiah, Mukim Gadong, Rembau District, Negeri Sembilan</p>
+          <p class="pcard__desc"><b>13 units</b> of two-storey shop offices on Malay Reserve land and state leasehold. GDV RM 7.6 million.</p>
+        </div>
+        <p class="pcard__rm"><i>RM</i>8,000,000</p>
+        <span class="bar" style="--w:.0296"><i></i></span>
       </article>
 
-      <article class="row" data-project-id="proj-8" data-reveal data-reveal-ring="4" data-val="140">
-        <span class="row__shot"><img src="assets/img/proj-ehsan-residence.jpg" alt="Ehsan Residence Condominium, Sepang" loading="lazy" decoding="async"></span>
-        <p class="row__yr">2015<small>2018</small></p>
-        <div>
-          <h4 class="row__name">Ehsan Residence Condominium</h4>
-          <p class="row__loc">Mukim Dengkil, Sepang District, Selangor</p>
-          <p class="row__desc"><b>320 units</b> on a 5.4-acre site. GDV RM 140 million. Completed with CCC — the company's first high-rise scheme.</p>
+      <article class="pcard" data-project-id="proj-8" data-reveal data-reveal-ring="4" data-val="140">
+        <div class="pcard__shot">
+          <img src="assets/img/proj-ehsan-residence.jpg" alt="Ehsan Residence Condominium, Sepang" loading="lazy" decoding="async">
+          <span class="tag tag--done">CCC issued</span>
         </div>
-        <div class="row__val"><span class="row__rm"><i>RM</i>140,000,000</span><span class="bar" style="--w:.5185"><i></i></span></div>
-        <div class="row__status"><span class="tag tag--done">CCC issued</span></div>
+        <p class="pcard__yr">2015<small>2018</small></p>
+        <div class="pcard__body">
+          <h4 class="pcard__name">Ehsan Residence Condominium</h4>
+          <p class="pcard__loc">Mukim Dengkil, Sepang District, Selangor</p>
+          <p class="pcard__desc"><b>320 units</b> on a 5.4-acre site. GDV RM 140 million. Completed with CCC — the company's first high-rise scheme.</p>
+        </div>
+        <p class="pcard__rm"><i>RM</i>140,000,000</p>
+        <span class="bar" style="--w:.5185"><i></i></span>
       </article>
 
-      <article class="row" data-project-id="proj-9" data-reveal data-reveal-ring="5" data-val="30">
-        <span class="row__shot"><img src="assets/img/proj-sri-ehsan.jpg" alt="Taman Sri Ehsan, Kluang, Johor" loading="lazy" decoding="async"></span>
-        <p class="row__yr">2017<small>2019</small></p>
-        <div>
-          <h4 class="row__name">Taman Sri Ehsan</h4>
-          <p class="row__loc">Mukim Kluang, Jalan Batu Pahat, Johor Darul Takzim</p>
-          <p class="row__desc"><b>64 units</b> of single-storey semi-detached houses on freehold land. GDV RM 30 million. Fully completed with CCC.</p>
+      <article class="pcard" data-project-id="proj-9" data-reveal data-reveal-ring="5" data-val="30">
+        <div class="pcard__shot">
+          <img src="assets/img/proj-sri-ehsan.jpg" alt="Taman Sri Ehsan, Kluang, Johor" loading="lazy" decoding="async">
+          <span class="tag tag--done">CCC issued</span>
         </div>
-        <div class="row__val"><span class="row__rm"><i>RM</i>30,000,000</span><span class="bar" style="--w:.1111"><i></i></span></div>
-        <div class="row__status"><span class="tag tag--done">CCC issued</span></div>
+        <p class="pcard__yr">2017<small>2019</small></p>
+        <div class="pcard__body">
+          <h4 class="pcard__name">Taman Sri Ehsan</h4>
+          <p class="pcard__loc">Mukim Kluang, Jalan Batu Pahat, Johor Darul Takzim</p>
+          <p class="pcard__desc"><b>64 units</b> of single-storey semi-detached houses on freehold land. GDV RM 30 million. Fully completed with CCC.</p>
+        </div>
+        <p class="pcard__rm"><i>RM</i>30,000,000</p>
+        <span class="bar" style="--w:.1111"><i></i></span>
       </article>
 
-      <article class="row" data-project-id="proj-10" data-reveal data-reveal-ring="5" data-val="6.5">
-        <span class="row__shot"><img src="assets/img/proj-shop-residence.jpg" alt="Shop office at Ehsan Waterpark, Port Dickson" loading="lazy" decoding="async"></span>
-        <p class="row__yr">2017<small>2019</small></p>
-        <div>
-          <h4 class="row__name">2-Storey Shop Office, Ehsan Waterpark</h4>
-          <p class="row__loc">Port Dickson, Negeri Sembilan</p>
-          <p class="row__desc">Two-storey shop offices at Ehsan Waterpark on freehold land. Fully completed.</p>
+      <article class="pcard" data-project-id="proj-10" data-reveal data-reveal-ring="5" data-val="6.5">
+        <div class="pcard__shot">
+          <img src="assets/img/proj-shop-residence.jpg" alt="Shop office at Ehsan Waterpark, Port Dickson" loading="lazy" decoding="async">
+          <span class="tag tag--done">Completed</span>
         </div>
-        <div class="row__val"><span class="row__rm"><i>RM</i>6,500,000</span><span class="bar" style="--w:.0241"><i></i></span></div>
-        <div class="row__status"><span class="tag tag--done">Completed</span></div>
+        <p class="pcard__yr">2017<small>2019</small></p>
+        <div class="pcard__body">
+          <h4 class="pcard__name">2-Storey Shop Office, Ehsan Waterpark</h4>
+          <p class="pcard__loc">Port Dickson, Negeri Sembilan</p>
+          <p class="pcard__desc">Two-storey shop offices at Ehsan Waterpark on freehold land. Fully completed.</p>
+        </div>
+        <p class="pcard__rm"><i>RM</i>6,500,000</p>
+        <span class="bar" style="--w:.0241"><i></i></span>
       </article>
 
-      <article class="row" data-project-id="proj-11" data-reveal data-reveal-ring="6" data-val="12">
-        <span class="row__shot"><img src="assets/img/proj-shop-residence.jpg" alt="Shop office at Ehsan Residence, Sepang" loading="lazy" decoding="async"></span>
-        <p class="row__yr">2019<small>2020</small></p>
-        <div>
-          <h4 class="row__name">Shop Office, Ehsan Residence</h4>
-          <p class="row__loc">Ehsan Residence, Mukim Dengkil, Sepang, Selangor</p>
-          <p class="row__desc"><b>14 units</b> of two-storey shops on freehold land. GDV RM 12 million. Fully completed with CCC.</p>
+      <article class="pcard" data-project-id="proj-11" data-reveal data-reveal-ring="6" data-val="12">
+        <div class="pcard__shot">
+          <img src="assets/img/proj-shop-residence.jpg" alt="Shop office at Ehsan Residence, Sepang" loading="lazy" decoding="async">
+          <span class="tag tag--done">CCC issued</span>
         </div>
-        <div class="row__val"><span class="row__rm"><i>RM</i>12,000,000</span><span class="bar" style="--w:.0444"><i></i></span></div>
-        <div class="row__status"><span class="tag tag--done">CCC issued</span></div>
+        <p class="pcard__yr">2019<small>2020</small></p>
+        <div class="pcard__body">
+          <h4 class="pcard__name">Shop Office, Ehsan Residence</h4>
+          <p class="pcard__loc">Ehsan Residence, Mukim Dengkil, Sepang, Selangor</p>
+          <p class="pcard__desc"><b>14 units</b> of two-storey shops on freehold land. GDV RM 12 million. Fully completed with CCC.</p>
+        </div>
+        <p class="pcard__rm"><i>RM</i>12,000,000</p>
+        <span class="bar" style="--w:.0444"><i></i></span>
       </article>
 
-      <article class="row" data-project-id="proj-12" data-reveal data-reveal-ring="6" data-val="90">
-        <span class="row__shot"><img src="assets/img/proj-salam-nadiah.jpg" alt="Taman Mawar Ehsan, Rembau" loading="lazy" decoding="async"></span>
-        <p class="row__yr">Ph 1–4<small>2022–24</small></p>
-        <div>
-          <h4 class="row__name">Taman Mawar Ehsan</h4>
-          <p class="row__loc">Mukim Pedas, Rembau District, Negeri Sembilan</p>
-          <p class="row__desc"><b>238 units</b> of two-storey and single-storey terrace houses over four phases — Phase 1 Type A 20 units, Type B 38 units; Phase 2 70 units; Phase 3 53 units; Phase 4 57 units. 1,100 to 2,000 sq ft, from RM 299,800. 99-year leasehold. GDV RM 90 million.</p>
+      <article class="pcard" data-project-id="proj-12" data-reveal data-reveal-ring="6" data-val="90">
+        <div class="pcard__shot">
+          <img src="assets/img/proj-salam-nadiah.jpg" alt="Taman Mawar Ehsan, Rembau" loading="lazy" decoding="async">
+          <span class="tag tag--done">Phases 1–4 CCC</span>
         </div>
-        <div class="row__val"><span class="row__rm"><i>RM</i>90,000,000</span><span class="bar" style="--w:.3333"><i></i></span></div>
-        <div class="row__status"><span class="tag tag--done">Phases 1–4 CCC</span></div>
+        <p class="pcard__yr">Ph 1–4<small>2022–24</small></p>
+        <div class="pcard__body">
+          <h4 class="pcard__name">Taman Mawar Ehsan</h4>
+          <p class="pcard__loc">Mukim Pedas, Rembau District, Negeri Sembilan</p>
+          <p class="pcard__desc"><b>238 units</b> of two-storey and single-storey terrace houses over four phases — Phase 1 Type A 20 units, Type B 38 units; Phase 2 70 units; Phase 3 53 units; Phase 4 57 units. 1,100 to 2,000 sq ft, from RM 299,800. 99-year leasehold. GDV RM 90 million.</p>
+        </div>
+        <p class="pcard__rm"><i>RM</i>90,000,000</p>
+        <span class="bar" style="--w:.3333"><i></i></span>
       </article>
 
       <h3 class="phase">On-going <b>2020 — 2028</b></h3>
 
-      <article class="row" data-project-id="proj-13" data-reveal data-reveal-ring="1" data-val="120">
-        <span class="row__shot"><img src="assets/img/proj-bestari.jpg" alt="Taman Universiti Bestari, Sungai Petani, Kedah" loading="lazy" decoding="async"></span>
-        <p class="row__yr">2020<small>on-going</small></p>
-        <div>
-          <h4 class="row__name">Taman Universiti Bestari</h4>
-          <p class="row__loc">Sungai Petani, Kedah</p>
-          <p class="row__desc"><b>535 units</b> over eight phases on 53 acres of freehold land. 1,140 to 2,800 sq ft, from RM 249,800. GDV RM 120 million. Phases 1–4 completed, Phase 5 under construction, Phases 6–8 coming soon.</p>
+      <article class="pcard" data-project-id="proj-13" data-reveal data-reveal-ring="1" data-val="120">
+        <div class="pcard__shot">
+          <img src="assets/img/proj-bestari.jpg" alt="Taman Universiti Bestari, Sungai Petani, Kedah" loading="lazy" decoding="async">
+          <span class="tag tag--live">Phase 5 building</span>
         </div>
-        <div class="row__val"><span class="row__rm"><i>RM</i>120,000,000</span><span class="bar" style="--w:.4444"><i></i></span></div>
-        <div class="row__status"><span class="tag tag--live">Phase 5 building</span></div>
+        <p class="pcard__yr">2020<small>on-going</small></p>
+        <div class="pcard__body">
+          <h4 class="pcard__name">Taman Universiti Bestari</h4>
+          <p class="pcard__loc">Sungai Petani, Kedah</p>
+          <p class="pcard__desc"><b>535 units</b> over eight phases on 53 acres of freehold land. 1,140 to 2,800 sq ft, from RM 249,800. GDV RM 120 million. Phases 1–4 completed, Phase 5 under construction, Phases 6–8 coming soon.</p>
+        </div>
+        <p class="pcard__rm"><i>RM</i>120,000,000</p>
+        <span class="bar" style="--w:.4444"><i></i></span>
       </article>
 
-      <article class="row" data-project-id="proj-14" data-reveal data-reveal-ring="2" data-val="270">
-        <span class="row__shot"><img src="assets/img/proj-widuri.jpg" alt="Residensi Mutiara Austin, Mount Austin, Johor Bahru" loading="lazy" decoding="async"></span>
-        <p class="row__yr">2023<small>2027</small></p>
-        <div>
-          <h4 class="row__name">Residensi Mutiara Austin</h4>
-          <p class="row__loc">Mount Austin, Mukim Tebrau, Johor Bahru District, Johor Darul Takzim</p>
-          <p class="row__desc"><b>650 units</b> of 16-storey serviced apartments across three blocks — Block A 201 units, Block B 209 units, Block C 240 units — over one retail level of 9 units. Phase 1 2023–2026, Phase 2 2024–2027. GDV RM 300 million.</p>
+      <article class="pcard" data-project-id="proj-14" data-reveal data-reveal-ring="2" data-val="270">
+        <div class="pcard__shot">
+          <img src="assets/img/proj-widuri.jpg" alt="Residensi Mutiara Austin, Mount Austin, Johor Bahru" loading="lazy" decoding="async">
+          <span class="tag tag--live">Under construction</span>
         </div>
-        <div class="row__val"><span class="row__rm"><i>RM</i>270,000,000</span><span class="bar" style="--w:1"><i></i></span></div>
-        <div class="row__status"><span class="tag tag--live">Under construction</span></div>
+        <p class="pcard__yr">2023<small>2027</small></p>
+        <div class="pcard__body">
+          <h4 class="pcard__name">Residensi Mutiara Austin</h4>
+          <p class="pcard__loc">Mount Austin, Mukim Tebrau, Johor Bahru District, Johor Darul Takzim</p>
+          <p class="pcard__desc"><b>650 units</b> of 16-storey serviced apartments across three blocks — Block A 201 units, Block B 209 units, Block C 240 units — over one retail level of 9 units. Phase 1 2023–2026, Phase 2 2024–2027. GDV RM 300 million.</p>
+        </div>
+        <p class="pcard__rm"><i>RM</i>270,000,000</p>
+        <span class="bar" style="--w:1"><i></i></span>
       </article>
 
-      <article class="row" data-project-id="proj-15" data-reveal data-reveal-ring="3" data-val="180">
-        <span class="row__shot"><img src="assets/img/proj-widuri-2.jpg" alt="Ehsan Widuri, Putra Nilai, Negeri Sembilan" loading="lazy" decoding="async"></span>
-        <p class="row__yr">2024<small>2028</small></p>
-        <div>
-          <h4 class="row__name">Ehsan Widuri, Putra Nilai</h4>
-          <p class="row__loc">Bandar Baru Nilai, Mukim Labu, Seremban District, Negeri Sembilan</p>
-          <p class="row__desc"><b>490 units</b> — Block A 242 units and Block B 242 units, levels 9 to 30 — with 6 retail lots at ground level and 7 retail lots on levels 3 to 8. Freehold, 2 acres. Phase 1 launched October 2024, Block A under construction, estimated completion end 2028. GDV RM 200 million.</p>
+      <article class="pcard" data-project-id="proj-15" data-reveal data-reveal-ring="3" data-val="180">
+        <div class="pcard__shot">
+          <img src="assets/img/proj-widuri-2.jpg" alt="Ehsan Widuri, Putra Nilai, Negeri Sembilan" loading="lazy" decoding="async">
+          <span class="tag tag--live">Block A building</span>
         </div>
-        <div class="row__val"><span class="row__rm"><i>RM</i>180,000,000</span><span class="bar" style="--w:.6667"><i></i></span></div>
-        <div class="row__status"><span class="tag tag--live">Block A building</span></div>
+        <p class="pcard__yr">2024<small>2028</small></p>
+        <div class="pcard__body">
+          <h4 class="pcard__name">Ehsan Widuri, Putra Nilai</h4>
+          <p class="pcard__loc">Bandar Baru Nilai, Mukim Labu, Seremban District, Negeri Sembilan</p>
+          <p class="pcard__desc"><b>490 units</b> — Block A 242 units and Block B 242 units, levels 9 to 30 — with 6 retail lots at ground level and 7 retail lots on levels 3 to 8. Freehold, 2 acres. Phase 1 launched October 2024, Block A under construction, estimated completion end 2028. GDV RM 200 million.</p>
+        </div>
+        <p class="pcard__rm"><i>RM</i>180,000,000</p>
+        <span class="bar" style="--w:.6667"><i></i></span>
       </article>
 
       <h3 class="phase">Future <b>pipeline</b></h3>
 
-      <article class="row" data-project-id="proj-16" data-reveal data-reveal-ring="1" data-val="0">
-        <span class="row__shot"><img src="assets/img/proj-bestari.jpg" alt="Taman Seri Emas, Kampar, Perak" loading="lazy" decoding="async"></span>
-        <p class="row__yr">Future<small>planned</small></p>
-        <div>
-          <h4 class="row__name">Taman Seri Emas</h4>
-          <p class="row__loc">Kampar, Perak</p>
-          <p class="row__desc">A <b>mixed development of 1,800 units</b> built around a luxurious lifestyle offer — the largest scheme on the company's book to date.</p>
+      <article class="pcard" data-project-id="proj-16" data-reveal data-reveal-ring="1" data-val="0">
+        <div class="pcard__shot">
+          <img src="assets/img/proj-bestari.jpg" alt="Taman Seri Emas, Kampar, Perak" loading="lazy" decoding="async">
+          <span class="tag tag--next">Future project</span>
         </div>
-        <div class="row__val"><span class="row__rm"><i>RM</i>TBA</span><span class="bar" style="--w:0"><i></i></span></div>
-        <div class="row__status"><span class="tag tag--next">Future project</span></div>
+        <p class="pcard__yr">Future<small>planned</small></p>
+        <div class="pcard__body">
+          <h4 class="pcard__name">Taman Seri Emas</h4>
+          <p class="pcard__loc">Kampar, Perak</p>
+          <p class="pcard__desc">A <b>mixed development of 1,800 units</b> built around a luxurious lifestyle offer — the largest scheme on the company's book to date.</p>
+        </div>
+        <p class="pcard__rm"><i>RM</i>TBA</p>
+        <span class="bar" style="--w:0"><i></i></span>
       </article>
       </div>
       <button class="ledger__more-btn" type="button" id="ledgerMoreBtn" aria-expanded="false" aria-controls="ledgerMore">
@@ -569,11 +621,14 @@
         <span>2020 &ndash; future</span>
       </button>
 
-      <p class="tally" aria-live="off"><span>Value in view</span><b data-tally>RM 0</b></p>
     </div>
-  </section>
 
-  <div class="peek" aria-hidden="true"><img src="" alt=""><span class="peek__cap"></span></div>
+    <!-- Outside .ledger on purpose. It is position: sticky, and as a grid item
+         its containing block would collapse to its own row track — leaving it
+         nothing to travel through. Out here the section is the containing
+         block, so it rides the whole record the way it used to. -->
+    <p class="tally" aria-live="off"><span>Value in view</span><b data-tally>RM 0</b></p>
+  </section>
 
   <!-- ================= 05 · EVENTS ================= -->
   <section class="section" id="events">
@@ -953,7 +1008,7 @@
       </form>
     </div>
 
-    <div class="contact">
+    <!-- <div class="contact">
       <div data-reveal data-reveal-ring="1">
         <h3>HQ Office</h3>
         <p>Suite C-20-3A, Level 20, Block C,<br>Megan Avenue II, Jalan Yap Kwan Seng,<br>50450 Kuala Lumpur, Malaysia</p>
@@ -984,12 +1039,11 @@
           <li>0120130311-WP148971</li>
         </ul>
       </div>
-    </div>
+    </div> -->
   </div>
 
   <p class="colophon">
     <span>&copy; Ehsan Plant &amp; Property Sdn Bhd</span>
-    <span>Content sourced from the company profile, 3 July 2025</span>
     <span>We build for your needs</span>
   </p>
 </footer>

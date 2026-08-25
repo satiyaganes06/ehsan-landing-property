@@ -9,22 +9,21 @@
      1. marquee cloning     the vertical auto-scrollers need a second copy of
                             their content before the -50% loop is seamless
      2. count-up            numbers that tick to their authored value
-     3. ledger peek         a cursor-tracked photo panel over the work record
-     4. running tally       project value accumulating as rows pass mid-screen
-     5. chrome              scroll progress bar + section rail current-state
-     6. story cards         one testimonial card expanded at a time, on hover
-     7. ledger disclosure   "view more" reveals the rest of the work record
-     8. assistant widget    the floating chat launcher, canned replies only
-     9. row navigation      work-record rows open their detail page
-    10. awards carousel     auto-scrolling recognition strip
-    11. enquiry form        client-side validation, placeholder submit
-    12. commitment stage    scattered grid scrubbed through a pinned panel
+     3. running tally       project value accumulating as cards pass mid-screen
+     4. chrome              scroll progress bar + section rail current-state
+     5. story cards         one testimonial card expanded at a time, on hover
+     6. ledger disclosure   "view more" reveals the rest of the work record
+     7. assistant widget    the floating chat launcher, canned replies only
+     8. card navigation     work-record cards open their detail page
+     9. awards carousel     auto-scrolling recognition strip
+    10. enquiry form        client-side validation, placeholder submit
+    11. commitment stage    scattered grid scrubbed through a pinned panel
 
    Every one of these degrades to the authored HTML if it never runs: the
    marquees show one static column, the numbers already read correctly in the
-   markup, the ledger is a plain table, the rail simply stays inert, and the
-   commitment stage stays a plain grid above a numbered list. The topnav needs
-   nothing here at all — it hangs off the same html.past-hero flag #5 already
+   markup, the work record is a plain grid of cards, the rail simply stays
+   inert, and the commitment stage stays a plain grid above a numbered list. The topnav needs
+   nothing here at all — it hangs off the same html.past-hero flag #4 already
    sets.
    ------------------------------------------------------------------------- */
 
@@ -95,82 +94,22 @@
   }
 
 
-  /* ---------- 3. ledger peek ----------
-     Lifts the row's own <img> into a fixed panel that follows the pointer. The
-     same <img> is what mobile shows inline (see .row__shot in content.css), so
-     there is only ever one copy of each photo in the document.
-
-     Fine pointers only. On touch the panel would have nothing to track, and the
-     inline thumbnails already do the job. */
-
-  const peek = document.querySelector('.peek');
-  const rows = document.querySelectorAll('.row');
-
-  if (peek && rows.length && matchMedia('(hover: hover) and (pointer: fine)').matches) {
-    const peekImg = peek.querySelector('img');
-    const peekCap = peek.querySelector('.peek__cap');
-
-    let x = 0, y = 0, queued = false;
-
-    // Position only. The panel is clamped to the viewport on both axes so it
-    // never hangs off an edge, and the write is transform-only so it stays on
-    // the compositor.
-    const place = () => {
-      queued = false;
-      const w = peek.offsetWidth  || 336;
-      const h = peek.offsetHeight || 252;
-      const cx = Math.min(Math.max(x, w / 2 + 16), window.innerWidth  - w / 2 - 16);
-      const cy = Math.min(Math.max(y, h / 2 + 16), window.innerHeight - h / 2 - 16);
-      peek.style.transform = `translate3d(${cx}px, ${cy}px, 0) translate(-50%, -50%)`;
-    };
-
-    rows.forEach((row) => {
-      const src = row.querySelector('img');
-      const name = row.querySelector('.row__name');
-      if (!src || !name) return;
-
-      row.addEventListener('pointerenter', (e) => {
-        if (e.pointerType !== 'mouse') return;
-        peekImg.src = src.currentSrc || src.src;
-        peekImg.alt = '';
-        peekCap.textContent = name.textContent;
-        x = e.clientX + 180;   // offset right of the cursor, clear of the copy
-        y = e.clientY;
-        place();               // place BEFORE showing, so it never fades in mid-flight
-        peek.classList.add('is-on');
-      });
-
-      row.addEventListener('pointermove', (e) => {
-        if (e.pointerType !== 'mouse') return;
-        x = e.clientX + 180;
-        y = e.clientY;
-        if (queued) return;
-        queued = true;
-        requestAnimationFrame(place);
-      });
-
-      row.addEventListener('pointerleave', () => {
-        peek.classList.remove('is-on');
-      });
-    });
-  }
-
-
-  /* ---------- 4. running tally ----------
-     Sums data-val (RM millions) for every row whose top has crossed 65% of the
-     viewport, so the figure climbs as the ledger is read rather than jumping to
-     a total the moment the section appears. */
+  /* ---------- 3. running tally ----------
+     Sums data-val (RM millions) for every card whose top has crossed 65% of the
+     viewport, so the figure climbs as the record is read rather than jumping
+     to a total the moment the section appears. */
 
   const tallyEl = document.querySelector('[data-tally]');
+  const cards   = document.querySelectorAll('.pcard');
 
-  if (tallyEl && rows.length) {
-    const vals = [...rows].map((r) => parseFloat(r.dataset.val) || 0);
+  if (tallyEl && cards.length) {
+    const vals = [...cards].map((r) => parseFloat(r.dataset.val) || 0);
     let shown = -1;
 
     const paint = () => {
       const line = window.innerHeight * 0.65;
       let sum = 0;
-      rows.forEach((r, i) => {
+      cards.forEach((r, i) => {
         if (r.getBoundingClientRect().top < line) sum += vals[i];
       });
       if (sum === shown) return;
@@ -190,7 +129,7 @@
   }
 
 
-  /* ---------- 5. chrome ----------
+  /* ---------- 4. chrome ----------
      The progress bar and rail are hidden until <html> carries `past-hero`, so
      neither ever overlays the stage while the stage is still the thing on
      screen. The flag is driven by the content block's own top edge rather than
@@ -239,7 +178,7 @@
   chrome();
 
 
-  /* ---------- 6. story cards ----------
+  /* ---------- 5. story cards ----------
      One [data-story] carries .is-active in the markup by default (the first
      one), so the section is already correct before this runs. Hover/focus
      just moves that class — the width, background and reveal transitions all
@@ -293,7 +232,7 @@
   });
 
 
-  /* ---------- 7. ledger disclosure ----------
+  /* ---------- 6. ledger disclosure ----------
      The work record ships with only the first five rows visible; the rest
      sit behind [hidden] in .ledger__more so the page never promises "sixteen
      projects" and shows five. Un-hiding rather than un-rendering means the
@@ -319,7 +258,7 @@
   }
 
 
-  /* ---------- 8. assistant widget ----------
+  /* ---------- 7. assistant widget ----------
      A placeholder, and labelled as one in the panel itself — there is no
      model behind this, just a small set of canned replies keyed on keywords
      the profile actually covers, so the demo never implies more than it is. */
@@ -381,8 +320,8 @@
     });
   }
 
-  /* ---------- 9. project row navigation ----------
-     Navigate to project detail page on row click.
+  /* ---------- 8. card navigation ----------
+     Navigate to the project detail page on card click.
 
      Through SITE.url, not a bare relative path. The detail page lives in
      /html/ while the ledger that links to it is at the root, so a plain
@@ -392,7 +331,7 @@
      inside /html/ and would resolve it to /html/html/. SITE.url anchors the
      path to the project root regardless of which page is asking. */
 
-  document.querySelectorAll('.row[data-project-id]').forEach((row) => {
+  document.querySelectorAll('.pcard[data-project-id]').forEach((row) => {
     row.addEventListener('click', () => {
       const projectId = row.dataset.projectId;
       if (projectId) {
@@ -402,7 +341,7 @@
     });
   });
 
-  /* ---------- 10. awards carousel (Kelo-inspired) ----------
+  /* ---------- 9. awards carousel (Kelo-inspired) ----------
      Horizontal auto-scroll via requestAnimationFrame, pause on hover, modal details */
 
   const AWARD_DATA = {
@@ -503,7 +442,7 @@
     }
   });
 
-  /* ---------- 11. enquiry form ----------
+  /* ---------- 10. enquiry form ----------
      No backend yet, so this validates client-side and reports the outcome in
      place. `is-validated` gates the :invalid styling so the form is not red on
      first paint — it only turns red once someone has actually tried to send. */
@@ -543,7 +482,7 @@
   }
 
 
-  /* ---------- 12. commitment stage ----------
+  /* ---------- 11. commitment stage ----------
      The pinned black panel in section 02. Two jobs:
 
        a. SCATTER. Every cell is given an explicit grid-row/grid-column, so
