@@ -1,0 +1,499 @@
+// ---------------------------------------------------------------------------
+// Ehsan admin — data model
+//
+// i18n shape: structural facts (coordinates, capacity, GDV, dates) live on the
+// base row; anything a translator would touch lives in a per-locale side table.
+// Slugs are per-locale too, so the Malay site can carry Malay URLs rather than
+// English ones under a /ms prefix.
+//
+// The alternative — a `locale` column on the base row with duplicated records —
+// was rejected: it splits one project into two rows that then drift apart on
+// the fields that are supposed to be shared.
+// ---------------------------------------------------------------------------
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Locale {
+  EN
+  MS
+}
+
+enum PublishState {
+  DRAFT
+  PUBLISHED
+  SCHEDULED
+}
+
+enum ProjectStatus {
+  COMPLETED
+  ONGOING
+  FUTURE
+}
+
+enum EnquiryStatus {
+  NEW
+  READ
+  REPLIED
+  ARCHIVED
+  SPAM
+}
+
+enum SeoBand {
+  BAD
+  NEUTRAL
+  GOOD
+}
+
+// ---------------------------------------------------------------- identity --
+
+model User {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  name         String
+  passwordHash String
+  isActive     Boolean   @default(true)
+  lastSeenAt   DateTime?
+  createdAt    DateTime  @default(now())
+
+  roles     UserRole[]
+  sessions  Session[]
+  auditLog  AuditEntry[]
+  enquiries Enquiry[]    @relation("EnquiryAssignee")
+
+  @@map("users")
+}
+
+model Role {
+  id    String @id @default(cuid())
+  key   String @unique // owner | admin | editor | contributor | viewer
+  label String
+  rank  Int // lower outranks higher; guards privilege escalation
+
+  users       UserRole[]
+  permissions RolePermission[]
+
+  @@map("roles")
+}
+
+model Permission {
+  id       String @id @default(cuid())
+  resource String // project | event | award | testimonial | block | media | enquiry | user | setting | ai
+  action   String // read | create | update | delete | publish
+
+  roles RolePermission[]
+
+  @@unique([resource, action])
+  @@map("permissions")
+}
+
+model RolePermission {
+  roleId       String
+  permissionId String
+  role         Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@id([roleId, permissionId])
+  @@map("role_permissions")
+}
+
+model UserRole {
+  userId String
+  roleId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role   Role   @relation(fields: [roleId], references: [id], onDelete: Cascade)
+
+  @@id([userId, roleId])
+  @@map("user_roles")
+}
+
+// Sessions live in the database rather than in a self-contained JWT so an
+// account can be cut off immediately instead of at token expiry.
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  expiresAt DateTime
+  ip        String?
+  userAgent String?
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("sessions")
+}
+
+// ----------------------------------------------------------------- content --
+
+model Project {
+  id           String        @id @default(cuid())
+  reference    String        @unique // "proj-1" — stable key the static site already uses
+  status       ProjectStatus
+  yearStart    String?
+  yearEnd      String?
+  latitude     Float?
+  longitude    Float?
+  units        String?
+  areaText     String?
+  priceRange   String?
+  occupancy    String?
+  gdvMillions  Decimal?      @db.Decimal(12, 2)
+  barWeight    Float? // --w on the landing-page card, 0..1
+  // Mirrors Event.relatedReferences -- the SEO score's internal-links rule
+  // needs a real signal on both content types, not prose-scanning for links
+  // that do not exist in plain-text descriptions.
+  relatedReferences Json     @default("[]")
+  sortOrder    Int           @default(0)
+  publishState PublishState  @default(DRAFT)
+  publishedAt  DateTime?
+  scheduledFor DateTime?
+  // Backs the Contributor role's "own records only" restriction from the
+  // permission plan -- a rule the flat resource:action matrix in
+  // permissions.ts cannot express on its own, since it is about WHICH rows,
+  // not which verbs. Nullable because imported/seeded records predate any
+  // admin user creating them.
+  createdById  String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  translations ProjectTranslation[]
+  media        ProjectMedia[]
+
+  @@index([publishState, sortOrder])
+  @@map("projects")
+}
+
+model ProjectTranslation {
+  id          String  @id @default(cuid())
+  projectId   String
+  locale      Locale
+  slug        String
+  name        String
+  location    String
+  description String  @db.Text
+  amenities   Json    @default("[]")
+  certificate String?
+  project     Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, locale])
+  @@unique([locale, slug])
+  @@map("project_translations")
+}
+
+model ProjectMedia {
+  id        String  @id @default(cuid())
+  projectId String
+  mediaId   String
+  role      String  @default("gallery") // hero | gallery | blueprint
+  sortOrder Int     @default(0)
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  media     Media   @relation(fields: [mediaId], references: [id], onDelete: Cascade)
+
+  @@index([projectId, role, sortOrder])
+  @@map("project_media")
+}
+
+model Event {
+  id           String       @id @default(cuid())
+  reference    String       @unique // "event-1"
+  startsAt     DateTime
+  endsAt       DateTime?
+  capacity     Int?
+  registered   Int          @default(0)
+  isFree       Boolean      @default(true)
+  priceText    String?
+  heroMediaId  String?
+  // Today's events.json points hero images at hotlinked Unsplash URLs, not
+  // uploaded files. Rather than fabricate Media rows with invented byte
+  // counts to represent them, this is the fallback the bridge reads when no
+  // heroMedia has been uploaded yet -- clearing it once a real photo replaces
+  // the placeholder is a deliberate editorial action, not automatic.
+  heroImageUrl String?
+  // Which other events this one cross-links to on its detail page. Kept on
+  // the base row, not per-translation: which events relate to each other is
+  // a fact about the events, not about the language a visitor reads them in.
+  relatedReferences Json    @default("[]")
+  sortOrder    Int          @default(0)
+  publishState PublishState @default(DRAFT)
+  publishedAt  DateTime?
+  scheduledFor DateTime?
+  createdById  String?
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  heroMedia    Media?             @relation(fields: [heroMediaId], references: [id])
+  translations EventTranslation[]
+
+  @@index([publishState, startsAt])
+  @@map("events")
+}
+
+model EventTranslation {
+  id          String @id @default(cuid())
+  eventId     String
+  locale      Locale
+  slug        String
+  title       String
+  category    String
+  location    String
+  description String @db.Text
+  agenda      Json   @default("[]")
+  speakers    Json   @default("[]")
+  highlights  Json   @default("[]")
+  event       Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+  @@unique([eventId, locale])
+  @@unique([locale, slug])
+  @@map("event_translations")
+}
+
+model Award {
+  id           String       @id @default(cuid())
+  reference    String       @unique
+  year         Int
+  mediaId      String?
+  sortOrder    Int          @default(0)
+  publishState PublishState @default(DRAFT)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  media        Media?             @relation(fields: [mediaId], references: [id])
+  translations AwardTranslation[]
+
+  @@map("awards")
+}
+
+model AwardTranslation {
+  id          String @id @default(cuid())
+  awardId     String
+  locale      Locale
+  name        String
+  issuer      String?
+  description String @db.Text
+  award       Award  @relation(fields: [awardId], references: [id], onDelete: Cascade)
+
+  @@unique([awardId, locale])
+  @@map("award_translations")
+}
+
+model Testimonial {
+  id           String       @id @default(cuid())
+  reference    String       @unique
+  mediaId      String?
+  projectId    String?
+  sortOrder    Int          @default(0)
+  isPlaceholder Boolean     @default(false) // the current four are; surfaced in the dashboard
+  publishState PublishState @default(DRAFT)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  media        Media?                   @relation(fields: [mediaId], references: [id])
+  translations TestimonialTranslation[]
+
+  @@map("testimonials")
+}
+
+model TestimonialTranslation {
+  id            String      @id @default(cuid())
+  testimonialId String
+  locale        Locale
+  quote         String      @db.Text
+  author        String
+  role          String
+  groupLabel    String? // "First-time buyers", "Investors"
+  testimonial   Testimonial @relation(fields: [testimonialId], references: [id], onDelete: Cascade)
+
+  @@unique([testimonialId, locale])
+  @@map("testimonial_translations")
+}
+
+// The "other texts" — hero copy, section headings and ledes, doctrine,
+// commitments, contact details. Typed keys rather than a page builder: the
+// landing page's scroll choreography depends on its section order, so the
+// client can change words without being able to break the layout.
+model TextBlock {
+  id        String   @id @default(cuid())
+  key       String   @unique // "hero.title", "doctrine.vision", "contact.hq"
+  label     String
+  kind      String   @default("paragraph") // heading | lede | paragraph | list | contact
+  group     String   @default("general") // which page section it belongs to
+  sortOrder Int      @default(0)
+  updatedAt DateTime @updatedAt
+
+  translations TextBlockTranslation[]
+
+  @@index([group, sortOrder])
+  @@map("text_blocks")
+}
+
+model TextBlockTranslation {
+  id          String    @id @default(cuid())
+  textBlockId String
+  locale      Locale
+  value       Json // string for most kinds, array for list, object for contact
+  textBlock   TextBlock @relation(fields: [textBlockId], references: [id], onDelete: Cascade)
+
+  @@unique([textBlockId, locale])
+  @@map("text_block_translations")
+}
+
+// -------------------------------------------------------------------- seo --
+
+// Polymorphic side table, deliberately: one score engine, one form component,
+// one query — and a new content type later needs no SEO work at all.
+model SeoMeta {
+  id              String   @id @default(cuid())
+  entityType      String // project | event | page
+  entityId        String
+  locale          Locale
+  focusKeyword    String?
+  metaTitle       String?
+  metaDescription String?  @db.Text
+  canonicalUrl    String?
+  robotsIndex     Boolean  @default(true)
+  robotsFollow    Boolean  @default(true)
+  ogTitle         String?
+  ogDescription   String?  @db.Text
+  ogMediaId       String?
+  score           Int      @default(0)
+  band            SeoBand  @default(BAD)
+  scoreDetail     Json     @default("[]") // per-rule pass/fail, for the checklist UI
+  scoredAt        DateTime?
+  updatedAt       DateTime @updatedAt
+
+  ogMedia Media? @relation(fields: [ogMediaId], references: [id])
+
+  @@unique([entityType, entityId, locale])
+  @@index([band])
+  @@map("seo_meta")
+}
+
+// Written automatically whenever a slug changes, so an indexed URL is never
+// orphaned by an edit.
+model Redirect {
+  id        String   @id @default(cuid())
+  fromPath  String   @unique
+  toPath    String
+  code      Int      @default(301)
+  createdAt DateTime @default(now())
+
+  @@map("redirects")
+}
+
+// ------------------------------------------------------------------ media --
+
+model Media {
+  id         String   @id @default(cuid())
+  storageKey String   @unique
+  filename   String
+  mimeType   String
+  width      Int?
+  height     Int?
+  bytes      Int
+  altText    String? // required before a record can reach GOOD; feeds the score
+  focalX     Float    @default(0.5)
+  focalY     Float    @default(0.5)
+  createdAt  DateTime @default(now())
+
+  projects     ProjectMedia[]
+  events       Event[]
+  awards       Award[]
+  testimonials Testimonial[]
+  seoMeta      SeoMeta[]
+
+  @@map("media")
+}
+
+// --------------------------------------------------------------- history ---
+
+model Revision {
+  id         String   @id @default(cuid())
+  entityType String
+  entityId   String
+  snapshot   Json
+  createdById String?
+  createdAt  DateTime @default(now())
+
+  @@index([entityType, entityId, createdAt])
+  @@map("revisions")
+}
+
+model AuditEntry {
+  id         String   @id @default(cuid())
+  actorId    String?
+  action     String // created | updated | published | deleted | login | ai.suggest
+  entityType String?
+  entityId   String?
+  diff       Json?
+  ip         String?
+  createdAt  DateTime @default(now())
+
+  actor User? @relation(fields: [actorId], references: [id], onDelete: SetNull)
+
+  @@index([createdAt])
+  @@map("audit_log")
+}
+
+// -------------------------------------------------------------- enquiries --
+
+model Enquiry {
+  id         String        @id @default(cuid())
+  name       String
+  email      String
+  phone      String?
+  interest   String?
+  message    String        @db.Text
+  status     EnquiryStatus @default(NEW)
+  assignedTo String?
+  notes      String?       @db.Text
+  utm        Json?
+  referrer   String?
+  ipHash     String? // hashed, not raw — PDPA data minimisation
+  userAgent  String?
+  consentAt  DateTime? // explicit PDPA consent timestamp
+  createdAt  DateTime      @default(now())
+
+  assignee User? @relation("EnquiryAssignee", fields: [assignedTo], references: [id], onDelete: SetNull)
+
+  @@index([status, createdAt])
+  @@map("enquiries")
+}
+
+// ---------------------------------------------------------------- ai log ---
+
+// Every suggestion is recorded with whether a human took it. Provider and model
+// are stored per row so the OpenRouter-era history stays interpretable after
+// the switch to Claude.
+model AiSuggestion {
+  id           String   @id @default(cuid())
+  task         String // meta | keywords | rewrite | alt | links
+  provider     String
+  model        String
+  entityType   String?
+  entityId     String?
+  locale       Locale?
+  input        Json
+  output       Json
+  accepted     Boolean?
+  inputTokens  Int      @default(0)
+  outputTokens Int      @default(0)
+  latencyMs    Int      @default(0)
+  createdById  String?
+  createdAt    DateTime @default(now())
+
+  @@index([task, createdAt])
+  @@map("ai_suggestions")
+}
+
+model Setting {
+  key       String   @id
+  value     Json
+  updatedAt DateTime @updatedAt
+
+  @@map("settings")
+}
