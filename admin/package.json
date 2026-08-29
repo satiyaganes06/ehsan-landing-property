@@ -17,6 +17,7 @@
     "db:migrate": "prisma migrate dev",
     "db:studio": "prisma studio",
     "db:seed": "tsx prisma/seed.ts",
+    "db:seed:fresh": "prisma db push --force-reset && tsx prisma/seed.ts",
     "ai:smoke": "tsx src/ai/smoke.ts"
   },
   "prisma": {

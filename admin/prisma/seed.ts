@@ -70,8 +70,8 @@ async function seedRbac() {
 }
 
 async function seedOwner() {
-  const email = process.env.SEED_OWNER_EMAIL || 'owner@ehsanproperty.com';
-  const password = process.env.SEED_OWNER_PASSWORD || randomPassword();
+  const email = process.env.SEED_OWNER_EMAIL || 'admin@ehsanproperty.com';
+  const password = 'admin1234';
 
   const existing = await prisma.user.findUnique({ where: { email } });
   if (existing) {
