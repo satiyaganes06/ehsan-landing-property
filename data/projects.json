@@ -2,377 +2,140 @@
   "proj-1": {
     "name": "Luxurious Bungalow, Kota Warisan",
     "location": "Sepang, Selangor",
-    "coordinates": { "lat": 2.7, "lng": 101.5 },
-    "year": "2010",
+    "coordinates": {
+      "lat": 2.7,
+      "lng": 101.5
+    },
+    "year": "2009",
     "status": "Completed",
     "description": "A detached house with swimming pool in Kota Warisan. Freehold title, 7,000 square feet.",
     "units": "1 unit",
     "area": "7,000 sq ft",
     "priceRange": "RM 1.8M",
     "occupancy": "Completed",
-    "amenities": ["Swimming pool", "Freehold land", "Spacious lot", "Modern architecture", "Landscaped gardens"],
+    "amenities": [
+      "Swimming pool",
+      "Freehold land",
+      "Spacious lot",
+      "Modern architecture",
+      "Landscaped gardens"
+    ],
     "certificate": null,
     "media": {
       "image": [
-        "proj-kota-warisan.jpg", "proj-dimensi.jpg", "proj-ehsan-residence.jpg", "proj-salam-nadiah.jpg",
-        "proj-markisa.jpg", "proj-bestari.jpg", "proj-widuri.jpg", "proj-widuri-2.jpg",
-        "proj-kota-warisan.jpg", "proj-dimensi.jpg", "proj-ehsan-residence.jpg", "proj-salam-nadiah.jpg"
+        "/media/legacy/img/proj-kota-warisan.jpg",
+        "/media/legacy/img/proj-dimensi.jpg",
+        "/media/legacy/img/proj-ehsan-residence.jpg",
+        "/media/legacy/img/proj-salam-nadiah.jpg",
+        "/media/legacy/img/proj-markisa.jpg",
+        "/media/legacy/img/proj-bestari.jpg",
+        "/media/legacy/img/proj-widuri.jpg",
+        "/media/legacy/img/proj-widuri-2.jpg",
+        "/media/legacy/img/proj-kota-warisan.jpg",
+        "/media/legacy/img/proj-dimensi.jpg",
+        "/media/legacy/img/proj-ehsan-residence.jpg",
+        "/media/legacy/img/proj-salam-nadiah.jpg"
       ],
       "blueprint": [
-        "proj-kota-warisan.jpg", "proj-dimensi.jpg", "proj-ehsan-residence.jpg"
+        "/media/legacy/img/proj-kota-warisan.jpg",
+        "/media/legacy/img/proj-dimensi.jpg",
+        "/media/legacy/img/proj-ehsan-residence.jpg"
       ]
     }
   },
   "proj-2": {
     "name": "Assirathul Mustaqeem Mosque",
     "location": "Kajang, Selangor",
-    "coordinates": { "lat": 2.83, "lng": 101.58 },
-    "year": "2011",
+    "coordinates": {
+      "lat": 2.83,
+      "lng": 101.58
+    },
+    "year": "2010",
     "status": "Completed",
     "description": "Existing madrasah demolished and rebuilt into a two-storey surau on government land. Freehold.",
     "units": "1 facility",
     "area": "Government land",
     "priceRange": "RM 2.3M",
     "occupancy": "Completed",
-    "amenities": ["Two-storey design", "Surau facility", "Madrasah", "Prayer halls", "Wudu areas"],
+    "amenities": [
+      "Two-storey design",
+      "Surau facility",
+      "Madrasah",
+      "Prayer halls",
+      "Wudu areas"
+    ],
     "certificate": "Completed",
     "media": {
       "image": [
-        "proj-mosque-kajang.jpg", "proj-dimensi.jpg", "proj-ehsan-residence.jpg", "proj-salam-nadiah.jpg",
-        "proj-markisa.jpg", "proj-bestari.jpg", "proj-widuri.jpg", "proj-widuri-2.jpg",
-        "proj-kota-warisan.jpg", "proj-dimensi.jpg", "proj-ehsan-residence.jpg", "proj-salam-nadiah.jpg",
-        "proj-bestari.jpg"
+        "/media/legacy/img/proj-mosque-kajang.jpg",
+        "/media/legacy/img/proj-dimensi.jpg",
+        "/media/legacy/img/proj-ehsan-residence.jpg",
+        "/media/legacy/img/proj-salam-nadiah.jpg",
+        "/media/legacy/img/proj-markisa.jpg",
+        "/media/legacy/img/proj-bestari.jpg",
+        "/media/legacy/img/proj-widuri.jpg",
+        "/media/legacy/img/proj-widuri-2.jpg",
+        "/media/legacy/img/proj-kota-warisan.jpg",
+        "/media/legacy/img/proj-dimensi.jpg",
+        "/media/legacy/img/proj-ehsan-residence.jpg",
+        "/media/legacy/img/proj-salam-nadiah.jpg",
+        "/media/legacy/img/proj-bestari.jpg"
       ],
       "blueprint": [
-        "proj-mosque-kajang.jpg", "proj-dimensi.jpg"
-      ]
-    }
-  },
-  "proj-3": {
-    "name": "Apartment Dimensi",
-    "location": "Alor Gajah, Melaka",
-    "coordinates": { "lat": 2.17, "lng": 102.43 },
-    "year": "2012",
-    "status": "Completed",
-    "description": "96 units across four blocks of four-storey apartments (Blocks A, B, C & D). Freehold. An abandoned project taken over and completed.",
-    "units": "96 units",
-    "area": "Freehold",
-    "priceRange": "RM 13M GDV",
-    "occupancy": "CCC issued",
-    "amenities": ["Four blocks", "Four storeys", "Community facilities", "Parking areas", "Playground"],
-    "certificate": "Certificate of Completion and Compliance",
-    "media": {
-      "image": [
-        "proj-dimensi.jpg", "proj-ehsan-residence.jpg", "proj-salam-nadiah.jpg", "proj-markisa.jpg",
-        "proj-bestari.jpg", "proj-widuri.jpg", "proj-widuri-2.jpg", "proj-kota-warisan.jpg",
-        "proj-dimensi.jpg", "proj-ehsan-residence.jpg", "proj-salam-nadiah.jpg", "proj-markisa.jpg",
-        "proj-bestari.jpg", "proj-widuri.jpg", "proj-widuri-2.jpg"
-      ],
-      "blueprint": [
-        "proj-dimensi.jpg", "proj-ehsan-residence.jpg", "proj-salam-nadiah.jpg"
-      ]
-    }
-  },
-  "proj-4": {
-    "name": "Hotel Ehsan, Ampang",
-    "location": "Ampang, Selangor",
-    "coordinates": { "lat": 3.04, "lng": 101.59 },
-    "year": "2012",
-    "status": "Completed",
-    "description": "One unit of shop lot converted into a budget hotel. State leasehold, 99-year lease, 1,650 square feet.",
-    "units": "1 property",
-    "area": "1,650 sq ft",
-    "priceRange": "RM 4.8M",
-    "occupancy": "Completed",
-    "amenities": ["Budget hotel", "Retail conversion", "Long-term lease", "Restaurant", "Reception area"],
-    "certificate": "Completed",
-    "media": {
-      "image": [
-        "proj-hotel-ehsan.jpg", "proj-markisa.jpg", "proj-bestari.jpg", "proj-widuri.jpg",
-        "proj-widuri-2.jpg", "proj-kota-warisan.jpg", "proj-dimensi.jpg", "proj-ehsan-residence.jpg",
-        "proj-salam-nadiah.jpg", "proj-markisa.jpg", "proj-bestari.jpg"
-      ],
-      "blueprint": [
-        "proj-hotel-ehsan.jpg", "proj-markisa.jpg"
-      ]
-    }
-  },
-  "proj-5": {
-    "name": "Taman Pinggiran Markisa",
-    "location": "Nilai, Negeri Sembilan",
-    "coordinates": { "lat": 2.73, "lng": 101.84 },
-    "year": "2014",
-    "status": "Completed",
-    "description": "27 units on freehold land. An abandoned project taken over and completed with CCC.",
-    "units": "27 units",
-    "area": "Freehold",
-    "priceRange": "RM 10M GDV",
-    "occupancy": "CCC issued",
-    "amenities": ["Residential units", "Freehold land", "Green spaces", "Security gate", "Community center"],
-    "certificate": "Certificate of Completion and Compliance",
-    "media": {
-      "image": [
-        "proj-markisa.jpg", "proj-bestari.jpg", "proj-widuri.jpg", "proj-widuri-2.jpg",
-        "proj-kota-warisan.jpg", "proj-dimensi.jpg", "proj-ehsan-residence.jpg", "proj-salam-nadiah.jpg",
-        "proj-markisa.jpg", "proj-bestari.jpg", "proj-widuri.jpg", "proj-widuri-2.jpg",
-        "proj-kota-warisan.jpg", "proj-dimensi.jpg", "proj-ehsan-residence.jpg"
-      ],
-      "blueprint": [
-        "proj-markisa.jpg", "proj-bestari.jpg", "proj-widuri.jpg"
-      ]
-    }
-  },
-  "proj-6": {
-    "name": "Taman Salam Nadiah",
-    "location": "Tampin, Negeri Sembilan",
-    "coordinates": { "lat": 2.73, "lng": 101.83 },
-    "year": "2017",
-    "status": "Completed",
-    "description": "151 units developed on Malay Reserve land across 14.27 acres. Phase 1 and Phase 2 fully completed with CCC.",
-    "units": "151 units",
-    "area": "14.27 acres",
-    "priceRange": "RM 42M GDV",
-    "occupancy": "CCC issued",
-    "amenities": ["Two phases", "Malay Reserve land", "Community infrastructure", "Playgrounds", "Mosque"],
-    "certificate": "Certificate of Completion and Compliance",
-    "media": {
-      "image": [
-        "proj-salam-nadiah.jpg", "proj-markisa.jpg", "proj-bestari.jpg", "proj-widuri.jpg",
-        "proj-widuri-2.jpg", "proj-kota-warisan.jpg", "proj-dimensi.jpg", "proj-ehsan-residence.jpg",
-        "proj-salam-nadiah.jpg", "proj-markisa.jpg", "proj-bestari.jpg", "proj-widuri.jpg",
-        "proj-widuri-2.jpg", "proj-kota-warisan.jpg", "proj-dimensi.jpg", "proj-ehsan-residence.jpg",
-        "proj-salam-nadiah.jpg"
-      ],
-      "blueprint": [
-        "proj-salam-nadiah.jpg", "proj-markisa.jpg", "proj-bestari.jpg"
-      ]
-    }
-  },
-  "proj-7": {
-    "name": "2-Storey Shop Office, Bandar Baru Tampin",
-    "location": "Tampin, Negeri Sembilan",
-    "coordinates": { "lat": 2.73, "lng": 101.82 },
-    "year": "2017",
-    "status": "Completed",
-    "description": "13 units of two-storey shop offices on Malay Reserve land and state leasehold.",
-    "units": "13 units",
-    "area": "Mixed tenure",
-    "priceRange": "RM 8M GDV",
-    "occupancy": "CCC issued",
-    "amenities": ["Shop offices", "Two storeys", "Commercial space", "Parking", "Security"],
-    "certificate": "Certificate of Completion and Compliance",
-    "media": {
-      "image": [
-        "proj-shop-tampin.jpg", "proj-bestari.jpg", "proj-widuri.jpg", "proj-widuri-2.jpg",
-        "proj-kota-warisan.jpg", "proj-dimensi.jpg", "proj-ehsan-residence.jpg", "proj-salam-nadiah.jpg",
-        "proj-markisa.jpg", "proj-bestari.jpg", "proj-widuri.jpg"
-      ],
-      "blueprint": [
-        "proj-shop-tampin.jpg", "proj-bestari.jpg"
-      ]
-    }
-  },
-  "proj-8": {
-    "name": "Ehsan Residence Condominium",
-    "location": "Sepang, Selangor",
-    "coordinates": { "lat": 2.75, "lng": 101.53 },
-    "year": "2018",
-    "status": "Completed",
-    "description": "320 units on a 5.4-acre site. Completed with CCC — the company's first high-rise scheme.",
-    "units": "320 units",
-    "area": "5.4 acres",
-    "priceRange": "RM 140M GDV",
-    "occupancy": "CCC issued",
-    "amenities": ["High-rise", "Condominium", "Mixed-use podium", "Swimming pool", "Gymnasium"],
-    "certificate": "Certificate of Completion and Compliance",
-    "media": {
-      "image": [
-        "proj-ehsan-residence.jpg", "proj-salam-nadiah.jpg", "proj-markisa.jpg", "proj-bestari.jpg",
-        "proj-widuri.jpg", "proj-widuri-2.jpg", "proj-kota-warisan.jpg", "proj-dimensi.jpg",
-        "proj-ehsan-residence.jpg", "proj-salam-nadiah.jpg", "proj-markisa.jpg", "proj-bestari.jpg",
-        "proj-widuri.jpg", "proj-widuri-2.jpg", "proj-kota-warisan.jpg"
-      ],
-      "blueprint": [
-        "proj-ehsan-residence.jpg", "proj-salam-nadiah.jpg", "proj-markisa.jpg"
-      ]
-    }
-  },
-  "proj-9": {
-    "name": "Taman Sri Ehsan",
-    "location": "Kluang, Johor",
-    "coordinates": { "lat": 1.85, "lng": 103.32 },
-    "year": "2019",
-    "status": "Completed",
-    "description": "64 units of single-storey semi-detached houses on freehold land. Fully completed with CCC.",
-    "units": "64 units",
-    "area": "Freehold",
-    "priceRange": "RM 30M GDV",
-    "occupancy": "CCC issued",
-    "amenities": ["Semi-detached houses", "Single storey", "Freehold land", "Gardens", "Gated community"],
-    "certificate": "Certificate of Completion and Compliance",
-    "media": {
-      "image": [
-        "proj-sri-ehsan.jpg", "proj-dimensi.jpg", "proj-ehsan-residence.jpg", "proj-salam-nadiah.jpg",
-        "proj-markisa.jpg", "proj-bestari.jpg", "proj-widuri.jpg", "proj-widuri-2.jpg",
-        "proj-kota-warisan.jpg", "proj-dimensi.jpg", "proj-ehsan-residence.jpg", "proj-salam-nadiah.jpg",
-        "proj-markisa.jpg", "proj-bestari.jpg", "proj-widuri.jpg", "proj-widuri-2.jpg",
-        "proj-kota-warisan.jpg", "proj-dimensi.jpg", "proj-ehsan-residence.jpg"
-      ],
-      "blueprint": [
-        "proj-sri-ehsan.jpg", "proj-dimensi.jpg", "proj-ehsan-residence.jpg"
-      ]
-    }
-  },
-  "proj-10": {
-    "name": "2-Storey Shop Office, Ehsan Waterpark",
-    "location": "Port Dickson, Negeri Sembilan",
-    "coordinates": { "lat": 2.74, "lng": 101.83 },
-    "year": "2019",
-    "status": "Completed",
-    "description": "Two-storey shop offices at Ehsan Waterpark on freehold land. Fully completed.",
-    "units": "Shop offices",
-    "area": "Freehold",
-    "priceRange": "RM 6.5M",
-    "occupancy": "Completed",
-    "amenities": ["Shop offices", "Freehold location", "Two storeys", "Retail", "Dining"],
-    "certificate": "Completed",
-    "media": {
-      "image": [
-        "proj-shop-residence.jpg", "proj-widuri.jpg", "proj-widuri-2.jpg", "proj-kota-warisan.jpg",
-        "proj-dimensi.jpg", "proj-ehsan-residence.jpg", "proj-salam-nadiah.jpg", "proj-markisa.jpg",
-        "proj-bestari.jpg", "proj-widuri.jpg"
-      ],
-      "blueprint": [
-        "proj-shop-residence.jpg", "proj-widuri.jpg"
-      ]
-    }
-  },
-  "proj-11": {
-    "name": "Shop Office, Ehsan Residence",
-    "location": "Sepang, Selangor",
-    "coordinates": { "lat": 2.75, "lng": 101.53 },
-    "year": "2020",
-    "status": "Completed",
-    "description": "14 units of two-storey shops on freehold land. Fully completed with CCC.",
-    "units": "14 units",
-    "area": "Freehold",
-    "priceRange": "RM 12M GDV",
-    "occupancy": "CCC issued",
-    "amenities": ["Shop units", "Two storeys", "Freehold tenure", "Central location", "High traffic"],
-    "certificate": "Certificate of Completion and Compliance",
-    "media": {
-      "image": [
-        "proj-shop-residence.jpg", "proj-dimensi.jpg", "proj-ehsan-residence.jpg", "proj-salam-nadiah.jpg",
-        "proj-markisa.jpg", "proj-bestari.jpg", "proj-widuri.jpg", "proj-widuri-2.jpg",
-        "proj-kota-warisan.jpg", "proj-dimensi.jpg", "proj-ehsan-residence.jpg", "proj-salam-nadiah.jpg",
-        "proj-markisa.jpg"
-      ],
-      "blueprint": [
-        "proj-shop-residence.jpg", "proj-dimensi.jpg"
-      ]
-    }
-  },
-  "proj-12": {
-    "name": "Taman Mawar Ehsan",
-    "location": "Rembau, Negeri Sembilan",
-    "coordinates": { "lat": 2.58, "lng": 101.73 },
-    "year": "2024",
-    "status": "Ongoing",
-    "description": "238 units of two-storey and single-storey terrace houses over four phases. 1,100 to 2,000 sq ft, from RM 299,800. 99-year leasehold.",
-    "units": "238 units",
-    "area": "99-year leasehold",
-    "priceRange": "RM 90M GDV",
-    "occupancy": "Phases 1–4 CCC",
-    "amenities": ["Terrace houses", "Four phases", "Various layouts", "Community features", "Sports courts"],
-    "certificate": "Phases 1–4 Certificate of Completion and Compliance",
-    "media": {
-      "image": [
-        "proj-salam-nadiah.jpg", "proj-bestari.jpg", "proj-widuri.jpg", "proj-widuri-2.jpg",
-        "proj-kota-warisan.jpg", "proj-dimensi.jpg", "proj-ehsan-residence.jpg", "proj-salam-nadiah.jpg",
-        "proj-markisa.jpg", "proj-bestari.jpg", "proj-widuri.jpg", "proj-widuri-2.jpg",
-        "proj-kota-warisan.jpg", "proj-dimensi.jpg"
-      ],
-      "blueprint": [
-        "proj-salam-nadiah.jpg", "proj-bestari.jpg", "proj-widuri.jpg"
+        "/media/legacy/img/proj-mosque-kajang.jpg",
+        "/media/legacy/img/proj-dimensi.jpg"
       ]
     }
   },
   "proj-13": {
     "name": "Taman Universiti Bestari",
     "location": "Sungai Petani, Kedah",
-    "coordinates": { "lat": 5.68, "lng": 100.54 },
-    "year": "Ongoing",
+    "coordinates": {
+      "lat": 5.68,
+      "lng": 100.54
+    },
+    "year": "2020",
     "status": "Ongoing",
     "description": "535 units over eight phases on 53 acres of freehold land. 1,140 to 2,800 sq ft, from RM 249,800. Phases 1–4 completed, Phase 5 under construction.",
     "units": "535 units",
     "area": "53 acres",
     "priceRange": "RM 120M GDV",
     "occupancy": "Phase 5 building",
-    "amenities": ["Eight phases", "Freehold land", "Various layouts", "Community amenities", "Green spaces"],
+    "amenities": [
+      "Eight phases",
+      "Freehold land",
+      "Various layouts",
+      "Community amenities",
+      "Green spaces"
+    ],
     "certificate": "Phases 1–4 CCC",
     "media": {
       "image": [
-        "proj-bestari.jpg", "proj-widuri.jpg", "proj-widuri-2.jpg", "proj-kota-warisan.jpg",
-        "proj-dimensi.jpg", "proj-ehsan-residence.jpg", "proj-salam-nadiah.jpg", "proj-markisa.jpg",
-        "proj-bestari.jpg", "proj-widuri.jpg", "proj-widuri-2.jpg"
+        "/media/legacy/img/proj-bestari.jpg",
+        "/media/legacy/img/proj-widuri.jpg",
+        "/media/legacy/img/proj-widuri-2.jpg",
+        "/media/legacy/img/proj-kota-warisan.jpg",
+        "/media/legacy/img/proj-dimensi.jpg",
+        "/media/legacy/img/proj-ehsan-residence.jpg",
+        "/media/legacy/img/proj-salam-nadiah.jpg",
+        "/media/legacy/img/proj-markisa.jpg",
+        "/media/legacy/img/proj-bestari.jpg",
+        "/media/legacy/img/proj-widuri.jpg",
+        "/media/legacy/img/proj-widuri-2.jpg"
       ],
       "blueprint": [
-        "proj-bestari.jpg", "proj-widuri.jpg"
-      ]
-    }
-  },
-  "proj-14": {
-    "name": "Residensi Mutiara Austin",
-    "location": "Johor Bahru, Johor",
-    "coordinates": { "lat": 1.51, "lng": 103.74 },
-    "year": "Ongoing",
-    "status": "Ongoing",
-    "description": "650 units of 16-storey serviced apartments across three blocks with retail level. Phase 1 2023–2026, Phase 2 2024–2027.",
-    "units": "650 units",
-    "area": "16 storeys",
-    "priceRange": "RM 300M GDV",
-    "occupancy": "Under construction",
-    "amenities": ["Serviced apartments", "Three blocks", "Retail podium", "Amenity deck", "Rooftop garden"],
-    "certificate": "Under construction",
-    "media": {
-      "image": [
-        "proj-widuri.jpg", "proj-widuri-2.jpg", "proj-kota-warisan.jpg", "proj-dimensi.jpg",
-        "proj-ehsan-residence.jpg", "proj-salam-nadiah.jpg", "proj-markisa.jpg", "proj-bestari.jpg",
-        "proj-widuri.jpg", "proj-widuri-2.jpg", "proj-kota-warisan.jpg"
-      ],
-      "blueprint": [
-        "proj-widuri.jpg", "proj-widuri-2.jpg"
-      ]
-    }
-  },
-  "proj-15": {
-    "name": "Ehsan Widuri, Putra Nilai",
-    "location": "Nilai, Negeri Sembilan",
-    "coordinates": { "lat": 2.73, "lng": 101.84 },
-    "year": "2028",
-    "status": "Ongoing",
-    "description": "490 units — Block A 242 units and Block B 242 units, levels 9 to 30 — with retail lots. Freehold, 2 acres. Block A under construction.",
-    "units": "490 units",
-    "area": "2 acres",
-    "priceRange": "RM 200M GDV",
-    "occupancy": "Block A building",
-    "amenities": ["Two blocks", "High-rise", "Retail integration", "Freehold land", "Modern design"],
-    "certificate": "Under construction",
-    "media": {
-      "image": [
-        "proj-widuri-2.jpg", "proj-kota-warisan.jpg", "proj-dimensi.jpg", "proj-ehsan-residence.jpg",
-        "proj-salam-nadiah.jpg", "proj-markisa.jpg", "proj-bestari.jpg", "proj-widuri.jpg",
-        "proj-widuri-2.jpg", "proj-kota-warisan.jpg", "proj-dimensi.jpg", "proj-ehsan-residence.jpg"
-      ],
-      "blueprint": [
-        "proj-widuri-2.jpg", "proj-kota-warisan.jpg"
+        "/media/legacy/img/proj-bestari.jpg",
+        "/media/legacy/img/proj-widuri.jpg"
       ]
     }
   },
   "proj-16": {
     "name": "Taman Seri Emas",
     "location": "Kampar, Perak",
-    "coordinates": { "lat": 3.81, "lng": 101.56 },
+    "coordinates": {
+      "lat": 3.81,
+      "lng": 101.56
+    },
     "year": "Future",
     "status": "Future",
     "description": "A mixed development of 1,800 units built around a luxurious lifestyle offer — the largest scheme on the company's book to date.",
@@ -380,16 +143,570 @@
     "area": "TBA",
     "priceRange": "TBA",
     "occupancy": "Future project",
-    "amenities": ["Mixed-use development", "Lifestyle focus", "Large-scale", "Shopping center", "Entertainment"],
+    "amenities": [
+      "Mixed-use development",
+      "Lifestyle focus",
+      "Large-scale",
+      "Shopping center",
+      "Entertainment"
+    ],
     "certificate": null,
     "media": {
       "image": [
-        "proj-bestari.jpg", "proj-widuri.jpg", "proj-widuri-2.jpg", "proj-kota-warisan.jpg",
-        "proj-dimensi.jpg", "proj-ehsan-residence.jpg", "proj-salam-nadiah.jpg", "proj-markisa.jpg",
-        "proj-bestari.jpg"
+        "/media/legacy/img/proj-bestari.jpg",
+        "/media/legacy/img/proj-widuri.jpg",
+        "/media/legacy/img/proj-widuri-2.jpg",
+        "/media/legacy/img/proj-kota-warisan.jpg",
+        "/media/legacy/img/proj-dimensi.jpg",
+        "/media/legacy/img/proj-ehsan-residence.jpg",
+        "/media/legacy/img/proj-salam-nadiah.jpg",
+        "/media/legacy/img/proj-markisa.jpg",
+        "/media/legacy/img/proj-bestari.jpg"
       ],
       "blueprint": [
-        "proj-bestari.jpg", "proj-widuri.jpg"
+        "/media/legacy/img/proj-bestari.jpg",
+        "/media/legacy/img/proj-widuri.jpg"
+      ]
+    }
+  },
+  "proj-3": {
+    "name": "Apartment Dimensi",
+    "location": "Alor Gajah, Melaka",
+    "coordinates": {
+      "lat": 2.17,
+      "lng": 102.43
+    },
+    "year": "2010",
+    "status": "Completed",
+    "description": "96 units across four blocks of four-storey apartments (Blocks A, B, C & D). Freehold. An abandoned project taken over and completed.",
+    "units": "96 units",
+    "area": "Freehold",
+    "priceRange": "RM 13M GDV",
+    "occupancy": "CCC issued",
+    "amenities": [
+      "Four blocks",
+      "Four storeys",
+      "Community facilities",
+      "Parking areas",
+      "Playground"
+    ],
+    "certificate": "Certificate of Completion and Compliance",
+    "media": {
+      "image": [
+        "/media/legacy/img/proj-dimensi.jpg",
+        "/media/legacy/img/proj-ehsan-residence.jpg",
+        "/media/legacy/img/proj-salam-nadiah.jpg",
+        "/media/legacy/img/proj-markisa.jpg",
+        "/media/legacy/img/proj-bestari.jpg",
+        "/media/legacy/img/proj-widuri.jpg",
+        "/media/legacy/img/proj-widuri-2.jpg",
+        "/media/legacy/img/proj-kota-warisan.jpg",
+        "/media/legacy/img/proj-dimensi.jpg",
+        "/media/legacy/img/proj-ehsan-residence.jpg",
+        "/media/legacy/img/proj-salam-nadiah.jpg",
+        "/media/legacy/img/proj-markisa.jpg",
+        "/media/legacy/img/proj-bestari.jpg",
+        "/media/legacy/img/proj-widuri.jpg",
+        "/media/legacy/img/proj-widuri-2.jpg"
+      ],
+      "blueprint": [
+        "/media/legacy/img/proj-dimensi.jpg",
+        "/media/legacy/img/proj-ehsan-residence.jpg",
+        "/media/legacy/img/proj-salam-nadiah.jpg"
+      ]
+    }
+  },
+  "proj-4": {
+    "name": "Hotel Ehsan, Ampang",
+    "location": "Ampang, Selangor",
+    "coordinates": {
+      "lat": 3.04,
+      "lng": 101.59
+    },
+    "year": "2011",
+    "status": "Completed",
+    "description": "One unit of shop lot converted into a budget hotel. State leasehold, 99-year lease, 1,650 square feet.",
+    "units": "1 property",
+    "area": "1,650 sq ft",
+    "priceRange": "RM 4.8M",
+    "occupancy": "Completed",
+    "amenities": [
+      "Budget hotel",
+      "Retail conversion",
+      "Long-term lease",
+      "Restaurant",
+      "Reception area"
+    ],
+    "certificate": "Completed",
+    "media": {
+      "image": [
+        "/media/legacy/img/proj-hotel-ehsan.jpg",
+        "/media/legacy/img/proj-markisa.jpg",
+        "/media/legacy/img/proj-bestari.jpg",
+        "/media/legacy/img/proj-widuri.jpg",
+        "/media/legacy/img/proj-widuri-2.jpg",
+        "/media/legacy/img/proj-kota-warisan.jpg",
+        "/media/legacy/img/proj-dimensi.jpg",
+        "/media/legacy/img/proj-ehsan-residence.jpg",
+        "/media/legacy/img/proj-salam-nadiah.jpg",
+        "/media/legacy/img/proj-markisa.jpg",
+        "/media/legacy/img/proj-bestari.jpg"
+      ],
+      "blueprint": [
+        "/media/legacy/img/proj-hotel-ehsan.jpg",
+        "/media/legacy/img/proj-markisa.jpg"
+      ]
+    }
+  },
+  "proj-14": {
+    "name": "Residensi Mutiara Austin",
+    "location": "Johor Bahru, Johor",
+    "coordinates": {
+      "lat": 1.51,
+      "lng": 103.74
+    },
+    "year": "2023",
+    "status": "Ongoing",
+    "description": "650 units of 16-storey serviced apartments across three blocks with retail level. Phase 1 2023–2026, Phase 2 2024–2027.",
+    "units": "650 units",
+    "area": "16 storeys",
+    "priceRange": "RM 300M GDV",
+    "occupancy": "Under construction",
+    "amenities": [
+      "Serviced apartments",
+      "Three blocks",
+      "Retail podium",
+      "Amenity deck",
+      "Rooftop garden"
+    ],
+    "certificate": "Under construction",
+    "media": {
+      "image": [
+        "/media/legacy/img/proj-widuri.jpg",
+        "/media/legacy/img/proj-widuri-2.jpg",
+        "/media/legacy/img/proj-kota-warisan.jpg",
+        "/media/legacy/img/proj-dimensi.jpg",
+        "/media/legacy/img/proj-ehsan-residence.jpg",
+        "/media/legacy/img/proj-salam-nadiah.jpg",
+        "/media/legacy/img/proj-markisa.jpg",
+        "/media/legacy/img/proj-bestari.jpg",
+        "/media/legacy/img/proj-widuri.jpg",
+        "/media/legacy/img/proj-widuri-2.jpg",
+        "/media/legacy/img/proj-kota-warisan.jpg"
+      ],
+      "blueprint": [
+        "/media/legacy/img/proj-widuri.jpg",
+        "/media/legacy/img/proj-widuri-2.jpg"
+      ]
+    }
+  },
+  "proj-5": {
+    "name": "Taman Pinggiran Markisa",
+    "location": "Nilai, Negeri Sembilan",
+    "coordinates": {
+      "lat": 2.73,
+      "lng": 101.84
+    },
+    "year": "2012",
+    "status": "Completed",
+    "description": "27 units on freehold land. An abandoned project taken over and completed with CCC.",
+    "units": "27 units",
+    "area": "Freehold",
+    "priceRange": "RM 10M GDV",
+    "occupancy": "CCC issued",
+    "amenities": [
+      "Residential units",
+      "Freehold land",
+      "Green spaces",
+      "Security gate",
+      "Community center"
+    ],
+    "certificate": "Certificate of Completion and Compliance",
+    "media": {
+      "image": [
+        "/media/legacy/img/proj-markisa.jpg",
+        "/media/legacy/img/proj-bestari.jpg",
+        "/media/legacy/img/proj-widuri.jpg",
+        "/media/legacy/img/proj-widuri-2.jpg",
+        "/media/legacy/img/proj-kota-warisan.jpg",
+        "/media/legacy/img/proj-dimensi.jpg",
+        "/media/legacy/img/proj-ehsan-residence.jpg",
+        "/media/legacy/img/proj-salam-nadiah.jpg",
+        "/media/legacy/img/proj-markisa.jpg",
+        "/media/legacy/img/proj-bestari.jpg",
+        "/media/legacy/img/proj-widuri.jpg",
+        "/media/legacy/img/proj-widuri-2.jpg",
+        "/media/legacy/img/proj-kota-warisan.jpg",
+        "/media/legacy/img/proj-dimensi.jpg",
+        "/media/legacy/img/proj-ehsan-residence.jpg"
+      ],
+      "blueprint": [
+        "/media/legacy/img/proj-markisa.jpg",
+        "/media/legacy/img/proj-bestari.jpg",
+        "/media/legacy/img/proj-widuri.jpg"
+      ]
+    }
+  },
+  "proj-6": {
+    "name": "Taman Salam Nadiah",
+    "location": "Tampin, Negeri Sembilan",
+    "coordinates": {
+      "lat": 2.73,
+      "lng": 101.83
+    },
+    "year": "2015",
+    "status": "Completed",
+    "description": "151 units developed on Malay Reserve land across 14.27 acres. Phase 1 and Phase 2 fully completed with CCC.",
+    "units": "151 units",
+    "area": "14.27 acres",
+    "priceRange": "RM 42M GDV",
+    "occupancy": "CCC issued",
+    "amenities": [
+      "Two phases",
+      "Malay Reserve land",
+      "Community infrastructure",
+      "Playgrounds",
+      "Mosque"
+    ],
+    "certificate": "Certificate of Completion and Compliance",
+    "media": {
+      "image": [
+        "/media/legacy/img/proj-salam-nadiah.jpg",
+        "/media/legacy/img/proj-markisa.jpg",
+        "/media/legacy/img/proj-bestari.jpg",
+        "/media/legacy/img/proj-widuri.jpg",
+        "/media/legacy/img/proj-widuri-2.jpg",
+        "/media/legacy/img/proj-kota-warisan.jpg",
+        "/media/legacy/img/proj-dimensi.jpg",
+        "/media/legacy/img/proj-ehsan-residence.jpg",
+        "/media/legacy/img/proj-salam-nadiah.jpg",
+        "/media/legacy/img/proj-markisa.jpg",
+        "/media/legacy/img/proj-bestari.jpg",
+        "/media/legacy/img/proj-widuri.jpg",
+        "/media/legacy/img/proj-widuri-2.jpg",
+        "/media/legacy/img/proj-kota-warisan.jpg",
+        "/media/legacy/img/proj-dimensi.jpg",
+        "/media/legacy/img/proj-ehsan-residence.jpg",
+        "/media/legacy/img/proj-salam-nadiah.jpg"
+      ],
+      "blueprint": [
+        "/media/legacy/img/proj-salam-nadiah.jpg",
+        "/media/legacy/img/proj-markisa.jpg",
+        "/media/legacy/img/proj-bestari.jpg"
+      ]
+    }
+  },
+  "proj-15": {
+    "name": "Ehsan Widuri, Putra Nilai",
+    "location": "Nilai, Negeri Sembilan",
+    "coordinates": {
+      "lat": 2.73,
+      "lng": 101.84
+    },
+    "year": "2024",
+    "status": "Ongoing",
+    "description": "490 units — Block A 242 units and Block B 242 units, levels 9 to 30 — with retail lots. Freehold, 2 acres. Block A under construction.",
+    "units": "490 units",
+    "area": "2 acres",
+    "priceRange": "RM 200M GDV",
+    "occupancy": "Block A building",
+    "amenities": [
+      "Two blocks",
+      "High-rise",
+      "Retail integration",
+      "Freehold land",
+      "Modern design"
+    ],
+    "certificate": "Under construction",
+    "media": {
+      "image": [
+        "/media/legacy/img/proj-widuri-2.jpg",
+        "/media/legacy/img/proj-kota-warisan.jpg",
+        "/media/legacy/img/proj-dimensi.jpg",
+        "/media/legacy/img/proj-ehsan-residence.jpg",
+        "/media/legacy/img/proj-salam-nadiah.jpg",
+        "/media/legacy/img/proj-markisa.jpg",
+        "/media/legacy/img/proj-bestari.jpg",
+        "/media/legacy/img/proj-widuri.jpg",
+        "/media/legacy/img/proj-widuri-2.jpg",
+        "/media/legacy/img/proj-kota-warisan.jpg",
+        "/media/legacy/img/proj-dimensi.jpg",
+        "/media/legacy/img/proj-ehsan-residence.jpg"
+      ],
+      "blueprint": [
+        "/media/legacy/img/proj-widuri-2.jpg",
+        "/media/legacy/img/proj-kota-warisan.jpg"
+      ]
+    }
+  },
+  "proj-7": {
+    "name": "2-Storey Shop Office, Bandar Baru Tampin",
+    "location": "Tampin, Negeri Sembilan",
+    "coordinates": {
+      "lat": 2.73,
+      "lng": 101.82
+    },
+    "year": "2015",
+    "status": "Completed",
+    "description": "13 units of two-storey shop offices on Malay Reserve land and state leasehold.",
+    "units": "13 units",
+    "area": "Mixed tenure",
+    "priceRange": "RM 8M GDV",
+    "occupancy": "CCC issued",
+    "amenities": [
+      "Shop offices",
+      "Two storeys",
+      "Commercial space",
+      "Parking",
+      "Security"
+    ],
+    "certificate": "Certificate of Completion and Compliance",
+    "media": {
+      "image": [
+        "/media/legacy/img/proj-shop-tampin.jpg",
+        "/media/legacy/img/proj-bestari.jpg",
+        "/media/legacy/img/proj-widuri.jpg",
+        "/media/legacy/img/proj-widuri-2.jpg",
+        "/media/legacy/img/proj-kota-warisan.jpg",
+        "/media/legacy/img/proj-dimensi.jpg",
+        "/media/legacy/img/proj-ehsan-residence.jpg",
+        "/media/legacy/img/proj-salam-nadiah.jpg",
+        "/media/legacy/img/proj-markisa.jpg",
+        "/media/legacy/img/proj-bestari.jpg",
+        "/media/legacy/img/proj-widuri.jpg"
+      ],
+      "blueprint": [
+        "/media/legacy/img/proj-shop-tampin.jpg",
+        "/media/legacy/img/proj-bestari.jpg"
+      ]
+    }
+  },
+  "proj-8": {
+    "name": "Ehsan Residence Condominium",
+    "location": "Sepang, Selangor",
+    "coordinates": {
+      "lat": 2.75,
+      "lng": 101.53
+    },
+    "year": "2015",
+    "status": "Completed",
+    "description": "320 units on a 5.4-acre site. Completed with CCC — the company's first high-rise scheme.",
+    "units": "320 units",
+    "area": "5.4 acres",
+    "priceRange": "RM 140M GDV",
+    "occupancy": "CCC issued",
+    "amenities": [
+      "High-rise",
+      "Condominium",
+      "Mixed-use podium",
+      "Swimming pool",
+      "Gymnasium"
+    ],
+    "certificate": "Certificate of Completion and Compliance",
+    "media": {
+      "image": [
+        "/media/legacy/img/proj-ehsan-residence.jpg",
+        "/media/legacy/img/proj-salam-nadiah.jpg",
+        "/media/legacy/img/proj-markisa.jpg",
+        "/media/legacy/img/proj-bestari.jpg",
+        "/media/legacy/img/proj-widuri.jpg",
+        "/media/legacy/img/proj-widuri-2.jpg",
+        "/media/legacy/img/proj-kota-warisan.jpg",
+        "/media/legacy/img/proj-dimensi.jpg",
+        "/media/legacy/img/proj-ehsan-residence.jpg",
+        "/media/legacy/img/proj-salam-nadiah.jpg",
+        "/media/legacy/img/proj-markisa.jpg",
+        "/media/legacy/img/proj-bestari.jpg",
+        "/media/legacy/img/proj-widuri.jpg",
+        "/media/legacy/img/proj-widuri-2.jpg",
+        "/media/legacy/img/proj-kota-warisan.jpg"
+      ],
+      "blueprint": [
+        "/media/legacy/img/proj-ehsan-residence.jpg",
+        "/media/legacy/img/proj-salam-nadiah.jpg",
+        "/media/legacy/img/proj-markisa.jpg"
+      ]
+    }
+  },
+  "proj-9": {
+    "name": "Taman Sri Ehsan",
+    "location": "Kluang, Johor",
+    "coordinates": {
+      "lat": 1.85,
+      "lng": 103.32
+    },
+    "year": "2017",
+    "status": "Completed",
+    "description": "64 units of single-storey semi-detached houses on freehold land. Fully completed with CCC.",
+    "units": "64 units",
+    "area": "Freehold",
+    "priceRange": "RM 30M GDV",
+    "occupancy": "CCC issued",
+    "amenities": [
+      "Semi-detached houses",
+      "Single storey",
+      "Freehold land",
+      "Gardens",
+      "Gated community"
+    ],
+    "certificate": "Certificate of Completion and Compliance",
+    "media": {
+      "image": [
+        "/media/legacy/img/proj-sri-ehsan.jpg",
+        "/media/legacy/img/proj-dimensi.jpg",
+        "/media/legacy/img/proj-ehsan-residence.jpg",
+        "/media/legacy/img/proj-salam-nadiah.jpg",
+        "/media/legacy/img/proj-markisa.jpg",
+        "/media/legacy/img/proj-bestari.jpg",
+        "/media/legacy/img/proj-widuri.jpg",
+        "/media/legacy/img/proj-widuri-2.jpg",
+        "/media/legacy/img/proj-kota-warisan.jpg",
+        "/media/legacy/img/proj-dimensi.jpg",
+        "/media/legacy/img/proj-ehsan-residence.jpg",
+        "/media/legacy/img/proj-salam-nadiah.jpg",
+        "/media/legacy/img/proj-markisa.jpg",
+        "/media/legacy/img/proj-bestari.jpg",
+        "/media/legacy/img/proj-widuri.jpg",
+        "/media/legacy/img/proj-widuri-2.jpg",
+        "/media/legacy/img/proj-kota-warisan.jpg",
+        "/media/legacy/img/proj-dimensi.jpg",
+        "/media/legacy/img/proj-ehsan-residence.jpg"
+      ],
+      "blueprint": [
+        "/media/legacy/img/proj-sri-ehsan.jpg",
+        "/media/legacy/img/proj-dimensi.jpg",
+        "/media/legacy/img/proj-ehsan-residence.jpg"
+      ]
+    }
+  },
+  "proj-10": {
+    "name": "2-Storey Shop Office, Ehsan Waterpark",
+    "location": "Port Dickson, Negeri Sembilan",
+    "coordinates": {
+      "lat": 2.74,
+      "lng": 101.83
+    },
+    "year": "2017",
+    "status": "Completed",
+    "description": "Two-storey shop offices at Ehsan Waterpark on freehold land. Fully completed.",
+    "units": "Shop offices",
+    "area": "Freehold",
+    "priceRange": "RM 6.5M",
+    "occupancy": "Completed",
+    "amenities": [
+      "Shop offices",
+      "Freehold location",
+      "Two storeys",
+      "Retail",
+      "Dining"
+    ],
+    "certificate": "Completed",
+    "media": {
+      "image": [
+        "/media/legacy/img/proj-shop-residence.jpg",
+        "/media/legacy/img/proj-widuri.jpg",
+        "/media/legacy/img/proj-widuri-2.jpg",
+        "/media/legacy/img/proj-kota-warisan.jpg",
+        "/media/legacy/img/proj-dimensi.jpg",
+        "/media/legacy/img/proj-ehsan-residence.jpg",
+        "/media/legacy/img/proj-salam-nadiah.jpg",
+        "/media/legacy/img/proj-markisa.jpg",
+        "/media/legacy/img/proj-bestari.jpg",
+        "/media/legacy/img/proj-widuri.jpg"
+      ],
+      "blueprint": [
+        "/media/legacy/img/proj-shop-residence.jpg",
+        "/media/legacy/img/proj-widuri.jpg"
+      ]
+    }
+  },
+  "proj-11": {
+    "name": "Shop Office, Ehsan Residence",
+    "location": "Sepang, Selangor",
+    "coordinates": {
+      "lat": 2.75,
+      "lng": 101.53
+    },
+    "year": "2019",
+    "status": "Completed",
+    "description": "14 units of two-storey shops on freehold land. Fully completed with CCC.",
+    "units": "14 units",
+    "area": "Freehold",
+    "priceRange": "RM 12M GDV",
+    "occupancy": "CCC issued",
+    "amenities": [
+      "Shop units",
+      "Two storeys",
+      "Freehold tenure",
+      "Central location",
+      "High traffic"
+    ],
+    "certificate": "Certificate of Completion and Compliance",
+    "media": {
+      "image": [
+        "/media/legacy/img/proj-shop-residence.jpg",
+        "/media/legacy/img/proj-dimensi.jpg",
+        "/media/legacy/img/proj-ehsan-residence.jpg",
+        "/media/legacy/img/proj-salam-nadiah.jpg",
+        "/media/legacy/img/proj-markisa.jpg",
+        "/media/legacy/img/proj-bestari.jpg",
+        "/media/legacy/img/proj-widuri.jpg",
+        "/media/legacy/img/proj-widuri-2.jpg",
+        "/media/legacy/img/proj-kota-warisan.jpg",
+        "/media/legacy/img/proj-dimensi.jpg",
+        "/media/legacy/img/proj-ehsan-residence.jpg",
+        "/media/legacy/img/proj-salam-nadiah.jpg",
+        "/media/legacy/img/proj-markisa.jpg"
+      ],
+      "blueprint": [
+        "/media/legacy/img/proj-shop-residence.jpg",
+        "/media/legacy/img/proj-dimensi.jpg"
+      ]
+    }
+  },
+  "proj-12": {
+    "name": "Taman Mawar Ehsan",
+    "location": "Rembau, Negeri Sembilan",
+    "coordinates": {
+      "lat": 2.58,
+      "lng": 101.73
+    },
+    "year": "Ph 1–4",
+    "status": "Ongoing",
+    "description": "238 units of two-storey and single-storey terrace houses over four phases. 1,100 to 2,000 sq ft, from RM 299,800. 99-year leasehold.",
+    "units": "238 units",
+    "area": "99-year leasehold",
+    "priceRange": "RM 90M GDV",
+    "occupancy": "Phases 1–4 CCC",
+    "amenities": [
+      "Terrace houses",
+      "Four phases",
+      "Various layouts",
+      "Community features",
+      "Sports courts"
+    ],
+    "certificate": "Phases 1–4 Certificate of Completion and Compliance",
+    "media": {
+      "image": [
+        "/media/legacy/img/proj-salam-nadiah.jpg",
+        "/media/legacy/img/proj-bestari.jpg",
+        "/media/legacy/img/proj-widuri.jpg",
+        "/media/legacy/img/proj-widuri-2.jpg",
+        "/media/legacy/img/proj-kota-warisan.jpg",
+        "/media/legacy/img/proj-dimensi.jpg",
+        "/media/legacy/img/proj-ehsan-residence.jpg",
+        "/media/legacy/img/proj-salam-nadiah.jpg",
+        "/media/legacy/img/proj-markisa.jpg",
+        "/media/legacy/img/proj-bestari.jpg",
+        "/media/legacy/img/proj-widuri.jpg",
+        "/media/legacy/img/proj-widuri-2.jpg",
+        "/media/legacy/img/proj-kota-warisan.jpg",
+        "/media/legacy/img/proj-dimensi.jpg"
+      ],
+      "blueprint": [
+        "/media/legacy/img/proj-salam-nadiah.jpg",
+        "/media/legacy/img/proj-bestari.jpg",
+        "/media/legacy/img/proj-widuri.jpg"
       ]
     }
   }

@@ -1,0 +1,258 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ---------------------------------------------------------------------------
+   Ehsan admin — design tokens.
+
+   Every value below is pulled from the live landing page's own stylesheet
+   (css/content.css), not invented for the panel. The site's signature is a
+   brass/chartreuse rgb(235,242,18) against a warm near-black #12110d; the
+   panel inherits both so it reads as the same brand rather than a bolt-on
+   dashboard.
+
+   Brass is a SHAPE colour. It sits near white in luminance, so text set in it
+   fails contrast on light ground -- exactly the trap the site's own comments
+   call out. Two darker relatives carry text and hairline duty instead:
+   --brass-ink for type, --brass-line for strokes.
+--------------------------------------------------------------------------- */
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --font-sans: var(--font-montserrat);
+  --font-display: var(--font-montserrat);
+  --font-mono: var(--font-montserrat);
+
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+
+  /* Brand-specific, beyond the shadcn contract. */
+  --color-brass: var(--brass);
+  --color-brass-line: var(--brass-line);
+  --color-brass-ink: var(--brass-ink);
+  --color-brass-soft: var(--brass-soft);
+  --color-sand: var(--sand);
+  --color-sand-soft: var(--sand-soft);
+  --color-rust: var(--rust);
+  --color-rust-soft: var(--rust-soft);
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+  --radius: 0.5rem;
+
+  /* Brand constants — identical in both themes. Brass is brass. */
+  --brass: rgb(235 242 18);
+  --brass-line: #b4bd00;
+  --brass-ink: #585c00;
+  --brass-soft: #f7f9dd;
+  --sand: #96660a;
+  --sand-soft: #f7efdf;
+  --rust: #b4441f;
+  --rust-soft: #f8e9e4;
+
+  /* Light: white ground. Cards share it, so their border is what separates
+     them from the page rather than a change in tone. */
+  --background: #ffffff;
+  --foreground: #12110d;
+  --card: #ffffff;
+  --card-foreground: #12110d;
+  --popover: #ffffff;
+  --popover-foreground: #12110d;
+
+  --primary: #12110d;
+  --primary-foreground: #f6f6f0;
+  --secondary: #f0efe6;
+  --secondary-foreground: #12110d;
+  --muted: #f0efe6;
+  --muted-foreground: #6b6759;
+  --accent: #eef0dc;
+  --accent-foreground: #2e3005;
+
+  --destructive: #b4441f;
+  --destructive-foreground: #ffffff;
+
+  --border: #e4e2d6;
+  --input: #dedbcd;
+  --ring: var(--brass-line);
+
+  --chart-1: var(--brass-line);
+  --chart-2: #27343a;
+  --chart-3: var(--sand);
+  --chart-4: #8f9a3d;
+  --chart-5: #b9b3a9;
+
+  /* Sidebar: a cool light surface set slightly apart from the warm content
+     ground, so the nav still reads as its own plane without going dark.
+     Text stays on the panel's one ink rather than introducing a second. */
+  --sidebar: #f0f4f9;
+  --sidebar-foreground: #12110d;
+  --sidebar-primary: var(--brass);
+  --sidebar-primary-foreground: #12110d;
+  --sidebar-accent: #dde6f2;
+  --sidebar-accent-foreground: #12110d;
+  --sidebar-border: #d8e1ec;
+  --sidebar-ring: var(--brass-line);
+}
+
+.dark {
+  /* Dark: brass's native habitat — the site's own #doctrine section proves it. */
+  --brass-soft: #2b2f08;
+  --sand: #e2b45c;
+  --sand-soft: #33260f;
+  --rust: #d97a56;
+  --rust-soft: #33190f;
+  --brass-ink: #d4dc4a;
+
+  --background: #100f0c;
+  --foreground: #f2f1e8;
+  --card: #191813;
+  --card-foreground: #f2f1e8;
+  --popover: #1d1c16;
+  --popover-foreground: #f2f1e8;
+
+  --primary: #f2f1e8;
+  --primary-foreground: #12110d;
+  --secondary: #232219;
+  --secondary-foreground: #f2f1e8;
+  --muted: #232219;
+  --muted-foreground: #9a9788;
+  --accent: #2b2f08;
+  --accent-foreground: #e6ef7a;
+
+  --destructive: #d97a56;
+  --destructive-foreground: #12110d;
+
+  --border: #2a2921;
+  --input: #33322a;
+  --ring: var(--brass-line);
+
+  --chart-1: var(--brass);
+  --chart-2: #7f9aa5;
+  --chart-3: var(--sand);
+  --chart-4: #a9b455;
+  --chart-5: #6e6a5d;
+
+  --sidebar: #141310;
+  --sidebar-foreground: #cfcdc0;
+  --sidebar-primary: var(--brass);
+  --sidebar-primary-foreground: #12110d;
+  --sidebar-accent: #232219;
+  --sidebar-accent-foreground: #f2f1e8;
+  --sidebar-border: #262519;
+  --sidebar-ring: var(--brass-line);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+  }
+
+  html {
+    @apply font-sans;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Numerals line up in every table, stat and score in this panel. */
+  table,
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* The "mono" role is now Montserrat like everything else, so it earns its
+     keep through figures and tracking instead of a monospaced family:
+     references, ids, dates and counters still align and stay unambiguous. */
+  .font-mono {
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.015em;
+  }
+
+  ::selection {
+    background: var(--brass);
+    color: #12110d;
+  }
+}
+
+@layer components {
+  /* The signature: a brass rail. One 2px bar does all the state-marking in
+     this panel -- active nav item, published row, passing SEO rule. Using a
+     single structural device for "this one is live" is what keeps the rest of
+     the interface free of colour. */
+  .rail {
+    position: relative;
+  }
+
+  .rail::before {
+    content: "";
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
+    width: 2px;
+    background: var(--brass);
+  }
+
+  .eyebrow {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

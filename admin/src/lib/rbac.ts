@@ -8,14 +8,19 @@ declare module 'fastify' {
 }
 
 /**
- * Fastify preHandler hooks that call reply.send() do not need to throw to
- * stop the chain -- the framework checks reply.sent before running the next
- * hook or the route handler. Throwing after send() is worse than a no-op: it
- * logs an "already sent" warning on every rejected request. So every guard
- * here just sends and returns.
+ * Fastify signals hook completion one of two ways: the hook calls the `done`
+ * callback it is handed as a third argument, or it returns a promise the
+ * framework can await. A hook that takes only (req, reply) and returns
+ * undefined does neither, and the hook chain simply never advances -- the
+ * request hangs until the client times out.
+ *
+ * These guards are therefore async. Once the returned promise settles Fastify
+ * checks reply.sent, so sending a 401/403 and returning is enough to stop the
+ * route handler from running; throwing after send() would only add an
+ * "already sent" warning to every rejected request.
  */
 export function requirePermission(resource: string, action: string) {
-  return (req: FastifyRequest, reply: FastifyReply): void => {
+  return async (req: FastifyRequest, reply: FastifyReply): Promise<void> => {
     if (!req.user) {
       reply.code(401).send({ error: 'unauthenticated', message: 'Sign in required.' });
       return;
