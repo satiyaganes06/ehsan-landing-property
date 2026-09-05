@@ -4,7 +4,11 @@
     {
       "name": "ehsan-site",
       "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "8934"],
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8934"
+      ],
       "port": 8934
     },
     {
@@ -12,7 +16,7 @@
       "runtimeExecutable": "/bin/zsh",
       "runtimeArgs": [
         "-c",
-        "export PATH=/opt/homebrew/opt/node@22/bin:$PATH && cd admin/web && exec npm run dev"
+        "export PATH=/opt/homebrew/opt/node@22/bin:$PATH && cd admin/webapp && exec npm run dev"
       ],
       "port": 3000
     }

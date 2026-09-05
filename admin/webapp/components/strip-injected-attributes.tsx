@@ -1,28 +1,40 @@
 import Script from 'next/script';
 
 /**
- * Browser extensions that scan the page — Bitdefender's is the common one —
- * stamp their own attributes onto elements in the server-rendered HTML before
- * React gets to it: `bis_skin_checked`, `bis_register`, `__processed_<uuid>__`.
- * React then compares that mutated DOM against what it meant to render and
- * reports a hydration mismatch on essentially every <div> on the page.
+ * Browser extensions that scan the page stamp their own attributes onto the
+ * server-rendered HTML before React hydrates. React then compares that mutated
+ * DOM against what it meant to render and reports a mismatch on nearly every
+ * element. Two are common here:
  *
- * It is cosmetic — the attributes do nothing and the app works — but the noise
- * buries real hydration bugs, which is the actual cost. This strips them back
- * out while hydration is happening.
+ *   Bitdefender  bis_skin_checked, bis_register, __processed_<uuid>__
+ *   Grammarly    data-gr-ext-installed, data-new-gr-c-s-check-loaded
  *
- * It runs with next/script's `beforeInteractive` strategy, which Next
- * guarantees executes before any of its own code and before hydration -- so
- * the observer is installed in time to catch the attributes as they appear,
- * rather than racing to clean up after the fact. It disconnects shortly after
- * load: past that point the extension is welcome to do as it likes, because
- * React is no longer comparing the DOM against server output.
+ * The attributes do nothing and the app works, but the noise buries real
+ * hydration bugs -- which is the actual cost.
  *
- * This cannot be done from a normal effect — hydration has already failed by
- * the time one runs.
+ * A MutationObserver alone cannot fix this: its callback is a microtask, while
+ * React reads the DOM synchronously during hydration, so the observer always
+ * arrives too late. The load-bearing part here is patching setAttribute, which
+ * runs in the extension's own call stack and stops the attribute landing at
+ * all. The observer stays as a backup for writes that bypass it (dataset
+ * assignment, for one), and both are undone shortly after load -- past that
+ * point React is no longer comparing against server output, so the extensions
+ * are welcome to do as they like.
+ *
+ * This cannot be done from an effect: hydration has already failed by then.
  */
 const SCRIPT = `(function () {
-  var NOISE = /^(bis_skin_checked|bis_register|bis_size|bis_id)$|^__processed_[0-9a-fA-F-]+__$/;
+  var NOISE = /^(bis_skin_checked|bis_register|bis_size|bis_id|cz-shortcut-listen|data-lt-installed)$|^__processed_[0-9a-fA-F-]+__$|^data-(new-)?gr-/;
+
+  var nativeSetAttribute = Element.prototype.setAttribute;
+  var patched = true;
+
+  // Synchronous, and therefore the part that actually works: the extension
+  // calls this on its own stack, before React ever looks at the element.
+  Element.prototype.setAttribute = function (name, value) {
+    if (patched && typeof name === 'string' && NOISE.test(name)) return;
+    return nativeSetAttribute.call(this, name, value);
+  };
 
   function clean(node) {
     if (!node || node.nodeType !== 1 || !node.attributes) return;
@@ -56,11 +68,12 @@ const SCRIPT = `(function () {
   function stop() {
     sweep(document.documentElement);
     observer.disconnect();
+    Element.prototype.setAttribute = nativeSetAttribute;
+    patched = false;
   }
 
-  // Hydration is long finished a beat after load; stop watching then.
-  if (document.readyState === 'complete') setTimeout(stop, 1000);
-  else addEventListener('load', function () { setTimeout(stop, 1000); });
+  if (document.readyState === 'complete') setTimeout(stop, 1500);
+  else addEventListener('load', function () { setTimeout(stop, 1500); });
 })();`;
 
 export function StripInjectedAttributes() {

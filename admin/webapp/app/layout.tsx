@@ -25,7 +25,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
        `html { font-family: var(--font-sans) }`, and a variable declared on
        <body> is not visible to the element above it. */
     <html lang="en" className={montserrat.variable} suppressHydrationWarning>
-      <body className="antialiased">
+      {/* Extensions (Grammarly, Bitdefender) write their markers onto <body>
+          via dataset assignment, which bypasses the setAttribute patch in
+          StripInjectedAttributes. Suppressing here covers this element's own
+          attributes; it does not extend to children, so it hides nothing real. */}
+      <body className="antialiased" suppressHydrationWarning>
         <StripInjectedAttributes />
         <Providers>
           {children}

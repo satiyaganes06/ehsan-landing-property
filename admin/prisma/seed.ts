@@ -17,6 +17,7 @@
    already has a production site to import from.
    --------------------------------------------------------------------------- */
 
+import { randomBytes } from 'node:crypto';
 import { PrismaClient } from '@prisma/client';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
@@ -71,7 +72,12 @@ async function seedRbac() {
 
 async function seedOwner() {
   const email = process.env.SEED_OWNER_EMAIL || 'admin@ehsanproperty.com';
-  const password = 'admin1234';
+  // SEED_OWNER_PASSWORD is respected when set; otherwise a random one is
+  // generated and printed once. Previously this was hardcoded to a short
+  // known value while the log below claimed the env var was honoured -- fine
+  // against a local container, not against a hosted database.
+  const password =
+    process.env.SEED_OWNER_PASSWORD || randomBytes(12).toString('base64url');
 
   const existing = await prisma.user.findUnique({ where: { email } });
   if (existing) {

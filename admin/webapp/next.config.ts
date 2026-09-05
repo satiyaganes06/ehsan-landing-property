@@ -9,16 +9,25 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: path.resolve(import.meta.dirname),
   },
-  // The Fastify API stays its own service. Proxying it under this origin is
-  // what lets the session cookie, the /media/* static mounts and the preview
-  // iframe all behave as same-origin -- the iframe in particular only sends
-  // credentials when it is not cross-site.
+  /**
+   * Migration seam. These are `fallback` rewrites deliberately: an array-form
+   * rewrite is checked BEFORE dynamic routes, so it would shadow a local
+   * app/api/projects/[id]/route.ts. `fallback` runs after every local route
+   * has been tried, so anything implemented here wins and everything still
+   * living in Fastify proxies through untouched.
+   *
+   * Delete the /api entry once the last module has moved.
+   */
   async rewrites() {
-    return [
-      { source: '/api/:path*', destination: `${API_ORIGIN}/api/:path*` },
-      { source: '/media/:path*', destination: `${API_ORIGIN}/media/:path*` },
-      { source: '/live-site/:path*', destination: `${API_ORIGIN}/live-site/:path*` },
-    ];
+    return {
+      beforeFiles: [],
+      afterFiles: [],
+      fallback: [
+        { source: '/api/:path*', destination: `${API_ORIGIN}/api/:path*` },
+        { source: '/media/:path*', destination: `${API_ORIGIN}/media/:path*` },
+        { source: '/live-site/:path*', destination: `${API_ORIGIN}/live-site/:path*` },
+      ],
+    };
   },
 };
 
