@@ -10,6 +10,7 @@ import { PageHeader } from '@/components/page-header';
 import { EmptyState, ErrorState } from '@/components/states';
 import { EnquiryPill } from '@/components/state-pills';
 import { ConfirmDialog } from '@/components/confirm-dialog';
+import { PaginationBar, usePagination } from '@/components/pagination-bar';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { api, ApiError } from '@/lib/api';
@@ -36,6 +37,8 @@ export default function EnquiriesPage() {
     () => items.find((e) => e.id === selectedId) ?? null,
     [items, selectedId],
   );
+
+  const { page: enquiryPage, bindings: enquiryBindings } = usePagination(items);
 
   const setStatus = useMutation({
     mutationFn: ({ id, status }: { id: string; status: EnquiryStatus }) =>
@@ -108,8 +111,9 @@ export default function EnquiriesPage() {
         />
       ) : (
         <div className="grid gap-4 lg:grid-cols-[22rem_minmax(0,1fr)]">
+          <div className="space-y-3">
           <ul className="bg-card divide-border max-h-[70vh] divide-y overflow-y-auto rounded-lg border">
-            {items.map((enquiry) => (
+            {enquiryPage.map((enquiry) => (
               <li key={enquiry.id}>
                 <button
                   type="button"
@@ -144,6 +148,8 @@ export default function EnquiriesPage() {
               </li>
             ))}
           </ul>
+          <PaginationBar {...enquiryBindings} label="enquiries" />
+          </div>
 
           <div className="bg-card rounded-lg border">
             {selected ? (

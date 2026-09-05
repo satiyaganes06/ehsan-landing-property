@@ -12,7 +12,7 @@
       "runtimeExecutable": "/bin/zsh",
       "runtimeArgs": [
         "-c",
-        "export PATH=/opt/homebrew/opt/node@22/bin:$PATH && cd admin/webapp && exec npm run dev"
+        "export PATH=/opt/homebrew/opt/node@22/bin:$PATH && cd admin/web && exec npm run dev"
       ],
       "port": 3000
     }

@@ -12,6 +12,7 @@ import {
 import { PageHeader } from '@/components/page-header';
 import { EmptyState, ErrorState, NoResultsState } from '@/components/states';
 import { ConfirmDialog } from '@/components/confirm-dialog';
+import { PaginationBar, usePagination } from '@/components/pagination-bar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -70,6 +71,10 @@ function MediaLibrary() {
   }, [query.data, filter, search]);
 
   const missingAlt = (query.data ?? []).filter((m) => !m.altText).length;
+
+  // Paged from the FILTERED list, so search and the missing-description
+  // filter reset the range rather than paging through hidden rows.
+  const { page: mediaPage, bindings: mediaBindings } = usePagination(items);
 
   const upload = useMutation({
     mutationFn: async (files: FileList) => {
@@ -203,8 +208,9 @@ function MediaLibrary() {
           }}
         />
       ) : (
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
-          {items.map((item) => (
+        <div className="space-y-4">
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+          {mediaPage.map((item) => (
             <button
               key={item.id}
               type="button"
@@ -233,6 +239,8 @@ function MediaLibrary() {
               </div>
             </button>
           ))}
+          </div>
+          <PaginationBar {...mediaBindings} label="images" />
         </div>
       )}
 

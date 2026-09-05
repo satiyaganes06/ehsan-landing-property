@@ -13,6 +13,7 @@ import { EmptyState, ErrorState } from '@/components/states';
 import { PublishPill } from '@/components/state-pills';
 import { PermissionButton } from '@/components/permission-button';
 import { ConfirmDialog } from '@/components/confirm-dialog';
+import { PaginationBar, usePagination } from '@/components/pagination-bar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -125,6 +126,10 @@ export default function TestimonialsPage() {
       }),
   });
 
+  const { page: testimonialPage, bindings: testimonialBindings } = usePagination(
+    list.data ?? [],
+  );
+
   return (
     <div className="mx-auto w-full max-w-4xl space-y-6">
       <PageHeader
@@ -160,8 +165,9 @@ export default function TestimonialsPage() {
           description="Add a resident quote and it will appear on the site once published."
         />
       ) : (
-        <div className="space-y-3">
-          {list.data?.map((item) => (
+        <div className="space-y-4">
+          <div className="space-y-3">
+          {testimonialPage.map((item) => (
             <button
               key={item.id}
               type="button"
@@ -181,6 +187,8 @@ export default function TestimonialsPage() {
               </div>
             </button>
           ))}
+          </div>
+          <PaginationBar {...testimonialBindings} label="testimonials" />
         </div>
       )}
 

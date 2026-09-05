@@ -7,6 +7,7 @@ import { ScrollText } from 'lucide-react';
 
 import { PageHeader } from '@/components/page-header';
 import { EmptyState, ErrorState, NoResultsState } from '@/components/states';
+import { PaginationBar, usePagination } from '@/components/pagination-bar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -73,6 +74,8 @@ export default function AuditPage() {
     return list;
   }, [query.data, scope, search]);
 
+  const { page: entryPage, bindings: entryBindings } = usePagination(rows);
+
   return (
     <div className="mx-auto w-full max-w-4xl space-y-6">
       <PageHeader
@@ -123,8 +126,9 @@ export default function AuditPage() {
           }}
         />
       ) : (
+        <div className="space-y-4">
         <ol className="bg-card divide-border divide-y overflow-hidden rounded-lg border">
-          {rows.map((entry) => {
+          {entryPage.map((entry) => {
             const failed = entry.action === 'login.failed';
             return (
               <li key={entry.id} className={cn('flex items-baseline gap-3 px-4 py-3', failed && 'rail')}>
@@ -154,6 +158,8 @@ export default function AuditPage() {
             );
           })}
         </ol>
+        <PaginationBar {...entryBindings} label="entries" />
+        </div>
       )}
     </div>
   );

@@ -26,8 +26,8 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
-const WEBAPP = path.resolve(HERE, '..');
-const REPO = path.resolve(WEBAPP, '../..');
+const WEB = path.resolve(HERE, '..');
+const REPO = path.resolve(WEB, '../..');
 
 const SHIM = `<script>
 /* Injected by scripts/sync-preview-templates.mjs -- do not edit here. */
@@ -95,11 +95,11 @@ const TARGETS = [
   { from: 'html/event-detail.html', to: 'public/preview/event.html', extra: [INERT_FORM] },
 ];
 
-await mkdir(path.join(WEBAPP, 'public/preview'), { recursive: true });
+await mkdir(path.join(WEB, 'public/preview'), { recursive: true });
 
 for (const target of TARGETS) {
   const source = await readFile(path.join(REPO, target.from), 'utf8');
   const output = injectIntoHead(rewritePaths(source), SHIM, ...target.extra);
-  await writeFile(path.join(WEBAPP, target.to), output, 'utf8');
+  await writeFile(path.join(WEB, target.to), output, 'utf8');
   console.log(`${target.from} -> ${target.to}`);
 }

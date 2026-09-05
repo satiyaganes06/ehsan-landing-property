@@ -117,6 +117,7 @@ export default function EventsPage() {
         error={query.error}
         onRetry={() => query.refetch()}
         onRowClick={(row) => router.push(`/events/${row.id}`)}
+        label="events"
         searchPlaceholder="Search events…"
         toolbar={
           <div className="flex flex-wrap gap-1">

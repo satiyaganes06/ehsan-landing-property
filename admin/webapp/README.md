@@ -18,7 +18,7 @@ npm run db:up      # postgres
 npm run dev        # API on :4000
 ```
 
-Then from `admin/webapp/`:
+Then from `admin/web/`:
 
 ```bash
 npm run dev        # panel on :3000

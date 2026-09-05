@@ -106,6 +106,7 @@ export default function ProjectsPage() {
         error={query.error}
         onRetry={() => query.refetch()}
         onRowClick={(row) => router.push(`/projects/${row.id}`)}
+        label="projects"
         searchPlaceholder="Search projects by name or place…"
         toolbar={
           <div className="flex flex-wrap gap-1">

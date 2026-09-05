@@ -11,13 +11,14 @@ import {
   type ColumnDef,
   type SortingState,
 } from '@tanstack/react-table';
-import { ArrowDown, ArrowUp, ChevronLeft, ChevronRight, ChevronsUpDown, Search } from 'lucide-react';
+import { ArrowDown, ArrowUp, ChevronsUpDown, Search } from 'lucide-react';
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { ErrorState, NoResultsState } from '@/components/states';
+import { DEFAULT_PAGE_SIZE, PaginationBar } from '@/components/pagination-bar';
 import { cn } from '@/lib/utils';
 
 interface DataTableProps<TData> {
@@ -34,6 +35,8 @@ interface DataTableProps<TData> {
   /** Extra controls rendered beside the search box. */
   toolbar?: React.ReactNode;
   pageSize?: number;
+  /** Plural noun for the pagination count line, e.g. "projects". */
+  label?: string;
 }
 
 export function DataTable<TData>({
@@ -47,7 +50,8 @@ export function DataTable<TData>({
   onRowClick,
   searchPlaceholder = 'Search…',
   toolbar,
-  pageSize = 20,
+  pageSize = DEFAULT_PAGE_SIZE,
+  label = 'records',
 }: DataTableProps<TData>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState('');
@@ -162,34 +166,18 @@ export function DataTable<TData>({
         ) : null}
       </div>
 
-      {table.getPageCount() > 1 ? (
-        <div className="flex items-center justify-between gap-4">
-          <p className="text-muted-foreground text-xs tabular-nums">
-            Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()} ·{' '}
-            {table.getFilteredRowModel().rows.length} records
-          </p>
-          <div className="flex gap-1.5">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => table.previousPage()}
-              disabled={!table.getCanPreviousPage()}
-            >
-              <ChevronLeft className="size-3.5" />
-              Previous
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => table.nextPage()}
-              disabled={!table.getCanNextPage()}
-            >
-              Next
-              <ChevronRight className="size-3.5" />
-            </Button>
-          </div>
-        </div>
+      {table.getFilteredRowModel().rows.length > 0 ? (
+        <PaginationBar
+          pageIndex={table.getState().pagination.pageIndex}
+          pageCount={table.getPageCount()}
+          pageSize={table.getState().pagination.pageSize}
+          total={table.getFilteredRowModel().rows.length}
+          onPageChange={(index: number) => table.setPageIndex(index)}
+          onPageSizeChange={(size: number) => table.setPageSize(size)}
+          label={label}
+        />
       ) : null}
+
     </div>
   );
 }

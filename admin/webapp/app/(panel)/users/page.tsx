@@ -12,6 +12,7 @@ import {
 import { PageHeader } from '@/components/page-header';
 import { ErrorState } from '@/components/states';
 import { PermissionButton } from '@/components/permission-button';
+import { PaginationBar, usePagination } from '@/components/pagination-bar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -88,6 +89,8 @@ export default function UsersPage() {
     );
   }
 
+  const { page: userPage, bindings: userBindings } = usePagination(query.data ?? []);
+
   return (
     <div className="mx-auto w-full max-w-4xl space-y-6">
       <PageHeader
@@ -110,8 +113,9 @@ export default function UsersPage() {
           ))}
         </div>
       ) : (
-        <div className="bg-card divide-border divide-y overflow-hidden rounded-lg border">
-          {query.data?.map((user) => (
+        <div className="space-y-4">
+          <div className="bg-card divide-border divide-y overflow-hidden rounded-lg border">
+          {userPage.map((user) => (
             <button
               key={user.id}
               type="button"
@@ -156,6 +160,8 @@ export default function UsersPage() {
               </span>
             </button>
           ))}
+          </div>
+          <PaginationBar {...userBindings} label="people" labelOne="person" />
         </div>
       )}
 

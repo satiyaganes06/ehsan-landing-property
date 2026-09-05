@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { Loader2, Plus, Trash2, Trophy } from 'lucide-react';
@@ -13,6 +13,7 @@ import { EmptyState, ErrorState } from '@/components/states';
 import { PublishPill } from '@/components/state-pills';
 import { PermissionButton } from '@/components/permission-button';
 import { ConfirmDialog } from '@/components/confirm-dialog';
+import { PaginationBar, usePagination } from '@/components/pagination-bar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -139,6 +140,14 @@ export default function AwardsPage() {
       }),
   });
 
+  // Newest first, then paged — sorting has to happen before slicing or each
+  // page would be sorted only within itself.
+  const sortedAwards = useMemo(
+    () => [...(list.data ?? [])].sort((a, b) => b.year - a.year),
+    [list.data],
+  );
+  const { page: awardPage, bindings: awardBindings } = usePagination(sortedAwards);
+
   return (
     <div className="mx-auto w-full max-w-6xl space-y-6">
       <PageHeader
@@ -174,10 +183,9 @@ export default function AwardsPage() {
           description="Add the first award and it will appear on the site once published."
         />
       ) : (
+        <div className="space-y-4">
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {[...(list.data ?? [])]
-            .sort((a, b) => b.year - a.year)
-            .map((award) => (
+          {awardPage.map((award) => (
               <button
                 key={award.id}
                 type="button"
@@ -209,7 +217,9 @@ export default function AwardsPage() {
                   </div>
                 </div>
               </button>
-            ))}
+          ))}
+        </div>
+        <PaginationBar {...awardBindings} label="awards" />
         </div>
       )}
 
