@@ -21,7 +21,7 @@
  *
  * Re-run with: npm run sync:preview
  */
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -96,6 +96,19 @@ const TARGETS = [
 ];
 
 await mkdir(path.join(APP, 'public/preview'), { recursive: true });
+
+/* The preview loads the site's real CSS, JS and images from /live-site/.
+   Fastify used to serve those straight from the repo; with the API gone they
+   are copied into public/ so they deploy with the app and cannot break
+   because the landing site was redeployed separately. */
+const SITE_DIRS = ['css', 'js', 'components', 'assets'];
+const LIVE_SITE = path.join(APP, 'public/live-site');
+
+await rm(LIVE_SITE, { recursive: true, force: true });
+for (const dir of SITE_DIRS) {
+  await cp(path.join(REPO, dir), path.join(LIVE_SITE, dir), { recursive: true });
+  console.log(`${dir}/ -> public/live-site/${dir}/`);
+}
 
 for (const target of TARGETS) {
   const source = await readFile(path.join(REPO, target.from), 'utf8');

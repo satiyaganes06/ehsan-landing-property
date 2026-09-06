@@ -86,6 +86,14 @@ export function route<P = Record<string, never>>(options: RouteOptions, handler:
   };
 }
 
+/**
+ * Row-level refusal, matching requirePermission's shape so callers see one
+ * error contract no matter which layer rejected them.
+ */
+export function forbiddenOwnership() {
+  return fail(403, 'forbidden', 'You can only edit records you created.');
+}
+
 /** For routes that are deliberately public: the enquiry form, health. */
 export function publicRoute<P = Record<string, never>>(
   handler: (ctx: Omit<Ctx<P>, 'user'>) => Promise<Response> | Response,

@@ -1,19 +1,21 @@
 /**
- * Two storage origins share one Media table, distinguished by a prefix on
- * storageKey rather than a schema column:
+ * Turns a Media row's storageKey into a URL the browser can request.
  *
- *   legacy:img/proj-kota-warisan.jpg   -- imported from the site's own
- *                                          assets/ at seed time; read-only,
- *                                          served straight from the repo
- *   upload:2026/08/xyz.webp            -- uploaded through the panel; served
- *                                          from admin/uploads
+ *   legacy:img/proj-x.jpg   -> /live-site/assets/img/proj-x.jpg
+ *   upload:2026/09/a.webp   -> /media/uploads/2026/09/a.webp
+ *   blob:https://…/a.webp   -> https://…/a.webp
  *
- * mediaUrl() is the one place that distinction turns into an actual URL, so
- * nothing else in the codebase needs to know the convention exists.
+ * The legacy branch drops a leading `img/` deliberately. The seed wrote keys
+ * as `legacy:img/…` while the files sit directly under assets/img, so the old
+ * mapping produced /media/legacy/img/… and 404'd for every imported photo.
  */
 export function mediaUrl(storageKey: string): string {
+  if (storageKey.startsWith('blob:')) {
+    return storageKey.slice('blob:'.length);
+  }
   if (storageKey.startsWith('legacy:')) {
-    return `/media/legacy/${storageKey.slice('legacy:'.length)}`;
+    const rest = storageKey.slice('legacy:'.length).replace(/^img\//, '');
+    return `/live-site/assets/img/${rest}`;
   }
   if (storageKey.startsWith('upload:')) {
     return `/media/uploads/${storageKey.slice('upload:'.length)}`;

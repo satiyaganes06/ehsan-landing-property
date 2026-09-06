@@ -1,3 +1,18 @@
+/* Where published content comes from.
+
+   Unset, the site reads the checked-in data/*.json exactly as before, so
+   nothing changes until you decide to switch. Point it at the deployed panel
+   to serve content straight from the CMS:
+
+     <script>window.EHSAN_CMS_ORIGIN = 'https://admin.ehsanproperty.com';</script>
+
+   Set it before this script loads (a <script> tag in the page head does it).
+*/
+function cmsUrl(file, fallback) {
+  const origin = window.EHSAN_CMS_ORIGIN;
+  return origin ? origin.replace(/\/$/, '') + '/api/public/' + file : SITE.url(fallback);
+}
+
 /* =========================================================================
    project-detail.js — Fetch from JSON, media switching, lightbox & maps
    ========================================================================= */
@@ -9,7 +24,7 @@ let currentMediaType = 'image';
 /* ===== Load Projects from JSON ===== */
 async function loadProjectsData() {
   try {
-    const response = await fetch(SITE.url('data/projects.json'));
+    const response = await fetch(cmsUrl('projects.json', 'data/projects.json'));
     if (!response.ok) throw new Error('Failed to load projects');
     PROJECTS_DATA = await response.json();
     return true;
@@ -64,7 +79,7 @@ class LightboxGallery {
 
   render() {
     const img = this.images[this.currentIndex];
-    this.lightboxImage.src = SITE.url(`assets/img/${img}`);
+    this.lightboxImage.src = imgUrl(img);
     this.lightboxCurrent.textContent = this.currentIndex + 1;
   }
 
@@ -144,7 +159,7 @@ class Carousel {
 
       if (typeof slide === 'string') {
         const img = document.createElement('img');
-        img.src = SITE.url(`assets/img/${slide}`);
+        img.src = imgUrl(slide);
         img.alt = `Project image ${idx + 1}`;
         slideEl.appendChild(img);
       }
@@ -287,7 +302,7 @@ function renderImageGallery(data, lightbox) {
     const isLast = i === displayCount - 1 && hasMore;
     html += `
       <div class="gallery-item" data-index="${i}">
-        <img class="gallery-item__image" src="${SITE.url(`assets/img/${images[i]}`)}" alt="Project image ${i + 1}" loading="lazy">
+        <img class="gallery-item__image" src="${imgUrl(images[i])}" alt="Project image ${i + 1}" loading="lazy">
         ${isLast ? `<div class="gallery-item__overlay"><div class="gallery-item__overlay-text">+${moreCount}</div></div>` : ''}
       </div>
     `;
@@ -322,7 +337,7 @@ function renderBlueprintGallery(data, lightbox) {
     const isLast = i === displayCount - 1 && hasMore;
     html += `
       <div class="gallery-item" data-index="${i}">
-        <img class="gallery-item__image" src="${SITE.url(`assets/img/${blueprints[i]}`)}" alt="Blueprint ${i + 1}" loading="lazy">
+        <img class="gallery-item__image" src="${imgUrl(blueprints[i])}" alt="Blueprint ${i + 1}" loading="lazy">
         ${isLast ? `<div class="gallery-item__overlay"><div class="gallery-item__overlay-text">+${moreCount}</div></div>` : ''}
       </div>
     `;
@@ -350,7 +365,7 @@ function renderRelatedProjects(currentProjectKey) {
   relatedContainer.innerHTML = related.map(([key, proj]) => `
     <a href="project-detail.html?project=${key}" class="related-project-card">
       <div class="related-project-card__image">
-        <img src="${SITE.url(`assets/img/${proj.media.image[0]}`)}" alt="${proj.name}" loading="lazy">
+        <img src="${imgUrl(proj.media.image[0])}" alt="${proj.name}" loading="lazy">
       </div>
       <div class="related-project-card__body">
         <h3 class="related-project-card__title">${proj.name}</h3>
@@ -390,6 +405,15 @@ function configureMediaSwitcher(data) {
 
 /* ===== Initialize ===== */
 const ROOT = document.documentElement;
+
+/* An image value is either a bare name under assets/img (legacy content) or
+   an absolute URL (uploaded to blob storage). Pass the latter through. */
+function imgUrl(name) {
+  return /^(https?:)?\/\//.test(name) || name.startsWith('/')
+    ? name
+    : SITE.url('assets/img/' + name);
+}
+
 
 document.addEventListener('DOMContentLoaded', async () => {
   ROOT.classList.add('is-ready');

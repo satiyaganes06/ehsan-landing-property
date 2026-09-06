@@ -23,23 +23,23 @@
     "certificate": null,
     "media": {
       "image": [
-        "/media/legacy/img/proj-kota-warisan.jpg",
-        "/media/legacy/img/proj-dimensi.jpg",
-        "/media/legacy/img/proj-ehsan-residence.jpg",
-        "/media/legacy/img/proj-salam-nadiah.jpg",
-        "/media/legacy/img/proj-markisa.jpg",
-        "/media/legacy/img/proj-bestari.jpg",
-        "/media/legacy/img/proj-widuri.jpg",
-        "/media/legacy/img/proj-widuri-2.jpg",
-        "/media/legacy/img/proj-kota-warisan.jpg",
-        "/media/legacy/img/proj-dimensi.jpg",
-        "/media/legacy/img/proj-ehsan-residence.jpg",
-        "/media/legacy/img/proj-salam-nadiah.jpg"
+        "proj-kota-warisan.jpg",
+        "proj-dimensi.jpg",
+        "proj-ehsan-residence.jpg",
+        "proj-salam-nadiah.jpg",
+        "proj-markisa.jpg",
+        "proj-bestari.jpg",
+        "proj-widuri.jpg",
+        "proj-widuri-2.jpg",
+        "proj-kota-warisan.jpg",
+        "proj-dimensi.jpg",
+        "proj-ehsan-residence.jpg",
+        "proj-salam-nadiah.jpg"
       ],
       "blueprint": [
-        "/media/legacy/img/proj-kota-warisan.jpg",
-        "/media/legacy/img/proj-dimensi.jpg",
-        "/media/legacy/img/proj-ehsan-residence.jpg"
+        "proj-kota-warisan.jpg",
+        "proj-dimensi.jpg",
+        "proj-ehsan-residence.jpg"
       ]
     }
   },
@@ -67,23 +67,23 @@
     "certificate": "Completed",
     "media": {
       "image": [
-        "/media/legacy/img/proj-mosque-kajang.jpg",
-        "/media/legacy/img/proj-dimensi.jpg",
-        "/media/legacy/img/proj-ehsan-residence.jpg",
-        "/media/legacy/img/proj-salam-nadiah.jpg",
-        "/media/legacy/img/proj-markisa.jpg",
-        "/media/legacy/img/proj-bestari.jpg",
-        "/media/legacy/img/proj-widuri.jpg",
-        "/media/legacy/img/proj-widuri-2.jpg",
-        "/media/legacy/img/proj-kota-warisan.jpg",
-        "/media/legacy/img/proj-dimensi.jpg",
-        "/media/legacy/img/proj-ehsan-residence.jpg",
-        "/media/legacy/img/proj-salam-nadiah.jpg",
-        "/media/legacy/img/proj-bestari.jpg"
+        "proj-mosque-kajang.jpg",
+        "proj-dimensi.jpg",
+        "proj-ehsan-residence.jpg",
+        "proj-salam-nadiah.jpg",
+        "proj-markisa.jpg",
+        "proj-bestari.jpg",
+        "proj-widuri.jpg",
+        "proj-widuri-2.jpg",
+        "proj-kota-warisan.jpg",
+        "proj-dimensi.jpg",
+        "proj-ehsan-residence.jpg",
+        "proj-salam-nadiah.jpg",
+        "proj-bestari.jpg"
       ],
       "blueprint": [
-        "/media/legacy/img/proj-mosque-kajang.jpg",
-        "/media/legacy/img/proj-dimensi.jpg"
+        "proj-mosque-kajang.jpg",
+        "proj-dimensi.jpg"
       ]
     }
   },
@@ -111,21 +111,21 @@
     "certificate": "Phases 1–4 CCC",
     "media": {
       "image": [
-        "/media/legacy/img/proj-bestari.jpg",
-        "/media/legacy/img/proj-widuri.jpg",
-        "/media/legacy/img/proj-widuri-2.jpg",
-        "/media/legacy/img/proj-kota-warisan.jpg",
-        "/media/legacy/img/proj-dimensi.jpg",
-        "/media/legacy/img/proj-ehsan-residence.jpg",
-        "/media/legacy/img/proj-salam-nadiah.jpg",
-        "/media/legacy/img/proj-markisa.jpg",
-        "/media/legacy/img/proj-bestari.jpg",
-        "/media/legacy/img/proj-widuri.jpg",
-        "/media/legacy/img/proj-widuri-2.jpg"
+        "proj-bestari.jpg",
+        "proj-widuri.jpg",
+        "proj-widuri-2.jpg",
+        "proj-kota-warisan.jpg",
+        "proj-dimensi.jpg",
+        "proj-ehsan-residence.jpg",
+        "proj-salam-nadiah.jpg",
+        "proj-markisa.jpg",
+        "proj-bestari.jpg",
+        "proj-widuri.jpg",
+        "proj-widuri-2.jpg"
       ],
       "blueprint": [
-        "/media/legacy/img/proj-bestari.jpg",
-        "/media/legacy/img/proj-widuri.jpg"
+        "proj-bestari.jpg",
+        "proj-widuri.jpg"
       ]
     }
   },
@@ -153,19 +153,19 @@
     "certificate": null,
     "media": {
       "image": [
-        "/media/legacy/img/proj-bestari.jpg",
-        "/media/legacy/img/proj-widuri.jpg",
-        "/media/legacy/img/proj-widuri-2.jpg",
-        "/media/legacy/img/proj-kota-warisan.jpg",
-        "/media/legacy/img/proj-dimensi.jpg",
-        "/media/legacy/img/proj-ehsan-residence.jpg",
-        "/media/legacy/img/proj-salam-nadiah.jpg",
-        "/media/legacy/img/proj-markisa.jpg",
-        "/media/legacy/img/proj-bestari.jpg"
+        "proj-bestari.jpg",
+        "proj-widuri.jpg",
+        "proj-widuri-2.jpg",
+        "proj-kota-warisan.jpg",
+        "proj-dimensi.jpg",
+        "proj-ehsan-residence.jpg",
+        "proj-salam-nadiah.jpg",
+        "proj-markisa.jpg",
+        "proj-bestari.jpg"
       ],
       "blueprint": [
-        "/media/legacy/img/proj-bestari.jpg",
-        "/media/legacy/img/proj-widuri.jpg"
+        "proj-bestari.jpg",
+        "proj-widuri.jpg"
       ]
     }
   },
@@ -193,26 +193,26 @@
     "certificate": "Certificate of Completion and Compliance",
     "media": {
       "image": [
-        "/media/legacy/img/proj-dimensi.jpg",
-        "/media/legacy/img/proj-ehsan-residence.jpg",
-        "/media/legacy/img/proj-salam-nadiah.jpg",
-        "/media/legacy/img/proj-markisa.jpg",
-        "/media/legacy/img/proj-bestari.jpg",
-        "/media/legacy/img/proj-widuri.jpg",
-        "/media/legacy/img/proj-widuri-2.jpg",
-        "/media/legacy/img/proj-kota-warisan.jpg",
-        "/media/legacy/img/proj-dimensi.jpg",
-        "/media/legacy/img/proj-ehsan-residence.jpg",
-        "/media/legacy/img/proj-salam-nadiah.jpg",
-        "/media/legacy/img/proj-markisa.jpg",
-        "/media/legacy/img/proj-bestari.jpg",
-        "/media/legacy/img/proj-widuri.jpg",
-        "/media/legacy/img/proj-widuri-2.jpg"
+        "proj-dimensi.jpg",
+        "proj-ehsan-residence.jpg",
+        "proj-salam-nadiah.jpg",
+        "proj-markisa.jpg",
+        "proj-bestari.jpg",
+        "proj-widuri.jpg",
+        "proj-widuri-2.jpg",
+        "proj-kota-warisan.jpg",
+        "proj-dimensi.jpg",
+        "proj-ehsan-residence.jpg",
+        "proj-salam-nadiah.jpg",
+        "proj-markisa.jpg",
+        "proj-bestari.jpg",
+        "proj-widuri.jpg",
+        "proj-widuri-2.jpg"
       ],
       "blueprint": [
-        "/media/legacy/img/proj-dimensi.jpg",
-        "/media/legacy/img/proj-ehsan-residence.jpg",
-        "/media/legacy/img/proj-salam-nadiah.jpg"
+        "proj-dimensi.jpg",
+        "proj-ehsan-residence.jpg",
+        "proj-salam-nadiah.jpg"
       ]
     }
   },
@@ -240,21 +240,21 @@
     "certificate": "Completed",
     "media": {
       "image": [
-        "/media/legacy/img/proj-hotel-ehsan.jpg",
-        "/media/legacy/img/proj-markisa.jpg",
-        "/media/legacy/img/proj-bestari.jpg",
-        "/media/legacy/img/proj-widuri.jpg",
-        "/media/legacy/img/proj-widuri-2.jpg",
-        "/media/legacy/img/proj-kota-warisan.jpg",
-        "/media/legacy/img/proj-dimensi.jpg",
-        "/media/legacy/img/proj-ehsan-residence.jpg",
-        "/media/legacy/img/proj-salam-nadiah.jpg",
-        "/media/legacy/img/proj-markisa.jpg",
-        "/media/legacy/img/proj-bestari.jpg"
+        "proj-hotel-ehsan.jpg",
+        "proj-markisa.jpg",
+        "proj-bestari.jpg",
+        "proj-widuri.jpg",
+        "proj-widuri-2.jpg",
+        "proj-kota-warisan.jpg",
+        "proj-dimensi.jpg",
+        "proj-ehsan-residence.jpg",
+        "proj-salam-nadiah.jpg",
+        "proj-markisa.jpg",
+        "proj-bestari.jpg"
       ],
       "blueprint": [
-        "/media/legacy/img/proj-hotel-ehsan.jpg",
-        "/media/legacy/img/proj-markisa.jpg"
+        "proj-hotel-ehsan.jpg",
+        "proj-markisa.jpg"
       ]
     }
   },
@@ -282,21 +282,21 @@
     "certificate": "Under construction",
     "media": {
       "image": [
-        "/media/legacy/img/proj-widuri.jpg",
-        "/media/legacy/img/proj-widuri-2.jpg",
-        "/media/legacy/img/proj-kota-warisan.jpg",
-        "/media/legacy/img/proj-dimensi.jpg",
-        "/media/legacy/img/proj-ehsan-residence.jpg",
-        "/media/legacy/img/proj-salam-nadiah.jpg",
-        "/media/legacy/img/proj-markisa.jpg",
-        "/media/legacy/img/proj-bestari.jpg",
-        "/media/legacy/img/proj-widuri.jpg",
-        "/media/legacy/img/proj-widuri-2.jpg",
-        "/media/legacy/img/proj-kota-warisan.jpg"
+        "proj-widuri.jpg",
+        "proj-widuri-2.jpg",
+        "proj-kota-warisan.jpg",
+        "proj-dimensi.jpg",
+        "proj-ehsan-residence.jpg",
+        "proj-salam-nadiah.jpg",
+        "proj-markisa.jpg",
+        "proj-bestari.jpg",
+        "proj-widuri.jpg",
+        "proj-widuri-2.jpg",
+        "proj-kota-warisan.jpg"
       ],
       "blueprint": [
-        "/media/legacy/img/proj-widuri.jpg",
-        "/media/legacy/img/proj-widuri-2.jpg"
+        "proj-widuri.jpg",
+        "proj-widuri-2.jpg"
       ]
     }
   },
@@ -324,26 +324,26 @@
     "certificate": "Certificate of Completion and Compliance",
     "media": {
       "image": [
-        "/media/legacy/img/proj-markisa.jpg",
-        "/media/legacy/img/proj-bestari.jpg",
-        "/media/legacy/img/proj-widuri.jpg",
-        "/media/legacy/img/proj-widuri-2.jpg",
-        "/media/legacy/img/proj-kota-warisan.jpg",
-        "/media/legacy/img/proj-dimensi.jpg",
-        "/media/legacy/img/proj-ehsan-residence.jpg",
-        "/media/legacy/img/proj-salam-nadiah.jpg",
-        "/media/legacy/img/proj-markisa.jpg",
-        "/media/legacy/img/proj-bestari.jpg",
-        "/media/legacy/img/proj-widuri.jpg",
-        "/media/legacy/img/proj-widuri-2.jpg",
-        "/media/legacy/img/proj-kota-warisan.jpg",
-        "/media/legacy/img/proj-dimensi.jpg",
-        "/media/legacy/img/proj-ehsan-residence.jpg"
+        "proj-markisa.jpg",
+        "proj-bestari.jpg",
+        "proj-widuri.jpg",
+        "proj-widuri-2.jpg",
+        "proj-kota-warisan.jpg",
+        "proj-dimensi.jpg",
+        "proj-ehsan-residence.jpg",
+        "proj-salam-nadiah.jpg",
+        "proj-markisa.jpg",
+        "proj-bestari.jpg",
+        "proj-widuri.jpg",
+        "proj-widuri-2.jpg",
+        "proj-kota-warisan.jpg",
+        "proj-dimensi.jpg",
+        "proj-ehsan-residence.jpg"
       ],
       "blueprint": [
-        "/media/legacy/img/proj-markisa.jpg",
-        "/media/legacy/img/proj-bestari.jpg",
-        "/media/legacy/img/proj-widuri.jpg"
+        "proj-markisa.jpg",
+        "proj-bestari.jpg",
+        "proj-widuri.jpg"
       ]
     }
   },
@@ -371,28 +371,28 @@
     "certificate": "Certificate of Completion and Compliance",
     "media": {
       "image": [
-        "/media/legacy/img/proj-salam-nadiah.jpg",
-        "/media/legacy/img/proj-markisa.jpg",
-        "/media/legacy/img/proj-bestari.jpg",
-        "/media/legacy/img/proj-widuri.jpg",
-        "/media/legacy/img/proj-widuri-2.jpg",
-        "/media/legacy/img/proj-kota-warisan.jpg",
-        "/media/legacy/img/proj-dimensi.jpg",
-        "/media/legacy/img/proj-ehsan-residence.jpg",
-        "/media/legacy/img/proj-salam-nadiah.jpg",
-        "/media/legacy/img/proj-markisa.jpg",
-        "/media/legacy/img/proj-bestari.jpg",
-        "/media/legacy/img/proj-widuri.jpg",
-        "/media/legacy/img/proj-widuri-2.jpg",
-        "/media/legacy/img/proj-kota-warisan.jpg",
-        "/media/legacy/img/proj-dimensi.jpg",
-        "/media/legacy/img/proj-ehsan-residence.jpg",
-        "/media/legacy/img/proj-salam-nadiah.jpg"
+        "proj-salam-nadiah.jpg",
+        "proj-markisa.jpg",
+        "proj-bestari.jpg",
+        "proj-widuri.jpg",
+        "proj-widuri-2.jpg",
+        "proj-kota-warisan.jpg",
+        "proj-dimensi.jpg",
+        "proj-ehsan-residence.jpg",
+        "proj-salam-nadiah.jpg",
+        "proj-markisa.jpg",
+        "proj-bestari.jpg",
+        "proj-widuri.jpg",
+        "proj-widuri-2.jpg",
+        "proj-kota-warisan.jpg",
+        "proj-dimensi.jpg",
+        "proj-ehsan-residence.jpg",
+        "proj-salam-nadiah.jpg"
       ],
       "blueprint": [
-        "/media/legacy/img/proj-salam-nadiah.jpg",
-        "/media/legacy/img/proj-markisa.jpg",
-        "/media/legacy/img/proj-bestari.jpg"
+        "proj-salam-nadiah.jpg",
+        "proj-markisa.jpg",
+        "proj-bestari.jpg"
       ]
     }
   },
@@ -420,22 +420,22 @@
     "certificate": "Under construction",
     "media": {
       "image": [
-        "/media/legacy/img/proj-widuri-2.jpg",
-        "/media/legacy/img/proj-kota-warisan.jpg",
-        "/media/legacy/img/proj-dimensi.jpg",
-        "/media/legacy/img/proj-ehsan-residence.jpg",
-        "/media/legacy/img/proj-salam-nadiah.jpg",
-        "/media/legacy/img/proj-markisa.jpg",
-        "/media/legacy/img/proj-bestari.jpg",
-        "/media/legacy/img/proj-widuri.jpg",
-        "/media/legacy/img/proj-widuri-2.jpg",
-        "/media/legacy/img/proj-kota-warisan.jpg",
-        "/media/legacy/img/proj-dimensi.jpg",
-        "/media/legacy/img/proj-ehsan-residence.jpg"
+        "proj-widuri-2.jpg",
+        "proj-kota-warisan.jpg",
+        "proj-dimensi.jpg",
+        "proj-ehsan-residence.jpg",
+        "proj-salam-nadiah.jpg",
+        "proj-markisa.jpg",
+        "proj-bestari.jpg",
+        "proj-widuri.jpg",
+        "proj-widuri-2.jpg",
+        "proj-kota-warisan.jpg",
+        "proj-dimensi.jpg",
+        "proj-ehsan-residence.jpg"
       ],
       "blueprint": [
-        "/media/legacy/img/proj-widuri-2.jpg",
-        "/media/legacy/img/proj-kota-warisan.jpg"
+        "proj-widuri-2.jpg",
+        "proj-kota-warisan.jpg"
       ]
     }
   },
@@ -463,21 +463,21 @@
     "certificate": "Certificate of Completion and Compliance",
     "media": {
       "image": [
-        "/media/legacy/img/proj-shop-tampin.jpg",
-        "/media/legacy/img/proj-bestari.jpg",
-        "/media/legacy/img/proj-widuri.jpg",
-        "/media/legacy/img/proj-widuri-2.jpg",
-        "/media/legacy/img/proj-kota-warisan.jpg",
-        "/media/legacy/img/proj-dimensi.jpg",
-        "/media/legacy/img/proj-ehsan-residence.jpg",
-        "/media/legacy/img/proj-salam-nadiah.jpg",
-        "/media/legacy/img/proj-markisa.jpg",
-        "/media/legacy/img/proj-bestari.jpg",
-        "/media/legacy/img/proj-widuri.jpg"
+        "proj-shop-tampin.jpg",
+        "proj-bestari.jpg",
+        "proj-widuri.jpg",
+        "proj-widuri-2.jpg",
+        "proj-kota-warisan.jpg",
+        "proj-dimensi.jpg",
+        "proj-ehsan-residence.jpg",
+        "proj-salam-nadiah.jpg",
+        "proj-markisa.jpg",
+        "proj-bestari.jpg",
+        "proj-widuri.jpg"
       ],
       "blueprint": [
-        "/media/legacy/img/proj-shop-tampin.jpg",
-        "/media/legacy/img/proj-bestari.jpg"
+        "proj-shop-tampin.jpg",
+        "proj-bestari.jpg"
       ]
     }
   },
@@ -505,26 +505,26 @@
     "certificate": "Certificate of Completion and Compliance",
     "media": {
       "image": [
-        "/media/legacy/img/proj-ehsan-residence.jpg",
-        "/media/legacy/img/proj-salam-nadiah.jpg",
-        "/media/legacy/img/proj-markisa.jpg",
-        "/media/legacy/img/proj-bestari.jpg",
-        "/media/legacy/img/proj-widuri.jpg",
-        "/media/legacy/img/proj-widuri-2.jpg",
-        "/media/legacy/img/proj-kota-warisan.jpg",
-        "/media/legacy/img/proj-dimensi.jpg",
-        "/media/legacy/img/proj-ehsan-residence.jpg",
-        "/media/legacy/img/proj-salam-nadiah.jpg",
-        "/media/legacy/img/proj-markisa.jpg",
-        "/media/legacy/img/proj-bestari.jpg",
-        "/media/legacy/img/proj-widuri.jpg",
-        "/media/legacy/img/proj-widuri-2.jpg",
-        "/media/legacy/img/proj-kota-warisan.jpg"
+        "proj-ehsan-residence.jpg",
+        "proj-salam-nadiah.jpg",
+        "proj-markisa.jpg",
+        "proj-bestari.jpg",
+        "proj-widuri.jpg",
+        "proj-widuri-2.jpg",
+        "proj-kota-warisan.jpg",
+        "proj-dimensi.jpg",
+        "proj-ehsan-residence.jpg",
+        "proj-salam-nadiah.jpg",
+        "proj-markisa.jpg",
+        "proj-bestari.jpg",
+        "proj-widuri.jpg",
+        "proj-widuri-2.jpg",
+        "proj-kota-warisan.jpg"
       ],
       "blueprint": [
-        "/media/legacy/img/proj-ehsan-residence.jpg",
-        "/media/legacy/img/proj-salam-nadiah.jpg",
-        "/media/legacy/img/proj-markisa.jpg"
+        "proj-ehsan-residence.jpg",
+        "proj-salam-nadiah.jpg",
+        "proj-markisa.jpg"
       ]
     }
   },
@@ -552,30 +552,30 @@
     "certificate": "Certificate of Completion and Compliance",
     "media": {
       "image": [
-        "/media/legacy/img/proj-sri-ehsan.jpg",
-        "/media/legacy/img/proj-dimensi.jpg",
-        "/media/legacy/img/proj-ehsan-residence.jpg",
-        "/media/legacy/img/proj-salam-nadiah.jpg",
-        "/media/legacy/img/proj-markisa.jpg",
-        "/media/legacy/img/proj-bestari.jpg",
-        "/media/legacy/img/proj-widuri.jpg",
-        "/media/legacy/img/proj-widuri-2.jpg",
-        "/media/legacy/img/proj-kota-warisan.jpg",
-        "/media/legacy/img/proj-dimensi.jpg",
-        "/media/legacy/img/proj-ehsan-residence.jpg",
-        "/media/legacy/img/proj-salam-nadiah.jpg",
-        "/media/legacy/img/proj-markisa.jpg",
-        "/media/legacy/img/proj-bestari.jpg",
-        "/media/legacy/img/proj-widuri.jpg",
-        "/media/legacy/img/proj-widuri-2.jpg",
-        "/media/legacy/img/proj-kota-warisan.jpg",
-        "/media/legacy/img/proj-dimensi.jpg",
-        "/media/legacy/img/proj-ehsan-residence.jpg"
+        "proj-sri-ehsan.jpg",
+        "proj-dimensi.jpg",
+        "proj-ehsan-residence.jpg",
+        "proj-salam-nadiah.jpg",
+        "proj-markisa.jpg",
+        "proj-bestari.jpg",
+        "proj-widuri.jpg",
+        "proj-widuri-2.jpg",
+        "proj-kota-warisan.jpg",
+        "proj-dimensi.jpg",
+        "proj-ehsan-residence.jpg",
+        "proj-salam-nadiah.jpg",
+        "proj-markisa.jpg",
+        "proj-bestari.jpg",
+        "proj-widuri.jpg",
+        "proj-widuri-2.jpg",
+        "proj-kota-warisan.jpg",
+        "proj-dimensi.jpg",
+        "proj-ehsan-residence.jpg"
       ],
       "blueprint": [
-        "/media/legacy/img/proj-sri-ehsan.jpg",
-        "/media/legacy/img/proj-dimensi.jpg",
-        "/media/legacy/img/proj-ehsan-residence.jpg"
+        "proj-sri-ehsan.jpg",
+        "proj-dimensi.jpg",
+        "proj-ehsan-residence.jpg"
       ]
     }
   },
@@ -603,20 +603,20 @@
     "certificate": "Completed",
     "media": {
       "image": [
-        "/media/legacy/img/proj-shop-residence.jpg",
-        "/media/legacy/img/proj-widuri.jpg",
-        "/media/legacy/img/proj-widuri-2.jpg",
-        "/media/legacy/img/proj-kota-warisan.jpg",
-        "/media/legacy/img/proj-dimensi.jpg",
-        "/media/legacy/img/proj-ehsan-residence.jpg",
-        "/media/legacy/img/proj-salam-nadiah.jpg",
-        "/media/legacy/img/proj-markisa.jpg",
-        "/media/legacy/img/proj-bestari.jpg",
-        "/media/legacy/img/proj-widuri.jpg"
+        "proj-shop-residence.jpg",
+        "proj-widuri.jpg",
+        "proj-widuri-2.jpg",
+        "proj-kota-warisan.jpg",
+        "proj-dimensi.jpg",
+        "proj-ehsan-residence.jpg",
+        "proj-salam-nadiah.jpg",
+        "proj-markisa.jpg",
+        "proj-bestari.jpg",
+        "proj-widuri.jpg"
       ],
       "blueprint": [
-        "/media/legacy/img/proj-shop-residence.jpg",
-        "/media/legacy/img/proj-widuri.jpg"
+        "proj-shop-residence.jpg",
+        "proj-widuri.jpg"
       ]
     }
   },
@@ -644,23 +644,23 @@
     "certificate": "Certificate of Completion and Compliance",
     "media": {
       "image": [
-        "/media/legacy/img/proj-shop-residence.jpg",
-        "/media/legacy/img/proj-dimensi.jpg",
-        "/media/legacy/img/proj-ehsan-residence.jpg",
-        "/media/legacy/img/proj-salam-nadiah.jpg",
-        "/media/legacy/img/proj-markisa.jpg",
-        "/media/legacy/img/proj-bestari.jpg",
-        "/media/legacy/img/proj-widuri.jpg",
-        "/media/legacy/img/proj-widuri-2.jpg",
-        "/media/legacy/img/proj-kota-warisan.jpg",
-        "/media/legacy/img/proj-dimensi.jpg",
-        "/media/legacy/img/proj-ehsan-residence.jpg",
-        "/media/legacy/img/proj-salam-nadiah.jpg",
-        "/media/legacy/img/proj-markisa.jpg"
+        "proj-shop-residence.jpg",
+        "proj-dimensi.jpg",
+        "proj-ehsan-residence.jpg",
+        "proj-salam-nadiah.jpg",
+        "proj-markisa.jpg",
+        "proj-bestari.jpg",
+        "proj-widuri.jpg",
+        "proj-widuri-2.jpg",
+        "proj-kota-warisan.jpg",
+        "proj-dimensi.jpg",
+        "proj-ehsan-residence.jpg",
+        "proj-salam-nadiah.jpg",
+        "proj-markisa.jpg"
       ],
       "blueprint": [
-        "/media/legacy/img/proj-shop-residence.jpg",
-        "/media/legacy/img/proj-dimensi.jpg"
+        "proj-shop-residence.jpg",
+        "proj-dimensi.jpg"
       ]
     }
   },
@@ -688,25 +688,25 @@
     "certificate": "Phases 1–4 Certificate of Completion and Compliance",
     "media": {
       "image": [
-        "/media/legacy/img/proj-salam-nadiah.jpg",
-        "/media/legacy/img/proj-bestari.jpg",
-        "/media/legacy/img/proj-widuri.jpg",
-        "/media/legacy/img/proj-widuri-2.jpg",
-        "/media/legacy/img/proj-kota-warisan.jpg",
-        "/media/legacy/img/proj-dimensi.jpg",
-        "/media/legacy/img/proj-ehsan-residence.jpg",
-        "/media/legacy/img/proj-salam-nadiah.jpg",
-        "/media/legacy/img/proj-markisa.jpg",
-        "/media/legacy/img/proj-bestari.jpg",
-        "/media/legacy/img/proj-widuri.jpg",
-        "/media/legacy/img/proj-widuri-2.jpg",
-        "/media/legacy/img/proj-kota-warisan.jpg",
-        "/media/legacy/img/proj-dimensi.jpg"
+        "proj-salam-nadiah.jpg",
+        "proj-bestari.jpg",
+        "proj-widuri.jpg",
+        "proj-widuri-2.jpg",
+        "proj-kota-warisan.jpg",
+        "proj-dimensi.jpg",
+        "proj-ehsan-residence.jpg",
+        "proj-salam-nadiah.jpg",
+        "proj-markisa.jpg",
+        "proj-bestari.jpg",
+        "proj-widuri.jpg",
+        "proj-widuri-2.jpg",
+        "proj-kota-warisan.jpg",
+        "proj-dimensi.jpg"
       ],
       "blueprint": [
-        "/media/legacy/img/proj-salam-nadiah.jpg",
-        "/media/legacy/img/proj-bestari.jpg",
-        "/media/legacy/img/proj-widuri.jpg"
+        "proj-salam-nadiah.jpg",
+        "proj-bestari.jpg",
+        "proj-widuri.jpg"
       ]
     }
   }

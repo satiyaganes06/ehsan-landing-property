@@ -1,3 +1,18 @@
+/* Where published content comes from.
+
+   Unset, the site reads the checked-in data/*.json exactly as before, so
+   nothing changes until you decide to switch. Point it at the deployed panel
+   to serve content straight from the CMS:
+
+     <script>window.EHSAN_CMS_ORIGIN = 'https://admin.ehsanproperty.com';</script>
+
+   Set it before this script loads (a <script> tag in the page head does it).
+*/
+function cmsUrl(file, fallback) {
+  const origin = window.EHSAN_CMS_ORIGIN;
+  return origin ? origin.replace(/\/$/, '') + '/api/public/' + file : SITE.url(fallback);
+}
+
 /* =========================================================================
    events.js — the full event listing.
 
@@ -90,7 +105,7 @@
 
   /* ---------- load ---------- */
 
-  fetch(SITE.url('data/events.json'))
+  fetch(cmsUrl('events.json', 'data/events.json'))
     .then((r) => {
       if (!r.ok) throw new Error(`events.json → ${r.status}`);
       return r.json();

@@ -1,10 +1,9 @@
 /**
  * Resolves a Media row to a URL the browser can actually request.
  *
- * The API's own mediaUrl() maps `legacy:img/x.jpg` to /media/legacy/img/x.jpg,
- * but the /media/legacy/ mount is already rooted at assets/img -- so that path
- * 404s for every image the seed imported with an `img/` prefix. Until the API
- * is corrected, the panel resolves from storageKey itself:
+ * Mirrors lib/server/media-url.ts so the panel and the API agree. The site's
+ * own assets are copied into public/live-site at build time, which is what
+ * these paths resolve against:
  *
  *   legacy:img/proj-widuri.jpg   -> /live-site/assets/img/proj-widuri.jpg
  *   legacy:awards/logo-01.png    -> /live-site/assets/img/awards/logo-01.png
@@ -17,6 +16,9 @@ export function mediaSrc(
   storageKey: string | null | undefined,
   fallbackUrl?: string | null,
 ): string {
+  if (storageKey?.startsWith('blob:')) {
+    return storageKey.slice('blob:'.length);
+  }
   if (storageKey?.startsWith('legacy:')) {
     const rest = storageKey.slice('legacy:'.length).replace(/^img\//, '');
     return `/live-site/assets/img/${rest}`;

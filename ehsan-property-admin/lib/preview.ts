@@ -13,36 +13,21 @@ import type { AgendaItem, EventDetail, ProjectDetail } from '@/lib/types';
 /* ---------------------------------------------------------------------------
    Image paths
 
-   The site builds every image URL as SITE.url(`assets/img/${name}`), which
-   resolves to /live-site/assets/img/<name>. So the job here is to turn a
-   Media row into a name relative to assets/img.
+   Must match what the publish bridge emits, or a draft preview would show
+   different images from the published page. The site's scripts prefix a bare
+   name with assets/img and pass anything absolute through, so:
 
-   Resolution is done from storageKey rather than the API's own mediaUrl(),
-   because mediaUrl() maps `legacy:img/x.jpg` to /media/legacy/img/x.jpg while
-   the /media/legacy/ mount is already rooted at assets/img -- that path 404s.
-   Reading the key directly sidesteps the mismatch instead of inheriting it.
-
-     legacy:img/proj-kota-warisan.jpg  -> proj-kota-warisan.jpg
-     legacy:placeholders/avatar1.jpg   -> placeholders/avatar1.jpg
-     upload:2026/08/hero.webp          -> ../../../media/uploads/2026/08/hero.webp
-
-   Uploads live on a different mount entirely, so they climb back out of
-   assets/img with ../../.. -- the browser normalises the result to
-   /media/uploads/... before requesting it. Three levels, because the
-   /live-site/ base contributes a segment of its own.
+     legacy:img/proj-widuri.jpg  -> proj-widuri.jpg
+     legacy:awards/logo-01.png   -> awards/logo-01.png
+     upload:2026/09/hero.webp    -> /media/uploads/2026/09/hero.webp
+     blob:https://…/hero.webp    -> https://…/hero.webp
 --------------------------------------------------------------------------- */
 function toSiteImageName(storageKey: string | null | undefined): string | null {
   if (!storageKey) return null;
-  if (/^https?:\/\//i.test(storageKey)) return storageKey;
-
   if (storageKey.startsWith('legacy:')) {
     return storageKey.slice('legacy:'.length).replace(/^img\//, '');
   }
-
-  const uploadPath = storageKey.startsWith('upload:')
-    ? storageKey.slice('upload:'.length)
-    : storageKey;
-  return `../../../media/uploads/${uploadPath}`;
+  return mediaSrc(storageKey);
 }
 
 /** COMPLETED -> Completed. The site prints this string as-is. */

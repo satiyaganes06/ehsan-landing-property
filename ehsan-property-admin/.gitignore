@@ -39,3 +39,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+.seed-credentials.txt
+
+# generated from the landing site by scripts/sync-preview-templates.mjs
+/public/live-site
+/public/preview
