@@ -1,69 +1,34 @@
 /* -------------------------------------------------------------------------
-   Ehsan Towers — load-in gate + frame-sequence scrub
-
-   The load-in animation itself lives entirely in style.css. This file's only
-   job in that respect is to flip ONE flag — `is-ready` on <html> — once the
-   hero footage has actually decoded. Both the content ripple and the
-   background-media entrance hang off that single flag, so the copy and the
-   footage arrive together instead of racing.
+   Ehsan Plant & Property — load-in gate + frame-sequence scrub
    ------------------------------------------------------------------------- */
-
 const ROOT = document.documentElement;
-
-const FRAME_DIR   = 'assets/frames-hd';   // cut by tools/cut-frames.sh from the source mp4
-const FRAME_EXT   = '.webp';
+const FRAME_DIR = 'assets/frames-hd';
+const FRAME_EXT = '.webp';
 const FRAME_FIRST = 1;
-const FRAME_LAST  = 30;   // frames 31..140 exist on disk but are not loaded
+const FRAME_LAST = 20;
 const FRAME_COUNT = FRAME_LAST - FRAME_FIRST + 1;
-
 const src = (n) => `${FRAME_DIR}/${String(n).padStart(5, '0')}${FRAME_EXT}`;
 
-
-/* ---------- persistent chrome: ripple once per session ----------
-   CURRENTLY DORMANT: the nav bar was removed, so nothing on the page carries
-   [data-chrome] and this flag has no elements to act on. Kept because it is a
-   spec requirement and is exactly what any re-added persistent chrome needs —
-   tag the element [data-chrome] and it plays once per session, then jumps
-   straight to the settled state. Applied before `is-ready` so such an element
-   never starts an animation it is about to skip. */
-
 const CHROME_KEY = 'ehsan:chrome-rippled';
-
 try {
-  if (sessionStorage.getItem(CHROME_KEY)) {
-    ROOT.classList.add('chrome-settled');
-  } else {
-    sessionStorage.setItem(CHROME_KEY, '1');
-  }
-} catch {
-  /* private mode / storage disabled — play it, which is the safe default. */
-}
-
-
-/* ---------- scroll scrub ---------- */
+  if (sessionStorage.getItem(CHROME_KEY)) ROOT.classList.add('chrome-settled');
+  else sessionStorage.setItem(CHROME_KEY, '1');
+} catch { /* Storage is optional. */ }
 
 const canvas = document.getElementById('sequence');
-const ctx    = canvas.getContext('2d', { alpha: false });
-const stage  = document.querySelector('.stage');
-const fixed  = document.querySelector('.stage__fixed');
-
-let wanted   = 0;   // frame index the scroll position asks for
-let painted  = -1;  // frame index currently on the canvas
-
+const ctx = canvas.getContext('2d', { alpha: false });
+const stage = document.querySelector('.stage');
+let wanted = 0;
+let painted = -1;
 ctx.imageSmoothingQuality = 'high';
 
-/* The backing store follows the SOURCE frames rather than a hardcoded size —
-   otherwise higher-resolution frames get resampled down into a 720p buffer on
-   the way in and the extra detail is thrown away before CSS ever scales it up.
-   The markup's width/height are only a placeholder aspect for the first paint. */
 function sizeCanvasTo(img) {
   if (canvas.width === img.naturalWidth && canvas.height === img.naturalHeight) return;
-  canvas.width  = img.naturalWidth;
+  canvas.width = img.naturalWidth;
   canvas.height = img.naturalHeight;
-  ctx.imageSmoothingQuality = 'high';  // resizing resets context state
-  painted = -1;                        // ...and clears the backing store
+  ctx.imageSmoothingQuality = 'high';
+  painted = -1;
 }
-
 function draw(i) {
   const img = frames[i];
   if (!img || painted === i) return;
@@ -71,8 +36,6 @@ function draw(i) {
   ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
   painted = i;
 }
-
-/** Nearest already-loaded frame, so scrubbing stays responsive mid-download. */
 function nearestLoaded(i) {
   if (frames[i]) return i;
   for (let d = 1; d < FRAME_COUNT; d++) {
@@ -81,95 +44,59 @@ function nearestLoaded(i) {
   }
   return -1;
 }
-
-/* ---------- the gate ----------
-   Frame 1 only. Waiting on the whole sequence would hold the reveal until every
-   frame landed; the rest stream in behind the entrance instead. */
-
 const frames = new Array(FRAME_COUNT);
 let readyFired = false;
-
 function markReady() {
   if (readyFired) return;
   readyFired = true;
-  ROOT.classList.add('is-ready');   // the one flag both effects listen for
+  ROOT.classList.add('is-ready');
 }
-
 function loadFrame(i) {
   return new Promise((resolve) => {
     const img = new Image();
     img.decoding = 'async';
-    img.onload  = () => { frames[i] = img; resolve(img); };
+    img.fetchPriority = i === 0 ? 'high' : 'low';
+    img.onload = () => { frames[i] = img; resolve(img); };
     img.onerror = () => resolve(null);
     img.src = src(FRAME_FIRST + i);
   });
 }
-
 loadFrame(0).then((img) => {
   if (img) draw(0);
   markReady();
   streamRest();
 });
-
-// Never strand the page behind a stalled network.
 setTimeout(markReady, 4000);
 
-
-/* ---------- stream the remaining frames ---------- */
-
-const CONCURRENCY = 6;
-
+const CONCURRENCY = Math.min(4, FRAME_COUNT - 1);
 function streamRest() {
   let next = 1;
   const worker = async () => {
     while (next < FRAME_COUNT) {
       const i = next++;
       await loadFrame(i);
-      if (i === wanted) draw(i);   // the frame we're parked on just arrived
+      if (i === wanted) draw(i);
     }
   };
   for (let w = 0; w < CONCURRENCY; w++) worker();
 }
-
-
-/* Hand-off: the hero copy is position:fixed, so without this it would sit
-   behind the content sections forever. Fading it out over the TAIL of the scrub
-   means the hero has cleared by the time the first section arrives, instead of
-   the section slamming over live copy. Deliberately applied to the whole block
-   — this is an exit, and an exit reads correctly as one gesture. */
-const HANDOFF_START = 0.55;
-
-function heroHandoff(p) {
-  const out = Math.min(Math.max((p - HANDOFF_START) / (1 - HANDOFF_START), 0), 1);
-  fixed.style.opacity = String(1 - out);
-  // Stop the faded copy from swallowing clicks meant for the content below.
-  fixed.style.visibility = out === 1 ? 'hidden' : '';
-}
-
 function onScroll() {
   const travel = stage.offsetHeight - window.innerHeight;
-  const p = travel > 0
+  const progress = travel > 0
     ? Math.min(Math.max(-stage.getBoundingClientRect().top / travel, 0), 1)
     : 0;
-
-  wanted = Math.round(p * (FRAME_COUNT - 1));
-
-  const i = nearestLoaded(wanted);
-  if (i >= 0) draw(i);
-
-  heroHandoff(p);
+  wanted = Math.round(progress * (FRAME_COUNT - 1));
+  const frame = nearestLoaded(wanted);
+  if (frame >= 0) draw(frame);
 }
-
 let queued = false;
 window.addEventListener('scroll', () => {
   if (queued) return;
   queued = true;
   requestAnimationFrame(() => { queued = false; onScroll(); });
 }, { passive: true });
-
 window.addEventListener('resize', onScroll, { passive: true });
 onScroll();
-
 
 /* -------------------------------------------------------------------------
    EFFECT 3: SECTION REVEAL ON SCROLL

@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600&family=Azeret+Mono:wght@300;400;500&family=Fraunces:ital,opsz,wght@0,9..144,300..500;1,9..144,300..500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../css/content.css">
-<link rel="stylesheet" href="../css/project-detail.css">
+<link rel="stylesheet" href="../css/project-detail.css?v=20260915.9">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 fill=%27%230a0b0d%27/%3E%3Cpath d=%27M6 24V8h20v4H11v3h12v4H11v3h15v2z%27 fill=%27%23d18829%27/%3E%3C/svg%3E">
 </head>
 <body>
@@ -17,6 +17,9 @@
 <div data-component="navbar"></div>
 
 <div class="grain" aria-hidden="true"></div>
+
+<!-- The dedicated Widuri experience is populated only for project proj-15. -->
+<main class="widuri-experience" id="widuriExperience" hidden></main>
 
 <!-- Hero Section with Carousel -->
 <div class="hero-wrapper">
@@ -69,6 +72,9 @@
       </div>
     </div>
   </div>
+
+  <!-- Widuri receives an editorial project introduction. It remains empty for every other project. -->
+  <section class="widuri-story" id="widuriStory" hidden></section>
 
   
 
@@ -165,7 +171,7 @@
 <script src="../components/mount.js"></script>
 
 <!-- Page behaviour — runs after the chrome is in the DOM. -->
-<script src="../js/project-detail.js"></script>
+<script src="../js/project-detail.js?v=20260915.6"></script>
 <script src="../js/content.js"></script>
 </body>
 </html>

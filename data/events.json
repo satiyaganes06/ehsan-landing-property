@@ -11,7 +11,7 @@
     "attendees": "150 Attendees",
     "capacity": 200,
     "registered": 87,
-    "description": "Join us for the grand launch of Residensi Mutiara Austin, a premium 650-unit high-rise residential development in Johor Bahru. Experience the architecture, meet our team, and discover exclusive investment opportunities in one of the region's most anticipated property launches.",
+    "description": "Join us for the grand launch of Residensi Mutiara Austin, a premium 650 unit high rise residential development in Johor Bahru. Experience the architecture, meet our team, and discover exclusive investment opportunities in one of the region's most anticipated property launches.",
     "agenda": [
       { "time": "2:00 PM", "title": "Welcome & Arrival", "description": "Registration and networking" },
       { "time": "2:30 PM", "title": "Project Presentation", "description": "Overview of Residensi Mutiara Austin" },
@@ -25,7 +25,7 @@
     ],
     "highlights": [
       "Exclusive preview of show units",
-      "Discounted pre-launch pricing",
+      "Discounted pre launch pricing",
       "Special financing options",
       "Networking with investors",
       "Complimentary refreshments",
@@ -45,9 +45,9 @@
     "attendees": "200 Attendees",
     "capacity": 300,
     "registered": 145,
-    "description": "Explore Ehsan Widuri Putra Nilai, a 490-unit mixed-use development in the heart of Nilai. Tour completed units, meet current residents, and learn about upcoming phases. This open house is your chance to experience the community and lifestyle we've built.",
+    "description": "Explore Ehsan Widuri Putra Nilai, a 490 unit mixed use development in the heart of Nilai. Tour completed units, meet current residents, and learn about upcoming phases. This open house is your chance to experience the community and lifestyle we've built.",
     "agenda": [
-      { "time": "10:00 AM", "title": "Registration & Welcome", "description": "Check-in and welcome briefing" },
+      { "time": "10:00 AM", "title": "Registration & Welcome", "description": "Check in and welcome briefing" },
       { "time": "10:30 AM", "title": "Completed Units Tour", "description": "Walk through finished residences" },
       { "time": "11:30 AM", "title": "Resident Meet & Greet", "description": "Chat with current residents" },
       { "time": "12:00 PM", "title": "Phase 2 Preview", "description": "Upcoming development plans" },
@@ -55,7 +55,7 @@
     ],
     "speakers": [
       { "name": "Project Manager", "title": "Ehsan Widuri Lead", "image": "https://i.pravatar.cc/150?u=ehsan-pm", "bio": "Overseeing Widuri's development" },
-      { "name": "Resident Ambassador", "title": "Happy Resident", "image": "https://i.pravatar.cc/150?u=ehsan-resident", "bio": "2-year Widuri resident" }
+      { "name": "Resident Ambassador", "title": "Happy Resident", "image": "https://i.pravatar.cc/150?u=ehsan-resident", "bio": "2 year Widuri resident" }
     ],
     "highlights": [
       "Tour 3 different unit types",
@@ -79,7 +79,7 @@
     "attendees": "300 Attendees",
     "capacity": 400,
     "registered": 256,
-    "description": "Learn investment strategies for Malaysian property from industry experts. Ehsan will present market insights, ROI strategies, and how to identify high-potential developments. Perfect for both seasoned investors and those new to property investment.",
+    "description": "Learn investment strategies for Malaysian property from industry experts. Ehsan will present market insights, ROI strategies, and how to identify high potential developments. Perfect for both seasoned investors and those new to property investment.",
     "agenda": [
       { "time": "6:00 PM", "title": "Welcome & Keynote", "description": "Market overview 2024-2025" },
       { "time": "6:30 PM", "title": "Investment Strategies", "description": "Maximizing property ROI" },
@@ -113,9 +113,9 @@
     "attendees": "120 Attendees",
     "capacity": 160,
     "registered": 64,
-    "description": "A first look at the final phase of Taman Mawar Ehsan — 57 units of single and two-storey terrace houses on 99-year leasehold land, from RM 299,800. Phases 1 to 3 are complete and occupied, so you can walk a finished street before you commit.",
+    "description": "A first look at the final phase of Taman Mawar Ehsan — 57 units of single and two storey terrace houses on 99 year leasehold land, from RM 299,800. Phases 1 to 3 are complete and occupied, so you can walk a finished street before you commit.",
     "agenda": [
-      { "time": "11:00 AM", "title": "Registration", "description": "Check-in and site briefing" },
+      { "time": "11:00 AM", "title": "Registration", "description": "Check in and site briefing" },
       { "time": "11:30 AM", "title": "Phase 4 Masterplan", "description": "Layouts, pricing and handover schedule" },
       { "time": "12:15 PM", "title": "Completed Street Walk", "description": "Tour Phases 1 to 3" },
       { "time": "1:00 PM", "title": "Lunch & Booking Desk", "description": "Meet the sales and loan panel" }
@@ -126,7 +126,7 @@
     "highlights": [
       "Walk finished Phase 1–3 streets",
       "Phase 4 launch pricing",
-      "On-site loan panel",
+      "On site loan panel",
       "Bumiputera unit allocation",
       "Lunch provided"
     ],
@@ -144,7 +144,7 @@
     "attendees": "180 Attendees",
     "capacity": 250,
     "registered": 98,
-    "description": "Spend a morning on the 53-acre Taman Universiti Bestari site in Kedah. Phases 1 to 4 are handed over, Phase 5 is under construction, and Phases 6 to 8 are open for registration of interest. Hard hats provided for the construction walk.",
+    "description": "Spend a morning on the 53 acre Taman Universiti Bestari site in Kedah. Phases 1 to 4 are handed over, Phase 5 is under construction, and Phases 6 to 8 are open for registration of interest. Hard hats provided for the construction walk.",
     "agenda": [
       { "time": "9:30 AM", "title": "Arrival & Safety Briefing", "description": "Hard hats and site rules" },
       { "time": "10:00 AM", "title": "Phase 5 Construction Walk", "description": "See the build in progress" },
@@ -152,7 +152,7 @@
       { "time": "12:00 PM", "title": "Phases 6–8 Briefing", "description": "Register your interest early" }
     ],
     "speakers": [
-      { "name": "Site Manager", "title": "Bestari Phase 5", "image": "https://i.pravatar.cc/150?u=ehsan-site", "bio": "On-site since groundbreaking" }
+      { "name": "Site Manager", "title": "Bestari Phase 5", "image": "https://i.pravatar.cc/150?u=ehsan-site", "bio": "On site since groundbreaking" }
     ],
     "highlights": [
       "Live construction walk",
@@ -165,7 +165,7 @@
   },
   "event-6": {
     "id": "event-6",
-    "title": "First-Time Buyer Financing Clinic",
+    "title": "First Time Buyer Financing Clinic",
     "category": "Seminar",
     "date": "December 7, 2024",
     "dateTime": "Dec 7, 2024 · 10:00 AM",
@@ -175,12 +175,12 @@
     "attendees": "90 Attendees",
     "capacity": 120,
     "registered": 71,
-    "description": "A working session for first-time buyers, not a sales pitch. Bring your payslips and we will walk you through loan eligibility, the LPPSA and bank panels, government schemes, and the real cost of buying beyond the sticker price.",
+    "description": "A working session for first time buyers, not a sales pitch. Bring your payslips and we will walk you through loan eligibility, the LPPSA and bank panels, government schemes, and the real cost of buying beyond the sticker price.",
     "agenda": [
       { "time": "10:00 AM", "title": "What You Can Actually Borrow", "description": "DSR, CCRIS and CTOS explained" },
       { "time": "10:45 AM", "title": "Schemes & Subsidies", "description": "What is available and who qualifies" },
       { "time": "11:30 AM", "title": "The Hidden Costs", "description": "Legal fees, stamp duty, MOT" },
-      { "time": "12:15 PM", "title": "One-to-One Desk", "description": "Bring documents for a personal review" }
+      { "time": "12:15 PM", "title": "One to One Desk", "description": "Bring documents for a personal review" }
     ],
     "speakers": [
       { "name": "Mortgage Advisor", "title": "Panel Bank Liaison", "image": "https://i.pravatar.cc/150?u=ehsan-mortgage", "bio": "Handles Ehsan's loan panel" }

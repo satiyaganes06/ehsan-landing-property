@@ -29,12 +29,12 @@
     "coordinates": { "lat": 2.83, "lng": 101.58 },
     "year": "2011",
     "status": "Completed",
-    "description": "Existing madrasah demolished and rebuilt into a two-storey surau on government land. Freehold.",
+    "description": "Existing madrasah demolished and rebuilt into a two storey surau on government land. Freehold.",
     "units": "1 facility",
     "area": "Government land",
     "priceRange": "RM 2.3M",
     "occupancy": "Completed",
-    "amenities": ["Two-storey design", "Surau facility", "Madrasah", "Prayer halls", "Wudu areas"],
+    "amenities": ["Two storey design", "Surau facility", "Madrasah", "Prayer halls", "Wudu areas"],
     "certificate": "Completed",
     "media": {
       "image": [
@@ -54,7 +54,7 @@
     "coordinates": { "lat": 2.17, "lng": 102.43 },
     "year": "2012",
     "status": "Completed",
-    "description": "96 units across four blocks of four-storey apartments (Blocks A, B, C & D). Freehold. An abandoned project taken over and completed.",
+    "description": "96 units across four blocks of four storey apartments (Blocks A, B, C & D). Freehold. An abandoned project taken over and completed.",
     "units": "96 units",
     "area": "Freehold",
     "priceRange": "RM 13M GDV",
@@ -79,12 +79,12 @@
     "coordinates": { "lat": 3.04, "lng": 101.59 },
     "year": "2012",
     "status": "Completed",
-    "description": "One unit of shop lot converted into a budget hotel. State leasehold, 99-year lease, 1,650 square feet.",
+    "description": "One unit of shop lot converted into a budget hotel. State leasehold, 99 year lease, 1,650 square feet.",
     "units": "1 property",
     "area": "1,650 sq ft",
     "priceRange": "RM 4.8M",
     "occupancy": "Completed",
-    "amenities": ["Budget hotel", "Retail conversion", "Long-term lease", "Restaurant", "Reception area"],
+    "amenities": ["Budget hotel", "Retail conversion", "Long term lease", "Restaurant", "Reception area"],
     "certificate": "Completed",
     "media": {
       "image": [
@@ -149,12 +149,12 @@
     }
   },
   "proj-7": {
-    "name": "2-Storey Shop Office, Bandar Baru Tampin",
+    "name": "2 Storey Shop Office, Bandar Baru Tampin",
     "location": "Tampin, Negeri Sembilan",
     "coordinates": { "lat": 2.73, "lng": 101.82 },
     "year": "2017",
     "status": "Completed",
-    "description": "13 units of two-storey shop offices on Malay Reserve land and state leasehold.",
+    "description": "13 units of two storey shop offices on Malay Reserve land and state leasehold.",
     "units": "13 units",
     "area": "Mixed tenure",
     "priceRange": "RM 8M GDV",
@@ -178,12 +178,12 @@
     "coordinates": { "lat": 2.75, "lng": 101.53 },
     "year": "2018",
     "status": "Completed",
-    "description": "320 units on a 5.4-acre site. Completed with CCC — the company's first high-rise scheme.",
+    "description": "320 units on a 5.4 acre site. Completed with CCC — the company's first high rise scheme.",
     "units": "320 units",
     "area": "5.4 acres",
     "priceRange": "RM 140M GDV",
     "occupancy": "CCC issued",
-    "amenities": ["High-rise", "Condominium", "Mixed-use podium", "Swimming pool", "Gymnasium"],
+    "amenities": ["High rise", "Condominium", "Mixed use podium", "Swimming pool", "Gymnasium"],
     "certificate": "Certificate of Completion and Compliance",
     "media": {
       "image": [
@@ -203,12 +203,12 @@
     "coordinates": { "lat": 1.85, "lng": 103.32 },
     "year": "2019",
     "status": "Completed",
-    "description": "64 units of single-storey semi-detached houses on freehold land. Fully completed with CCC.",
+    "description": "64 units of single storey semi detached houses on freehold land. Fully completed with CCC.",
     "units": "64 units",
     "area": "Freehold",
     "priceRange": "RM 30M GDV",
     "occupancy": "CCC issued",
-    "amenities": ["Semi-detached houses", "Single storey", "Freehold land", "Gardens", "Gated community"],
+    "amenities": ["Semi detached houses", "Single storey", "Freehold land", "Gardens", "Gated community"],
     "certificate": "Certificate of Completion and Compliance",
     "media": {
       "image": [
@@ -224,12 +224,12 @@
     }
   },
   "proj-10": {
-    "name": "2-Storey Shop Office, Ehsan Waterpark",
+    "name": "2 Storey Shop Office, Ehsan Waterpark",
     "location": "Port Dickson, Negeri Sembilan",
     "coordinates": { "lat": 2.74, "lng": 101.83 },
     "year": "2019",
     "status": "Completed",
-    "description": "Two-storey shop offices at Ehsan Waterpark on freehold land. Fully completed.",
+    "description": "Two storey shop offices at Ehsan Waterpark on freehold land. Fully completed.",
     "units": "Shop offices",
     "area": "Freehold",
     "priceRange": "RM 6.5M",
@@ -253,7 +253,7 @@
     "coordinates": { "lat": 2.75, "lng": 101.53 },
     "year": "2020",
     "status": "Completed",
-    "description": "14 units of two-storey shops on freehold land. Fully completed with CCC.",
+    "description": "14 units of two storey shops on freehold land. Fully completed with CCC.",
     "units": "14 units",
     "area": "Freehold",
     "priceRange": "RM 12M GDV",
@@ -278,9 +278,9 @@
     "coordinates": { "lat": 2.58, "lng": 101.73 },
     "year": "2024",
     "status": "Ongoing",
-    "description": "238 units of two-storey and single-storey terrace houses over four phases. 1,100 to 2,000 sq ft, from RM 299,800. 99-year leasehold.",
+    "description": "238 units of two storey and single storey terrace houses over four phases. 1,100 to 2,000 sq ft, from RM 299,800. 99 year leasehold.",
     "units": "238 units",
-    "area": "99-year leasehold",
+    "area": "99 year leasehold",
     "priceRange": "RM 90M GDV",
     "occupancy": "Phases 1–4 CCC",
     "amenities": ["Terrace houses", "Four phases", "Various layouts", "Community features", "Sports courts"],
@@ -327,7 +327,7 @@
     "coordinates": { "lat": 1.51, "lng": 103.74 },
     "year": "Ongoing",
     "status": "Ongoing",
-    "description": "650 units of 16-storey serviced apartments across three blocks with retail level. Phase 1 2023–2026, Phase 2 2024–2027.",
+    "description": "650 units of 16 storey serviced apartments across three blocks with retail level. Phase 1 2023–2026, Phase 2 2024–2027.",
     "units": "650 units",
     "area": "16 storeys",
     "priceRange": "RM 300M GDV",
@@ -346,27 +346,25 @@
     }
   },
   "proj-15": {
-    "name": "Ehsan Widuri, Putra Nilai",
+    "name": "Ehsan Widuri",
     "location": "Nilai, Negeri Sembilan",
     "coordinates": { "lat": 2.73, "lng": 101.84 },
     "year": "2028",
     "status": "Ongoing",
-    "description": "490 units — Block A 242 units and Block B 242 units, levels 9 to 30 — with retail lots. Freehold, 2 acres. Block A under construction.",
+    "description": "A freehold serviced apartment in Bandar Baru Nilai, created for connected living near leading universities, everyday retail and the KLIA corridor.",
     "units": "490 units",
     "area": "2 acres",
-    "priceRange": "RM 200M GDV",
-    "occupancy": "Block A building",
-    "amenities": ["Two blocks", "High-rise", "Retail integration", "Freehold land", "Modern design"],
+    "priceRange": "From RM296,000",
+    "occupancy": "Under construction",
+    "amenities": ["30 lifestyle facilities", "Swimming and wading pools", "Indoor and outdoor gym", "Freehold ownership", "Retail and office spaces"],
     "certificate": "Under construction",
     "media": {
       "image": [
-        "proj-widuri-2.jpg", "proj-kota-warisan.jpg", "proj-dimensi.jpg", "proj-ehsan-residence.jpg",
-        "proj-salam-nadiah.jpg", "proj-markisa.jpg", "proj-bestari.jpg", "proj-widuri.jpg",
-        "proj-widuri-2.jpg", "proj-kota-warisan.jpg", "proj-dimensi.jpg", "proj-ehsan-residence.jpg"
+        "widuri/elevation-front.jpg", "gallery/BusinessEntrance-DESKTOP-OB2275O-1.webp", "gallery/SwimmingPool2_A-DESKTOP-OB2275O-scaled.webp", "gallery/GazeboAndBBQ-DESKTOP-OB2275O-scaled.webp",
+        "gallery/GuessWaiting-DESKTOP-OB2275O-scaled.webp", "gallery/IndoorGym_1-DESKTOP-OB2275O-scaled.webp", "gallery/OutdoorGym-DESKTOP-OB2275O-scaled.webp", "gallery/OfficeSpace-DESKTOP-OB2275O-scaled.webp",
+        "gallery/TableGame-DESKTOP-OB2275O-scaled.webp", "gallery/OfficeLiftLobby-DESKTOP-OB2275O-scaled.webp"
       ],
-      "blueprint": [
-        "proj-widuri-2.jpg", "proj-kota-warisan.jpg"
-      ]
+      "blueprint": []
     }
   },
   "proj-16": {
@@ -380,7 +378,7 @@
     "area": "TBA",
     "priceRange": "TBA",
     "occupancy": "Future project",
-    "amenities": ["Mixed-use development", "Lifestyle focus", "Large-scale", "Shopping center", "Entertainment"],
+    "amenities": ["Mixed use development", "Lifestyle focus", "Large scale", "Shopping center", "Entertainment"],
     "certificate": null,
     "media": {
       "image": [

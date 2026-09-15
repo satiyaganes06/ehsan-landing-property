@@ -17,14 +17,12 @@
      8. card navigation     work-record cards open their detail page
      9. awards carousel     auto-scrolling recognition strip
     10. enquiry form        client-side validation, placeholder submit
-    11. commitment stage    scattered grid scrubbed through a pinned panel
 
    Every one of these degrades to the authored HTML if it never runs: the
    marquees show one static column, the numbers already read correctly in the
    markup, the work record is a plain grid of cards, the rail simply stays
-   inert, and the commitment stage stays a plain grid above a numbered list. The topnav needs
-   nothing here at all — it hangs off the same html.past-hero flag #4 already
-   sets.
+   inert, and the commitment stage stays a plain grid above a numbered list.
+   The topnav remains visible independently of these enhancements.
    ------------------------------------------------------------------------- */
 
 (() => {
@@ -132,8 +130,9 @@
   /* ---------- 4. chrome ----------
      The progress bar and rail are hidden until <html> carries `past-hero`, so
      neither ever overlays the stage while the stage is still the thing on
-     screen. The flag is driven by the content block's own top edge rather than
-     a pixel threshold, so it stays correct at any viewport height. */
+     screen. The top navigation stays visible throughout. The flag is driven by
+     the content block's own top edge rather than a pixel threshold, so it stays
+     correct at any viewport height. */
 
   const content = document.getElementById('content');
   const bar     = document.querySelector('.progress__bar');
@@ -232,31 +231,43 @@
   });
 
 
-  /* ---------- 6. ledger disclosure ----------
-     The work record ships with only the first five rows visible; the rest
-     sit behind [hidden] in .ledger__more so the page never promises "sixteen
-     projects" and shows five. Un-hiding rather than un-rendering means the
-     IntersectionObserver from #armReveals (app.js) is already watching every
-     row — newly shown rows still play the same reveal-in the visible ones did. */
+  /* ---------- 6. work record order ----------
+     Keep one continuous project record, with the newest and future work at
+     the front. The authored cards stay intact so their detail links keep
+     working, but category headings no longer interrupt the chronology. */
 
-  const moreBtn = document.getElementById('ledgerMoreBtn');
-  const more    = document.getElementById('ledgerMore');
+  const ledger = document.querySelector('.ledger');
+  if (ledger) {
+    const moreProjects = ledger.querySelector('.ledger__more');
+    const moreProjectsButton = ledger.querySelector('.ledger__more-btn');
 
-  if (moreBtn && more) {
-    const LABEL_MORE = moreBtn.querySelector('span').textContent;
-    const LABEL_LESS = 'Show fewer projects';
-
-    moreBtn.addEventListener('click', () => {
-      const open = more.hasAttribute('hidden');
-      more.toggleAttribute('hidden', !open);
-      moreBtn.setAttribute('aria-expanded', String(open));
-      moreBtn.querySelector('span').textContent = open ? LABEL_LESS : LABEL_MORE;
-      if (!open) {
-        moreBtn.scrollIntoView({ behavior: REDUCE.matches ? 'auto' : 'smooth', block: 'nearest' });
+    if (moreProjects) {
+      while (moreProjects.firstChild) {
+        ledger.insertBefore(moreProjects.firstChild, moreProjects);
       }
-    });
-  }
+      moreProjects.remove();
+    }
 
+    const cards = Array.from(ledger.querySelectorAll(':scope > .pcard'));
+    ledger.querySelectorAll(':scope > .phase').forEach((phase) => phase.remove());
+
+    const latestYear = (card) => {
+      const year = card.querySelector('.pcard__yr')?.textContent.toLowerCase() || '';
+      const range = year.match(/(\d{4})\s*[–-]\s*(\d{2,4})/);
+      if (range) {
+        const [, start, end] = range;
+        return Number(end.length === 2 ? `${start.slice(0, 2)}${end}` : end);
+      }
+      const values = [...year.matchAll(/\d{4}/g)].map(([value]) => Number(value));
+      return values.length ? Math.max(...values) : 0;
+    };
+
+    cards
+      .sort((a, b) => latestYear(b) - latestYear(a))
+      .forEach((card) => ledger.append(card));
+
+    moreProjectsButton?.remove();
+  }
 
   /* ---------- 7. assistant widget ----------
      A placeholder, and labelled as one in the panel itself — there is no
@@ -341,108 +352,7 @@
     });
   });
 
-  /* ---------- 9. awards carousel (Kelo-inspired) ----------
-     Horizontal auto-scroll via requestAnimationFrame, pause on hover, modal details */
-
-  const AWARD_DATA = {
-    'award-1': { year: '2014', title: 'Selangor Excellence Business Awards', description: 'Recognized for excellence in business practices and significant contribution to the Selangor business community.' },
-    'award-2': { year: '2015', title: 'ASEAN Outstanding Business Awards', description: 'Acknowledged for outstanding business practices and regional contribution across the ASEAN region.' },
-    'award-3': { year: '2016', title: 'MIMCOIN SME Congress & Golden Dinar Awards', description: 'Honored for SME development initiatives and innovative business practices.' },
-    'award-4': { year: '2019', title: 'MIMCOIN SME Congress & Golden Dinar Awards', description: 'Continued recognition for exceptional SME contributions and sustained business growth.' },
-    'award-5': { year: '2014', title: 'Global Leadership Awards', description: 'Recognized for outstanding leadership and vision in the property development industry.' },
-    'award-6': { year: '2015', title: 'SME Recognition Awards', description: 'Acknowledged for significant contributions to SME sector growth and industry development.' },
-    'award-7': { year: '2017', title: 'MIMCOIN SME Congress & Golden Dinar Awards', description: 'Honored for sustained excellence in SME innovation and business development.' },
-    'award-8': { year: '2022', title: 'Bumiputera Business Excellence Awards', description: 'Recognized for excellence in Bumiputera business practices and community development.' },
-    'award-9': { year: '2017', title: 'Malaysia Top Achiever Awards', description: 'Acknowledged as a top achiever in property development and business excellence.' },
-    'award-10': { year: '2018', title: 'Global Leadership Awards', description: 'Honored for global leadership, innovation, and strategic business practices.' },
-    'award-11': { year: '2023', title: 'Nambikhai Business Icon Awards', description: 'Recognized as a business icon for excellence, innovation, and lasting industry impact.' },
-    'award-12': { year: '2023', title: 'Consumer\'s Choice Award', description: 'Awarded by consumers for outstanding service quality and customer satisfaction.' }
-  };
-
-  // Auto-scroll carousel (Kelo pattern: requestAnimationFrame + pause on hover)
-  const awardTrack = document.getElementById('awardTrack');
-  if (awardTrack) {
-    const cards = Array.from(awardTrack.querySelectorAll('.award-card'));
-    let scrollPos = { current: 0 };
-    let isHovered = false;
-    let animationFrameId = null;
-
-    // Duplicate cards for seamless loop
-    cards.forEach((card) => {
-      const clone = card.cloneNode(true);
-      clone.setAttribute('aria-hidden', 'true');
-      awardTrack.appendChild(clone);
-    });
-
-    // Auto-scroll loop
-    function autoScroll() {
-      if (!isHovered) {
-        scrollPos.current += 0.5;
-        // Reset to 0 when we've scrolled halfway (seamless loop)
-        if (scrollPos.current >= awardTrack.scrollWidth / 2) {
-          scrollPos.current = 0;
-        }
-        awardTrack.scrollLeft = scrollPos.current;
-      }
-      animationFrameId = requestAnimationFrame(autoScroll);
-    }
-
-    // Pause on hover
-    awardTrack.addEventListener('mouseenter', () => {
-      isHovered = true;
-      scrollPos.current = awardTrack.scrollLeft;
-    });
-
-    awardTrack.addEventListener('mouseleave', () => {
-      isHovered = false;
-    });
-
-    // Start auto-scroll
-    autoScroll();
-
-    // Cleanup on page unload
-    window.addEventListener('beforeunload', () => {
-      cancelAnimationFrame(animationFrameId);
-    });
-  }
-
-  // Award card click → modal
-  const modal = document.getElementById('awardModal');
-  const modalBackdrop = document.getElementById('awardModalBackdrop');
-  const modalClose = document.getElementById('awardModalClose');
-
-  if (awardTrack) {
-    awardTrack.addEventListener('click', (e) => {
-      const card = e.target.closest('.award-card');
-      if (!card) return;
-
-      const awardId = card.dataset.awardId;
-      const award = AWARD_DATA[awardId];
-      if (!award) return;
-
-      const icon = card.querySelector('.award-card__icon').textContent;
-      document.getElementById('awardModalIcon').textContent = icon;
-      document.getElementById('awardModalYear').textContent = award.year;
-      document.getElementById('awardModalTitle').textContent = award.title;
-      document.getElementById('awardModalDesc').textContent = award.description;
-
-      modal.setAttribute('aria-hidden', 'false');
-    });
-  }
-
-  function closeModal() {
-    modal.setAttribute('aria-hidden', 'true');
-  }
-
-  modalClose.addEventListener('click', closeModal);
-  modalBackdrop.addEventListener('click', closeModal);
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal.getAttribute('aria-hidden') === 'false') {
-      closeModal();
-    }
-  });
-
-  /* ---------- 10. enquiry form ----------
+  /* ---------- 9. enquiry form ----------
      No backend yet, so this validates client-side and reports the outcome in
      place. `is-validated` gates the :invalid styling so the form is not red on
      first paint — it only turns red once someone has actually tried to send. */
@@ -482,7 +392,7 @@
   }
 
 
-  /* ---------- 11. commitment stage ----------
+  /* ---------- optional commitment stage ----------
      The pinned black panel in section 02. Two jobs:
 
        a. SCATTER. Every cell is given an explicit grid-row/grid-column, so
@@ -501,13 +411,16 @@
      each cell's offset within the stage is cached at measure time, so the
      loop never interleaves reads and writes no matter how many cells there
      are. Everything is gated behind .is-live, which is added here: with this
-     module absent the CSS leaves the stage static and the grid auto-flows. */
+     module absent the CSS leaves the stage static and the grid auto-flows.
+     The homepage now uses that compact normal flow by default. The optional
+     effect remains available only when a section explicitly opts in. */
 
   const commit = document.getElementById('commitment');
   const cGrid  = commit && commit.querySelector('[data-commit-grid]');
 
-  if (commit && cGrid && !REDUCE.matches) {
+  if (commit?.dataset.commitScroll === 'pinned' && cGrid && !REDUCE.matches) {
     const stage = commit.querySelector('.commit__stage');
+    const head  = commit.querySelector('.commit__head');
     const wrap  = commit.querySelector('.commit__wrap');
     const cue   = commit.querySelector('[data-commit-cue]');
     const cells = [...cGrid.querySelectorAll('.commit__cell')];
@@ -564,7 +477,7 @@
       const vh  = window.innerHeight;
       // Distance scrolled INTO the section. One rect read, taken fresh rather
       // than cached, so nothing above this section resizing can desync it.
-      const rel = -commit.getBoundingClientRect().top;
+      const rel = -stage.getBoundingClientRect().top;
 
       // Nothing to do while the section is a full viewport away — but flush
       // once on the way out so no cell is left frozen mid-scale.
@@ -634,7 +547,10 @@
       // svh, which on mobile is the small viewport and does not match
       // innerHeight. Assuming would unpin the stage early by the URL-bar's
       // worth of pixels, right at the end of the scroll.
-      commit.style.height = `${stage.offsetHeight + travel}px`;
+      const headSpace = head
+        ? head.offsetHeight + parseFloat(getComputedStyle(head).marginBottom)
+        : 0;
+      commit.style.height = `${headSpace + stage.offsetHeight + travel}px`;
 
       // Offsets are taken against the stage's own box rather than via
       // offsetTop. offsetParent is defined by `position`, but the wrap carries

@@ -159,9 +159,8 @@ a { color: inherit; text-decoration: none; }
     linear-gradient(to top,  rgba(16,14,12,.75) 0%, rgba(16,14,12,0) 45%);
 }
 
-/* Deliberately short. The hero plays a brief camera move (frames 1..30) and
-   then hands straight off to the content below — a quarter viewport of
-   scrolling resolves the whole scrub, so the page moves on almost immediately. */
+/* Deliberately short. The hero resolves frames 1..20 within a quarter viewport
+   of scrolling, so the page moves on almost immediately. */
 .stage__scrub { height: 125vh; }
 
 /* ---------- hero ---------- */
@@ -210,6 +209,13 @@ a { color: inherit; text-decoration: none; }
   flex-wrap: wrap;
   gap: .75rem;
   margin-bottom: 3rem;
+}
+
+@media (max-width: 640px) {
+  .hero__actions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 
 .btn {
@@ -683,9 +689,7 @@ html.reveal-armed [data-reveal].is-revealed {
 
 
 /* =========================================================================
-   TOPNAV — site-wide, slides down as the hero hands off to the content
-   (same html.past-hero flag that fades in .progress and .rail), so the
-   content's upward scroll and the bar's downward reveal read as one gesture.
+   TOPNAV — site-wide and persistent from the first hero frame onward.
    ========================================================================= */
 
 .topnav {
@@ -701,10 +705,9 @@ html.reveal-armed [data-reveal].is-revealed {
   backdrop-filter: blur(10px) saturate(1.3);
   -webkit-backdrop-filter: blur(10px) saturate(1.3);
   border-bottom: 1px solid var(--c-line);
-  transform: translateY(-100%);
+  transform: translateY(0);
   transition: transform .65s var(--ease);
 }
-html.past-hero .topnav { transform: translateY(0); }
 
 .topnav__brand {
   display: flex;
