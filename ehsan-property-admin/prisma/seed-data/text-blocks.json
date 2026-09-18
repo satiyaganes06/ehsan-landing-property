@@ -1,0 +1,117 @@
+[
+  {
+    "key": "hero.title_line1",
+    "label": "Hero title, line 1",
+    "kind": "heading",
+    "group": "hero",
+    "value": "Two towers."
+  },
+  {
+    "key": "hero.title_line2",
+    "label": "Hero title, line 2 (accent)",
+    "kind": "heading",
+    "group": "hero",
+    "value": "One address."
+  },
+  {
+    "key": "hero.copy",
+    "label": "Hero paragraph",
+    "kind": "paragraph",
+    "group": "hero",
+    "value": "Thirty-eight storeys above Seri Kembangan, wrapped in a retail podium and four levels of amenity deck. Built for the way Klang Valley actually lives."
+  },
+  {
+    "key": "prelude.motto_line1",
+    "label": "Motto, line 1",
+    "kind": "heading",
+    "group": "prelude",
+    "value": "We build"
+  },
+  {
+    "key": "prelude.motto_line2",
+    "label": "Motto, line 2 (italic)",
+    "kind": "heading",
+    "group": "prelude",
+    "value": "for your needs."
+  },
+  {
+    "key": "prelude.sub",
+    "label": "Prelude paragraph",
+    "kind": "paragraph",
+    "group": "prelude",
+    "value": "Seventeen years of Bumiputera property development across Selangor, Negeri Sembilan, Melaka, Johor and Kedah — from a single detached house in Kota Warisan to a 3,442-unit pipeline carried on a gross development value of RM 1.307 billion."
+  },
+  {
+    "key": "doctrine.title",
+    "label": "Doctrine section title",
+    "kind": "heading",
+    "group": "doctrine",
+    "value": "Objective, mission, vision."
+  },
+  {
+    "key": "doctrine.vision",
+    "label": "Company vision",
+    "kind": "paragraph",
+    "group": "doctrine",
+    "value": "Ehsan Plant & Property Sdn Bhd aims to provide services and products according to established standards and produce work results with the highest quality, while also contributing to the country's economic development — and aspires to be a progressive and advanced Bumiputera company in property construction."
+  },
+  {
+    "key": "doctrine.objectives",
+    "label": "Company objectives",
+    "kind": "list",
+    "group": "doctrine",
+    "value": [
+      "To create environmentally friendly and contemporary modern property constructions.",
+      "To establish affordable properties.",
+      "To generate more job opportunities."
+    ]
+  },
+  {
+    "key": "doctrine.mission",
+    "label": "Company mission",
+    "kind": "list",
+    "group": "doctrine",
+    "value": [
+      "To provide affordable asset ownership facilities to the public — Everyone Can Own A House — together with Ehsan Property.",
+      "To become a competitive leader in the real estate industry in Malaysia.",
+      "To always consider the company motto We Build For Your Needs."
+    ]
+  },
+  {
+    "key": "commitment.vows",
+    "label": "The five commitments",
+    "kind": "list",
+    "group": "commitment",
+    "value": [
+      "To become a visionary and competitive company",
+      "To have efficient and effective operational time management",
+      "To be innovative and maintain integrity",
+      "To instil a team spirit that values sincerity",
+      "To provide the best quality and satisfaction to our customers"
+    ]
+  },
+  {
+    "key": "contact.hq_address",
+    "label": "HQ office address",
+    "kind": "contact",
+    "group": "contact",
+    "value": "Suite C-20-3A, Level 20, Block C,, Megan Avenue II, Jalan Yap Kwan Seng,, 50450 Kuala Lumpur, Malaysia"
+  },
+  {
+    "key": "contact.phones",
+    "label": "Telephone numbers",
+    "kind": "list",
+    "group": "contact",
+    "value": [
+      "03-2162 6649",
+      "03-2162 6648"
+    ]
+  },
+  {
+    "key": "contact.email",
+    "label": "Contact email",
+    "kind": "contact",
+    "group": "contact",
+    "value": "info@ehsanproperty.com"
+  }
+]

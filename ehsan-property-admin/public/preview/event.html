@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Event Details — Ehsan Plant &amp; Property</title>
+<link rel="stylesheet" href="/live-site/css/style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600&family=Azeret+Mono:wght@300;400;500&family=Fraunces:ital,opsz,wght@0,9..144,300..500;1,9..144,300..500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/live-site/css/content.css">
+<link rel="stylesheet" href="/live-site/css/event-detail.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 fill=%270a0b0d%27/%3E%3Cpath d=%27M6 24V8h20v4H11v3h12v4H11v3h15v2z%27 fill=%27%23d18829%27/%3E%3C/svg%3E">
+<script>
+/* Injected by scripts/sync-preview-templates.mjs -- do not edit here. */
+(function () {
+  var resolveDraft;
+  var draft = new Promise(function (resolve) { resolveDraft = resolve; });
+
+  window.addEventListener('message', function (event) {
+    if (event.source !== window.parent) return;
+    if (!event.data || event.data.type !== 'ehsan:preview-data') return;
+    resolveDraft(event.data.payload);
+  });
+
+  /* The page fetches its own data file on load. Park that request until the
+     panel hands over the draft, so the published copy is never rendered
+     first and then replaced -- the reader would see it flash. */
+  var realFetch = window.fetch.bind(window);
+  window.fetch = function (input, init) {
+    var url = typeof input === 'string' ? input : (input && input.url) || '';
+    if (/\/data\/(projects|events)\.json/.test(url)) {
+      return draft.then(function (payload) {
+        return new Response(JSON.stringify(payload), {
+          status: 200,
+          headers: { 'Content-Type': 'application/json' },
+        });
+      });
+    }
+    return realFetch(input, init);
+  };
+
+  function announceReady() {
+    if (window.parent === window) return;
+    window.parent.postMessage({ type: 'ehsan:preview-ready' }, window.location.origin);
+  }
+  announceReady();
+  window.addEventListener('load', announceReady);
+})();
+</script>
+<script>
+/* Preview only: the registration form must not reach the real endpoint. */
+document.addEventListener('submit', function (event) {
+  if (event.target && event.target.id === 'eventRegisterForm') {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+  }
+}, true);
+</script>
+</head>
+<body>
+
+<div data-component="navbar"></div>
+
+<div class="grain" aria-hidden="true"></div>
+
+<!-- Event Hero Section -->
+<div class="event-hero">
+  <img id="eventHeroImage" src="" alt="Event hero" class="event-hero__image">
+  <div class="event-hero__overlay">
+    <div class="event-hero__badge" id="eventHeroBadge"></div>
+    <div class="event-hero__content">
+      <h1 class="event-hero__title" id="eventHeroTitle"></h1>
+      <p class="event-hero__date" id="eventHeroDate"></p>
+    </div>
+  </div>
+</div>
+
+<!-- Event Content -->
+<div class="event-content">
+  <div class="event-content__inner">
+    <!-- Back Link -->
+    <a href="/live-site/index.html#events" class="event-back">
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Back to events
+    </a>
+
+    <!-- Event Details Grid -->
+    <div class="event-details-grid">
+      <!-- Main Content -->
+      <article class="event-details-main">
+        <!-- Quick Facts -->
+        <section class="event-facts">
+          <h2 class="event-facts__title">Event Details</h2>
+          <div class="event-facts__grid">
+            <div class="event-fact">
+              <div class="event-fact__label">📅 Date & Time</div>
+              <div class="event-fact__value" id="eventDateTime"></div>
+            </div>
+            <div class="event-fact">
+              <div class="event-fact__label">📍 Location</div>
+              <div class="event-fact__value" id="eventLocation"></div>
+            </div>
+            <div class="event-fact">
+              <div class="event-fact__label">👥 Expected Attendees</div>
+              <div class="event-fact__value" id="eventAttendees"></div>
+            </div>
+            <div class="event-fact">
+              <div class="event-fact__label">💰 Registration</div>
+              <div class="event-fact__value" id="eventPrice"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Description -->
+        <section class="event-description">
+          <h2 class="event-section-title">About This Event</h2>
+          <p id="eventDescription"></p>
+        </section>
+
+        <!-- Agenda -->
+        <section class="event-agenda">
+          <h2 class="event-section-title">Event Agenda</h2>
+          <div class="event-agenda__items" id="eventAgenda"></div>
+        </section>
+
+        <!-- Speakers -->
+        <!-- <section class="event-speakers">
+          <h2 class="event-section-title">Meet the Speakers</h2>
+          <div class="event-speakers__grid" id="eventSpeakers"></div>
+        </section> -->
+
+        <!-- Highlights -->
+        <!-- <section class="event-highlights">
+          <h2 class="event-section-title">Event Highlights</h2>
+          <ul class="event-highlights__list" id="eventHighlights"></ul>
+        </section> -->
+      </article>
+
+      <!-- Sidebar -->
+      <aside class="event-sidebar">
+        <!-- Registration Card -->
+        <div class="event-register-card">
+          <h3 class="event-register-card__title">Secure Your Spot</h3>
+          <p class="event-register-card__desc">Join us for an exclusive preview of our latest developments.</p>
+
+          <form class="event-register-form" id="eventRegisterForm">
+            <div class="form-group">
+              <label for="registerName">Full Name</label>
+              <input type="text" id="registerName" name="name" required>
+            </div>
+            <div class="form-group">
+              <label for="registerEmail">Email Address</label>
+              <input type="email" id="registerEmail" name="email" required>
+            </div>
+            <div class="form-group">
+              <label for="registerPhone">Phone Number</label>
+              <input type="tel" id="registerPhone" name="phone" required>
+            </div>
+            <button type="submit" class="btn btn--solid">Register Now</button>
+          </form>
+        </div>
+
+        <!-- Event Stats -->
+        <div class="event-stats-card">
+          <h3 class="event-stats-card__title">Event Stats</h3>
+          <div class="event-stat">
+            <span class="event-stat__label">Capacity</span>
+            <span class="event-stat__value" id="eventCapacity"></span>
+          </div>
+          <div class="event-stat">
+            <span class="event-stat__label">Registered</span>
+            <span class="event-stat__value" id="eventRegistered"></span>
+          </div>
+          <div class="event-stat">
+            <span class="event-stat__label">Spots Left</span>
+            <span class="event-stat__value" id="eventSpotsLeft"></span>
+          </div>
+        </div>
+
+        <!-- Share Event -->
+        <div class="event-share-card">
+          <h3 class="event-share-card__title">Share Event</h3>
+          <div class="event-share-btns">
+            <a href="#" class="event-share-btn" title="Share on Facebook">f</a>
+            <a href="#" class="event-share-btn" title="Share on Twitter">𝕏</a>
+            <a href="#" class="event-share-btn" title="Share via Email">✉</a>
+            <a href="#" class="event-share-btn" title="Copy Link">🔗</a>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <!-- Related Events -->
+    <!-- <section class="event-related">
+      <h2 class="event-section-title">Other Upcoming Events</h2>
+      <div class="event-related__grid" id="relatedEvents"></div>
+    </section> -->
+
+    <!-- CTA -->
+    <!-- <div class="event-footer">
+      <a href="/live-site/index.html#events" class="btn btn--solid">View All Events</a>
+    </div> -->
+  </div>
+</div>
+
+<!-- Assistant Widget -->
+<div data-component="footer"></div>
+
+<div data-component="assistant"></div>
+
+<!-- Page chrome: registry first, then each component, then mount. -->
+<script src="/live-site/components/registry.js"></script>
+<script src="/live-site/components/navbar.js"></script>
+<script src="/live-site/components/footer.js"></script>
+<script src="/live-site/components/assistant.js"></script>
+<script src="/live-site/components/mount.js"></script>
+
+<!-- Page behaviour — runs after the chrome is in the DOM. -->
+<script src="/live-site/js/event-detail.js"></script>
+<script src="/live-site/js/content.js"></script>
+</body>
+</html>

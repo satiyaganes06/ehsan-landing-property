@@ -1,0 +1,30 @@
+[
+  {
+    "img": "avatar4.jpeg",
+    "quote": "Handover day felt like the finish line of years of saving. The team walked us through every defect check without rushing us once.",
+    "author": "Aisyah &amp; Farid",
+    "role": "First home, Taman Sri Ehsan",
+    "group": "First-time buyers"
+  },
+  {
+    "img": "avatar1.jpg",
+    "quote": "Five years in and the estate still feels as maintained as move-in day. That's rarer than people think.",
+    "author": "Mr Tan K.W.",
+    "role": "Resident, Ehsan Residence",
+    "group": "Homeowners"
+  },
+  {
+    "img": "avatar2.jpg",
+    "quote": "We bought two units off-plan on the strength of the Sepang track record. Construction updates have matched the timeline so far.",
+    "author": "Ravindran S.",
+    "role": "Investor, Ehsan Widuri",
+    "group": "Investors"
+  },
+  {
+    "img": "avatar3.jpeg",
+    "quote": "Foot traffic built faster than we forecast. Having the developer still active on-site during our fit-out made the handover painless.",
+    "author": "Grace Lim",
+    "role": "Tenant, Shop Office, Ehsan Residence",
+    "group": "Business tenants"
+  }
+]
