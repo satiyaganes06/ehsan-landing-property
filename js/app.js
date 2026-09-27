@@ -1,13 +1,8 @@
 /* -------------------------------------------------------------------------
-   Ehsan Plant & Property — load-in gate + frame-sequence scrub
+   Ehsan Plant & Property — arrival and architectural camera motion
    ------------------------------------------------------------------------- */
 const ROOT = document.documentElement;
-const FRAME_DIR = 'assets/frames-hd';
-const FRAME_EXT = '.webp';
-const FRAME_FIRST = 1;
-const FRAME_LAST = 20;
-const FRAME_COUNT = FRAME_LAST - FRAME_FIRST + 1;
-const src = (n) => `${FRAME_DIR}/${String(n).padStart(5, '0')}${FRAME_EXT}`;
+const REDUCED = matchMedia('(prefers-reduced-motion: reduce)');
 
 const CHROME_KEY = 'ehsan:chrome-rippled';
 try {
@@ -15,79 +10,60 @@ try {
   else sessionStorage.setItem(CHROME_KEY, '1');
 } catch { /* Storage is optional. */ }
 
-const canvas = document.getElementById('sequence');
-const ctx = canvas.getContext('2d', { alpha: false });
+const scene = document.getElementById('hero-scene');
 const stage = document.querySelector('.stage');
-let wanted = 0;
-let painted = -1;
-ctx.imageSmoothingQuality = 'high';
-
-function sizeCanvasTo(img) {
-  if (canvas.width === img.naturalWidth && canvas.height === img.naturalHeight) return;
-  canvas.width = img.naturalWidth;
-  canvas.height = img.naturalHeight;
-  ctx.imageSmoothingQuality = 'high';
-  painted = -1;
-}
-function draw(i) {
-  const img = frames[i];
-  if (!img || painted === i) return;
-  sizeCanvasTo(img);
-  ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-  painted = i;
-}
-function nearestLoaded(i) {
-  if (frames[i]) return i;
-  for (let d = 1; d < FRAME_COUNT; d++) {
-    if (frames[i - d]) return i - d;
-    if (frames[i + d]) return i + d;
-  }
-  return -1;
-}
-const frames = new Array(FRAME_COUNT);
 let readyFired = false;
 function markReady() {
   if (readyFired) return;
   readyFired = true;
   ROOT.classList.add('is-ready');
 }
-function loadFrame(i) {
-  return new Promise((resolve) => {
-    const img = new Image();
-    img.decoding = 'async';
-    img.fetchPriority = i === 0 ? 'high' : 'low';
-    img.onload = () => { frames[i] = img; resolve(img); };
-    img.onerror = () => resolve(null);
-    img.src = src(FRAME_FIRST + i);
-  });
-}
-loadFrame(0).then((img) => {
-  if (img) draw(0);
+if (scene) {
+  scene.decode().catch(() => {}).finally(markReady);
+} else {
   markReady();
-  streamRest();
-});
+}
 setTimeout(markReady, 4000);
 
-const CONCURRENCY = Math.min(4, FRAME_COUNT - 1);
-function streamRest() {
-  let next = 1;
-  const worker = async () => {
-    while (next < FRAME_COUNT) {
-      const i = next++;
-      await loadFrame(i);
-      if (i === wanted) draw(i);
-    }
-  };
-  for (let w = 0; w < CONCURRENCY; w++) worker();
+let cameraProgress = 0;
+let cameraTarget = 0;
+let cameraFrame = 0;
+let cameraTime = 0;
+const MOBILE_CAMERA = matchMedia('(max-width: 760px)');
+
+function paintCamera() {
+  const strength = MOBILE_CAMERA.matches ? .5 : 1;
+  const p = cameraProgress;
+  stage.style.setProperty('--camera-x', `${(-p * 38 * strength).toFixed(2)}px`);
+  stage.style.setProperty('--camera-y', `${(p * 100 * strength).toFixed(2)}px`);
+  stage.style.setProperty('--camera-pitch', `${(p * 2 * strength).toFixed(3)}deg`);
+  stage.style.setProperty('--camera-bank', `${(Math.sin(p * Math.PI) * .65 * strength).toFixed(3)}deg`);
+  stage.style.setProperty('--camera-scale', (1 + p * .18 * strength).toFixed(4));
 }
+
+function animateCamera(time) {
+  const elapsed = Math.min(time - (cameraTime || time - 16), 64);
+  cameraTime = time;
+  cameraProgress += (cameraTarget - cameraProgress) * (1 - Math.exp(-elapsed / 140));
+  if (Math.abs(cameraTarget - cameraProgress) < .0005) cameraProgress = cameraTarget;
+  paintCamera();
+  cameraFrame = cameraProgress === cameraTarget ? 0 : requestAnimationFrame(animateCamera);
+  if (!cameraFrame) cameraTime = 0;
+}
+
 function onScroll() {
-  const travel = stage.offsetHeight - window.innerHeight;
-  const progress = travel > 0
-    ? Math.min(Math.max(-stage.getBoundingClientRect().top / travel, 0), 1)
-    : 0;
-  wanted = Math.round(progress * (FRAME_COUNT - 1));
-  const frame = nearestLoaded(wanted);
-  if (frame >= 0) draw(frame);
+  if (!stage || stage.hidden) return;
+  const rect = stage.getBoundingClientRect();
+  cameraTarget = REDUCED.matches ? 0 : Math.min(Math.max(-rect.top / rect.height, 0), 1);
+  if (REDUCED.matches || rect.bottom <= 0 || document.hidden) {
+    cancelAnimationFrame(cameraFrame);
+    cameraFrame = 0;
+    cameraTime = 0;
+    cameraProgress = cameraTarget;
+    paintCamera();
+  } else if (!cameraFrame) {
+    cameraFrame = requestAnimationFrame(animateCamera);
+  }
 }
 let queued = false;
 window.addEventListener('scroll', () => {
@@ -96,6 +72,8 @@ window.addEventListener('scroll', () => {
   requestAnimationFrame(() => { queued = false; onScroll(); });
 }, { passive: true });
 window.addEventListener('resize', onScroll, { passive: true });
+REDUCED.addEventListener('change', onScroll);
+document.addEventListener('visibilitychange', onScroll);
 onScroll();
 
 /* -------------------------------------------------------------------------
@@ -110,8 +88,6 @@ onScroll();
    1000ms, same curve, same 100ms-per-ring beat — so the page reads as one
    system rather than two unrelated animation styles.
    ------------------------------------------------------------------------- */
-
-const REDUCED = matchMedia('(prefers-reduced-motion: reduce)');
 
 function armReveals() {
   const targets = document.querySelectorAll('[data-reveal]');

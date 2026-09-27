@@ -4,12 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Ehsan Plant &amp; Property</title>
-<link rel="preload" as="image" href="assets/frames-hd/00001.webp">
+<link rel="preload" as="image" href="assets/img/malaysian-skyline-hero-hd.webp">
 <link rel="stylesheet" href="css/style.css?v=20260914.3">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600&family=Azeret+Mono:wght@300;400;500&family=Fraunces:ital,opsz,wght@0,9..144,300..500;1,9..144,300..500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/content.css?v=20260915.1">
+<link rel="stylesheet" href="css/content.css?v=20260928.1">
+<link rel="stylesheet" href="css/hero-concept.css?v=20260919.1">
 <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
 <meta name="description" content="Ehsan Plant &amp; Property Sdn Bhd — Bumiputera property developer and CIDB G7 contractor. Sixteen projects, RM 1.307 billion GDV, 3,442 units across Malaysia.">
 </head>
@@ -31,7 +32,9 @@
 
   <!-- ========== BACKGROUND MEDIA (effect 2, and nothing else gets it) ========== -->
   <div class="stage__media">
-    <canvas class="hero-media" id="sequence" width="1920" height="1080" aria-hidden="true"></canvas>
+    <div class="hero-camera">
+      <img class="hero-media" id="hero-scene" src="assets/img/malaysian-skyline-hero-hd.webp" width="1672" height="941" fetchpriority="high" alt="Malaysian architectural concept with landed homes, condominiums, shoplots and tropical greenery against a skyline inspired by Merdeka 118, The Exchange 106, the Petronas Twin Towers and KL Tower">
+    </div>
     <div class="stage__scrim" aria-hidden="true"></div>
   </div>
 
@@ -59,15 +62,12 @@
       </div>
     </main>
 
-    <p class="scrollcue" data-ripple data-ring="5" aria-hidden="true">
-      Scroll
-    </p>
+    <div class="scrollcue" data-ring="5" aria-hidden="true" data-cms-fixed>
+      <span class="scrollcue__dot"></span>
+    </div>
 
   </div>
 
-  <!-- Spacer that gives the sticky canvas its scrub distance. Sized in CSS to
-       resolve frames 1..20 within about a quarter viewport of scrolling. -->
-  <div class="stage__scrub" aria-hidden="true"></div>
 </div>
 
 <!--
@@ -106,9 +106,11 @@
     <div class="prelude__intro">
       <p class="prelude__mark" data-reveal data-reveal-ring="0">
         <b>Ehsan Plant &amp; Property Sdn Bhd</b>
-        <span>817795-X</span>
-        <span>Est. 15 May 2008</span>
-        <span>Bumiputera Developer &middot; CIDB G7</span>
+        <!-- Company metadata intentionally omitted. Keep the caption-free slots
+             hidden so existing CMS field paths for later content stay stable. -->
+        <span hidden data-cms-fixed></span>
+        <span hidden data-cms-fixed></span>
+        <span hidden data-cms-fixed></span>
       </p>
 
       <h2 class="motto">
@@ -133,7 +135,7 @@
     <div>
       <figure class="frame" data-reveal data-reveal-ring="2">
         <img src="../assets/img/about-us.jpg" alt="The Ehsan Plant &amp; Property team gathered at a company event" loading="lazy" decoding="async">
-        <figcaption>The Ehsan Plant &amp; Property team<br>Ehsan Residence, Sepang</figcaption>
+        <figcaption hidden data-cms-fixed></figcaption>
       </figure>
     </div>
 
@@ -978,7 +980,8 @@
 <script src="components/mount.js"></script>
 
 <!-- Page behaviour — runs after the chrome is in the DOM. -->
-<script src="js/app.js?v=20260914.3"></script>
+<script src="js/app.js?v=20260919.1"></script>
 <script src="js/content.js?v=20260915.2"></script>
+<script src="js/landing-editor.js?v=9"></script>
 </body>
 </html>

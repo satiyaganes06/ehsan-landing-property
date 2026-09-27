@@ -7,7 +7,7 @@ export const runtime = 'nodejs';
 
 const MediaLinkBody = z.object({
   mediaId: z.string().min(1),
-  role: z.enum(['hero', 'gallery', 'blueprint']).default('gallery'),
+  role: z.enum(['hero', 'gallery', 'blueprint', 'thumbnail']).default('gallery'),
   sortOrder: z.number().int().default(0),
 });
 
@@ -20,7 +20,11 @@ export const POST = route<{ id: string }>(
     if (!project) return json({ error: 'not_found', message: 'Project not found.' }, 404);
     if (!canActOnOwnRecord(user, project.createdById)) return forbiddenOwnership();
 
-    const link = await prisma.projectMedia.create({ data: { projectId: project.id, ...data } });
+    const link = await prisma.$transaction(async tx => {
+      // A thumbnail is a single project-specific selection, not a gallery item.
+      if (data.role === 'thumbnail') await tx.projectMedia.deleteMany({ where: { projectId: project.id, role: 'thumbnail' } });
+      return tx.projectMedia.create({ data: { projectId: project.id, ...data } });
+    });
     return json(link, 201);
   },
 );

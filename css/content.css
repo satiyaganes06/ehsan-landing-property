@@ -584,17 +584,21 @@ html.past-hero .rail { opacity: 1; pointer-events: auto; }
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr));
   gap: 1px;
   background: var(--c-line);
   border-block: 1px solid var(--c-line);
 }
 .scale li {
   background: var(--c-ground);
+  min-width: 0;
+  overflow-wrap: anywhere;
   padding: 1.75rem clamp(1rem, 2vw, 1.75rem) 1.5rem;
 }
 .scale__n {
-  display: block;
+  display: flex;
+  align-items: baseline;
+  flex-wrap: nowrap;
   font-family: var(--serif);
   font-size: clamp(2.25rem, 5vw, 3.5rem);
   font-weight: 300;
@@ -602,6 +606,8 @@ html.past-hero .rail { opacity: 1; pointer-events: auto; }
   letter-spacing: -.03em;
   color: var(--c-ink);
   font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  overflow-wrap: normal;
 }
 .scale__n sup {
   font-family: var(--mono);
@@ -1542,10 +1548,13 @@ html.reveal-armed .chain:not(.is-revealed) ol::before { transform: scaleY(0); }
 }
 .summary > div {
   background: var(--c-panel);
+  min-width: 0;
   padding: 1.5rem 1.375rem;
 }
 .summary__n {
   display: block;
+  white-space: nowrap;
+  overflow-wrap: normal;
   font-family: var(--serif);
   font-size: clamp(1.75rem, 3.4vw, 2.5rem);
   font-weight: 300;

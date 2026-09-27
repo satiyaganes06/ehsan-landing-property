@@ -56,6 +56,20 @@ enum SeoBand {
   GOOD
 }
 
+// Anonymous browser sessions. No names, IP addresses, query strings or cookies.
+model PageView {
+  id        String   @id @default(cuid())
+  sessionId String
+  path      String
+  source    String
+  device    String
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([sessionId, createdAt])
+  @@map("page_views")
+}
+
 // ---------------------------------------------------------------- identity --
 
 model User {

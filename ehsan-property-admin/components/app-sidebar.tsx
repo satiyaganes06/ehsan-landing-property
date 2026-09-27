@@ -6,7 +6,7 @@ import { useTheme } from 'next-themes';
 import { useQuery } from '@tanstack/react-query';
 import {
   Building2, CalendarDays, ChevronsUpDown, Images, Inbox, LayoutDashboard,
-  LogOut, Monitor, Moon, Quote, ScrollText, Sun, Trophy, Type, Users,
+  LogOut, Monitor, Moon, Quote, ScrollText, Sun, Trophy, Settings2, Users,
 } from 'lucide-react';
 
 import {
@@ -38,20 +38,27 @@ const NAV: Array<{ group: string; items: NavItem[] }> = [
     items: [{ href: '/', label: 'Dashboard', icon: LayoutDashboard }],
   },
   {
+    group: 'Website',
+    items: [
+      { href: '/landing', label: 'Page builder', icon: Monitor, need: ['block', 'read'] },
+      { href: '/website', label: 'Website settings', icon: Settings2, need: ['block', 'read'] },
+      { href: '/media', label: 'Media library', icon: Images, need: ['media', 'read'] },
+    ],
+  },
+  {
     group: 'Content',
     items: [
       { href: '/projects', label: 'Projects', icon: Building2, need: ['project', 'read'] },
       { href: '/events', label: 'Events', icon: CalendarDays, need: ['event', 'read'] },
       { href: '/awards', label: 'Awards', icon: Trophy, need: ['award', 'read'] },
       { href: '/testimonials', label: 'Testimonials', icon: Quote, need: ['testimonial', 'read'] },
-      { href: '/content', label: 'Page text', icon: Type, need: ['block', 'read'] },
-      { href: '/media', label: 'Media', icon: Images, need: ['media', 'read'] },
     ],
   },
   {
     group: 'Operations',
     items: [
       { href: '/enquiries', label: 'Enquiries', icon: Inbox, need: ['enquiry', 'read'], badge: 'enquiries' },
+      { href: '/operations', label: 'Content overview', icon: ScrollText, need: ['project', 'read'] },
     ],
   },
   {

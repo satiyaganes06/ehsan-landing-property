@@ -27,4 +27,8 @@
 
     slot.outerHTML = render(window.SITE);
   });
+  const analytics = document.createElement('script');
+  analytics.src = window.SITE.url('js/analytics.js');
+  analytics.async = true;
+  document.body.append(analytics);
 })();

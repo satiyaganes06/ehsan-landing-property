@@ -1,0 +1,10 @@
+.rich-text-control { border: 1px solid var(--border); border-radius: .5rem; overflow: hidden; background: var(--background); }
+.rich-text-control .ql-toolbar.ql-snow { border: 0; border-bottom: 1px solid var(--border); background: var(--muted); }
+.rich-text-control .ql-container.ql-snow { border: 0; font-family: inherit; font-size: .875rem; }
+.rich-text-control .ql-editor { min-height: 100px; max-height: 320px; color: var(--foreground); }
+.rich-text-control .ql-snow .ql-stroke { stroke: var(--foreground); }
+.rich-text-control .ql-snow .ql-fill { fill: var(--foreground); }
+.rich-text-control .ql-snow .ql-picker { color: var(--foreground); }
+.rich-text-control .ql-snow .ql-picker-options { background: var(--background); color: var(--foreground); border-color: var(--border); }
+.rich-text-control .ql-toolbar button:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+.rich-text-control .ql-disabled { opacity: .65; }

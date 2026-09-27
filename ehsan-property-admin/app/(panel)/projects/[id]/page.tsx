@@ -493,6 +493,7 @@ function ContentTab({
 /** The two buckets the project page actually renders: the photo carousel and
     the separate blueprint gallery behind the "Blueprint" switcher. */
 const MEDIA_ROLES = [
+  { role: 'thumbnail', label: 'Thumbnail', blurb: 'One image for this project’s homepage card. Recommended: landscape, 1600 × 900 px, WebP or JPEG. Until selected, the first project photo is used.' },
   { role: 'gallery', label: 'Photos', blurb: 'Shown in the carousel and gallery grid.' },
   { role: 'blueprint', label: 'Blueprints', blurb: 'Shown behind the Blueprint switcher.' },
 ] as const;
@@ -521,7 +522,7 @@ function MediaTab({ project }: { project: ProjectDetail }) {
       }),
     onSuccess: async (_data, { role }) => {
       await queryClient.invalidateQueries({ queryKey: ['projects', project.id] });
-      toast.success(role === 'blueprint' ? 'Blueprint added.' : 'Photo added.');
+      toast.success(role === 'thumbnail' ? 'Thumbnail set.' : role === 'blueprint' ? 'Blueprint added.' : 'Photo added.');
     },
     onError: (err) =>
       toast.error('Could not add the image', {
@@ -566,7 +567,7 @@ function MediaTab({ project }: { project: ProjectDetail }) {
               {editable ? (
                 <Button variant="outline" size="sm" onClick={() => setPickerRole(role)}>
                   <Plus className="size-3.5" />
-                  Add {role === 'blueprint' ? 'blueprint' : 'photo'}
+                  {role === 'thumbnail' ? (items.length ? 'Replace thumbnail' : 'Set thumbnail') : `Add ${role === 'blueprint' ? 'blueprint' : 'photo'}`}
                 </Button>
               ) : null}
             </div>
@@ -581,7 +582,7 @@ function MediaTab({ project }: { project: ProjectDetail }) {
                 <ImageIcon className="size-5" />
                 <span className="text-sm">
                   {editable
-                    ? `Add the first ${role === 'blueprint' ? 'blueprint' : 'photo'}`
+                    ? (role === 'thumbnail' ? 'Set project thumbnail' : `Add the first ${role === 'blueprint' ? 'blueprint' : 'photo'}`)
                     : `No ${label.toLowerCase()} yet`}
                 </span>
               </button>

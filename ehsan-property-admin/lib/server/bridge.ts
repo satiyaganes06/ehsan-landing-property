@@ -89,6 +89,7 @@ export async function buildProjectsPayload(): Promise<Record<string, unknown>> {
       location: t.location,
       coordinates: p.latitude != null && p.longitude != null ? { lat: p.latitude, lng: p.longitude } : null,
       year: p.yearStart ?? '',
+      yearEnd: p.yearEnd ?? '',
       status: p.status === 'COMPLETED' ? 'Completed' : p.status === 'ONGOING' ? 'Ongoing' : 'Future',
       description: t.description,
       units: p.units ?? '',
@@ -98,6 +99,7 @@ export async function buildProjectsPayload(): Promise<Record<string, unknown>> {
       amenities: t.amenities,
       certificate: t.certificate ?? null,
       media: {
+        thumbnail: (() => { const image = p.media.find(m => m.role === 'thumbnail') || p.media.find(m => m.role === 'hero' || m.role === 'gallery'); return image ? siteImagePath(image.media.storageKey) : null; })(),
         image: p.media.filter((m) => m.role === 'gallery' || m.role === 'hero').map((m) => siteImagePath(m.media.storageKey)),
         blueprint: p.media.filter((m) => m.role === 'blueprint').map((m) => siteImagePath(m.media.storageKey)),
       },
