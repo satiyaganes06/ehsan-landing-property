@@ -3,7 +3,7 @@
   window.EhsanShare = {
     render({ kind, id, title, description, image }, target) {
       if (!target) return;
-      const url = `${admin}/api/public/share/${kind}/${encodeURIComponent(id)}`;
+      const url = document.querySelector('link[rel="canonical"]')?.href || location.href.split('#')[0];
       const setMeta = (name, content, property = true) => {
         const attribute = property ? 'property' : 'name';
         let tag = document.head.querySelector(`meta[${attribute}="${name}"]`);

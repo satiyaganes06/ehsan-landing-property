@@ -3,7 +3,7 @@
     const ledger = document.querySelector('.ledger');
     if (!ledger) return;
     const cards = [...ledger.querySelectorAll(':scope > .pcard')].filter(card => !card.hidden);
-    const archive = /\/projects\.html$/.test(location.pathname);
+    const archive = window.SITE?.page === 'projects.html';
     let page = 0;
     const search = document.querySelector('[data-project-search]');
     const stateFilter = document.querySelector('[data-project-state]');

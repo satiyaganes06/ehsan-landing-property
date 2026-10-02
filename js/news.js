@@ -42,7 +42,7 @@
       items = limit ? items.slice(0, limit) : items.slice(page * pageSize, (page + 1) * pageSize);
       const fragment = document.createDocumentFragment();
       items.forEach(article => {
-        const card = document.createElement('a'); card.className = 'news-card'; card.href = url(`html/news-detail.html?news=${encodeURIComponent(article.id)}`);
+        const card = document.createElement('a'); card.className = 'news-card'; card.href = SITE.recordUrl('news', article);
         const thumbnail = article.thumbnail ?? article.images[0];
         if (thumbnail) { const image = document.createElement('img'); image.src = imageUrl(thumbnail); image.alt = article.title; image.loading = 'lazy'; image.decoding = 'async'; card.append(image); }
         const body = document.createElement('div'); body.className = 'news-card__body';
@@ -64,8 +64,9 @@
     search?.addEventListener('input', () => { page = 0; paint(); }); paint();
   }
   if (detail) {
-    const article = articles.find(item => item.id === new URLSearchParams(location.search).get('news'));
+    const article = articles.find(item => item.id === SITE.recordId('news', Object.fromEntries(articles.map(item => [item.id, item]))));
     if (!article) { detail.textContent = 'This article is not available.'; return; }
+    SITE.canonical('news', article);
     document.title = `${article.title} — Ehsan News`;
     const header = document.createElement('header'); header.className = 'section__head';
     const time = document.createElement('p'); time.className = 'section__label'; time.textContent = `Published ${date(article.date)}`;

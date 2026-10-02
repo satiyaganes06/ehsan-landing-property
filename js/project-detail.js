@@ -24,6 +24,10 @@ let currentMediaType = 'image';
 /* ===== Load Projects from JSON ===== */
 async function loadProjectsData() {
   try {
+    if (window.EhsanPublicData) {
+      PROJECTS_DATA = await window.EhsanPublicData.getProjects();
+      return true;
+    }
     const admin = window.EHSAN_CMS_ORIGIN || window.SITE?.adminOrigin || (['localhost', '127.0.0.1'].includes(location.hostname) ? 'http://localhost:3001' : '');
     let response;
     try { response = await fetch(admin ? admin.replace(/\/$/, '') + '/api/public/projects.json' : cmsUrl('projects.json', 'data/projects.json?v=20260915.1'), { cache: 'no-store' }); }
@@ -233,7 +237,7 @@ class Carousel {
 /* ===== Project Data Loader ===== */
 function getProjectFromURL() {
   const params = new URLSearchParams(window.location.search);
-  return (params.get('project') || 'proj-1').replace(/[.,;]+$/, '');
+  return SITE.recordId('projects', PROJECTS_DATA) || (params.get('project') ? null : (/\/projects\//.test(location.pathname) ? null : 'proj-1'));
 }
 
 function loadProjectData(projectKey) {
@@ -596,7 +600,7 @@ function renderRelatedProjects(currentProjectKey) {
   const related = allProjects.sort(() => Math.random() - 0.5).slice(0, 3);
 
   relatedContainer.innerHTML = related.map(([key, proj]) => `
-    <a href="project-detail.html?project=${key}" class="related-project-card">
+    <a href="${SITE.recordUrl('projects', proj)}" class="related-project-card">
       <div class="related-project-card__image">
         <img src="${imgUrl(proj.media.image[0])}" alt="${proj.name}" loading="lazy">
       </div>
@@ -664,6 +668,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const projectData = loadProjectData(projectKey);
 
   if (projectData) {
+    SITE.canonical('projects', projectData);
     const isWiduri = projectKey === 'proj-15';
     document.body.classList.toggle('project--widuri', isWiduri);
     document.title = `${projectData.name} | Ehsan Plant & Property`;

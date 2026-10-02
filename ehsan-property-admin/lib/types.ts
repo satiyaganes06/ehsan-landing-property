@@ -37,6 +37,8 @@ export interface Translation {
 }
 
 export interface ProjectListItem {
+  featured: boolean;
+  createdAt: string;
   id: string;
   reference: string;
   name: string;
@@ -62,6 +64,7 @@ export interface ProjectTranslation {
 }
 
 export interface ProjectDetail {
+  content?: import('./server/project-content').ProjectContent;
   enquiry?: { enabled: boolean; interest: string; sections: Record<string, boolean> };
   id: string;
   reference: string;
@@ -156,6 +159,8 @@ export interface AwardListItem {
 }
 
 export interface AwardDetail extends AwardListItem {
+  mediaId: string | null;
+  media?: MediaItem | null;
   translations: Array<{
     locale: Locale;
     name?: string | null;

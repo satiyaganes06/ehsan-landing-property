@@ -6,7 +6,7 @@ import { useTheme } from 'next-themes';
 import { useQuery } from '@tanstack/react-query';
 import {
   Building2, CalendarDays, ChevronsUpDown, Images, Inbox, LayoutDashboard,
-  LogOut, Monitor, Moon, Quote, ScrollText, Sun, Trophy, Settings2, Users,
+  LogOut, Monitor, Moon, ScrollText, Sun, Trophy, Settings2, Users,
 } from 'lucide-react';
 
 import {
@@ -42,6 +42,7 @@ const NAV: Array<{ group: string; items: NavItem[] }> = [
     items: [
       { href: '/landing', label: 'Page builder', icon: Monitor, need: ['block', 'read'] },
       { href: '/about', label: 'About page', icon: Building2, need: ['block', 'read'] },
+      { href: '/project-licensing', label: 'Project Licensing', icon: ScrollText, need: ['block', 'read'] },
       { href: '/website', label: 'Website settings', icon: Settings2, need: ['block', 'read'] },
       { href: '/media', label: 'Media library', icon: Images, need: ['media', 'read'] },
     ],
@@ -53,7 +54,6 @@ const NAV: Array<{ group: string; items: NavItem[] }> = [
       { href: '/events', label: 'Events', icon: CalendarDays, need: ['event', 'read'] },
       { href: '/news', label: 'News', icon: ScrollText, need: ['block', 'read'] },
       { href: '/awards', label: 'Awards', icon: Trophy, need: ['award', 'read'] },
-      { href: '/testimonials', label: 'Testimonials', icon: Quote, need: ['testimonial', 'read'] },
     ],
   },
   {

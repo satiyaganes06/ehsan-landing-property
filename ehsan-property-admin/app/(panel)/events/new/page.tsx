@@ -1,5 +1,6 @@
 'use client';
 
+import { ModernSelect } from "@/components/modern-select";
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -98,7 +99,7 @@ export default function NewEventPage() {
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="space-y-2">
             <Label htmlFor="category">Category</Label>
-            <select
+            <ModernSelect
               id="category"
               required
               value={category}
@@ -113,7 +114,7 @@ export default function NewEventPage() {
                   {option}
                 </option>
               ))}
-            </select>
+            </ModernSelect>
           </div>
 
           <div className="space-y-2">

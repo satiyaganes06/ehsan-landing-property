@@ -1,30 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="project-page">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Project Details — Ehsan Plant &amp; Property</title>
-<link rel="stylesheet" href="../css/style.css">
+<script src="/js/public-data.js?v=20261002.49"></script>
+<link rel="stylesheet" href="/css/style.css?v=20261002.51">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600&family=Azeret+Mono:wght@300;400;500&family=Fraunces:ital,opsz,wght@0,9..144,300..500;1,9..144,300..500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../css/content.css?v=20261001.9">
-<link rel="stylesheet" href="../css/project-detail.css?v=20260915.9">
-<link rel="stylesheet" href="../css/project-mobile.css?v=20261002.31">
+<link rel="stylesheet" href="/css/content.css?v=20261002.51">
+<link rel="stylesheet" href="/css/project-detail.css?v=20260915.9">
+<link rel="stylesheet" href="/css/project-mobile.css?v=20261002.37">
+<link rel="stylesheet" href="/css/project-imports.css?v=20261002.1">
+<!-- The first paint must match the project theme, before data or scripts arrive. -->
+<style>html.project-page, body.project--modern { background: #f7f7f2; } .project--modern .hero-wrapper, .project--modern #widuriExperience[hidden] { display: none !important; }</style>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 fill=%27%230a0b0d%27/%3E%3Cpath d=%27M6 24V8h20v4H11v3h12v4H11v3h15v2z%27 fill=%27%23d18829%27/%3E%3C/svg%3E">
 </head>
-<body>
+<body class="project--modern">
 
 <div data-component="navbar"></div>
 
 <div class="grain" aria-hidden="true"></div>
 
-<!-- The dedicated Widuri experience is populated only for project proj-15. -->
+<!-- All project content is populated after data arrives; keep the initial view light. -->
 <p class="project-loading" role="status">Loading project…</p>
 <main class="widuri-experience" id="widuriExperience" hidden></main>
 
 <!-- Hero Section with Carousel -->
-<div class="hero-wrapper">
+<div class="hero-wrapper" hidden>
   <div class="project-hero">
     <!-- Media Switcher Overlay (top-right) -->
     <div class="media-switcher" id="mediaSwitcher">
@@ -158,7 +162,7 @@
 
 <!-- Sticky CTA Button -->
 <!-- <div class="sticky-cta">
-  <a href="../index.html#contact" class="btn btn--solid">Schedule a tour</a>
+  <a href="/#contact" class="btn btn--solid">Schedule a tour</a>
 </div> -->
 
 <div data-component="footer"></div>
@@ -166,17 +170,18 @@
 <div data-component="assistant"></div>
 
 <!-- Page chrome: registry first, then each component, then mount. -->
-<script src="../components/registry.js?v=20261002.e2e"></script>
-<script src="../components/navbar.js?v=20261002.7"></script>
-<script src="../components/footer.js?v=20261002.e2e"></script>
-<script src="../components/assistant.js"></script>
-<script src="../components/mount.js"></script>
+<script src="/js/phone-codes.js?v=20261002.51"></script>
+<script src="/components/registry.js?v=20261002.49"></script>
+<script src="/components/navbar.js?v=20261002.49"></script>
+<script src="/components/footer.js?v=20261002.49"></script>
+<script src="/components/assistant.js"></script>
+<script src="/components/mount.js"></script>
 
 <!-- Page behaviour — runs after the chrome is in the DOM. -->
-<script src="../js/page-share.js?v=20261002.17"></script>
-<script src="../js/project-page.js?v=20261002.29"></script>
-<script src="../js/project-detail.js?v=20261002.18"></script>
-<script src="../js/content.js"></script>
-<script src="../js/project-enquiry.js?v=20261002.30"></script>
+<script src="/js/page-share.js?v=20261002.49"></script>
+<script src="/js/project-page.js?v=20261002.49"></script>
+<script src="/js/project-detail.js?v=20261002.49"></script>
+<script src="/js/content.js?v=20261002.51"></script>
+<script src="/js/project-enquiry.js?v=20261002.51"></script>
 </body>
 </html>

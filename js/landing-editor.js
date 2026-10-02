@@ -2,11 +2,11 @@
    animations. Rich text is rebuilt using safe formatting tags and styles. */
 (async () => {
   const adminOrigin = window.SITE?.adminOrigin || 'http://localhost:3001';
-  const isAboutPage = /\/about\.html$/.test(location.pathname);
+  const isAboutPage = window.SITE?.page === 'about.html';
   let published;
   try {
     const response = await fetch(`${adminOrigin}/api/public/landing.json`, { cache: 'no-store' });
-    if (response.ok) published = await response.json();
+    if (response.ok) { published = await response.json(); window.EhsanPublicData?.saveLanding(published); }
   } catch (_) { /* A complete static fallback remains available offline. */ }
   const imageUrl = value => value && (value.startsWith('/media/') || value.startsWith('/live-site/')) ? adminOrigin + value : value;
   const plain = value => String(value).replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>');
@@ -21,29 +21,33 @@
       card.tabIndex = 0; card.setAttribute('role', 'link');
       card.addEventListener('keydown', event => { if (event.key === 'Enter') card.click(); });
       card.removeAttribute('data-reveal');
-      card.addEventListener('click', () => { if (!new URLSearchParams(location.search).has('landing-editor')) location.href = window.SITE.url(`html/project-detail.html?project=${encodeURIComponent(reference)}`); });
+      card.addEventListener('click', () => { if (!new URLSearchParams(location.search).has('landing-editor')) location.href = card.dataset.publicUrl || SITE.recordUrl('projects', published.projects[reference]); });
       projectTemplate.parentElement.append(card);
     });
     document.querySelectorAll('[data-project-id]').forEach(card => {
       const project = published.projects?.[card.dataset.projectId];
       if (!project) { card.hidden = true; return; }
+      if (location.pathname === '/' || /\/index\.html$/.test(location.pathname)) card.hidden = !project.featured;
       setText(card, '.pcard__name', project.name);
       setText(card, '.pcard__loc', project.location);
       setText(card, '.pcard__desc', project.description);
       setText(card, '.tag', project.status);
-      if (project.year) {
-        const year = card.querySelector('.pcard__yr');
-        if (year) { year.textContent = project.year; if (project.yearEnd) { const end = document.createElement('small'); end.textContent = project.yearEnd; year.append(end); } }
+      const year = card.querySelector('.pcard__yr');
+      if (year) {
+        year.replaceChildren();
+        year.hidden = true;
+        year.textContent = project.year || project.yearEnd || '';
+        if (project.year && project.yearEnd) { const end = document.createElement('small'); end.textContent = project.yearEnd; year.append(end); }
       }
-      const dateParts = [project.year, project.yearEnd].flatMap(value => String(value || '').match(/\b(?:19|20)\d{2}\b/g) || []).map(Number);
-      card.dataset.cmsYear = String(Math.max(0, ...dateParts));
+      card.dataset.cmsOrder = String(project.sortOrder ?? Number.MAX_SAFE_INTEGER);
+      card.dataset.publicUrl = SITE.recordUrl('projects', project);
       const thumbnail = project.media?.thumbnail || project.media?.image?.[0];
       if (thumbnail) setImage(card, /^https?:|^\//.test(thumbnail) ? thumbnail : window.SITE.url(`assets/img/${thumbnail}`), project.name);
     });
     const ledger = document.querySelector('.ledger');
-    const latest = card => Number(card.dataset.cmsYear || 0);
+    const position = card => Number(card.dataset.cmsOrder ?? Number.MAX_SAFE_INTEGER);
     if (ledger) [...ledger.querySelectorAll(':scope > .pcard')]
-      .sort((a, b) => latest(b) - latest(a))
+      .sort((a, b) => position(a) - position(b))
       .forEach(card => ledger.append(card));
     const eventTemplate = document.querySelector('.event-card');
     Object.keys(published.events || {}).forEach(reference => {
@@ -57,6 +61,7 @@
       const event = published.events?.[new URL(card.href).searchParams.get('event')];
       if (!event) { card.hidden = true; return; }
       card.dataset.cmsRecord = event.id;
+      card.href = SITE.recordUrl('events', event);
       setText(card, '.event-title', event.title); setText(card, '.event-category', event.category);
       setText(card, '.event-date-value', event.date); setImage(card, event.image, event.title);
       const stats = card.querySelectorAll('.event-stats span');
@@ -79,19 +84,8 @@
       setText(card, '.award-card__name', item.name); setText(card, '.award-card__desc', item.description);
       setText(card, '.award-card__year', item.year); setImage(card, item.image, item.name);
     });
-    populate('[data-story]', published.testimonials, (card, item) => {
-      setText(card, '.story__quote', item.quote); setText(card, '.story__name', item.author);
-      setText(card, '.story__role', item.role); setText(card, '.story__label', item.groupLabel); setImage(card, item.image, item.author);
-    });
-    document.querySelectorAll('[data-story]').forEach(card => {
-      const activate = () => document.querySelectorAll('[data-story]').forEach(story => {
-        story.classList.toggle('is-active', story === card);
-        story.querySelector('.story__body')?.setAttribute('aria-hidden', String(story !== card && matchMedia('(min-width: 1024px)').matches));
-      });
-      card.addEventListener('mouseenter', activate); card.addEventListener('focus', activate);
-    });
   }
-  if (/\/projects\.html$/.test(location.pathname)) {
+  if (window.SITE?.page === 'projects.html') {
     window.projectContentReady = true;
     window.dispatchEvent(new Event('ehsan:projects-ready'));
     return;
@@ -126,7 +120,7 @@
     return output;
   }
   const fields = [];
-  const roots = [...document.querySelectorAll(isAboutPage ? '.topnav, .content > section, .site-footer, .assistant' : '.topnav, .stage, .prelude, #gallery, #record, #news, #events, #awards, #testimonials, #commitment, #doctrine, #contact, .site-footer, .assistant')];
+  const roots = [...document.querySelectorAll(isAboutPage ? '.topnav, .content > section, .site-footer, .assistant' : '.topnav, .stage, .prelude, #gallery, #record, #news, #events, #awards, #commitment, #doctrine, #contact, .site-footer, .assistant')];
   const allowedUrl = value => {
     try { return ['http:', 'https:', 'mailto:', 'tel:'].includes(new URL(value, location.href).protocol); }
     catch (_) { return false; }
@@ -244,7 +238,7 @@
     subtitle: headingHtml(enquiryIntro?.querySelector('.enquiry__note')),
     button: legacyStatisticValue(enquiryForm.querySelector('[type="submit"]').firstChild),
     fields: [...enquiryForm.querySelectorAll('.field')].map(container => {
-      const input = container.querySelector('input, select, textarea');
+      const input = container.querySelector('input[name="phone"]') || container.querySelector('input, select, textarea');
       const liveLabel = container.querySelector('label');
       const labelHtml = headingHtml(liveLabel);
       const template = document.createElement('template'); template.innerHTML = labelHtml; template.content.querySelector('abbr')?.remove();
@@ -361,6 +355,7 @@
       if (raw !== renderedForm) {
         try {
           const config = JSON.parse(raw);
+          if (Array.isArray(config.fields)) config.fields = config.fields.map(field => field.id === 'phoneCountry' ? {...field, id:'phone', type:'tel', options:[], placeholder:'Phone number'} : field);
           if (!Array.isArray(config.fields) || config.fields.length > 20 || new Set(config.fields.map(field => field.id)).size !== config.fields.length) throw new Error('Invalid form');
           const fragment = document.createDocumentFragment();
           config.fields.forEach(field => {
@@ -490,6 +485,13 @@
     document.addEventListener('submit', event => { event.preventDefault(); event.stopImmediatePropagation(); }, true);
   }
   if (!editing) apply(published?.values);
+  if (published && (location.pathname === '/' || /\/index\.html$/.test(location.pathname))) {
+    let shown = 0;
+    document.querySelectorAll('[data-project-id]').forEach(card => {
+      card.hidden = !published.projects?.[card.dataset.projectId]?.featured || shown >= 3;
+      if (!card.hidden) shown++;
+    });
+  }
   window.projectContentReady = true;
   window.dispatchEvent(new Event('ehsan:projects-ready'));
 })();

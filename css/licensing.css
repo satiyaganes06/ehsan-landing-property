@@ -1,0 +1,15 @@
+html,body{background:#fff;color:#181a15}
+.licensing-page{max-width:1180px;margin:auto;padding:150px 32px 80px;color:#181a15}
+.licensing-eyebrow{text-transform:uppercase;letter-spacing:.2em;color:#696e00;font-size:12px}
+.licensing-page h1{font-family:var(--font-serif,Georgia,serif);font-size:clamp(42px,6vw,72px);font-weight:400;margin:18px 0}
+#licensing-intro{color:#65695e;max-width:650px;line-height:1.7;font-size:17px}
+#licensing-nav{display:flex;flex-wrap:wrap;gap:12px;margin:32px 0 40px}
+#licensing-nav button{padding:12px 16px;border:1px solid #dedfd6;border-radius:8px;color:#181a15;background:#f6f6f0;font:inherit;font-size:13px;cursor:pointer}#licensing-nav button:hover,#licensing-nav button[aria-selected="true"]{background:#f5dd62;border-color:#f5dd62}#licensing-nav button:focus-visible{outline:2px solid #585c00;outline-offset:3px}.licensing-record[hidden]{display:none}
+.licensing-record{scroll-margin-top:110px;border:1px solid #dedfd6;border-top:3px solid #f5dd62;border-radius:12px;margin-bottom:24px;padding:28px;background:#fff}
+.licensing-record h2{font-family:var(--font-serif,Georgia,serif);font-weight:400;font-size:30px;margin:0 0 10px}
+.licensing-phase{color:#696e00;font-size:12px;text-transform:uppercase;letter-spacing:.1em}.licensing-notice{font-size:12px;line-height:1.6;letter-spacing:.03em;margin:18px 0 26px;color:#65695e}
+.licensing-fields{display:grid;grid-template-columns:1fr 1fr;column-gap:36px;margin:0}
+.licensing-field{border-top:1px solid #e9eae3;padding:16px 0;min-width:0}.licensing-field dt{font-size:12px;color:#65695e;margin-bottom:7px}.licensing-field dd{margin:0;font-size:15px;line-height:1.75;overflow-wrap:anywhere;white-space:pre-line}
+.licensing-field--wide{grid-column:1/-1}.licensing-field ol{margin:8px 0 0;padding-left:22px}.licensing-field li{padding-bottom:10px}
+.licensing-footnote{font-size:13px;color:#65695e;line-height:1.7;margin:32px 0 0}
+@media(max-width:700px){.licensing-page{padding:120px 20px 48px}.licensing-record{padding:20px}.licensing-fields{grid-template-columns:1fr}.licensing-record h2{font-size:26px}}

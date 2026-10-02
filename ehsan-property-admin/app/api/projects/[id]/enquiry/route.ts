@@ -15,7 +15,7 @@ export const GET = route<{ id: string }>({ resource: 'project', action: 'read' }
   const values = (landing?.translations[0]?.value as { values?: Record<string, string> } | undefined)?.values;
   let formOptions: string[] = [];
   try { const form = JSON.parse(values?.['contact:form'] ?? '{}'); formOptions = form.fields?.find((field: { id: string }) => field.id === 'interest')?.options ?? []; } catch { /* Project names remain available. */ }
-  const sectionOptions = projectSections.filter(section => project.reference === 'proj-15' ? section.id !== 'certificate' : !['shuttle', 'fit'].includes(section.id));
+  const sectionOptions = projectSections.filter(section => project.reference === 'proj-15' ? !['certificate', 'gallery'].includes(section.id) : true).map(section => project.reference === 'proj-15' ? section : { ...section, label: section.label.replace(' (Widuri)', '') });
   return json({ ...settings, sectionOptions, options: [...new Set([...formOptions, ...translations.map(t => t.name)])] });
 });
 export const PUT = route<{ id: string }>({ resource: 'project', action: 'update' }, async ({ params, request, user }) => {

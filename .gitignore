@@ -2,3 +2,9 @@
 
 # Superseded 720p PNG frame set (190MB) — regenerate with tools/cut-frames.sh
 assets/frames-png/
+
+# Local clean-URL indexes generated from the shared HTML templates.
+/about/
+/projects/
+/events/
+/news/

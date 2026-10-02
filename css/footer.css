@@ -1,0 +1,15 @@
+.site-footer.footer-landscape{position:relative;isolation:isolate;overflow:hidden;background:#000;color:#fff;padding:0;margin:0;border:0}
+.footer-landscape__inner{max-width:1440px;margin:auto;padding:76px clamp(24px,4vw,64px) 28px}
+.footer-landscape__top{display:flex;justify-content:space-between;align-items:flex-start;gap:48px;min-height:280px;padding-bottom:48px}
+.footer-landscape__brand{display:flex;align-items:center;gap:16px;color:#fff;text-decoration:none}
+.footer-landscape__brand img{width:116px;height:116px;object-fit:contain;border-radius:12px}
+.footer-landscape__brand span{font-family:var(--font-sans,Arial,sans-serif);font-size:30px;font-weight:800;text-transform:uppercase;line-height:1.03;letter-spacing:-.5px}
+.footer-landscape__contact{max-width:560px;text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:10px;font-size:15px;line-height:1.7}
+.footer-landscape__contact h2{font-family:var(--font-sans,Arial,sans-serif);font-size:14px;letter-spacing:.3em;text-transform:uppercase;font-weight:500;margin:0 0 28px;color:#fff}
+.footer-landscape__contact p{margin:0}.footer-landscape__company{font-weight:600}
+.footer-landscape__contact address{font-style:normal}.footer-landscape a{color:inherit;text-decoration:none;transition:color .2s}
+.footer-landscape a:hover{color:#f5dd62}.footer-landscape a:focus-visible{outline:2px solid #f5dd62;outline-offset:5px}
+.footer-landscape__bottom{border-top:1px solid #ffffff40;padding-top:28px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.footer-landscape__bottom p{margin:0;font-size:10px;letter-spacing:.12em;text-transform:uppercase;line-height:1.8}
+.footer-landscape__bottom nav{display:flex;flex-wrap:wrap;gap:24px;font-size:12px;white-space:nowrap}
+@media(max-width:700px){.footer-landscape__inner{padding-top:48px}.footer-landscape__top{flex-direction:column;gap:40px;min-height:0}.footer-landscape__contact{text-align:left;align-items:flex-start;font-size:14px}.footer-landscape__contact h2{margin-bottom:10px}.footer-landscape__brand img{width:88px;height:88px}.footer-landscape__brand span{font-size:25px}.footer-landscape__bottom{flex-direction:column;align-items:flex-start}.footer-landscape__bottom nav{gap:20px}}

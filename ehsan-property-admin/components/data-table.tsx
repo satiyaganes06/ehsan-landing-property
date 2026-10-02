@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import {
   flexRender,
   getCoreRowModel,
@@ -11,7 +11,7 @@ import {
   type ColumnDef,
   type SortingState,
 } from '@tanstack/react-table';
-import { ArrowDown, ArrowUp, ChevronsUpDown, Search } from 'lucide-react';
+import { ArrowDown, ArrowUp, ChevronsUpDown, GripVertical, Search } from 'lucide-react';
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Input } from '@/components/ui/input';
@@ -37,6 +37,7 @@ interface DataTableProps<TData> {
   pageSize?: number;
   /** Plural noun for the pagination count line, e.g. "projects". */
   label?: string;
+  reorder?: { getId: (row: TData) => string; getLabel: (row: TData) => string; onMove: (id: string, targetId: string) => void; disabled?: boolean };
 }
 
 export function DataTable<TData>({
@@ -52,9 +53,14 @@ export function DataTable<TData>({
   toolbar,
   pageSize = DEFAULT_PAGE_SIZE,
   label = 'records',
+  reorder,
 }: DataTableProps<TData>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState('');
+  const [draggedId, setDraggedId] = useState<string | null>(null);
+  const [dropId, setDropId] = useState<string | null>(null);
+  const pointerStart = useRef<{ x: number; y: number; moved: boolean } | null>(null);
+  const canReorder = Boolean(reorder && !reorder.disabled && !globalFilter && !sorting.length);
 
   const table = useReactTable({
     data: data ?? [],
@@ -67,6 +73,8 @@ export function DataTable<TData>({
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     initialState: { pagination: { pageSize } },
+    enableSorting: !reorder,
+    getRowId: reorder ? reorder.getId : undefined,
   });
 
   if (isError) {
@@ -92,6 +100,7 @@ export function DataTable<TData>({
         </div>
         {toolbar}
       </div>
+      {reorder ? <p className="text-muted-foreground text-xs" role="status">{reorder.disabled ? 'Select All to reorder, or wait for the current save to finish.' : globalFilter ? 'Clear the search to reorder projects.' : 'Drag the handle to reorder. You can also focus it and use ↑ / ↓. Changes save automatically.'}</p> : null}
 
       <div className="bg-card overflow-hidden rounded-lg border">
         <div className="overflow-x-auto">
@@ -99,6 +108,7 @@ export function DataTable<TData>({
             <TableHeader>
               {table.getHeaderGroups().map((group) => (
                 <TableRow key={group.id} className="hover:bg-transparent">
+                  {reorder ? <TableHead className="w-10"><span className="sr-only">Order</span></TableHead> : null}
                   {group.headers.map((header) => {
                     const canSort = header.column.getCanSort();
                     const sorted = header.column.getIsSorted();
@@ -134,6 +144,7 @@ export function DataTable<TData>({
               {isPending
                 ? Array.from({ length: 6 }).map((_, i) => (
                     <TableRow key={i} className="hover:bg-transparent">
+                      {reorder ? <TableCell><Skeleton className="size-4" /></TableCell> : null}
                       {columns.map((_col, j) => (
                         <TableCell key={j}>
                           <Skeleton className={cn('h-4', j === 0 ? 'w-48' : 'w-20')} />
@@ -144,9 +155,47 @@ export function DataTable<TData>({
                 : rows.map((row) => (
                     <TableRow
                       key={row.id}
+                      data-reorder-id={reorder ? row.id : undefined}
                       onClick={onRowClick ? () => onRowClick(row.original) : undefined}
-                      className={cn(onRowClick && 'cursor-pointer')}
+                      className={cn(onRowClick && 'cursor-pointer', draggedId === row.id && 'opacity-40', dropId === row.id && draggedId !== row.id && 'bg-accent ring-primary ring-1 ring-inset')}
                     >
+                      {reorder ? <TableCell className="w-10 py-2.5">
+                        <Button variant="ghost" size="icon" className="size-8 touch-none cursor-grab active:cursor-grabbing" disabled={!canReorder}
+                          aria-label={`Reorder ${reorder.getLabel(row.original)}`} title="Drag to reorder; use arrow keys to move up or down"
+                          onPointerDown={event => {
+                            if (!canReorder || event.button !== 0) return;
+                            event.stopPropagation();
+                            event.currentTarget.setPointerCapture(event.pointerId);
+                            pointerStart.current = { x: event.clientX, y: event.clientY, moved: false };
+                          }}
+                          onPointerMove={event => {
+                            const start = pointerStart.current;
+                            if (!start) return;
+                            if (Math.hypot(event.clientX - start.x, event.clientY - start.y) < 5 && !start.moved) return;
+                            start.moved = true;
+                            setDraggedId(row.id);
+                            const target = document.elementFromPoint(event.clientX, event.clientY)?.closest('tr')?.getAttribute('data-reorder-id');
+                            setDropId(target ?? null);
+                          }}
+                          onPointerUp={event => {
+                            const moved = pointerStart.current?.moved;
+                            pointerStart.current = null;
+                            const target = document.elementFromPoint(event.clientX, event.clientY)?.closest('tr')?.getAttribute('data-reorder-id');
+                            if (canReorder && moved && target && target !== row.id) reorder.onMove(row.id, target);
+                            setDraggedId(null); setDropId(null);
+                          }}
+                          onPointerCancel={() => { pointerStart.current = null; setDraggedId(null); setDropId(null); }}
+                          onClick={event => event.stopPropagation()}
+                          onKeyDown={event => {
+                            event.stopPropagation();
+                            if (!canReorder || !['ArrowUp', 'ArrowDown'].includes(event.key)) return;
+                            event.preventDefault();
+                            const index = (data ?? []).findIndex(item => reorder.getId(item) === row.id);
+                            const target = data?.[index + (event.key === 'ArrowUp' ? -1 : 1)];
+                            if (target) reorder.onMove(row.id, reorder.getId(target));
+                          }}
+                        ><GripVertical className="size-4" /></Button>
+                      </TableCell> : null}
                       {row.getVisibleCells().map((cell) => (
                         <TableCell key={cell.id} className="py-2.5">
                           {flexRender(cell.column.columnDef.cell, cell.getContext())}

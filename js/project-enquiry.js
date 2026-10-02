@@ -1,10 +1,14 @@
 (async () => {
-  const reference = new URLSearchParams(location.search).get('project');
+  const projects = window.EhsanPublicData ? await window.EhsanPublicData.getProjects().catch(() => ({})) : {};
+  const reference = SITE.recordId('projects', projects);
   if (!reference) return;
   const admin = (window.EHSAN_CMS_ORIGIN || window.SITE?.adminOrigin || (['localhost', '127.0.0.1'].includes(location.hostname) ? 'http://localhost:3001' : '')).replace(/\/$/, '');
   if (!admin) return;
   let payload;
-  try { const response = await fetch(`${admin}/api/public/landing.json`, { cache: 'no-store' }); if (!response.ok) return; payload = await response.json(); } catch { return; }
+  try {
+    payload = window.EhsanPublicData?.getLanding();
+    if (!payload) { const response = await fetch(`${admin}/api/public/landing.json`, { cache: 'no-store' }); if (!response.ok) return; payload = await response.json(); window.EhsanPublicData?.saveLanding(payload); }
+  } catch { return; }
   const settings = payload.projects?.[reference]?.enquiry;
   if (!settings?.enabled || !settings.interest) return;
   const defaults = {
@@ -19,6 +23,7 @@
   };
   let config = defaults;
   try { const saved = JSON.parse(payload.values?.['contact:form'] || 'null'); if (saved?.fields) config = { ...defaults, ...saved }; } catch { /* Use the standard form. */ }
+  config.fields = config.fields.map(field => field.id === 'phoneCountry' ? {...field,id:'phone',type:'tel',options:[],placeholder:'Phone number'} : field);
   const text = html => { const template = document.createElement('template'); template.innerHTML = String(html || ''); return template.content.textContent.trim(); };
   const rich = (element, html) => {
     const template = document.createElement('template'); template.innerHTML = String(html || '');
@@ -84,7 +89,7 @@
     button.disabled = true; status.textContent = 'Sending…';
     const values = Object.fromEntries(new FormData(form));
     const phoneNumber = String(values.phone || '').trim().replace(/[\s().-]/g, '');
-    const phone = !phoneNumber ? '' : phoneNumber.startsWith('+') ? phoneNumber : `${values.phoneCountry || '+60'}${phoneNumber.replace(/^0/, '')}`;
+    const phone = window.EhsanPhone?.number(phoneNumber, values.phoneCountry) || phoneNumber;
     const extra = fields.filter(field => !['name', 'email', 'phone', 'interest', 'message'].includes(field.id)).map(field => `${text(field.label)}: ${values[field.id] || ''}`).join('\n');
     try {
       const response = await fetch(`${admin}/api/public/enquiries`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: values.name, email: values.email, phone, message: `${values.message}${extra ? '\n\n' + extra : ''}`, interest: settings.interest, projectReference: reference, website: values.website, renderedAt }) });

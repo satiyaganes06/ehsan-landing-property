@@ -54,19 +54,24 @@ export interface ProjectPreviewDraft {
 export function toSiteProject(detail: ProjectDetail, draft: ProjectPreviewDraft) {
   const images: string[] = [];
   const blueprints: string[] = [];
+  const grouped: Record<string, string[]> = { logo: [], location: [], shuttle: [], facilities: [], interior: [] };
 
   // The panel's roles are 'gallery' and 'blueprint'; the site's buckets are
   // 'image' and 'blueprint'. Anything not explicitly a blueprint is a gallery
   // image, so a new role can never make an image silently vanish.
-  for (const link of [...(detail.media ?? [])].sort((a, b) => a.sortOrder - b.sortOrder)) {
+  for (const link of [...(detail.media ?? [])].sort((a, b) => (detail.reference !== 'proj-15' ? Number(b.role === 'hero') - Number(a.role === 'hero') : 0) || a.sortOrder - b.sortOrder)) {
     const name = toSiteImageName(link.media?.storageKey);
     if (!name) continue;
-    (link.role === 'blueprint' ? blueprints : images).push(name);
+    if (detail.reference === 'proj-15') (link.role === 'blueprint' ? blueprints : images).push(name);
+    else if (link.role && grouped[link.role]) grouped[link.role].push(name);
+    else if (link.role === 'blueprint') blueprints.push(name);
+    else if (link.role !== 'thumbnail') images.push(name);
   }
 
   return {
     [detail.reference]: {
       enquiry: detail.enquiry,
+      ...(detail.reference !== 'proj-15' ? { content: detail.content } : {}),
       name: draft.name,
       location: draft.location,
       coordinates: { lat: detail.latitude ?? 0, lng: detail.longitude ?? 0 },
@@ -80,7 +85,7 @@ export function toSiteProject(detail: ProjectDetail, draft: ProjectPreviewDraft)
       occupancy: draft.occupancy,
       amenities: draft.amenities,
       certificate: draft.certificate,
-      media: { image: images, blueprint: blueprints },
+      media: { image: images, blueprint: blueprints, ...(detail.reference !== 'proj-15' ? { ...grouped, thumbnail: toSiteImageName(detail.media?.find(link => link.role === 'thumbnail')?.media.storageKey) } : {}) },
     },
   };
 }

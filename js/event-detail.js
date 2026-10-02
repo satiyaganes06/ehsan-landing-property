@@ -25,11 +25,12 @@ const ROOT = document.documentElement;
 
 function getEventFromURL() {
   const params = new URLSearchParams(window.location.search);
-  return params.get('event') || 'event-1';
+  return SITE.recordId('events', EVENTS_DATA) || (params.get('event') ? null : (/\/events\//.test(location.pathname) ? null : 'event-1'));
 }
 
 function loadEventData(eventId) {
   const data = EVENTS_DATA[eventId];
+  if (data) SITE.canonical('events', data);
   if (!data) {
     console.error(`Event ${eventId} not found`);
     return null;
@@ -105,7 +106,7 @@ function renderEventContent(data) {
     const relEvent = EVENTS_DATA[eventId];
     if (!relEvent) return '';
     return `
-      <a href="event-detail.html?event=${encodeURIComponent(eventId)}" class="event-related-card">
+      <a href="${SITE.recordUrl('events', relEvent)}" class="event-related-card">
         <img src="${relEvent.image}" alt="${relEvent.title}" class="event-related-img" referrerpolicy="no-referrer">
         <div class="event-related-info">
           <h4 class="event-related-title">${relEvent.title}</h4>

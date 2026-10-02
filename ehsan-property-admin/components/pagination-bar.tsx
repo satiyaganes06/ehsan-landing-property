@@ -1,5 +1,6 @@
 'use client';
 
+import { ModernSelect } from "@/components/modern-select";
 import { useEffect, useMemo, useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -61,7 +62,7 @@ export function PaginationBar({
       <div className="flex items-center gap-3">
         <label className="text-muted-foreground flex items-center gap-1.5 text-xs">
           <span>Per page</span>
-          <select
+          <ModernSelect
             value={pageSize}
             onChange={(e) => {
               onPageSizeChange(Number(e.target.value));
@@ -75,7 +76,7 @@ export function PaginationBar({
                 {size}
               </option>
             ))}
-          </select>
+          </ModernSelect>
         </label>
 
         {multiPage ? (

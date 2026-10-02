@@ -1,0 +1,35 @@
+// Copyedited from the supplied archives, not from the old demo records.
+const housing = (tenure, area, beds, baths, price) => ({
+  facts: [['Tenure', tenure], ['Area', area], ['Bedrooms', beds], ['Bathrooms', baths], ['Starting price', price]],
+});
+module.exports = [
+  { reference: 'proj-2', archives: ['madrasah'], name: 'Madrasah, Jalan Reko', location: 'Kajang, Selangor', status: 'COMPLETED', yearStart: '2010', yearEnd: '2011', description: 'Rebuilding a surau as a two-storey madrasah on Jalan Reko, Bandar Kajang, Selangor.', content: { facts: [['Total floor area', '8,800 sq ft'], ['Construction started', 'August 2010'], ['Completed', 'May 2011'], ['Gross development value', 'RM 2,500,000']] } },
+  { reference: 'proj-3', archives: ['apartment-dimensi-taman-dimensi-alor-gajah'], name: 'Apartment Dimensi', location: 'Taman Dimensi, Alor Gajah, Melaka', status: 'COMPLETED', description: 'Completed freehold apartments in Taman Dimensi, Alor Gajah, with three bedrooms and two bathrooms.', content: housing('Freehold', '900 sq ft', '3', '2', 'RM 128,000') },
+  { reference: 'proj-4', archives: ['ehsan-hotel'], name: 'Hotel Ehsan, Ampang', location: 'No. 14, Jalan Mamanda 5, Ampang Point, Ampang, Selangor', status: 'COMPLETED', yearStart: '2011', yearEnd: '2011', description: 'A shop office converted into a five-storey budget hotel at Ampang Point.', content: { facts: [['Total floor area', '8,250 sq ft'], ['Tenure', 'Lease of State'], ['Construction started', 'March 2011'], ['Completed', 'May 2011'], ['Gross development value', 'RM 4,800,000']] } },
+  { reference: 'proj-5', archives: ['taman-pinggiran-markisa'], name: 'Taman Pinggiran Markisa', location: '', status: 'COMPLETED', description: 'Completed Malay Reserve homes with five bedrooms and four bathrooms.', content: housing('Malay Reserve', '3,300 sq ft', '5', '4', 'RM 883,000') },
+  { reference: 'proj-6', archives: ['taman-salam-nadiah-tampin'], name: 'Taman Salam Nadiah', location: 'Tampin, Negeri Sembilan', status: 'COMPLETED', description: 'Completed Malay Reserve homes in Tampin with three bedrooms and two bathrooms.', content: housing('Malay Reserve', '20′ × 65′', '3', '2', 'RM 193,500') },
+  { reference: 'proj-8', archives: ['ehsan-residence-sepang'], name: 'Ehsan Residence', location: 'Sepang, Selangor', status: 'COMPLETED', description: 'Completed freehold homes in Sepang with four bedrooms, two bathrooms and a built-up area of 1,090 sq ft.', content: housing('Freehold', '1,090 sq ft built-up', '4', '2', 'RM 338,000') },
+  { reference: 'proj-9', archives: ['taman-sri-ehsan-kluang'], name: 'Taman Sri Ehsan', location: 'Kluang, Johor', status: 'COMPLETED', description: 'Completed freehold homes in Kluang with five bedrooms and three bathrooms.', content: housing('Freehold', '3,300 sq ft', '5', '3', 'RM 394,855.20') },
+  { reference: 'proj-12', archives: ['taman-mawar-ehsan-rembau'], name: 'Taman Mawar Ehsan', location: 'Rembau, Negeri Sembilan', status: 'ONGOING', description: 'Malay Reserved landed homes in Rembau, comprising single-storey and double-storey terrace houses across four phases.', content: {
+    facts: [['Tenure', 'Malay Reserved'], ['Development', '4 phases']],
+    layouts: [{ name: 'Single-storey terrace', details: ['1,100 sq ft', '3 bedrooms', '2 bathrooms'] }, { name: 'Double-storey terrace', details: ['2,000 sq ft', '4 bedrooms', '3 bathrooms'] }],
+    facilities: ['Surau', 'Community area', 'Kindergarten area', 'Open space', 'Playground', 'Guarded community area'],
+    access: ['6 km to Pasaraya', '7 km to IPD and Bomba', '7.5 km to JPJ Pedas', '2 minutes to Pedas Toll', '15 minutes to Seremban', '30 minutes to Nilai and Ayer Keroh', '60 minutes to Kuala Lumpur'],
+    neighbourhood: [{ title: 'Nearby amenities', items: ['SMK Pedas', 'SK Pedas', 'SM Sains Rembau', 'UiTM', 'Kolej Komuniti', 'KTM Rembau', 'Hospital Rembau', 'Masjid', 'Balai Polis', 'Zee Mart'] }],
+  } },
+  { reference: 'proj-13', archives: ['taman-universiti-bestari'], name: 'Taman Universiti Bestari', location: 'Sungai Petani, Kedah', status: 'ONGOING', description: 'An eight-phase development of single-storey terrace and semi-detached homes near AIMST University in Sungai Petani. Homes have four bedrooms and two bathrooms, with prices starting from RM 247,000.', content: {
+    facts: [['House size', '20′ × 70′'], ['Bedrooms', '4'], ['Bathrooms', '2'], ['Starting price', 'RM 247,000'], ['Development', '8 phases']],
+    updates: ['The supplied project update lists phases 1–4 as sold out, phase 5 under construction and phase 7 to be launched.'],
+    facilities: ['Developer-paid Sale and Purchase Agreement legal fees', 'Developer-paid Bank Loan Agreement legal fees', 'Developer-paid stamp duty'],
+    access: ['3.5 km to primary and secondary schools', '9 km to Bedong, Semeling, Gurun and Sungai Petani', '12 km to Sungai Petani North Toll, Laguna Merbok, Amanjaya Mall and TF Mart', '50 km to Alor Setar and Seberang Jaya, Penang'],
+    neighbourhood: [{ title: 'Education nearby', items: ['AIMST University', 'UiTM Merbok'] }],
+    locationText: 'Show house available for viewing: No. 43, Jalan BLM 6/2, Bandar Laguna Merbok, 08000 Sungai Petani, Kedah.',
+  } },
+  { reference: 'proj-14', archives: ['mutiara-austin-residence', 'mount-austin-johor'], name: 'Residensi Mutiara Austin', location: 'Mount Austin, Johor Bahru, Johor', status: 'ONGOING', units: '650 serviced apartments', description: 'A serviced apartment development in Mount Austin with 650 homes and five layouts ranging from 743 to 1,353 sq ft. Shared facilities include garden, play, fitness and community spaces.', content: {
+    facts: [['Homes', '650 serviced apartments'], ['Layouts', '5 types'], ['Layout sizes', '743–1,353 sq ft'], ['Facilities', '21']],
+    facilities: ['Herbs garden and chill area', 'Children’s playground', 'Water play area', 'Swimming pool', 'Multipurpose hall', 'Gym', 'Surau'],
+    access: ['3 minutes to Pasir Gudang Highway', '3 minutes to Tebrau Highway', '7 minutes to North–South Highway', '8 minutes to EDL Highway', '18 minutes to Danga Bay', '19 minutes to Johor Bahru city', '20 minutes to Woodlands Checkpoint', '30 minutes to Senai Airport'],
+    neighbourhood: [{ title: 'Education', items: ['Sunway College Johor Bahru', 'SMK Desa Tebrau', 'SMK Taman Pelangi Indah', 'SMK Taman Daya'] }, { title: 'Healthcare', items: ['Hospital Sultan Ismail', 'Johor Bahru Specialist Hospital'] }, { title: 'Shopping and leisure', items: ['AEON Tebrau City', 'Lotus Tebrau City', 'Toppen Shopping Mall', 'IKEA Tebrau', 'Austin Heights Water Theme Park'] }, { title: 'Golf', items: ['Austin Heights Golf & Hotel Resort', 'Ponderosa Golf & Country Club', 'Starhill Golf & Country Club'] }],
+  } },
+  { reference: 'proj-16', archives: ['kampar-perak'], name: 'Kampar, Perak', location: 'Kampar, Perak', status: 'FUTURE', units: '2,038 units', description: 'A planned mixed development of 2,038 units in Kampar, Perak.', content: { facts: [['Development', 'Mixed development'], ['Units', '2,038'], ['Stage', 'Future project']] } },
+];

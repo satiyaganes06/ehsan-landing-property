@@ -1,0 +1,10 @@
+RewriteEngine On
+RewriteCond %{THE_REQUEST} \s/+index\.html[?\s] [NC]
+RewriteRule ^index\.html$ / [R=301,L]
+RewriteCond %{THE_REQUEST} \s/+html/(about|projects|events|news)\.html[?\s] [NC]
+RewriteRule ^html/(about|projects|events|news)\.html$ /$1 [R=301,L]
+RewriteRule ^(about|projects|events|news)/$ /$1 [R=301,L]
+RewriteRule ^(about|projects|events|news)$ html/$1.html [L]
+RewriteRule ^projects/[a-z0-9-]+/?$ html/project-detail.html [L]
+RewriteRule ^events/[a-z0-9-]+/?$ html/event-detail.html [L]
+RewriteRule ^news/[a-z0-9-]+/?$ html/news-detail.html [L]

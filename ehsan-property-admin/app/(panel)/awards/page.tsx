@@ -1,9 +1,9 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
-import { Loader2, Plus, Trash2, Trophy } from 'lucide-react';
+import { ImagePlus, Loader2, Plus, Trash2, Trophy } from 'lucide-react';
 
 import {
   Sheet, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle,
@@ -14,6 +14,8 @@ import { PublishPill } from '@/components/state-pills';
 import { PermissionButton } from '@/components/permission-button';
 import { ConfirmDialog } from '@/components/confirm-dialog';
 import { PaginationBar, usePagination } from '@/components/pagination-bar';
+import { MediaPicker } from '@/components/media-picker';
+import { mediaSrc } from '@/lib/media';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -29,6 +31,8 @@ interface AwardDraft {
   description: string;
   year: string;
   reference: string;
+  mediaId: string | null;
+  mediaUrl: string;
 }
 
 const EMPTY: AwardDraft = {
@@ -37,6 +41,8 @@ const EMPTY: AwardDraft = {
   description: '',
   year: String(new Date().getFullYear()),
   reference: '',
+  mediaId: null,
+  mediaUrl: '',
 };
 
 export default function AwardsPage() {
@@ -45,7 +51,9 @@ export default function AwardsPage() {
 
   const [editingId, setEditingId] = useState<string | null>(null);
   const [creating, setCreating] = useState(false);
+  const [pickingImage, setPickingImage] = useState(false);
   const [draft, setDraft] = useState<AwardDraft>(EMPTY);
+  const [loadedDetail, setLoadedDetail] = useState<AwardDetail | undefined>();
   const [pendingDelete, setPendingDelete] = useState<AwardListItem | null>(null);
 
   const list = useQuery({
@@ -59,9 +67,10 @@ export default function AwardsPage() {
     enabled: Boolean(editingId),
   });
 
-  useEffect(() => {
+  // Initialise once per fetched record, without overwriting edits on every render.
+  if (detail.data && detail.data !== loadedDetail) {
     const data = detail.data;
-    if (!data) return;
+    setLoadedDetail(data);
     const t = data.translations?.find((x) => x.locale === 'EN');
     setDraft({
       name: t?.name ?? data.name ?? '',
@@ -69,8 +78,10 @@ export default function AwardsPage() {
       description: t?.description ?? '',
       year: String(data.year ?? ''),
       reference: data.reference ?? '',
+      mediaId: data.mediaId ?? null,
+      mediaUrl: mediaSrc(data.media?.storageKey, data.mediaUrl),
     });
-  }, [detail.data]);
+  }
 
   const open = creating || Boolean(editingId);
 
@@ -78,6 +89,8 @@ export default function AwardsPage() {
     setCreating(false);
     setEditingId(null);
     setDraft(EMPTY);
+    setPickingImage(false);
+    setLoadedDetail(undefined);
   }
 
   const save = useMutation({
@@ -88,6 +101,7 @@ export default function AwardsPage() {
         const created = await api.post<AwardDetail>('/api/awards', {
           reference: draft.reference || slugify(draft.name),
           year: Number(draft.year),
+          mediaId: draft.mediaId,
         });
         await api.put(`/api/awards/${created.id}/translations/EN`, {
           name: draft.name,
@@ -96,7 +110,7 @@ export default function AwardsPage() {
         });
         return created;
       }
-      await api.patch(`/api/awards/${editingId}`, { year: Number(draft.year) });
+      await api.patch(`/api/awards/${editingId}`, { year: Number(draft.year), mediaId: draft.mediaId });
       await api.put(`/api/awards/${editingId}/translations/EN`, {
         name: draft.name,
         issuer: draft.issuer || null,
@@ -247,6 +261,23 @@ export default function AwardsPage() {
             ) : (
               <>
                 <div className="space-y-2">
+                  <Label>Award image</Label>
+                  <div className="flex h-40 items-center justify-center rounded-lg border bg-[#f9f9f9] p-4">
+                    {draft.mediaUrl ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={draft.mediaUrl} alt={draft.name ? `${draft.name} award image` : 'Selected award image'} className="max-h-full max-w-full object-contain" />
+                    ) : <Trophy className="size-10 text-[#b9b3a9]" />}
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    <Button type="button" variant="outline" size="sm" onClick={() => setPickingImage(true)} disabled={save.isPending || !can('award', creating ? 'create' : 'update')}>
+                      <ImagePlus className="size-3.5" />
+                      {draft.mediaId ? 'Replace image' : 'Upload or choose image'}
+                    </Button>
+                    {draft.mediaId ? <Button type="button" variant="ghost" size="sm" disabled={save.isPending || !can('award', creating ? 'create' : 'update')} onClick={() => setDraft(current => ({ ...current, mediaId: null, mediaUrl: '' }))}>Remove image</Button> : null}
+                  </div>
+                  <p className="text-muted-foreground text-xs">Choose a logo from the library or upload a new image. Save the award to apply it.</p>
+                </div>
+                <div className="space-y-2">
                   <Label htmlFor="award-name">Award name</Label>
                   <Input
                     id="award-name"
@@ -339,7 +370,7 @@ export default function AwardsPage() {
               <Button
                 size="sm"
                 onClick={() => save.mutate()}
-                disabled={!draft.name.trim() || save.isPending}
+                disabled={!draft.name.trim() || save.isPending || (Boolean(editingId) && (detail.isPending || detail.isError)) || !can('award', creating ? 'create' : 'update')}
               >
                 {save.isPending ? <Loader2 className="size-3.5 animate-spin" /> : null}
                 {save.isPending ? 'Saving…' : creating ? 'Add award' : 'Save'}
@@ -348,6 +379,10 @@ export default function AwardsPage() {
           </SheetFooter>
         </SheetContent>
       </Sheet>
+
+      <MediaPicker open={pickingImage} onOpenChange={setPickingImage} selectedId={draft.mediaId}
+        onSelect={media => setDraft(current => ({ ...current, mediaId: media.id, mediaUrl: mediaSrc(media.storageKey, media.url) }))}
+      />
 
       <ConfirmDialog
         open={Boolean(pendingDelete)}

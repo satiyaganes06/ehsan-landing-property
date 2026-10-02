@@ -1,0 +1,290 @@
+{
+  "title": "Project Licensing",
+  "intro": "Developer licences, advertising and sales permits, and development particulars.",
+  "records": [
+    {
+      "id": "ehsan-widuri-phase-1",
+      "project": "Ehsan Widuri",
+      "phase": "Fasa 1",
+      "published": true,
+      "notice": "IKLAN INI TELAH DILULUSKAN OLEH JABATAN PERUMAHAN NEGARA",
+      "fields": [
+        {
+          "label": "No. Lesen Pemaju",
+          "value": "30255/10-2027/0254(N)"
+        },
+        {
+          "label": "Tempoh Sahlaku",
+          "value": "13/10/2022- 12/10/2027"
+        },
+        {
+          "label": "No. Permit Iklan & Jualan",
+          "value": "30255-1/09-2027/0892(N)-(S)"
+        },
+        {
+          "label": "Tempoh Sahlaku",
+          "value": "1/10/2024- 30/09/2027"
+        },
+        {
+          "label": "Jenis Pegangan Tanah",
+          "value": "Kekal"
+        },
+        {
+          "label": "Bebanan Tanah",
+          "value": "Tiada"
+        },
+        {
+          "label": "Sekatan Kepentingan",
+          "value": "Tiada"
+        },
+        {
+          "label": "Pihak Berkuasa Yang Meluluskan Pelan Bangunan",
+          "value": "MAJLIS BANDARAYA SEREMBAN"
+        },
+        {
+          "label": "No. Kelulusan Pelan Bangunan",
+          "value": "BIL: Bil(20) dlm MPN. 431/1/81/2019/2"
+        },
+        {
+          "label": "Spesifikasi",
+          "value": "PANGSAPURI SERVIS"
+        },
+        {
+          "label": "Nama Pemaju",
+          "value": "EHSAN BUMI SEJAHTERA SDN. BHD."
+        },
+        {
+          "label": "Tarikh Pemaju Perumahan dijangka Siap",
+          "value": "30/12/2027"
+        },
+        {
+          "label": "Harga Jualan Min & Max",
+          "value": "RM 386,900.000 (MIN) – RM 519,400.00 (MAX)"
+        },
+        {
+          "label": "Bil Unit",
+          "value": "242"
+        },
+        {
+          "label": "Bil Tempat Letak Kereta",
+          "value": "270"
+        }
+      ]
+    },
+    {
+      "id": "mutiara-austin-phase-1",
+      "project": "Residensi Mutiara Austin",
+      "phase": "Fasa 1",
+      "published": true,
+      "notice": "IKLAN INI TELAH DILULUSKAN OLEH JABATAN PERUMAHAN NEGARA",
+      "fields": [
+        {
+          "label": "No. Lesen Pemaju",
+          "value": "30292/11 – 2027/0291(A)"
+        },
+        {
+          "label": "Tempoh Sahlaku",
+          "value": "21/11/2022- 20/11/2027"
+        },
+        {
+          "label": "No. Permit Iklan & Jualan",
+          "value": "30292-1/03-2026/0283(A)-(S))"
+        },
+        {
+          "label": "Tempoh Sahlaku",
+          "value": "16/03/2023 – 15/03/2026"
+        },
+        {
+          "label": "Jenis Pegangan Tanah",
+          "value": "Pajakan 99 Tahun Berakhir pada 13/08/2118"
+        },
+        {
+          "label": "Bebanan Tanah",
+          "value": "Tiada"
+        },
+        {
+          "label": "Sekatan Kepentingan",
+          "value": "i) Tanah yang dikurniakan ini tidak boleh dijual, dicagar, digadai, dipajak atau dipindahmilik dengan apa cara sekalipun termasuk dengan cara menggunakan segala surat perjanjian yang bertujuan untuk melepaskan/menjual tanah ini tanpa persetujuan Pihak Berkuasa Negeri. ii)  Tuanpunya tanah tidak dibenarkan menawar atau menjual unit-unit (parcels) bangunan yang akan dibina di atas tanah ini melainkan bangunan telah mula dibina mengikut pelan yang diluluskan oleh Pihak Berkuasa Tempatan yang berkenaan. iii) Petak – petak bangunan yang didirikan di atas tanah ini apabila sahaja bertukar miliknya kepada seorang Bumiputera maka tidak boleh terkemudian dari itu terjual, dipajak atau dipindahmilik dengan apa cara sekalipun kepada orang Bukan Bumiputera/Syarikat Bukan Bumiputera tanpa persetujuan Pihak Berkuasa Negeri. iv) Petak-petak bangunan yang didirikan di atas tanah ini tidak boleh dijual atau dipindahmilik dengan apa cara sekali kepada Bukan Warganegara/Syarikat Asing tanpa persetujuan Pihak Berkuasa Negeri"
+        },
+        {
+          "label": "Pihak Berkuasa Yang Meluluskan Pelan Bangunan",
+          "value": "MAJLIS BANDARAYA JOHOR BAHRU"
+        },
+        {
+          "label": "No. Kelulusan Pelan Bangunan",
+          "value": "BIL: MBJB/U/2020/14/BGN/85/RP/(57)"
+        },
+        {
+          "label": "Spesifikasi",
+          "value": "PANGSAPURI SERVIS"
+        },
+        {
+          "label": "Nama Pemaju",
+          "value": "LINTANG HEBAT SDN. BHD."
+        },
+        {
+          "label": "Tarikh Pemaju Perumahan dijangka Siap",
+          "value": "30/06/2026"
+        },
+        {
+          "label": "Harga Jualan Min & Max",
+          "value": "RM445,800.00 (MIN) – RM 811,800.00 (MAX)"
+        },
+        {
+          "label": "Bil Unit",
+          "value": "410"
+        },
+        {
+          "label": "Bil Tempat Letak Kereta",
+          "value": "1 atau 2"
+        }
+      ]
+    },
+    {
+      "id": "mutiara-austin-phase-2",
+      "project": "Residensi Mutiara Austin",
+      "phase": "Fasa 2",
+      "published": true,
+      "notice": "IKLAN INI TELAH DILULUSKAN OLEH JABATAN PERUMAHAN NEGARA",
+      "fields": [
+        {
+          "label": "No. Lesen Pemaju",
+          "value": "30292/11 – 2027/0291(A)"
+        },
+        {
+          "label": "Tempoh Sahlaku",
+          "value": "21/11/2022- 20/11/2027"
+        },
+        {
+          "label": "No. Permit Iklan & Jualan",
+          "value": "30292-2/01-2027/0090(N)-(S)"
+        },
+        {
+          "label": "Tempoh Sahlaku",
+          "value": "30/01/2024 – 29/01/2027"
+        },
+        {
+          "label": "Jenis Pegangan Tanah",
+          "value": "Pajakan 99 Tahun Berakhir pada 13/08/2118"
+        },
+        {
+          "label": "Bebanan Tanah",
+          "value": "Tiada"
+        },
+        {
+          "label": "Sekatan Kepentingan",
+          "value": "i) Tanah yang dikurniakan ini tidak boleh dijual, dicagar, digadai, dipajak atau dipindahmilik dengan apa cara sekalipun termasuk dengan cara menggunakan segala surat perjanjian yang bertujuan untuk melepaskan/menjual tanah ini tanpa persetujuan Pihak Berkuasa Negeri. ii)  Tuanpunya tanah tidak dibenarkan menawar atau menjual unit-unit (parcels) bangunan yang akan dibina di atas tanah ini melainkan bangunan telah mula dibina mengikut pelan yang diluluskan oleh Pihak Berkuasa Tempatan yang berkenaan. iii) Petak – petak bangunan yang didirikan di atas tanah ini apabila sahaja bertukar miliknya kepada seorang Bumiputera maka tidak boleh terkemudian dari itu terjual, dipajak atau dipindahmilik dengan apa cara sekalipun kepada orang Bukan Bumiputera/Syarikat Bukan Bumiputera tanpa persetujuan Pihak Berkuasa Negeri. iv) Petak-petak bangunan yang didirikan di atas tanah ini tidak boleh dijual atau dipindahmilik dengan apa cara sekali kepada Bukan Warganegara/Syarikat Asing tanpa persetujuan Pihak Berkuasa Negeri"
+        },
+        {
+          "label": "Pihak Berkuasa Yang Meluluskan Pelan Bangunan",
+          "value": "MAJLIS BANDARAYA JOHOR BAHRU"
+        },
+        {
+          "label": "No. Kelulusan Pelan Bangunan",
+          "value": "BIL: MBJB/U/2020/14/BGN/85/RP/(57)"
+        },
+        {
+          "label": "Spesifikasi",
+          "value": "PANGSAPURI SERVIS"
+        },
+        {
+          "label": "Nama Pemaju",
+          "value": "LINTANG HEBAT SDN. BHD."
+        },
+        {
+          "label": "Tarikh Pemaju Perumahan dijangka Siap",
+          "value": "31/12/2027"
+        },
+        {
+          "label": "Harga Jualan Min & Max",
+          "value": "RM468,090.00(MIN) – RM 852,390.00 (MAX)"
+        },
+        {
+          "label": "Bil Unit",
+          "value": "240"
+        },
+        {
+          "label": "Bil Tempat Letak Kereta",
+          "value": "1 atau 2"
+        }
+      ]
+    },
+    {
+      "id": "universiti-bestari-phase-5",
+      "project": "Taman Universiti Bestari",
+      "phase": "Fasa 5",
+      "published": true,
+      "notice": "IKLAN INI TELAH DILULUSKAN OLEH JABATAN PERUMAHAN NEGARA",
+      "fields": [
+        {
+          "label": "No Lesen Pemaju",
+          "value": "19803/05-2026/0696(R)"
+        },
+        {
+          "label": "Tempoh Sah Lesen",
+          "value": "06.05.2023-05.05.2026"
+        },
+        {
+          "label": "No. Permit Iklan & Jualan",
+          "value": "19803-3/5/08-2026/0709(N )-(L)"
+        },
+        {
+          "label": "Tempoh sah Permit Iklan Dan Jualan",
+          "value": "07 Ogos 2026"
+        },
+        {
+          "label": "Jenis Pegangan Tanah",
+          "value": "Pajakan Selama Tempoh 99 Berakhir Pada 19 Nov 2101"
+        },
+        {
+          "label": "Bebanan Tanah",
+          "value": "Tiada"
+        },
+        {
+          "label": "Sekatan Kepentingan",
+          "value": "Di tegah tuan tanah membuat sebarang perkiraan (dealings) diatas tanah yang hendak dimajukan sebagai tapak perumahan itu melainkan tuan tanah bina dan peliharakan simpanan jalan itu dan taruh batu dan tar menurut taraf Jabatan Kerja Raya serta perbuat parit-parit dengan sepuas hati Penguasa Tempatan dan Jabatan Kerja Raya atau ada jaminan daripada Penguasa Tempatan dan Jabatan Kerja Raya bahawa jalan-jalan dan parit-parit itu dapat disempurnakan"
+        },
+        {
+          "label": "Pihak Berkuasa Yang Meluluskan Pelan Bangunan",
+          "value": "Majlis Perbandaran Sungai Petani Kedah"
+        },
+        {
+          "label": "No. Kelulusan Pelan Pembangunan",
+          "value": "MPSPK (BG) B-54/2020 RKM"
+        },
+        {
+          "label": "Spesi­kasi",
+          "value": "Rumah Teres Satu Tingkat"
+        },
+        {
+          "label": "Nama Pemaju",
+          "value": "Ehsan Teras Bina Sdn Bhd"
+        },
+        {
+          "label": "Nama Pemajuan Perumahan",
+          "value": "Taman Universiti Bestari"
+        },
+        {
+          "label": "Tarikh Pemaju Perumahan Dijangka Siap",
+          "value": "Jun 2026"
+        },
+        {
+          "label": "Jenis A",
+          "value": "58 unit"
+        },
+        {
+          "label": "Jenis B",
+          "value": "18 Unit"
+        },
+        {
+          "label": "Baki Unit Belum Dijual",
+          "value": "70 Unit"
+        },
+        {
+          "label": "Harga Jualan",
+          "value": "RM332,484(minima) RM414,526 (maksima)"
+        }
+      ]
+    }
+  ]
+}

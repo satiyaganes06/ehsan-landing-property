@@ -313,7 +313,7 @@
       const projectId = row.dataset.projectId;
       if (projectId) {
         window.location.href =
-          SITE.url(`html/project-detail.html?project=${encodeURIComponent(projectId)}`);
+          row.dataset.publicUrl || SITE.url(`html/project-detail.html?project=${encodeURIComponent(projectId)}`);
       }
     });
   });
@@ -325,10 +325,6 @@
 
   if (enquiry) {
     const status = enquiry.querySelector('[data-enquiry-status]');
-    const actions = enquiry.querySelector('.enquiry__actions');
-    const consentLabel = document.createElement('label'); consentLabel.className = 'project-enquiry-consent';
-    const consent = document.createElement('input'); consent.type = 'checkbox'; consent.name = 'consent'; consent.required = true;
-    consentLabel.append(consent, ' I agree to be contacted about this enquiry.'); actions.prepend(consentLabel);
     const trap = document.createElement('input'); trap.name = 'website'; trap.type = 'text'; trap.tabIndex = -1; trap.autocomplete = 'off'; trap.setAttribute('aria-hidden', 'true'); trap.className = 'project-enquiry-trap'; enquiry.append(trap);
     const renderedAt = Date.now();
 
@@ -353,10 +349,11 @@
       if (new URLSearchParams(location.search).has('landing-editor')) { report('Preview only — no enquiry was sent.', null); return; }
       const submit = enquiry.querySelector('[type="submit"]'); submit.disabled = true; report('Sending…', null);
       const values = Object.fromEntries(new FormData(enquiry));
-      const extra = [...enquiry.querySelectorAll('.field')].filter(field => !['name', 'email', 'phone', 'interest', 'message'].includes(field.querySelector('[name]')?.name)).map(field => `${field.querySelector('label')?.textContent || 'Additional information'}: ${field.querySelector('[name]')?.value || ''}`).join('\n');
+      const phone = window.EhsanPhone?.number(values.phone, values.phoneCountry) || values.phone;
+      const extra = [...enquiry.querySelectorAll('.field')].filter(field => !['name', 'email', 'phone', 'phoneCountry', 'interest', 'message'].includes(field.querySelector('[name]')?.name)).map(field => `${field.querySelector('label')?.textContent || 'Additional information'}: ${field.querySelector('[name]')?.value || ''}`).join('\n');
       try {
         const admin = (window.EHSAN_CMS_ORIGIN || window.SITE?.adminOrigin || 'http://localhost:3001').replace(/\/$/, '');
-        const response = await fetch(`${admin}/api/public/enquiries`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: values.name, email: values.email, phone: values.phone, interest: values.interest, message: `${values.message || ''}${extra ? '\n\n' + extra : ''}`, consent: consent.checked, website: values.website, renderedAt, utm: Object.fromEntries([...new URLSearchParams(location.search)].filter(([key]) => key.startsWith('utm_'))) }) });
+        const response = await fetch(`${admin}/api/public/enquiries`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: values.name, email: values.email, phone, interest: values.interest, message: `${values.message || ''}${extra ? '\n\n' + extra : ''}`, website: values.website, renderedAt, utm: Object.fromEntries([...new URLSearchParams(location.search)].filter(([key]) => key.startsWith('utm_'))) }) });
         const result = await response.json(); if (!response.ok) throw new Error(result.message || 'Could not send your enquiry. Please try again.');
         report('Thank you. Your enquiry has been received and our team will contact you.', 'ok');
         enquiry.reset(); enquiry.classList.remove('is-validated');

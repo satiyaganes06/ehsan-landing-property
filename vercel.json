@@ -1,0 +1,18 @@
+{
+  "redirects": [
+    {"source":"/index.html","destination":"/","permanent":true},
+    {"source":"/html/about.html","destination":"/about","permanent":true},
+    {"source":"/html/projects.html","destination":"/projects","permanent":true},
+    {"source":"/html/events.html","destination":"/events","permanent":true},
+    {"source":"/html/news.html","destination":"/news","permanent":true}
+  ],
+  "rewrites": [
+    {"source":"/about","destination":"/html/about.html"},
+    {"source":"/projects","destination":"/html/projects.html"},
+    {"source":"/events","destination":"/html/events.html"},
+    {"source":"/news","destination":"/html/news.html"},
+    {"source":"/projects/:slug","destination":"/html/project-detail.html"},
+    {"source":"/events/:slug","destination":"/html/event-detail.html"},
+    {"source":"/news/:slug","destination":"/html/news-detail.html"}
+  ]
+}

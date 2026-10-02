@@ -1,4 +1,5 @@
 'use client';
+import { ModernSelect } from "@/components/modern-select";
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -11,6 +12,7 @@ export function ContactFormEditor({ value, disabled, onChange }: { value: string
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
   let form: ContactForm = { title: '', subtitle: '', button: 'Send enquiry', fields: [] };
   try { form = { ...form, ...JSON.parse(value) }; } catch { /* Keep the form editable. */ }
+  form.fields = form.fields.map(field => field.id === 'phoneCountry' ? {...field,id:'phone',type:'tel',options:[],placeholder:'Phone number'} : field);
   const commit = (next: ContactForm) => onChange(JSON.stringify(next));
   const update = (id: string, patch: Partial<ContactForm['fields'][number]>) => commit({ ...form, fields: form.fields.map(field => field.id === id ? { ...field, ...patch } : field) });
   const move = (index: number, offset: number) => { const fields = [...form.fields]; const [field] = fields.splice(index, 1); fields.splice(index + offset, 0, field); commit({ ...form, fields }); };
@@ -25,8 +27,8 @@ export function ContactFormEditor({ value, disabled, onChange }: { value: string
         <div className="flex flex-wrap gap-1"><Button size="sm" variant="outline" disabled={disabled || index === 0} onClick={() => move(index, -1)}>Move up</Button><Button size="sm" variant="outline" disabled={disabled || index === form.fields.length - 1} onClick={() => move(index, 1)}>Move down</Button><Button size="sm" variant="ghost" disabled={disabled || ['name', 'email', 'message'].includes(field.id)} onClick={() => setRemoving(field.id)}>Delete field</Button></div>
         <div className="space-y-2"><p className="text-xs font-medium">Label</p><RichTextEditor id={`form-${field.id}-label`} label="Label" html value={field.label} disabled={disabled} onChange={label => update(field.id, { label })} /></div>
         <div className="grid gap-3 sm:grid-cols-2">
-          <label className="space-y-1 text-xs">Field type<select className="block w-full rounded border bg-background p-2" disabled={disabled || ['name', 'email', 'message'].includes(field.id)} value={field.type} onChange={event => update(field.id, { type: event.target.value as typeof field.type })}>{[['text', 'Text'], ['email', 'Email'], ['tel', 'Phone'], ['textarea', 'Long message'], ['select', 'Dropdown']].map(([key, label]) => <option key={key} value={key}>{label}</option>)}</select></label>
-          <label className="space-y-1 text-xs">Width<select className="block w-full rounded border bg-background p-2" disabled={disabled} value={field.wide ? 'full' : 'half'} onChange={event => update(field.id, { wide: event.target.value === 'full' })}><option value="half">Half width</option><option value="full">Full width</option></select></label>
+          <label className="space-y-1 text-xs">Field type<ModernSelect className="block w-full rounded border bg-background p-2" disabled={disabled || ['name', 'email', 'message'].includes(field.id)} value={field.type} onChange={event => update(field.id, { type: event.target.value as typeof field.type })}>{[['text', 'Text'], ['email', 'Email'], ['tel', 'Phone'], ['textarea', 'Long message'], ['select', 'Dropdown']].map(([key, label]) => <option key={key} value={key}>{label}</option>)}</ModernSelect></label>
+          <label className="space-y-1 text-xs">Width<ModernSelect className="block w-full rounded border bg-background p-2" disabled={disabled} value={field.wide ? 'full' : 'half'} onChange={event => update(field.id, { wide: event.target.value === 'full' })}><option value="half">Half width</option><option value="full">Full width</option></ModernSelect></label>
         </div>
         <label className="block space-y-1 text-xs">{field.type === 'select' ? 'Dropdown prompt' : 'Placeholder'}<Input disabled={disabled} maxLength={300} value={field.placeholder} onChange={event => update(field.id, { placeholder: event.target.value })} /></label>
         {field.type === 'select' && <div className="space-y-2"><p className="text-xs font-medium">Dropdown options</p>{field.options.map((option, i) => <div key={i} className="flex gap-2"><Input aria-label={`Option ${i + 1}`} disabled={disabled} maxLength={200} value={option} onChange={event => update(field.id, { options: field.options.map((text, j) => j === i ? event.target.value : text) })} /><Button size="sm" variant="ghost" disabled={disabled} aria-label={`Remove option ${i + 1}`} onClick={() => update(field.id, { options: field.options.filter((_, j) => j !== i) })}>Remove</Button></div>)}<Button size="sm" variant="outline" disabled={disabled || field.options.length >= 40} onClick={() => update(field.id, { options: [...field.options, 'New option'] })}>Add option</Button></div>}

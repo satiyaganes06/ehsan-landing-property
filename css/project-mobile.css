@@ -1,6 +1,6 @@
 /* Shared mobile-first project pages. Full images, readable copy, clear actions. */
 .hero-wrapper { display: none; }
-.project-loading { padding: 8rem 1.25rem 4rem; text-align: center; color: #62675c; }
+.project-loading { display: grid; place-items: center; box-sizing: border-box; min-height: 68svh; margin: 0; padding: 8rem 1.25rem 4rem; text-align: center; color: #62675c; background: #f7f7f2; }
 body.project--modern { background: #f7f7f2; }
 .project--modern .hero-wrapper { display: none; }
 .project--modern #widuriExperience { display: block; padding: var(--project-nav-height, 5rem) 0 0; background: #f7f7f2; color: #181a15; overflow: visible; }

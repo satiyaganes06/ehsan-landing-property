@@ -38,7 +38,7 @@ function cmsUrl(file, fallback) {
   /* ---------- render ---------- */
 
   const card = ([id, ev], i) => `
-    <a href="event-detail.html?event=${encodeURIComponent(id)}" class="event-card" style="--i:${i}">
+    <a href="${SITE.recordUrl('events', ev)}" class="event-card" style="--i:${i}">
       <div class="event-image-wrapper">
         <img src="${ev.image}" alt="${ev.title}" loading="lazy" decoding="async" referrerpolicy="no-referrer">
         <span class="event-category">${ev.category}</span>

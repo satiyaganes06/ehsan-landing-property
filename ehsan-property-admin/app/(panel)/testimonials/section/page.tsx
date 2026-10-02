@@ -1,5 +1,5 @@
-import { LandingEditor } from '@/components/landing-editor';
+import { redirect } from 'next/navigation';
 
-export default function SectionSettingsPage() {
-  return <LandingEditor mode="section" initialSection="testimonials" />;
+export default function RemovedTestimonialsPage() {
+  redirect('/landing');
 }

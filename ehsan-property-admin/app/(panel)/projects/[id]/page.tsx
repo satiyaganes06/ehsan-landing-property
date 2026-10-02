@@ -1,5 +1,6 @@
 'use client';
 
+import { ModernSelect } from "@/components/modern-select";
 import { use, useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -32,6 +33,7 @@ import { useSession } from '@/lib/session';
 import type { MediaItem, ProjectDetail, SeoMeta } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import { ProjectEnquirySettings } from '@/components/project-enquiry-settings';
+import { ProjectSectionContent } from '@/components/project-section-content';
 
 interface ContentDraft {
   status: ProjectDetail['status'];
@@ -310,7 +312,7 @@ export default function ProjectEditPage({ params }: { params: Promise<{ id: stri
         <TabsContents>
         <TabsContent value="content" className="pt-5">
           {content ? (
-            <><ContentTab draft={content} onChange={setContent} readOnly={!can('project', 'update')} /><ProjectEnquirySettings key={id} id={id} readOnly={!can('project', 'update')} /></>
+            <><ContentTab draft={content} onChange={setContent} readOnly={!can('project', 'update')} />{data?.reference !== 'proj-15' && <ProjectSectionContent key={`section-content-${id}`} id={id} readOnly={!can('project', 'update')} />}<ProjectEnquirySettings key={id} id={id} readOnly={!can('project', 'update')} /></>
           ) : (
             <FormSkeleton />
           )}
@@ -420,7 +422,7 @@ function ContentTab({
 
         <div className="space-y-2">
           <Label htmlFor="status">Stage</Label>
-          <select
+          <ModernSelect
             id="status"
             value={draft.status}
             onChange={(e) => set('status', e.target.value as ContentDraft['status'])}
@@ -429,7 +431,7 @@ function ContentTab({
             <option value="ONGOING">Ongoing</option>
             <option value="COMPLETED">Completed</option>
             <option value="FUTURE">Planned</option>
-          </select>
+          </ModernSelect>
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2">
@@ -494,6 +496,12 @@ function ContentTab({
 /** The two buckets the project page actually renders: the photo carousel and
     the separate blueprint gallery behind the "Blueprint" switcher. */
 const MEDIA_ROLES = [
+  { role: 'hero', label: 'Hero image', blurb: 'Main project background image.' },
+  { role: 'logo', label: 'Project logo', blurb: 'Shown in the overview, without opening an image viewer.' },
+  { role: 'location', label: 'Location maps', blurb: 'Images shown in the location section.' },
+  { role: 'shuttle', label: 'Shuttle routes', blurb: 'Optional shuttle route images.' },
+  { role: 'facilities', label: 'Facilities', blurb: 'Facilities image carousel.' },
+  { role: 'interior', label: 'Interiors', blurb: 'Interior photos in the project gallery.' },
   { role: 'thumbnail', label: 'Thumbnail', blurb: 'One image for this project’s homepage card. Recommended: landscape, 1600 × 900 px, WebP or JPEG. Until selected, the first project photo is used.' },
   { role: 'gallery', label: 'Photos', blurb: 'Shown in the carousel and gallery grid.' },
   { role: 'blueprint', label: 'Blueprints', blurb: 'Shown behind the Blueprint switcher.' },
@@ -547,7 +555,7 @@ function MediaTab({ project }: { project: ProjectDetail }) {
 
   return (
     <div className="space-y-8">
-      {MEDIA_ROLES.map(({ role, label, blurb }) => {
+      {MEDIA_ROLES.filter(item => project.reference !== 'proj-15' || ['thumbnail', 'gallery', 'blueprint'].includes(item.role)).map(({ role, label, blurb }) => {
         const items = media
           .filter((link) => (link.role ?? 'gallery') === role)
           .sort((a, b) => a.sortOrder - b.sortOrder);

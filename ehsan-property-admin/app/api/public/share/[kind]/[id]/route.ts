@@ -2,6 +2,7 @@ import { prisma } from '@/lib/server/prisma';
 import { readNews } from '@/lib/server/news';
 import { mediaUrl } from '@/lib/server/media-url';
 import { publicRoute } from '@/lib/server/route';
+import { slugify } from '@/lib/server/slug';
 
 export const runtime = 'nodejs';
 const escape = (value: string) => value.replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char]!);
@@ -17,12 +18,13 @@ export const GET = publicRoute<{ kind: string; id: string }>(async ({ params, re
   const landing = new URL(process.env.NEXT_PUBLIC_LANDING_URL || (['localhost', '127.0.0.1'].includes(request.nextUrl.hostname) ? 'http://localhost:8899/' : 'https://ehsanproperty.com/'));
   if (!['https:', 'http:'].includes(landing.protocol)) throw new Error('Invalid landing URL configuration');
   if (!landing.pathname.endsWith('/')) landing.pathname += '/';
-  let title = '', description = '', image = '', published = '';
+  let title = '', description = '', image = '', published = '', slug = '';
   if (kind === 'project') {
     const project = await prisma.project.findFirst({ where: { reference: id, publishState: 'PUBLISHED' }, include: { translations: { where: { locale: 'EN' } }, media: { orderBy: { sortOrder: 'asc' }, include: { media: true } } } });
     const translation = project?.translations[0];
     if (!project || !translation) return new Response('Not found', { status: 404 });
     title = translation.name;
+    slug = /^proj-\d+$/.test(translation.slug) ? slugify(translation.name) : translation.slug;
     description = plain(translation.description || `${translation.name} in ${translation.location}. Discover this Ehsan development.`).slice(0, 200);
     const thumbnail = project.media.find(item => item.role === 'thumbnail') || project.media.find(item => ['hero', 'gallery'].includes(item.role));
     if (thumbnail) image = new URL(mediaUrl(thumbnail.media.storageKey), origin).href;
@@ -31,6 +33,7 @@ export const GET = publicRoute<{ kind: string; id: string }>(async ({ params, re
     const article = articles.find(item => item.id === id && item.published && !item.archived && Date.parse(item.date) <= Date.now());
     if (!article) return new Response('Not found', { status: 404 });
     title = article.title;
+    slug = slugify(article.title);
     description = plain(article.subtitle || article.excerpt).slice(0, 200);
     published = article.date;
     const thumbnail = article.thumbnail || article.images[0];
@@ -38,9 +41,8 @@ export const GET = publicRoute<{ kind: string; id: string }>(async ({ params, re
     if (thumbnail && /^https?:\/\//.test(thumbnail)) image = thumbnail;
   }
   if (!image) image = new URL('/live-site/assets/logo/epp_logo.png', origin).href;
-  const destination = new URL(kind === 'project' ? 'html/project-detail.html' : 'html/news-detail.html', landing);
-  destination.searchParams.set(kind === 'project' ? 'project' : 'news', id);
-  const shareUrl = new URL(`/api/public/share/${kind}/${encodeURIComponent(id)}`, origin).href;
+  const destination = new URL(`${kind === 'project' ? 'projects' : 'news'}/${encodeURIComponent(slug)}`, landing);
+  const shareUrl = destination.href;
   const meta = (name: string, value: string, property = true) => `<meta ${property ? 'property' : 'name'}="${name}" content="${escape(value)}">`;
   const html = `<!doctype html><html lang="en" prefix="og: https://ogp.me/ns#"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escape(title)} — Ehsan Plant &amp; Property</title>
 ${meta('description', description, false)}<link rel="canonical" href="${escape(shareUrl)}">

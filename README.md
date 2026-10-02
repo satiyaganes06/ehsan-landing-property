@@ -3,13 +3,23 @@
 Static site. No build step, no dependencies. Serve the folder and open it:
 
 ```sh
-python3 -m http.server 8899
+node tools/build-public-pages.mjs
+python3 -m http.server 8899 --bind 127.0.0.1
 # → http://localhost:8899
 ```
 
 A server is required rather than opening the files directly: the event and
 project pages read their content from `data/*.json` over `fetch`, which the
 `file://` protocol blocks.
+
+Public URLs use `/about`, `/projects`, `/projects/ehsan-widuri`, `/events/<slug>`,
+`/news/<slug>` and `/project-licensing/`. The local server resolves published
+CMS slugs (including new projects) and permanently redirects legacy HTML links
+when run as `python3 tools/serve.py --port 8899`. The standard static server also
+works with generated indexes; legacy links redirect in the browser.
+For hosting, use the included root `vercel.json` or Apache `.htaccess`; legacy
+detail links also resolve their record and redirect in the browser. Deploy the
+public repository root separately from the admin app. Admin URLs are unchanged.
 
 ## Layout
 

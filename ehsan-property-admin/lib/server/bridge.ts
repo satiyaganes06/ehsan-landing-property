@@ -20,7 +20,9 @@
    never leave the live site reading a truncated JSON file.
    --------------------------------------------------------------------------- */
 
-import { writeFile, rename, mkdir } from 'node:fs/promises';
+import { writeFile, rename, mkdir, readFile } from 'node:fs/promises';
+import { slugify } from './slug';
+import { readFeaturedProjects } from './featured-projects';
 import path from 'node:path';
 import 'server-only';
 import { prisma } from './prisma';
@@ -71,6 +73,7 @@ function siteImagePath(storageKey: string): string {
 }
 
 export async function buildProjectsPayload(): Promise<Record<string, unknown>> {
+  const featured = await readFeaturedProjects();
   const projects = await prisma.project.findMany({
     where: { publishState: 'PUBLISHED' },
     orderBy: { sortOrder: 'asc' },
@@ -80,7 +83,7 @@ export async function buildProjectsPayload(): Promise<Record<string, unknown>> {
     },
   });
 
-  const enquiryBlocks = await prisma.textBlock.findMany({ where: { key: { in: projects.map(p => projectEnquiryKey(p.reference)) } }, include: { translations: { where: { locale: 'EN' } } } });
+  const enquiryBlocks = await prisma.textBlock.findMany({ where: { key: { in: projects.flatMap(p => [projectEnquiryKey(p.reference), `project.content.${p.reference}`]) } }, include: { translations: { where: { locale: 'EN' } } } });
   const enquiryByKey = new Map(enquiryBlocks.map(block => [block.key, block.translations[0]?.value]));
   const out: Record<string, unknown> = {};
   for (const p of projects) {
@@ -88,7 +91,12 @@ export async function buildProjectsPayload(): Promise<Record<string, unknown>> {
     if (!t) continue; // no EN copy yet -- not ready to publish, skip rather than emit blanks
 
     out[p.reference] = {
+      featured: featured.includes(p.reference),
+      sortOrder: p.sortOrder,
+      createdAt: p.createdAt.toISOString(),
       name: t.name,
+      slug: /^proj-\d+$/.test(t.slug) ? slugify(t.name) : t.slug,
+      ...(p.reference !== 'proj-15' && enquiryByKey.has(`project.content.${p.reference}`) ? { content: enquiryByKey.get(`project.content.${p.reference}`) } : {}),
       enquiry: projectEnquirySchema.parse(enquiryByKey.get(projectEnquiryKey(p.reference)) ?? { enabled: false, interest: '' }),
       location: t.location,
       coordinates: p.latitude != null && p.longitude != null ? { lat: p.latitude, lng: p.longitude } : null,
@@ -106,6 +114,7 @@ export async function buildProjectsPayload(): Promise<Record<string, unknown>> {
         thumbnail: (() => { const image = p.media.find(m => m.role === 'thumbnail') || p.media.find(m => m.role === 'hero' || m.role === 'gallery'); return image ? siteImagePath(image.media.storageKey) : null; })(),
         image: p.media.filter((m) => m.role === 'gallery' || m.role === 'hero').map((m) => siteImagePath(m.media.storageKey)),
         blueprint: p.media.filter((m) => m.role === 'blueprint').map((m) => siteImagePath(m.media.storageKey)),
+        ...(p.reference !== 'proj-15' ? Object.fromEntries(['logo', 'location', 'shuttle', 'facilities', 'interior'].map(role => [role, p.media.filter(m => m.role === role).map(m => siteImagePath(m.media.storageKey))])) : {}),
       },
     };
   }
@@ -128,6 +137,7 @@ export async function buildEventsPayload(): Promise<Record<string, unknown>> {
     out[e.reference] = {
       id: e.reference,
       title: t.title,
+      slug: /^event-\d+$/.test(t.slug) ? slugify(t.title) : t.slug,
       category: t.category,
       date: fmtDate(e.startsAt),
       dateTime: fmtDateTime(e.startsAt),
@@ -160,6 +170,15 @@ export async function buildEventsPayload(): Promise<Record<string, unknown>> {
 async function mirrorToDisk(filename: string, data: unknown): Promise<boolean> {
   try {
     await writeJsonAtomic(filename, data);
+    // Local static servers need a real index for new published clean URLs.
+    // Deployed hosts use the supplied rewrites instead (read-only filesystem).
+    const kind = filename === 'projects.json' ? 'projects' : 'events';
+    const template = await readFile(path.join(DATA_DIR, '..', 'html', `${kind === 'projects' ? 'project' : 'event'}-detail.html`), 'utf8');
+    for (const record of Object.values(data as Record<string, {slug?: string}>)) {
+      if (!record.slug || !/^[a-z0-9-]+$/.test(record.slug)) continue;
+      const directory = path.join(DATA_DIR, '..', kind, record.slug);
+      await mkdir(directory, {recursive:true}); await writeFile(path.join(directory, 'index.html'), template);
+    }
     return true;
   } catch {
     return false;

@@ -1,5 +1,6 @@
 'use client';
 
+import { ModernSelect } from "@/components/modern-select";
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -130,7 +131,7 @@ export default function NewProjectPage() {
 
         <div className="space-y-2">
           <Label htmlFor="status">Stage</Label>
-          <select
+          <ModernSelect
             id="status"
             value={status}
             onChange={(e) => setStatus(e.target.value as ProjectStatus)}
@@ -139,7 +140,7 @@ export default function NewProjectPage() {
             <option value="ONGOING">Ongoing</option>
             <option value="COMPLETED">Completed</option>
             <option value="FUTURE">Planned</option>
-          </select>
+          </ModernSelect>
         </div>
 
         <div className="space-y-2">

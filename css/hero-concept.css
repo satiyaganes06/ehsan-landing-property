@@ -73,7 +73,7 @@ html.is-ready .stage .hero-media {
   .stage .hero__eyebrow { font-size: .6rem; margin-bottom: 1.25rem; }
   .stage .hero__copy { font-size: .9375rem; margin-bottom: 1.5rem; }
   .stage .hero__actions { flex-direction: column; align-items: flex-start; margin-bottom: 0; }
-  .stage .scrollcue { position: absolute; bottom: 1.6rem; left: var(--gutter); margin: 0; }
+  .stage .scrollcue { position: absolute; top: auto; bottom: 1.6rem; left: auto; right: var(--gutter); transform: none; margin: 0; }
   .hero__caption { bottom: 1.5rem; right: 90px; font-size: .5rem; }
 }
 @media (prefers-reduced-motion: reduce) {

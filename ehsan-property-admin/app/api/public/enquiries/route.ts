@@ -26,8 +26,6 @@ const PublicEnquiryBody = z.object({
   // faster than a human can read and fill five fields is not a human.
   renderedAt: z.number().optional(),
   utm: z.record(z.string(), z.string()).optional(),
-}).refine(body => !!body.projectReference || body.consent === true, {
-  path: ['consent'], message: 'Please agree to be contacted.',
 });
 
 const MIN_FILL_MS = 2500;

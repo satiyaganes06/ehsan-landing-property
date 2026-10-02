@@ -1607,6 +1607,8 @@ html.reveal-armed .chain:not(.is-revealed) ol::before { transform: scaleY(0); }
 
 /* ---------- the card ---------- */
 
+.pcard[hidden] { display: none !important; }
+
 .pcard {
   position: relative;
   display: flex;
@@ -1666,14 +1668,12 @@ html.reveal-armed .chain:not(.is-revealed) ol::before { transform: scaleY(0); }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* Desaturated at rest so a wall of sixteen photographs reads as one set
-     rather than sixteen competing colour casts; full colour on approach. */
-  filter: grayscale(.55);
+  filter: none;
   transform: scale(1.02);
-  transition: filter .5s ease, transform .7s var(--ease);
+  transition: transform .7s var(--ease);
 }
 .pcard:hover .pcard__shot img {
-  filter: grayscale(0);
+  filter: none;
   transform: scale(1.06);
 }
 
@@ -3017,6 +3017,13 @@ html.reveal-armed .pcard:not(.is-revealed) .bar i { transform: scaleX(0); }
 .about-story__title em { color: var(--brass-ink); }
 .about-team { margin: 3rem 0 0; }
 
+.pcard__yr{display:none!important}
+.project-phone{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);gap:10px}.project-phone .field__input{width:100%;min-width:0}.project-phone .modern-select{min-width:0}.project-phone .modern-select__trigger{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* Shared section call-to-action: About, Projects and News use one treatment. */
+.btn.btn--primary,.events-explore-btn{display:inline-flex;align-items:center;justify-content:space-between;gap:24px;min-height:64px;box-sizing:border-box;padding:10px 12px 10px 28px;border:0;border-radius:999px;background:#f5dd62;color:#111;font-family:var(--sans);font-size:16px;font-weight:700;line-height:1.25;letter-spacing:0;text-transform:none;text-decoration:none;transition:background-color .2s,box-shadow .2s}
+.btn.btn--primary::after,.events-explore-btn::after{content:'→';display:inline-flex;align-items:center;justify-content:center;flex:0 0 44px;width:44px;height:44px;border-radius:50%;background:#000;color:#f5dd62;font-size:24px;font-weight:400;line-height:1;transform:none}
+.btn.btn--primary:hover,.events-explore-btn:hover{background:#edd353;color:#111;transform:none;box-shadow:0 6px 16px #00000014}
+.btn.btn--primary:focus-visible,.events-explore-btn:focus-visible{outline:2px solid #585c00;outline-offset:4px}
 /* About-page purpose: the same light, compact treatment as the company grid. */
 #doctrine.purpose-compact {
   --c-ink: #12110d;

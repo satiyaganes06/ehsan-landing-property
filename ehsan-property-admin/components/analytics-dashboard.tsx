@@ -1,5 +1,6 @@
 'use client';
 
+import { ModernSelect } from "@/components/modern-select";
 import Link from 'next/link';
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
@@ -28,7 +29,7 @@ export function AnalyticsDashboard() {
   ] : [];
 
   return <div className="mx-auto max-w-7xl space-y-6">
-    <PageHeader title="Website analytics" description="See how people find and explore your website." actions={<><select aria-label="Analytics date range" className="rounded-md border bg-background px-3 py-2 text-sm" value={days} onChange={event => setDays(Number(event.target.value))}><option value={7}>Last 7 days</option><option value={30}>Last 30 days</option><option value={90}>Last 90 days</option></select><Button variant="outline" size="icon" aria-label="Refresh analytics" disabled={query.isFetching} onClick={() => query.refetch()}><RefreshCw className="size-4" /></Button></>} />
+    <PageHeader title="Website analytics" description="See how people find and explore your website." actions={<><ModernSelect aria-label="Analytics date range" className="rounded-md border bg-background px-3 py-2 text-sm" value={days} onChange={event => setDays(Number(event.target.value))}><option value={7}>Last 7 days</option><option value={30}>Last 30 days</option><option value={90}>Last 90 days</option></ModernSelect><Button variant="outline" size="icon" aria-label="Refresh analytics" disabled={query.isFetching} onClick={() => query.refetch()}><RefreshCw className="size-4" /></Button></>} />
     {query.isError && <ErrorState error={query.error} onRetry={() => query.refetch()} />}
     {query.isPending && <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">{[1, 2, 3, 4].map(key => <Skeleton key={key} className="h-32 rounded-xl" />)}</div>}
     {data && <>

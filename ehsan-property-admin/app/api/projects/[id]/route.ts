@@ -6,6 +6,7 @@ import { scoringInputFor } from '@/lib/server/seo-input';
 import { canActOnOwnRecord } from '@/lib/server/ownership';
 import { clientIp, forbiddenOwnership, json, noContent, route } from '@/lib/server/route';
 import { readProjectEnquiry } from '@/lib/server/project-enquiry';
+import { readProjectContent } from '@/lib/server/project-content';
 
 export const runtime = 'nodejs';
 
@@ -43,7 +44,8 @@ export const GET = route<{ id: string }>({ resource: 'project', action: 'read' }
     where: { entityType: 'project', entityId: project.id },
   });
   const enquiry = await readProjectEnquiry(project.reference);
-  return json({ ...project, seoMeta, enquiry });
+  const content = await readProjectContent(project.reference);
+  return json({ ...project, seoMeta, enquiry, ...(content ? { content } : {}) });
 });
 
 export const PATCH = route<{ id: string }>(

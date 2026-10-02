@@ -4,6 +4,8 @@ import { recordAudit } from '@/lib/server/audit';
 import { uniqueSlug } from '@/lib/server/slug';
 import { clientIp, json, route } from '@/lib/server/route';
 import { PaginationSchema } from '@/lib/server/validation';
+import { readFeaturedProjects } from '@/lib/server/featured-projects';
+import { projectContentSchema, projectContentKey } from '@/lib/server/project-content';
 
 export const runtime = 'nodejs';
 
@@ -28,7 +30,7 @@ export const GET = route({ resource: 'project', action: 'read' }, async ({ reque
   const [total, projects] = await Promise.all([
     prisma.project.count({ where }),
     prisma.project.findMany({
-      where, orderBy: { sortOrder: 'asc' },
+      where, orderBy: [{ sortOrder: 'asc' }, { id: 'asc' }],
       skip: (page - 1) * perPage, take: perPage,
       include: { translations: { where: { locale: 'EN' } } },
     }),
@@ -38,11 +40,13 @@ export const GET = route({ resource: 'project', action: 'read' }, async ({ reque
     where: { entityType: 'project', entityId: { in: projects.map((p) => p.id) }, locale: 'EN' },
   });
   const seoByProject = new Map(seoRows.map((s) => [s.entityId, s]));
+  const featured = await readFeaturedProjects();
 
   return json({
-    page, perPage, total,
+    page, perPage, total, featuredCount: featured.length,
     items: projects.map((p) => ({
       id: p.id, reference: p.reference, status: p.status, publishState: p.publishState,
+      createdAt: p.createdAt, featured: featured.includes(p.reference),
       yearStart: p.yearStart, yearEnd: p.yearEnd, sortOrder: p.sortOrder,
       name: p.translations[0]?.name ?? '(untranslated)',
       location: p.translations[0]?.location ?? '',
@@ -66,14 +70,18 @@ export const POST = route({ resource: 'project', action: 'create' }, async ({ re
     })),
   );
 
-  const project = await prisma.project.create({
-    data: {
-      reference, status,
-      sortOrder: (maxOrder._max.sortOrder ?? 0) + 1,
-      createdById: user.id, publishState: 'DRAFT',
-      translations: { create: { locale: 'EN', slug, name, location, description, amenities: [] } },
-    },
-    include: { translations: true },
+  const project = await prisma.$transaction(async tx => {
+    const created = await tx.project.create({
+      data: {
+        reference, status,
+        sortOrder: (maxOrder._max.sortOrder ?? 0) + 1,
+        createdById: user.id, publishState: 'DRAFT',
+        translations: { create: { locale: 'EN', slug, name, location, description, amenities: [] } },
+      },
+      include: { translations: true },
+    });
+    await tx.textBlock.create({ data: { key: projectContentKey(reference), label: 'Project section content', kind: 'configuration', group: 'project', translations: { create: { locale: 'EN', value: projectContentSchema.parse({}) } } } });
+    return created;
   });
 
   recordAudit({

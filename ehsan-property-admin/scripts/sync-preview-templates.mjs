@@ -31,6 +31,7 @@ const REPO = path.resolve(APP, '..');
 
 await mkdir(path.join(APP, 'data'), { recursive: true });
 await cp(path.join(REPO, 'data/news.json'), path.join(APP, 'data/news.json'));
+await cp(path.join(REPO, 'data/project-licensing.json'), path.join(APP, 'data/project-licensing.json'));
 
 const SHIM = `<script>
 /* Injected by scripts/sync-preview-templates.mjs -- do not edit here. */
@@ -86,11 +87,13 @@ document.addEventListener('submit', function (event) {
 function rewritePaths(html) {
   return html
     .replace(/(href|src)="\.\.\/(css|js|components|assets|data)\//g, '$1="/live-site/$2/')
+    .replace(/(href|src)="\/(css|js|components|assets|data)\//g, '$1="/live-site/$2/')
     .replace(/(href|src)="\.\.\/index\.html/g, '$1="/live-site/index.html');
 }
 
 function injectIntoHead(html, ...blocks) {
-  return html.replace('</head>', `${blocks.join('')}</head>`);
+  // Install the draft-fetch shim before the early project preloader can run.
+  return html.replace('<head>', `<head>${blocks[0] || ''}`).replace('</head>', `${blocks.slice(1).join('')}</head>`);
 }
 
 const TARGETS = [

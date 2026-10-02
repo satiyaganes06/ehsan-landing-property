@@ -4,12 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Ehsan Plant &amp; Property</title>
+<script src="js/public-data.js?v=20261002.49"></script>
 <link rel="preload" as="image" href="assets/img/malaysian-skyline-hero-hd.webp">
-<link rel="stylesheet" href="css/style.css?v=20260914.3">
+<link rel="stylesheet" href="css/style.css?v=20261002.51">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600&family=Azeret+Mono:wght@300;400;500&family=Fraunces:ital,opsz,wght@0,9..144,300..500;1,9..144,300..500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/content.css?v=20261001.5">
+<link rel="stylesheet" href="css/content.css?v=20261002.51">
 <link rel="stylesheet" href="css/hero-concept.css?v=20260919.1">
 <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
 <meta name="description" content="Ehsan Plant &amp; Property Sdn Bhd — Bumiputera property developer and CIDB G7 contractor. Sixteen projects, RM 1.307 billion GDV, 3,442 units across Malaysia.">
@@ -58,7 +59,7 @@
 
       <div class="hero__actions">
         <a class="btn btn--solid" href="#record" data-ripple data-ring="3">Explore Our Projects</a>
-        <a class="btn btn--ghost" href="html/about.html" data-ripple data-ring="3">About Ehsan</a>
+        <a class="btn btn--ghost" href="about" data-ripple data-ring="3">About Ehsan</a>
       </div>
     </main>
 
@@ -90,10 +91,9 @@
 
 <nav class="rail" aria-label="Section navigation">
   <a href="#gallery"><span>Gallery</span></a>
-  <a href="#record"><span>Work record</span></a>
+  <a href="#record"><span>Projects</span></a>
   <a href="#news"><span>News</span></a>
   <a href="#events"><span>Events</span></a>
-  <a href="#testimonials"><span>Voices</span></a>
   <a href="#contact"><span>Contact</span></a>
 </nav>
 
@@ -161,7 +161,7 @@
     </ul>
 
     <div class="prelude__cta">
-      <a href="html/about.html" class="btn btn--primary" data-reveal data-reveal-ring="5">About Us</a>
+      <a href="about" class="btn btn--primary" data-reveal data-reveal-ring="5">About Us</a>
     </div>
   </section>
 
@@ -222,7 +222,7 @@
   <section class="section" id="record">
     <header class="section__head">
       <span class="ghost" aria-hidden="true">04</span>
-      <p class="section__label" data-reveal data-reveal-ring="0">04 — Work record</p>
+      <p class="section__label" data-reveal data-reveal-ring="0">04 — Projects</p>
       <h2 class="section__title" data-reveal data-reveal-ring="0">Sixteen projects, <em>one book</em>.</h2>
       <p class="section__lede" data-reveal data-reveal-ring="1">
         Every project on the company work record, arranged from the latest
@@ -486,7 +486,7 @@
       </button>
 
     </div>
-    <div class="projects-footer events-footer"><a class="events-explore-btn" href="html/projects.html">View more projects</a></div>
+    <div class="projects-footer events-footer"><a class="events-explore-btn" href="projects">View more projects</a></div>
 
   </section>
 
@@ -498,7 +498,7 @@
       <p class="section__lede" data-reveal>Project milestones, community moments and company updates.</p>
     </header>
     <div class="news-grid" data-news-list data-news-limit="3"><p role="status">Loading news…</p></div>
-    <div class="events-footer"><a class="events-explore-btn" href="html/news.html">View more news</a></div>
+    <div class="events-footer"><a class="events-explore-btn" href="news">View more news</a></div>
   </section>
 
   <section class="section" id="events">
@@ -586,104 +586,13 @@
     </div>
 
     <div class="events-footer" data-reveal data-reveal-ring="4">
-      <a href="html/events.html" class="events-explore-btn">More events</a>
+      <a href="events" class="events-explore-btn">More events</a>
     </div>
   </section>
 
   <!-- ================= 06 · RECOGNITION ================= -->
 
 
-  <!-- ================= 07 · TESTIMONIALS =================
-       Not sourced from the PDF — the profile has no testimonials section.
-       Placeholder copy, clearly disclaimed below the cards, standing in for
-       real client quotes until those are collected. Default-active card is
-       set in markup (.story.is-active on the first one); content.js only
-       moves that class on hover/focus, so the section still reads correctly
-       with JS disabled — one card just stays permanently expanded. -->
-  <section class="section" id="testimonials">
-    <header class="section__head">
-      <span class="ghost" aria-hidden="true">07</span>
-      <p class="section__label" data-reveal data-reveal-ring="0">07 — Voices</p>
-      <h2 class="section__title" data-reveal data-reveal-ring="0">What people <em>tell us</em>.</h2>
-      <p class="section__lede" data-reveal data-reveal-ring="1">
-        Placeholder quotes, standing in until real client testimonials are collected.<span class="hint"> Hover a card to read it.</span>
-      </p>
-    </header>
-
-    <div class="stories" data-reveal data-reveal-ring="2">
-
-      <article class="story is-active" data-story tabindex="0">
-        <div class="story__panel">
-          <div class="story__media">
-            <img src="assets/img/placeholders/avatar4.jpeg" alt="Taman Sri Ehsan, Kluang" loading="lazy" decoding="async">
-            <span class="story__badge" style="color:var(--brass-ink)" aria-hidden="true">
-              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v9a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1v-9"/></svg>
-            </span>
-          </div>
-          <div class="story__body" aria-hidden="false">
-            <p class="story__quote">Handover day felt like the finish line of years of saving. The team walked us through every defect check without rushing us once.</p>
-            <p class="story__name">Aisyah &amp; Farid</p>
-            <p class="story__role">First home, Taman Sri Ehsan</p>
-          </div>
-        </div>
-        <p class="story__label">First time buyers</p>
-      </article>
-
-      <article class="story" data-story tabindex="0">
-        <div class="story__panel">
-          <div class="story__media">
-            <img src="assets/img/placeholders/avatar1.jpg" alt="Ehsan Residence Condominium, Sepang" loading="lazy" decoding="async">
-            <span class="story__badge" style="color:var(--sand)" aria-hidden="true">
-              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="1.5"/><path d="M9 21v-5h6v5M9 8h.01M15 8h.01M9 12h.01M15 12h.01"/></svg>
-            </span>
-          </div>
-          <div class="story__body" aria-hidden="true">
-            <p class="story__quote">Five years in and the estate still feels as maintained as move in day. That's rarer than people think.</p>
-            <p class="story__name">Mr Tan K.W.</p>
-            <p class="story__role">Resident, Ehsan Residence</p>
-          </div>
-        </div>
-        <p class="story__label">Homeowners</p>
-      </article>
-
-      <article class="story" data-story tabindex="0">
-        <div class="story__panel">
-          <div class="story__media">
-            <img src="assets/img/placeholders/avatar2.jpg" alt="Residensi Mutiara Austin, Johor Bahru" loading="lazy" decoding="async">
-            <span class="story__badge" style="color:var(--brass)" aria-hidden="true">
-              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17 9 11l4 4 8-9"/><path d="M15 6h6v6"/></svg>
-            </span>
-          </div>
-          <div class="story__body" aria-hidden="true">
-            <p class="story__quote">We bought two units off plan on the strength of the Sepang track record. Construction updates have matched the timeline so far.</p>
-            <p class="story__name">Ravindran S.</p>
-            <p class="story__role">Investor, Ehsan Widuri</p>
-          </div>
-        </div>
-        <p class="story__label">Investors</p>
-      </article>
-
-      <article class="story" data-story tabindex="0">
-        <div class="story__panel">
-          <div class="story__media">
-            <img src="assets/img/placeholders/avatar3.jpeg" alt="Shop office, Ehsan Residence" loading="lazy" decoding="async">
-            <span class="story__badge" style="color:var(--c-dim)" aria-hidden="true">
-              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9V6l2-3h14l2 3v3"/><path d="M5 9v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9"/><path d="M3 9a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0"/></svg>
-            </span>
-          </div>
-          <div class="story__body" aria-hidden="true">
-            <p class="story__quote">Foot traffic built faster than we forecast. Having the developer still active on site during our fit out made the handover painless.</p>
-            <p class="story__name">Grace Lim</p>
-            <p class="story__role">Tenant, Shop Office, Ehsan Residence</p>
-          </div>
-        </div>
-        <p class="story__label">Business tenants</p>
-      </article>
-
-    </div>
-
-    <p class="testimonial__note" data-reveal data-reveal-ring="3">Placeholder quotes — real client testimonials pending.</p>
-  </section>
 
   <!-- ================= 02 · COMMITMENT ================= -->
 
@@ -788,17 +697,18 @@
 <div data-component="assistant"></div>
 
 <!-- Page chrome: registry first, then each component, then mount. -->
-<script src="components/registry.js?v=20261002.e2e"></script>
-<script src="components/navbar.js?v=20261001"></script>
-<script src="components/footer.js?v=20261002.e2e"></script>
+<script src="/js/phone-codes.js?v=20261002.51"></script>
+<script src="components/registry.js?v=20261002.49"></script>
+<script src="components/navbar.js?v=20261002.49"></script>
+<script src="components/footer.js?v=20261002.49"></script>
 <script src="components/assistant.js"></script>
 <script src="components/mount.js"></script>
 
 <!-- Page behaviour — runs after the chrome is in the DOM. -->
 <script src="js/app.js?v=20260919.1"></script>
-<script src="js/content.js?v=20261002.e2e1"></script>
-<script src="js/landing-editor.js?v=15"></script>
-<script src="js/news.js?v=2"></script>
-<script src="js/projects.js?v=1"></script>
+<script src="js/content.js?v=20261002.51"></script>
+<script src="js/landing-editor.js?v=20261002.51"></script>
+<script src="js/news.js?v=20261002.49"></script>
+<script src="js/projects.js?v=20261002.49"></script>
 </body>
 </html>

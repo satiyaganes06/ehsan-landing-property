@@ -290,6 +290,10 @@ a { color: inherit; text-decoration: none; }
 /* ---------- scroll cue ---------- */
 
 .scrollcue {
+  position: absolute;
+  right: var(--gutter);
+  top: 72%;
+  transform: translateY(-50%);
   margin: 0;
   justify-self: center;
   width: 22px;

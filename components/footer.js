@@ -1,74 +1,34 @@
-/* -------------------------------------------------------------------------
-   components/footer.js — the site-wide footer.
-
-   Previously this markup lived only in index.html; as a component it now sits
-   at the foot of every page. The three link columns are data, not markup, so
-   adding a property or a social account is a one-line change.
-   ------------------------------------------------------------------------- */
-
-SITE.define('footer', (SITE) => {
-  const COLUMNS = [
-    {
-      heading: 'Company',
-      links: [
-        { label: 'Home',        href: 'index.html' },
-        { label: 'About Us',    href: 'html/about.html' },
-        { label: 'Work Record', href: 'index.html#record' },
-        { label: 'Recognition', href: 'html/about.html#awards' },
-      ],
-    },
-    {
-      heading: 'Properties',
-      links: [
-        { label: 'Taman Mawar Ehsan',        href: 'html/project-detail.html?project=proj-12' },
-        { label: 'Taman Universiti Bestari', href: 'html/project-detail.html?project=proj-13' },
-        { label: 'Residensi Mutiara Austin', href: 'html/project-detail.html?project=proj-14' },
-        { label: 'Ehsan Widuri', href: 'html/project-detail.html?project=proj-15' },
-      ],
-    },
-    {
-      heading: 'Contact',
-      links: [
-        { label: '03-2162 6649',            href: 'tel:+60321626649',            external: true },
-        { label: 'info@ehsanproperty.com',  href: 'mailto:info@ehsanproperty.com', external: true },
-        { label: 'ehsanproperty.com',       href: 'https://ehsanproperty.com',   external: true, blank: true },
-      ],
-    },
-  ];
-
-  const columns = COLUMNS.map((col) => {
-    const items = col.links.map(({ label, href, external, blank }) => {
-      // Only project-root-relative paths get rewritten; tel:, mailto: and
-      // absolute URLs are already resolvable from anywhere.
-      const url = external || href.startsWith('#') ? href : SITE.url(href);
-      const target = blank ? ' target="_blank" rel="noopener"' : '';
-      return `<li><a href="${url}"${target}>${label}</a></li>`;
-    }).join('\n          ');
-
-    return `
-      <div class="site-footer__column">
-        <h4 class="site-footer__heading">${col.heading}</h4>
-        <ul class="site-footer__links">
-          ${items}
-        </ul>
-      </div>`;
-  }).join('\n');
-
-  return `
-<footer class="site-footer">
-  <div class="site-footer__container">
-    <div class="site-footer__top">${columns}
-    </div>
-
-    <div class="site-footer__divider"></div>
-
-    <div class="site-footer__bottom">
-      <div class="site-footer__copyright">
-        <p>&copy; ${new Date().getFullYear()} Ehsan Plant &amp; Property Sdn Bhd (817795-X)</p>
-        <p>CIDB G7 Bumiputera Contractor</p>
+SITE.define('footer', SITE => {
+  const year = () => new Intl.DateTimeFormat('en', {year:'numeric',timeZone:'Asia/Kuala_Lumpur'}).format(new Date());
+  if (!window.ehsanFooterYearTimer) {
+    const refreshYear = () => { document.querySelectorAll('[data-footer-year]').forEach(node => { node.textContent = year(); }); };
+    window.ehsanFooterYearTimer = setInterval(refreshYear, 60_000);
+    document.addEventListener('visibilitychange', refreshYear);
+  }
+  if (!document.getElementById('ehsan-footer-style')) {
+    const style = document.createElement('link');
+    style.id = 'ehsan-footer-style'; style.rel = 'stylesheet';
+    style.href = SITE.url('css/footer.css?v=20261002.51'); document.head.append(style);
+  }
+  return `<footer class="site-footer footer-landscape">
+    <div class="footer-landscape__inner">
+      <div class="footer-landscape__top">
+        <a class="footer-landscape__brand" href="${SITE.url('/')}" aria-label="Ehsan Plant & Property home">
+          <img src="${SITE.url('assets/logo/epp_logo.png')}" alt="Ehsan Plant & Property logo" width="116" height="116">
+          <span>We build<br>for your<br>needs</span>
+        </a>
+        <div class="footer-landscape__contact">
+          <h2>Get in touch</h2>
+          <p class="footer-landscape__company">Ehsan Plant &amp; Property Sdn Bhd</p>
+          <address>Suite C-20-3A, Level 20, Block C, Megan Avenue II,<br>Jalan Yap Kwan Seng, 50450 Kuala Lumpur.</address>
+          <a href="tel:+60321626649">Tel: 03-2162 6649</a>
+          <a href="mailto:info@ehsanproperty.com">Email: info@ehsanproperty.com</a>
+        </div>
       </div>
-
+      <div class="footer-landscape__bottom">
+        <p>&copy; <span data-footer-year>${year()}</span> Ehsan Plant &amp; Property Sdn Bhd. All rights reserved.</p>
+        <nav aria-label="Footer"><a href="${SITE.url('about')}">About</a><a href="${SITE.url('projects')}">Projects</a><a href="${SITE.url('project-licensing/')}">Project Licensing</a><a href="https://www.instagram.com/ehsan_property/" target="_blank" rel="noopener noreferrer">Instagram ↗</a><a href="https://www.tiktok.com/@ehsanproperties" target="_blank" rel="noopener noreferrer">TikTok ↗</a></nav>
+      </div>
     </div>
-  </div>
-</footer>`;
+  </footer>`;
 });

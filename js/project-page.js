@@ -37,6 +37,7 @@
 return `<header class="project-lead${src ? ' project-lead--has-image' : ''}" data-project-section="hero" id="project-hero"><div class="project-lead__copy"><a class="project-back" href="projects.html">← All projects</a><h1>${escape(data.name)}</h1><p class="project-lead__location">${escape(data.location)}</p><div class="project-lead__actions">${data.enquiry?.enabled ? `<a class="project-primary" href="#project-enquiry">Register your interest ${formIcon}</a>` : '<a class="project-primary" href="../index.html#contact">Contact our team ↗</a>'}<div data-project-share></div></div></div>${src ? `<div class="project-picture project-picture--static"><img src="${escape(src)}" alt="${escape(data.name)}" fetchpriority="high"></div>` : ''}</header>`;
   }
   function generic(data) {
+    if (data.content?.template === 'widuri-sections-v1') return structured(data);
     const root = document.getElementById('widuriExperience');
     document.querySelector('.hero-wrapper').hidden = true;
     root.hidden = false;
@@ -57,6 +58,35 @@ return `<header class="project-lead${src ? ' project-lead--has-image' : ''}" dat
       + (data.coordinates ? section('location', 'Location', `<h2>${escape(data.location)}</h2><iframe class="project-map" title="Map of ${escape(data.name)}" src="https://www.google.com/maps?q=${encodeURIComponent(data.coordinates.lat + ',' + data.coordinates.lng)}&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`) : '')
       + (data.certificate ? section('certificate', 'Completion', `<h2>Project record</h2><p class="project-prose">${escape(data.certificate)}</p>`) : '')
       + section('cta', 'Speak to our team', `<h2>Find out more about ${escape(data.name)}</h2><a class="project-primary" href="${data.enquiry?.enabled ? '#project-enquiry' : '../index.html#contact'}">Contact sales ↗</a>`);
+  }
+  // Same section order as Widuri; a section exists only when it has content.
+  function structured(data) {
+    const root = document.getElementById('widuriExperience');
+    document.querySelector('.hero-wrapper').hidden = true;
+    root.hidden = false;
+    const content = data.content;
+    root.dataset.projectTemplate = content.template;
+    const media = data.media || {};
+    const list = items => `<ul class="project-feature-list">${items.map(item => `<li>${escape(item)}</li>`).join('')}</ul>`;
+    const gallery = (items, label) => `<div class="project-picture-grid">${items.map((image, i) => picture(imgUrl(image), `${data.name} ${label} ${i + 1}`)).join('')}</div>`;
+    const facts = content.facts?.length ? content.facts : content.sourceOnly ? [] : [['Units', data.units], ['Area', data.area], ['Starting price', data.priceRange]].filter(([, value]) => value);
+    const facilities = content.facilities?.length ? content.facilities : data.amenities || [];
+    const photos = [...new Set([...(media.image || []).slice(1), ...(media.interior || [])])];
+    const locationImages = media.location || [];
+    const logo = media.logo?.[0];
+    root.innerHTML = hero(data, media.image?.[0] || media.thumbnail ? imgUrl(media.image?.[0] || media.thumbnail) : '')
+      + (data.description || logo || content.updates?.length ? section('overview', 'Overview', `${logo ? `<img class="widuri-project-logo" src="${escape(imgUrl(logo))}" alt="${escape(data.name)} logo">` : ''}${data.description ? `<h2>About this project</h2><p class="project-prose">${escape(data.description)}</p>` : ''}${(content.updates || []).map(update => `<p class="project-prose">${escape(update)}</p>`).join('')}`) : '')
+      + (facts.length ? section('specifications', 'Project at a glance', `<dl class="project-facts">${facts.map(([label, value]) => `<div><dt>${escape(label)}</dt><dd>${escape(value)}</dd></div>`).join('')}</dl>`) : '')
+      + (content.access?.length || content.locationText || locationImages.length || data.coordinates ? section('location', 'Location & access', `${content.locationText ? `<p class="project-prose">${escape(content.locationText)}</p>` : ''}${content.access?.length ? `${list(content.access)}<p class="project-prose">Distances and travel times are approximate, as supplied in the project information.</p>` : ''}${locationImages.length ? gallery(locationImages, 'location map') : ''}${data.coordinates && !content.sourceOnly ? `<iframe class="project-map" title="Map of ${escape(data.name)}" src="https://www.google.com/maps?q=${encodeURIComponent(data.coordinates.lat + ',' + data.coordinates.lng)}&output=embed" loading="lazy"></iframe>` : ''}`) : '')
+      + (content.shuttle?.length || media.shuttle?.length ? section('shuttle', 'Shuttle connections', `${content.shuttle?.length ? list(content.shuttle) : ''}${media.shuttle?.length ? gallery(media.shuttle, 'shuttle route') : ''}`) : '')
+      + (content.neighbourhood?.length ? section('amenities', 'Neighbourhood', `<div class="project-import-cards">${content.neighbourhood.map(group => `<article><h3>${escape(group.title)}</h3>${list(group.items)}</article>`).join('')}</div>`) : '')
+      + (content.layouts?.length || media.blueprint?.length ? section('layouts', 'Layouts', `${content.layouts?.length ? `<div class="project-import-cards">${content.layouts.map(layout => `<article><h3>${escape(layout.name)}</h3>${list(layout.details)}</article>`).join('')}</div>` : ''}${media.blueprint?.length ? gallery(media.blueprint, 'floor plan') : ''}`) : '')
+      + (facilities.length || media.facilities?.length ? section('facilities', 'Facilities & features', `${facilities.length ? list(facilities) : ''}${media.facilities?.length ? gallery(media.facilities, 'facilities') : ''}`) : '')
+      + (photos.length ? section('gallery', 'Project gallery', gallery(photos, 'project photo')) : '')
+      + (content.fit?.length ? section('fit', 'Who it is for', list(content.fit)) : '')
+      + (data.certificate ? section('certificate', 'Completion', `<p class="project-prose">${escape(data.certificate)}</p>`) : '')
+      + (!content.sourceOnly && data.enquiry?.sections?.cta !== false ? section('cta', 'Speak to our team', `<h2>Find out more about ${escape(data.name)}</h2><a class="project-primary" href="${data.enquiry?.enabled ? '#project-enquiry' : '../index.html#contact'}">Contact sales ↗</a>`) : '');
+    if (content.sourceOnly) root.querySelector('.project-primary')?.remove();
   }
   function enhance(data, isWiduri) {
     const root = document.getElementById('widuriExperience');
@@ -94,7 +124,7 @@ return `<header class="project-lead${src ? ' project-lead--has-image' : ''}" dat
       paragraph.innerHTML.split(/<br\s*\/?\s*>/i).forEach(item => { const entry = document.createElement('li'); entry.textContent = new DOMParser().parseFromString(item, 'text/html').body.textContent; list.append(entry); });
       paragraph.replaceWith(list);
     });
-    root.querySelectorAll('[data-project-section="facilities"] .widuri-facilities__grid, [data-project-section="facilities"] .project-picture-grid').forEach(track => {
+    root.querySelectorAll('[data-project-section="facilities"] .widuri-facilities__grid, [data-project-section="facilities"] .project-picture-grid, [data-project-section="gallery"] .project-picture-grid').forEach(track => {
       const slides = [...track.children];
       if (slides.length < 2) return;
       track.classList.add('project-gallery-slider');

@@ -11,6 +11,7 @@ export const projectSections = [
   { id: 'amenities', label: 'Amenities / neighbourhood' },
   { id: 'layouts', label: 'Floor plans and layouts' },
   { id: 'facilities', label: 'Facilities / image gallery' },
+  { id: 'gallery', label: 'Project gallery / interiors' },
   { id: 'fit', label: 'Buyer profiles (Widuri)' },
   { id: 'certificate', label: 'Completion certificate' },
   { id: 'cta', label: 'Contact sales section' },
