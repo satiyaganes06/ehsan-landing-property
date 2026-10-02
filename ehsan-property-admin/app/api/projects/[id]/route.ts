@@ -5,6 +5,7 @@ import { recomputeSeo } from '@/lib/server/recompute-seo';
 import { scoringInputFor } from '@/lib/server/seo-input';
 import { canActOnOwnRecord } from '@/lib/server/ownership';
 import { clientIp, forbiddenOwnership, json, noContent, route } from '@/lib/server/route';
+import { readProjectEnquiry } from '@/lib/server/project-enquiry';
 
 export const runtime = 'nodejs';
 
@@ -41,7 +42,8 @@ export const GET = route<{ id: string }>({ resource: 'project', action: 'read' }
   const seoMeta = await prisma.seoMeta.findMany({
     where: { entityType: 'project', entityId: project.id },
   });
-  return json({ ...project, seoMeta });
+  const enquiry = await readProjectEnquiry(project.reference);
+  return json({ ...project, seoMeta, enquiry });
 });
 
 export const PATCH = route<{ id: string }>(

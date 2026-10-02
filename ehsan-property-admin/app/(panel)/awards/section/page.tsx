@@ -1,5 +1,5 @@
 import { LandingEditor } from '@/components/landing-editor';
 
 export default function SectionSettingsPage() {
-  return <LandingEditor mode="section" initialSection="awards" />;
+  return <LandingEditor page="about" mode="section" initialSection="awards" />;
 }

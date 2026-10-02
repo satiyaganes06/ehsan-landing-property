@@ -15,7 +15,7 @@ const AwardBody = z.object({
 
 export const GET = route({ resource: 'award', action: 'read' }, async () => {
   const awards = await prisma.award.findMany({
-    orderBy: { sortOrder: 'asc' },
+    orderBy: [{ year: 'desc' }, { sortOrder: 'asc' }],
     include: { translations: { where: { locale: 'EN' } }, media: true },
   });
   return json(

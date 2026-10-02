@@ -107,7 +107,7 @@ export default function EnquiriesPage() {
         <EmptyState
           icon={Inbox}
           title="No enquiries yet"
-          description="Messages from the site's contact form will appear here. The form on the live site still needs to be pointed at this panel."
+          description="Messages submitted through the website enquiry and event-registration forms will appear here."
         />
       ) : (
         <div className="grid gap-4 lg:grid-cols-[22rem_minmax(0,1fr)]">

@@ -6,10 +6,10 @@ import DOMPurify from 'dompurify';
 import 'quill/dist/quill.snow.css';
 import './rich-text-editor.css';
 
-type Props = { id: string; label: string; value: string; html: boolean; disabled: boolean; onChange: (html: string) => void };
+type Props = { id: string; label: string; value: string; html: boolean; disabled: boolean; editorial?: boolean; onChange: (html: string) => void };
 
 /** Browser-only Quill instance. No raw HTML editing or arbitrary embeds. */
-export function RichTextEditor({ id, label, value, html, disabled, onChange }: Props) {
+export function RichTextEditor({ id, label, value, html, disabled, editorial = false, onChange }: Props) {
   const host = useRef<HTMLDivElement>(null);
   const editor = useRef<Quill | null>(null);
   const latest = useRef({ value, html, disabled, onChange });
@@ -25,8 +25,8 @@ export function RichTextEditor({ id, label, value, html, disabled, onChange }: P
       mount.append(surface);
       const instance = new Quill(surface, {
         theme: 'snow',
-        formats: ['bold', 'italic', 'underline', 'strike', 'color', 'background', 'size', 'align'],
-        modules: { toolbar: [['bold', 'italic', 'underline', 'strike'], [{ size: ['small', false, 'large', 'huge'] }], [{ color: [] }, { background: [] }], [{ align: [] }], ['clean']] },
+        formats: ['bold', 'italic', 'underline', 'strike', 'color', 'background', 'size', 'align', ...(editorial ? ['header', 'list', 'blockquote'] : [])],
+        modules: { toolbar: [['bold', 'italic', 'underline', 'strike'], ...(editorial ? [[{ header: [2, 3, false] }], [{ list: 'ordered' }, { list: 'bullet' }, 'blockquote']] : []), [{ size: ['small', false, 'large', 'huge'] }], [{ color: [] }, { background: [] }], [{ align: [] }], ['clean']] },
       });
       editor.current = instance;
       instance.root.id = id;
@@ -47,12 +47,12 @@ export function RichTextEditor({ id, label, value, html, disabled, onChange }: P
       });
       mount.querySelectorAll<HTMLElement>('.ql-picker-label').forEach(picker => {
         const parent = picker.parentElement;
-        const name = parent?.classList.contains('ql-color') ? 'Text colour' : parent?.classList.contains('ql-background') ? 'Highlight colour' : parent?.classList.contains('ql-align') ? 'Text alignment' : 'Text size';
+        const name = parent?.classList.contains('ql-color') ? 'Text colour' : parent?.classList.contains('ql-background') ? 'Highlight colour' : parent?.classList.contains('ql-align') ? 'Text alignment' : parent?.classList.contains('ql-header') ? 'Heading level' : 'Text size';
         picker.setAttribute('aria-label', name);
       });
     }).catch(() => { if (active) setFailure(true); });
     return () => { active = false; editor.current = null; mount.replaceChildren(); };
-  }, [id, label]);
+  }, [id, label, editorial]);
 
   useEffect(() => {
     const instance = editor.current;

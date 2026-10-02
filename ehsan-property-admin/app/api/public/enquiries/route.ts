@@ -2,6 +2,7 @@ import { z } from 'zod';
 import { prisma } from '@/lib/server/prisma';
 import { enquiryRateLimited, hashIp } from '@/lib/server/rate-limit';
 import { clientIp, publicRoute } from '@/lib/server/route';
+import { readProjectEnquiry } from '@/lib/server/project-enquiry';
 
 export const runtime = 'nodejs';
 
@@ -10,8 +11,9 @@ const PublicEnquiryBody = z.object({
   email: z.string().email(),
   phone: z.string().max(30).optional(),
   interest: z.string().max(200).optional(),
+  projectReference: z.string().max(100).optional(),
   message: z.string().min(1).max(4000),
-  consent: z.literal(true),
+  consent: z.boolean().optional(),
   // Honeypot: a real visitor never sees or fills this (it is hidden via CSS on
   // the form). Any value here means an automated submission.
   //
@@ -24,6 +26,8 @@ const PublicEnquiryBody = z.object({
   // faster than a human can read and fill five fields is not a human.
   renderedAt: z.number().optional(),
   utm: z.record(z.string(), z.string()).optional(),
+}).refine(body => !!body.projectReference || body.consent === true, {
+  path: ['consent'], message: 'Please agree to be contacted.',
 });
 
 const MIN_FILL_MS = 2500;
@@ -46,7 +50,7 @@ export const POST = publicRoute(async ({ request }) => {
     );
   }
 
-  const { website, renderedAt, utm, consent: _consent, ...data } = parsed.data;
+  const { website, renderedAt, utm, projectReference, consent, ...data } = parsed.data;
 
   // A bot given a rejection learns to adjust; one given a quiet success moves
   // on. Both traps answer 200 without writing a row.
@@ -63,6 +67,12 @@ export const POST = publicRoute(async ({ request }) => {
     );
   }
 
+  if (projectReference) {
+    const project = await prisma.project.findUnique({ where: { reference: projectReference } });
+    const settings = project ? await readProjectEnquiry(projectReference) : null;
+    if (!settings?.enabled || project?.publishState !== 'PUBLISHED') return Response.json({ message: 'Enquiries are not available for this project.' }, { status: 400, headers: CORS });
+    data.interest = settings.interest;
+  }
   await prisma.enquiry.create({
     data: {
       ...data,
@@ -70,7 +80,7 @@ export const POST = publicRoute(async ({ request }) => {
       referrer: request.headers.get('referer') ?? undefined,
       ipHash,
       userAgent: request.headers.get('user-agent') ?? undefined,
-      consentAt: new Date(),
+      consentAt: consent === true ? new Date() : null,
     },
   });
 

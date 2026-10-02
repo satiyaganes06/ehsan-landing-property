@@ -23,6 +23,8 @@
   window.SITE = {
     /** Absolute URL of the project root, always with a trailing slash. */
     base,
+    /** Use the same CMS for every public page; never point production at localhost. */
+    adminOrigin: (window.EHSAN_CMS_ORIGIN || (['localhost', '127.0.0.1'].includes(location.hostname) ? 'http://localhost:3001' : location.origin)).replace(/\/$/, ''),
 
     /** Current page filename, lowercased — components use it for active state. */
     page: page.toLowerCase(),

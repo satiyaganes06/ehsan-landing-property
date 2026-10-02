@@ -35,7 +35,13 @@ export function LivePreview({ template, reference, data }: LivePreviewProps) {
   // Kept in a ref so the message handler always answers with the latest draft
   // without needing to be torn down and re-attached on every keystroke.
   const latest = useRef(data);
-  latest.current = data;
+  useEffect(() => {
+    latest.current = data;
+    // The static renderer consumes a single draft per document. Refresh it
+    // after editing pauses so subsequent unsaved changes are visible too.
+    const timer = setTimeout(() => { setReady(false); setNonce(n => n + 1); }, 500);
+    return () => clearTimeout(timer);
+  }, [data]);
 
   const post = useCallback(() => {
     frame.current?.contentWindow?.postMessage(
@@ -124,7 +130,7 @@ export function LivePreview({ template, reference, data }: LivePreviewProps) {
           title={`${template} page preview`}
           onLoad={post}
           className={cn(
-            'mx-auto block h-[68vh] rounded-md border bg-white transition-[width]',
+            'mx-auto block h-[68vh] max-w-full rounded-md border bg-white transition-[width]',
             device === 'mobile' ? 'w-[390px]' : 'w-full',
           )}
           sandbox="allow-same-origin allow-scripts allow-popups"

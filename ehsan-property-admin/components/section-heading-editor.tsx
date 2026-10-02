@@ -7,7 +7,7 @@ export function SectionHeadingEditor({ id, value, disabled, onChange }: { id: st
   let heading: Heading = { label: '', title: '', introduction: '' };
   try { heading = { ...heading, ...JSON.parse(value) }; } catch { /* Keep editable empty heading. */ }
   const update = (key: keyof Heading, text: string) => onChange(JSON.stringify({ ...heading, [key]: text }));
-  const labels: Record<keyof Heading, string> = { label: 'Section label', title: 'Title', introduction: 'Introduction' };
+  const labels: Record<keyof Heading, string> = { label: 'Section label', title: 'Title', introduction: 'Subtitle' };
   return <div className="space-y-4">
     <p className="text-xs text-muted-foreground">One heading group. Keep the parts you need; empty parts are not shown on the website.</p>
     {(Object.keys(labels) as (keyof Heading)[]).map(key => <div key={key} className="space-y-2">

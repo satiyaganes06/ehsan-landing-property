@@ -9,7 +9,7 @@
    Set it before this script loads (a <script> tag in the page head does it).
 */
 function cmsUrl(file, fallback) {
-  const origin = window.EHSAN_CMS_ORIGIN;
+  const origin = window.EHSAN_CMS_ORIGIN || window.SITE?.adminOrigin;
   return origin ? origin.replace(/\/$/, '') + '/api/public/' + file : SITE.url(fallback);
 }
 
@@ -111,7 +111,7 @@ function cmsUrl(file, fallback) {
       return r.json();
     })
     .then((data) => {
-      events = Object.entries(data);
+      events = Object.entries(data).map(([id, event]) => [id, { ...event, image: event.image?.startsWith('/media/') ? SITE.adminOrigin + event.image : event.image, speakers: event.speakers?.map(speaker => ({ ...speaker, image: speaker.image?.startsWith('/media/') ? SITE.adminOrigin + speaker.image : speaker.image })) }]);
       renderFilter();
       render();
     })

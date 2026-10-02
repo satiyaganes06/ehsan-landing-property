@@ -66,10 +66,12 @@ export function toSiteProject(detail: ProjectDetail, draft: ProjectPreviewDraft)
 
   return {
     [detail.reference]: {
+      enquiry: detail.enquiry,
       name: draft.name,
       location: draft.location,
       coordinates: { lat: detail.latitude ?? 0, lng: detail.longitude ?? 0 },
       year: draft.yearEnd || draft.yearStart,
+      yearEnd: draft.yearEnd,
       status: toTitleCase(draft.status),
       description: draft.description,
       units: draft.units,

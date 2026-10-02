@@ -24,7 +24,10 @@ let currentMediaType = 'image';
 /* ===== Load Projects from JSON ===== */
 async function loadProjectsData() {
   try {
-    const response = await fetch(cmsUrl('projects.json', 'data/projects.json?v=20260915.1'));
+    const admin = window.EHSAN_CMS_ORIGIN || window.SITE?.adminOrigin || (['localhost', '127.0.0.1'].includes(location.hostname) ? 'http://localhost:3001' : '');
+    let response;
+    try { response = await fetch(admin ? admin.replace(/\/$/, '') + '/api/public/projects.json' : cmsUrl('projects.json', 'data/projects.json?v=20260915.1'), { cache: 'no-store' }); }
+    catch { response = await fetch(SITE.url('data/projects.json?v=20260915.1')); }
     if (!response.ok) throw new Error('Failed to load projects');
     PROJECTS_DATA = await response.json();
     return true;
@@ -324,6 +327,22 @@ function renderWiduriExperience(data) {
     { key: 'd', title: 'Type D', size: '950 sq ft', file: 'WIDURI-FLOOR-PLAN-04.jpg', details: ['4 bedrooms', '2 bathrooms', '2 parking', 'Dual key option'] },
     { key: 'e', title: 'Type E', size: '980 sq ft', file: 'WIDURI-FLOOR-PLAN-05.jpg', details: ['4 bedrooms', '2 bathrooms', '2 parking', '44 homes'] }
   ];
+  const layoutMarkup = layout => {
+    const icons = [
+      '<path d="M3 18v-7h18v7M3 15h18M5 11V6h14v5M7 8h3m4 0h3M3 18v2m18-2v2"/>',
+      '<path d="M4 12h16v3a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5v-3ZM6 12V5a2 2 0 0 1 4 0M5 20v2m14-2v2"/>',
+      '<path d="m5 8 2-4h10l2 4M3 9h18v8H3V9Zm2 8v3m14-3v3M6 12h2m8 0h2"/>',
+      '<path d="m3 10 9-7 9 7M5 9v12h14V9M9 21v-7h6v7"/>',
+    ];
+    const facts = layout.details.map((detail, index) => {
+      const numeric = detail.match(/^(\d+)\s+(.+)$/);
+      const label = numeric ? ['Bedrooms', 'Bathrooms', 'Parking', 'Homes'][index] : 'Layout option';
+      const value = numeric ? numeric[1] : 'Dual key';
+      const icon = numeric ? icons[index] : '<circle cx="8" cy="8" r="4"/><path d="m11 11 9 9m-4-4 3-3m-6 0 3-3"/>';
+      return `<div class="widuri-layout-spec"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icon}</svg><dt>${label}</dt><dd>${value}</dd></div>`;
+    }).join('');
+    return `<div class="widuri-layout-heading"><h3>${layout.title}</h3><p class="widuri-layout-size">${layout.size}</p></div><dl class="widuri-layout-specs">${facts}</dl>`;
+  };
   const gallery = [
     ['SwimmingPool2_A-DESKTOP-OB2275O-scaled.jpg', 'Swimming pool'],
     ['WadingPool-DESKTOP-OB2275O-scaled.jpg', 'Wading pool'],
@@ -355,6 +374,7 @@ function renderWiduriExperience(data) {
     <section class="widuri-overview" aria-labelledby="widuriOverviewTitle">
       <div class="widuri-section-heading">
         <p class="widuri-kicker">01 / Overview</p>
+        <img class="widuri-project-logo" src="${SITE.url('assets/img/widuri/project-logo.png')}" alt="Ehsan Widuri project logo" width="3146" height="1242" loading="lazy" decoding="async">
         <h2 id="widuriOverviewTitle">A place to live close to <em>what matters.</em></h2>
       </div>
       <div class="widuri-overview__copy">
@@ -374,10 +394,13 @@ function renderWiduriExperience(data) {
       <div class="widuri-location__content">
         <p class="widuri-kicker">02 / Location</p>
         <h2 id="widuriLocationTitle">A connected life, from <em>Nilai onwards.</em></h2>
-        <p>Set within an established education and airport linked township, Widuri makes the places you use most feel close at hand.</p>
-        <div class="widuri-route-list">
-          <span>PLUS Highway</span><span>ELITE Highway</span><span>Nilai Labu Enstek Expressway</span><span>Approx. 20 minutes to KLIA</span>
-        </div>
+        <p>Set within an established education and airport-linked township, Widuri keeps everyday destinations close at hand.</p>
+        <ul class="widuri-route-list" aria-label="Transport connections">
+          <li><span class="widuri-route-label">Highway access</span><strong>PLUS Highway</strong></li>
+          <li><span class="widuri-route-label">Highway access</span><strong>ELITE Highway</strong></li>
+          <li><span class="widuri-route-label">Expressway access</span><strong>Nilai Labu Enstek Expressway</strong></li>
+          <li><span class="widuri-route-label">Airport connection</span><strong>KLIA · approx. 20 min drive</strong></li>
+        </ul>
       </div>
     </section>
 
@@ -386,7 +409,6 @@ function renderWiduriExperience(data) {
         <p class="widuri-kicker">Everyday connections</p>
         <h2 id="widuriShuttleTitle">No car? <em>No problem.</em></h2>
         <p>A complimentary shuttle route connects residents with nearby campuses, shopping and rail links.</p>
-        <div class="widuri-shuttle__stops"><span>INTI</span><span>MILA</span><span>USIM</span><span>Nilai University</span><span>AEON Mall</span><span>KTM Nilai</span></div>
       </div>
       <img src="${asset('2.shuttle-service-01-1_final.jpg')}" alt="Ehsan Widuri shuttle service route">
     </section>
@@ -416,7 +438,7 @@ function renderWiduriExperience(data) {
       <div class="widuri-layout-stage">
         <button class="widuri-plan" id="widuriPlanButton" type="button" aria-label="View Type A floor plan larger"><img id="widuriPlanImage" src="${asset(layouts[0].file)}" alt="Type A floor plan"></button>
         <div class="widuri-layout-details" id="widuriLayoutDetails">
-          <p class="widuri-kicker">Type A / 890 sq ft</p><h3>Room for more <em>possibility.</em></h3><ul>${layouts[0].details.map(detail => `<li>${detail}</li>`).join('')}</ul><a class="widuri-button" href="#enquire">Enquire about this home <span aria-hidden="true">↗</span></a>
+          ${layoutMarkup(layouts[0])}
         </div>
       </div>
     </section>
@@ -428,9 +450,8 @@ function renderWiduriExperience(data) {
         <p>Explore the places for movement, rest, work and play, all within the development.</p>
       </div>
       <div class="widuri-facilities__grid" id="gallery">
-        ${gallery.map(([file, label], index) => `<button class="widuri-facility-item" type="button" data-gallery-index="${index}" aria-label="View ${label} larger"><img src="${asset(file)}" alt="${label}"><span>${String(index + 1).padStart(2, '0')} / ${label}</span></button>`).join('')}
+        ${gallery.map(([file, label], index) => `<button class="widuri-facility-item" type="button" data-gallery-index="${index}" aria-label="View ${label} larger"><img src="${asset(file)}" alt="${label}"><span>${label}</span></button>`).join('')}
       </div>
-      <div class="widuri-facilities__list">Swimming pool · Children’s pool · Jogging track · Kids waterplay · Playground · Gazebo · Barbecue pit · Reading room · Multipurpose hall · Sauna · Indoor gym · Outdoor gym · Yoga room · Games room · EV charging</div>
     </section>
 
     <section class="widuri-fit" aria-labelledby="widuriFitTitle">
@@ -444,10 +465,6 @@ function renderWiduriExperience(data) {
       </div>
     </section>
 
-    <section class="widuri-enquire" id="enquire">
-      <div><p class="widuri-kicker">Ehsan Widuri, Bandar Baru Nilai</p><h2>Find your place at <em>Widuri.</em></h2></div>
-      <a class="widuri-button widuri-button--light" href="../index.html#contact">Contact sales <span aria-hidden="true">↗</span></a>
-    </section>
     <dialog class="widuri-lightbox" id="widuriLightbox"><button class="widuri-lightbox__close" type="button" aria-label="Close image">×</button><img id="widuriLightboxImage" src="" alt=""></dialog>
   `;
 
@@ -460,7 +477,7 @@ function renderWiduriExperience(data) {
     planImage.src = asset(layout.file);
     planImage.alt = `${layout.title} floor plan`;
     planButton.setAttribute('aria-label', `View ${layout.title} floor plan larger`);
-    layoutDetails.innerHTML = `<p class="widuri-kicker">${layout.title} / ${layout.size}</p><h3>Room for more <em>possibility.</em></h3><ul>${layout.details.map(detail => `<li>${detail}</li>`).join('')}</ul><a class="widuri-button" href="#enquire">Enquire about this home <span aria-hidden="true">↗</span></a>`;
+    layoutDetails.innerHTML = layoutMarkup(layout);
   };
   experience.querySelectorAll('.widuri-layout-tab').forEach((button) => {
     button.addEventListener('click', () => {
@@ -638,6 +655,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   const loaded = await loadProjectsData();
   if (!loaded) {
     console.error('Failed to load project data');
+    const status = document.querySelector('.project-loading');
+    if (status) status.textContent = 'We could not load this project. Please refresh the page.';
     return;
   }
 
@@ -651,20 +670,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (isWiduri) {
       renderWiduriExperience(projectData);
-      setupWiduriSectionMotion();
     } else {
-      const carousel = new Carousel();
-      carousel.init(projectData.media.image);
-
-      const lightbox = new LightboxGallery(projectData.media.image);
-      renderImageGallery(projectData, lightbox);
-      renderBlueprintGallery(projectData, lightbox);
-
-      renderProjectContent(projectData);
-      configureMediaSwitcher(projectData);
-      renderRelatedProjects(projectKey);
-      renderGoogleMap(projectData);
+      window.ProjectPage.generic(projectData);
     }
+    window.ProjectPage.enhance(projectData, isWiduri);
+  } else {
+    const status = document.querySelector('.project-loading');
+    if (status) status.textContent = 'This project is not available. Please browse our project portfolio.';
   }
 
   // Initialize scroll-based navbar slide-down

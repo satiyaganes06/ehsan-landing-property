@@ -29,6 +29,9 @@ const HERE = path.dirname(fileURLToPath(import.meta.url));
 const APP = path.resolve(HERE, '..');
 const REPO = path.resolve(APP, '..');
 
+await mkdir(path.join(APP, 'data'), { recursive: true });
+await cp(path.join(REPO, 'data/news.json'), path.join(APP, 'data/news.json'));
+
 const SHIM = `<script>
 /* Injected by scripts/sync-preview-templates.mjs -- do not edit here. */
 (function () {
@@ -47,7 +50,7 @@ const SHIM = `<script>
   var realFetch = window.fetch.bind(window);
   window.fetch = function (input, init) {
     var url = typeof input === 'string' ? input : (input && input.url) || '';
-    if (/\\/data\\/(projects|events)\\.json/.test(url)) {
+    if (window.parent !== window && /\\/(?:data|api\\/public)\\/(projects|events)\\.json/.test(url)) {
       return draft.then(function (payload) {
         return new Response(JSON.stringify(payload), {
           status: 200,
@@ -71,7 +74,7 @@ const SHIM = `<script>
 const INERT_FORM = `<script>
 /* Preview only: the registration form must not reach the real endpoint. */
 document.addEventListener('submit', function (event) {
-  if (event.target && event.target.id === 'eventRegisterForm') {
+  if (event.target && event.target.matches('form')) {
     event.preventDefault();
     event.stopImmediatePropagation();
   }
@@ -91,7 +94,7 @@ function injectIntoHead(html, ...blocks) {
 }
 
 const TARGETS = [
-  { from: 'html/project-detail.html', to: 'public/preview/project.html', extra: [] },
+  { from: 'html/project-detail.html', to: 'public/preview/project.html', extra: [INERT_FORM] },
   { from: 'html/event-detail.html', to: 'public/preview/event.html', extra: [INERT_FORM] },
 ];
 

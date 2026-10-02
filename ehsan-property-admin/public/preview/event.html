@@ -29,7 +29,7 @@
   var realFetch = window.fetch.bind(window);
   window.fetch = function (input, init) {
     var url = typeof input === 'string' ? input : (input && input.url) || '';
-    if (/\/data\/(projects|events)\.json/.test(url)) {
+    if (window.parent !== window && /\/(?:data|api\/public)\/(projects|events)\.json/.test(url)) {
       return draft.then(function (payload) {
         return new Response(JSON.stringify(payload), {
           status: 200,
@@ -51,7 +51,7 @@
 <script>
 /* Preview only: the registration form must not reach the real endpoint. */
 document.addEventListener('submit', function (event) {
-  if (event.target && event.target.id === 'eventRegisterForm') {
+  if (event.target && event.target.matches('form')) {
     event.preventDefault();
     event.stopImmediatePropagation();
   }
@@ -210,14 +210,14 @@ document.addEventListener('submit', function (event) {
 <div data-component="assistant"></div>
 
 <!-- Page chrome: registry first, then each component, then mount. -->
-<script src="/live-site/components/registry.js"></script>
-<script src="/live-site/components/navbar.js"></script>
-<script src="/live-site/components/footer.js"></script>
+<script src="/live-site/components/registry.js?v=20261002.e2e"></script>
+<script src="/live-site/components/navbar.js?v=20261001"></script>
+<script src="/live-site/components/footer.js?v=20261002.e2e"></script>
 <script src="/live-site/components/assistant.js"></script>
 <script src="/live-site/components/mount.js"></script>
 
 <!-- Page behaviour — runs after the chrome is in the DOM. -->
-<script src="/live-site/js/event-detail.js"></script>
+<script src="/live-site/js/event-detail.js?v=20261002.e2e"></script>
 <script src="/live-site/js/content.js"></script>
 </body>
 </html>

@@ -62,6 +62,7 @@ export interface ProjectTranslation {
 }
 
 export interface ProjectDetail {
+  enquiry?: { enabled: boolean; interest: string; sections: Record<string, boolean> };
   id: string;
   reference: string;
   status: ProjectStatus;

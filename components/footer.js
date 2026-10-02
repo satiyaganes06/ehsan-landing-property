@@ -14,16 +14,16 @@ SITE.define('footer', (SITE) => {
         { label: 'Home',        href: 'index.html' },
         { label: 'About Us',    href: 'html/about.html' },
         { label: 'Work Record', href: 'index.html#record' },
-        { label: 'Recognition', href: 'index.html#awards' },
+        { label: 'Recognition', href: 'html/about.html#awards' },
       ],
     },
     {
       heading: 'Properties',
       links: [
-        { label: 'Taman Mawar Ehsan',        href: 'index.html#record' },
-        { label: 'Taman Universiti Bestari', href: 'index.html#record' },
-        { label: 'Residensi Mutiara Austin', href: 'index.html#record' },
-        { label: 'Ehsan Widuri Putra Nilai', href: 'index.html#record' },
+        { label: 'Taman Mawar Ehsan',        href: 'html/project-detail.html?project=proj-12' },
+        { label: 'Taman Universiti Bestari', href: 'html/project-detail.html?project=proj-13' },
+        { label: 'Residensi Mutiara Austin', href: 'html/project-detail.html?project=proj-14' },
+        { label: 'Ehsan Widuri', href: 'html/project-detail.html?project=proj-15' },
       ],
     },
     {
@@ -32,14 +32,6 @@ SITE.define('footer', (SITE) => {
         { label: '03-2162 6649',            href: 'tel:+60321626649',            external: true },
         { label: 'info@ehsanproperty.com',  href: 'mailto:info@ehsanproperty.com', external: true },
         { label: 'ehsanproperty.com',       href: 'https://ehsanproperty.com',   external: true, blank: true },
-      ],
-    },
-    {
-      heading: 'Social',
-      links: [
-        { label: 'Facebook',  href: '#', blank: true },
-        { label: 'Instagram', href: '#', blank: true },
-        { label: 'LinkedIn',  href: '#', blank: true },
       ],
     },
   ];
@@ -76,13 +68,6 @@ SITE.define('footer', (SITE) => {
         <p>CIDB G7 Bumiputera Contractor</p>
       </div>
 
-      <div class="site-footer__legal">
-        <a href="#" class="site-footer__legal-link">Privacy Policy</a>
-        <span class="site-footer__separator"></span>
-        <a href="#" class="site-footer__legal-link">Terms of Service</a>
-        <span class="site-footer__separator"></span>
-        <a href="#" class="site-footer__legal-link">Disclaimer</a>
-      </div>
     </div>
   </div>
 </footer>`;

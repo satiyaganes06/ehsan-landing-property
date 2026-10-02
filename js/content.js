@@ -9,7 +9,6 @@
      1. marquee cloning     the vertical auto-scrollers need a second copy of
                             their content before the -50% loop is seamless
      2. count-up            numbers that tick to their authored value
-     3. running tally       project value accumulating as cards pass mid-screen
      4. chrome              scroll progress bar + section rail current-state
      5. story cards         one testimonial card expanded at a time, on hover
      6. ledger disclosure   "view more" reveals the rest of the work record
@@ -89,41 +88,6 @@
     }, { threshold: 0.6 });
 
     counters.forEach((el) => io.observe(el));
-  }
-
-
-  /* ---------- 3. running tally ----------
-     Sums data-val (RM millions) for every card whose top has crossed 65% of the
-     viewport, so the figure climbs as the record is read rather than jumping
-     to a total the moment the section appears. */
-
-  const tallyEl = document.querySelector('[data-tally]');
-  const cards   = document.querySelectorAll('.pcard');
-
-  if (tallyEl && cards.length) {
-    const vals = [...cards].map((r) => parseFloat(r.dataset.val) || 0);
-    let shown = -1;
-
-    const paint = () => {
-      const line = window.innerHeight * 0.65;
-      let sum = 0;
-      cards.forEach((r, i) => {
-        if (r.getBoundingClientRect().top < line) sum += vals[i];
-      });
-      if (sum === shown) return;
-      shown = sum;
-      tallyEl.textContent = sum >= 1000
-        ? `RM ${(sum / 1000).toFixed(3)} bil`
-        : `RM ${sum.toLocaleString('en-US', { maximumFractionDigits: 1 })} mil`;
-    };
-
-    let tQueued = false;
-    addEventListener('scroll', () => {
-      if (tQueued) return;
-      tQueued = true;
-      requestAnimationFrame(() => { tQueued = false; paint(); });
-    }, { passive: true });
-    paint();
   }
 
 
@@ -343,6 +307,8 @@
      path to the project root regardless of which page is asking. */
 
   document.querySelectorAll('.pcard[data-project-id]').forEach((row) => {
+    row.tabIndex = 0; row.setAttribute('role', 'link');
+    row.addEventListener('keydown', event => { if (event.key === 'Enter') row.click(); });
     row.addEventListener('click', () => {
       const projectId = row.dataset.projectId;
       if (projectId) {
@@ -353,14 +319,18 @@
   });
 
   /* ---------- 9. enquiry form ----------
-     No backend yet, so this validates client-side and reports the outcome in
-     place. `is-validated` gates the :invalid styling so the form is not red on
-     first paint — it only turns red once someone has actually tried to send. */
+     The homepage and project pages submit to the same lead inbox. */
 
   const enquiry = document.querySelector('[data-enquiry-form]');
 
   if (enquiry) {
     const status = enquiry.querySelector('[data-enquiry-status]');
+    const actions = enquiry.querySelector('.enquiry__actions');
+    const consentLabel = document.createElement('label'); consentLabel.className = 'project-enquiry-consent';
+    const consent = document.createElement('input'); consent.type = 'checkbox'; consent.name = 'consent'; consent.required = true;
+    consentLabel.append(consent, ' I agree to be contacted about this enquiry.'); actions.prepend(consentLabel);
+    const trap = document.createElement('input'); trap.name = 'website'; trap.type = 'text'; trap.tabIndex = -1; trap.autocomplete = 'off'; trap.setAttribute('aria-hidden', 'true'); trap.className = 'project-enquiry-trap'; enquiry.append(trap);
+    const renderedAt = Date.now();
 
     const report = (msg, kind) => {
       if (!status) return;
@@ -369,7 +339,7 @@
       status.classList.toggle('is-err', kind === 'err');
     };
 
-    enquiry.addEventListener('submit', (e) => {
+    enquiry.addEventListener('submit', async (e) => {
       e.preventDefault();
       enquiry.classList.add('is-validated');
 
@@ -380,9 +350,18 @@
         return;
       }
 
-      report('Thanks — this is a placeholder form, so nothing was sent. Email info@ehsanproperty.com to reach us.', 'ok');
-      enquiry.reset();
-      enquiry.classList.remove('is-validated');
+      if (new URLSearchParams(location.search).has('landing-editor')) { report('Preview only — no enquiry was sent.', null); return; }
+      const submit = enquiry.querySelector('[type="submit"]'); submit.disabled = true; report('Sending…', null);
+      const values = Object.fromEntries(new FormData(enquiry));
+      const extra = [...enquiry.querySelectorAll('.field')].filter(field => !['name', 'email', 'phone', 'interest', 'message'].includes(field.querySelector('[name]')?.name)).map(field => `${field.querySelector('label')?.textContent || 'Additional information'}: ${field.querySelector('[name]')?.value || ''}`).join('\n');
+      try {
+        const admin = (window.EHSAN_CMS_ORIGIN || window.SITE?.adminOrigin || 'http://localhost:3001').replace(/\/$/, '');
+        const response = await fetch(`${admin}/api/public/enquiries`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: values.name, email: values.email, phone: values.phone, interest: values.interest, message: `${values.message || ''}${extra ? '\n\n' + extra : ''}`, consent: consent.checked, website: values.website, renderedAt, utm: Object.fromEntries([...new URLSearchParams(location.search)].filter(([key]) => key.startsWith('utm_'))) }) });
+        const result = await response.json(); if (!response.ok) throw new Error(result.message || 'Could not send your enquiry. Please try again.');
+        report('Thank you. Your enquiry has been received and our team will contact you.', 'ok');
+        enquiry.reset(); enquiry.classList.remove('is-validated');
+      } catch (error) { report(error.message || 'Could not send your enquiry. Please try again.', 'err'); }
+      finally { submit.disabled = false; }
     });
 
     // Clear a stale message as soon as the visitor starts editing again.

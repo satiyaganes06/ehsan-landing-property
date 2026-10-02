@@ -25,6 +25,7 @@ import path from 'node:path';
 import 'server-only';
 import { prisma } from './prisma';
 import { mediaUrl } from './media-url';
+import { projectEnquirySchema, projectEnquiryKey } from './project-enquiry';
 
 /* Where the landing site reads its content from. Relative to the app root,
    which is one level below the repo root now that the panel sits there.
@@ -79,6 +80,8 @@ export async function buildProjectsPayload(): Promise<Record<string, unknown>> {
     },
   });
 
+  const enquiryBlocks = await prisma.textBlock.findMany({ where: { key: { in: projects.map(p => projectEnquiryKey(p.reference)) } }, include: { translations: { where: { locale: 'EN' } } } });
+  const enquiryByKey = new Map(enquiryBlocks.map(block => [block.key, block.translations[0]?.value]));
   const out: Record<string, unknown> = {};
   for (const p of projects) {
     const t = p.translations[0];
@@ -86,6 +89,7 @@ export async function buildProjectsPayload(): Promise<Record<string, unknown>> {
 
     out[p.reference] = {
       name: t.name,
+      enquiry: projectEnquirySchema.parse(enquiryByKey.get(projectEnquiryKey(p.reference)) ?? { enabled: false, interest: '' }),
       location: t.location,
       coordinates: p.latitude != null && p.longitude != null ? { lat: p.latitude, lng: p.longitude } : null,
       year: p.yearStart ?? '',

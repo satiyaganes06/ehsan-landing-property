@@ -2,6 +2,7 @@ import { z } from 'zod';
 import { prisma } from '@/lib/server/prisma';
 import { json, route } from '@/lib/server/route';
 import { recordAudit, recordRevision } from '@/lib/server/audit';
+import { contactFormSchema } from '@/lib/contact-form';
 
 export const runtime = 'nodejs';
 const key = 'landing.customization';
@@ -15,7 +16,11 @@ export const GET = route({ resource: 'block', action: 'read' }, async () => {
 
 export const PUT = route({ resource: 'block', action: 'update' }, async ({ request, user }) => {
   const body = schema.parse(await request.json());
-  for (const statisticKey of ['about:statistics', 'record:statistics']) {
+  if (body.values['contact:form'] !== undefined) {
+    try { contactFormSchema.parse(JSON.parse(body.values['contact:form'])); }
+    catch { return json({ message: 'Keep required Name (text), Email (email) and Message (long message) fields. Use up to 20 unique fields and 40 dropdown options; consent and website IDs are reserved.' }, 400); }
+  }
+  for (const statisticKey of ['about:statistics']) {
     if (body.values[statisticKey] === undefined) continue;
     try { statisticCards.parse(JSON.parse(body.values[statisticKey])); }
     catch { return json({ message: 'Use up to 30 statistic cards with a text value and title.' }, 400); }

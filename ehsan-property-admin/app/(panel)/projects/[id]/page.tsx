@@ -31,6 +31,7 @@ import { api, ApiError } from '@/lib/api';
 import { useSession } from '@/lib/session';
 import type { MediaItem, ProjectDetail, SeoMeta } from '@/lib/types';
 import { cn } from '@/lib/utils';
+import { ProjectEnquirySettings } from '@/components/project-enquiry-settings';
 
 interface ContentDraft {
   status: ProjectDetail['status'];
@@ -309,7 +310,7 @@ export default function ProjectEditPage({ params }: { params: Promise<{ id: stri
         <TabsContents>
         <TabsContent value="content" className="pt-5">
           {content ? (
-            <ContentTab draft={content} onChange={setContent} readOnly={!can('project', 'update')} />
+            <><ContentTab draft={content} onChange={setContent} readOnly={!can('project', 'update')} /><ProjectEnquirySettings key={id} id={id} readOnly={!can('project', 'update')} /></>
           ) : (
             <FormSkeleton />
           )}

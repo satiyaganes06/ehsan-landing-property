@@ -41,6 +41,7 @@ const NAV: Array<{ group: string; items: NavItem[] }> = [
     group: 'Website',
     items: [
       { href: '/landing', label: 'Page builder', icon: Monitor, need: ['block', 'read'] },
+      { href: '/about', label: 'About page', icon: Building2, need: ['block', 'read'] },
       { href: '/website', label: 'Website settings', icon: Settings2, need: ['block', 'read'] },
       { href: '/media', label: 'Media library', icon: Images, need: ['media', 'read'] },
     ],
@@ -50,6 +51,7 @@ const NAV: Array<{ group: string; items: NavItem[] }> = [
     items: [
       { href: '/projects', label: 'Projects', icon: Building2, need: ['project', 'read'] },
       { href: '/events', label: 'Events', icon: CalendarDays, need: ['event', 'read'] },
+      { href: '/news', label: 'News', icon: ScrollText, need: ['block', 'read'] },
       { href: '/awards', label: 'Awards', icon: Trophy, need: ['award', 'read'] },
       { href: '/testimonials', label: 'Testimonials', icon: Quote, need: ['testimonial', 'read'] },
     ],

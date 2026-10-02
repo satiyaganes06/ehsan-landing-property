@@ -2,6 +2,7 @@
    animations. Rich text is rebuilt using safe formatting tags and styles. */
 (async () => {
   const adminOrigin = window.SITE?.adminOrigin || 'http://localhost:3001';
+  const isAboutPage = /\/about\.html$/.test(location.pathname);
   let published;
   try {
     const response = await fetch(`${adminOrigin}/api/public/landing.json`, { cache: 'no-store' });
@@ -17,8 +18,10 @@
       if (!projectTemplate || [...document.querySelectorAll('[data-project-id]')].some(card => card.dataset.projectId === reference)) return;
       const card = projectTemplate.cloneNode(true);
       card.dataset.projectId = reference;
+      card.tabIndex = 0; card.setAttribute('role', 'link');
+      card.addEventListener('keydown', event => { if (event.key === 'Enter') card.click(); });
       card.removeAttribute('data-reveal');
-      card.addEventListener('click', () => { if (!new URLSearchParams(location.search).has('landing-editor')) location.href = `html/project-detail.html?project=${encodeURIComponent(reference)}`; });
+      card.addEventListener('click', () => { if (!new URLSearchParams(location.search).has('landing-editor')) location.href = window.SITE.url(`html/project-detail.html?project=${encodeURIComponent(reference)}`); });
       projectTemplate.parentElement.append(card);
     });
     document.querySelectorAll('[data-project-id]').forEach(card => {
@@ -35,7 +38,7 @@
       const dateParts = [project.year, project.yearEnd].flatMap(value => String(value || '').match(/\b(?:19|20)\d{2}\b/g) || []).map(Number);
       card.dataset.cmsYear = String(Math.max(0, ...dateParts));
       const thumbnail = project.media?.thumbnail || project.media?.image?.[0];
-      if (thumbnail) setImage(card, /^https?:|^\//.test(thumbnail) ? thumbnail : `assets/img/${thumbnail}`, project.name);
+      if (thumbnail) setImage(card, /^https?:|^\//.test(thumbnail) ? thumbnail : window.SITE.url(`assets/img/${thumbnail}`), project.name);
     });
     const ledger = document.querySelector('.ledger');
     const latest = card => Number(card.dataset.cmsYear || 0);
@@ -72,7 +75,7 @@
       });
       cards.slice(items.length).forEach(card => { card.hidden = true; });
     };
-    populate('.award-card', published.awards, (card, item) => {
+    populate('.award-card', published.awards ? [...published.awards].sort((a, b) => Number(b.year) - Number(a.year)) : undefined, (card, item) => {
       setText(card, '.award-card__name', item.name); setText(card, '.award-card__desc', item.description);
       setText(card, '.award-card__year', item.year); setImage(card, item.image, item.name);
     });
@@ -88,6 +91,12 @@
       card.addEventListener('mouseenter', activate); card.addEventListener('focus', activate);
     });
   }
+  if (/\/projects\.html$/.test(location.pathname)) {
+    window.projectContentReady = true;
+    window.dispatchEvent(new Event('ehsan:projects-ready'));
+    return;
+  }
+  document.querySelectorAll('.awards-grid').forEach(grid => [...grid.querySelectorAll('.award-card')].sort((a, b) => Number(b.querySelector('.award-card__year')?.textContent) - Number(a.querySelector('.award-card__year')?.textContent)).forEach(card => grid.append(card)));
   const targets = new Map();
   // Never insert saved HTML into the live DOM. Rebuild only supported formatting
   // from an inert template, without URLs, event handlers, embeds or arbitrary CSS.
@@ -117,7 +126,7 @@
     return output;
   }
   const fields = [];
-  const roots = [...document.querySelectorAll('.topnav, .stage, .prelude, #gallery, #record, #events, #awards, #testimonials, #commitment, #doctrine, #contact, .site-footer, .assistant')];
+  const roots = [...document.querySelectorAll(isAboutPage ? '.topnav, .content > section, .site-footer, .assistant' : '.topnav, .stage, .prelude, #gallery, #record, #news, #events, #awards, #testimonials, #commitment, #doctrine, #contact, .site-footer, .assistant')];
   const allowedUrl = value => {
     try { return ['http:', 'https:', 'mailto:', 'tel:'].includes(new URL(value, location.href).protocol); }
     catch (_) { return false; }
@@ -126,10 +135,11 @@
   editorStyle.textContent = '[hidden]{display:none!important}';
   document.head.append(editorStyle);
   roots.forEach((root, index) => {
-    const group = root.id || (root.classList.contains('stage') ? 'hero' : root.classList.contains('prelude') ? 'about' : root.classList.contains('assistant') ? 'assistant' : `chrome-${index}`);
+    const ownId = isAboutPage && root.id && !['awards', 'commitment', 'doctrine'].includes(root.id) ? (root.id.startsWith('about-') ? root.id : `about-${root.id}`) : root.id;
+    const group = ownId || (root.classList.contains('stage') ? 'hero' : root.classList.contains('prelude') ? 'about' : root.classList.contains('assistant') ? 'assistant' : root.classList.contains('site-footer') ? 'chrome-11' : `chrome-${index}`);
     root.dataset.cmsSection = group;
     const visit = (element, path) => {
-      if (element.matches('script, style, svg, noscript, [data-cms-fixed]')) return;
+      if (element.matches('script, style, svg, noscript, [data-cms-fixed], [data-news-list]')) return;
       if (element.parentElement?.hasAttribute('data-clone') && element.getAttribute('aria-hidden') === 'true') return;
       if (element.hasAttribute('data-count')) {
         const key = `${group}:${path}:count`;
@@ -161,7 +171,7 @@
     const key = `${group}:visible`;
     targets.set(key, { node: root, type: 'visible', original: 'true' });
     fields.push({ key, group, type: 'visible', label: 'Show this section', value: 'true' });
-    if (root.parentElement?.classList.contains('content')) {
+    if (root.parentElement?.classList.contains('content') && !root.classList.contains('about-close')) {
       targets.set(`${group}:order`, { node: root, type: 'order', original: String(index) });
       fields.push({ key: `${group}:order`, group, type: 'number', label: 'Section position (lower numbers appear first)', value: String(index) });
     }
@@ -184,19 +194,8 @@
   }) : [];
   if (statistics) fields.push({ key: 'about:statistics', group: 'about', type: 'cards', category: 'Statistics', label: 'Statistic cards', value: JSON.stringify(defaultStatistics) });
   fields.forEach(field => { if (field.type === 'number' && field.key.includes(':count') && targets.get(field.key)?.node.closest('.scale')) field.managed = true; });
-  const recordStatistics = document.querySelector('#record .summary');
-  const defaultRecordStatistics = recordStatistics ? [...recordStatistics.children].map((card, index) => ({
-    id: `record-stat-${index}`,
-    value: [...card.querySelector('.summary__n').childNodes].map(node => node.nodeType === Node.TEXT_NODE ? node.textContent.trim() : legacyStatisticValue(node.firstChild || node)).filter(Boolean).join(' '),
-    title: [...card.querySelector('.summary__l').childNodes].filter(node => node.nodeType === Node.TEXT_NODE).map(legacyStatisticValue).join(' '),
-  })) : [];
-  if (recordStatistics) {
-    fields.forEach(field => { const node = targets.get(field.key)?.node; if (node && recordStatistics.contains(node)) field.managed = true; });
-    fields.push({ key: 'record:statistics', group: 'record', type: 'cards', category: 'Statistics', label: 'Statistic cards', value: JSON.stringify(defaultRecordStatistics) });
-  }
   const statisticGroups = [
     { element: statistics, key: 'about:statistics', defaults: defaultStatistics, numberClass: 'scale__n', labelClass: 'scale__l', tag: 'li', rendered: undefined },
-    { element: recordStatistics, key: 'record:statistics', defaults: defaultRecordStatistics, numberClass: 'summary__n', labelClass: 'summary__l', tag: 'div', rendered: undefined },
   ];
   const legacyAttribute = (node, type) => {
     const entry = [...targets.entries()].find(([, target]) => target.node === node && target.type === type);
@@ -219,15 +218,49 @@
     return clone.innerHTML;
   };
   const groupedHeadings = roots.map(root => {
-    const head = root.querySelector('.section__head');
+    const head = root.querySelector('.section__head') || (root.id === 'contact' ? root.querySelector('.outro__in') : null);
     if (!head) return null;
     const group = root.dataset.cmsSection;
-    const nodes = { label: head.querySelector('.section__label'), title: head.querySelector('.section__title'), introduction: head.querySelector('.section__lede') };
+    const nodes = { label: head.querySelector('.section__label'), title: head.querySelector('.section__title, .outro__motto'), introduction: head.querySelector('.section__lede') };
     const defaults = Object.fromEntries(Object.entries(nodes).map(([key, node]) => [key, headingHtml(node)]));
-    fields.forEach(field => { const target = targets.get(field.key)?.node; if (target && head.contains(target)) field.managed = true; });
+    fields.forEach(field => { const target = targets.get(field.key)?.node; if (target && Object.values(nodes).some(node => node?.contains(target))) field.managed = true; });
     fields.push({ key: `${group}:heading`, group, type: 'heading', category: 'Heading', label: 'Section heading', value: JSON.stringify(defaults) });
     return { group, nodes, defaults, rendered: null };
   }).filter(Boolean);
+  if (isAboutPage) roots.filter(root => root.dataset.cmsSection.startsWith('about-')).forEach(root => {
+    const candidates = [...root.querySelectorAll('p, blockquote, figcaption, h3, dt, dd, li, .seal')].filter(node => !node.closest('.section__head') && !node.querySelector('a'));
+    candidates.filter(node => !candidates.some(parent => parent !== node && parent.contains(node))).forEach((node, index) => {
+      fields.forEach(field => { const target = targets.get(field.key)?.node; if (target && node.contains(target)) field.managed = true; });
+      const key = `${root.dataset.cmsSection}:content:${index}`;
+      const original = headingHtml(node);
+      targets.set(key, { node, type: 'html', original });
+      fields.push({ key, group: root.dataset.cmsSection, type: 'html', category: node.matches('h3') ? 'Heading' : 'Content', label: node.matches('dd') ? node.previousElementSibling?.textContent.trim() || 'Value' : node.textContent.trim().slice(0, 65), value: original });
+    });
+  });
+  const enquiryForm = document.querySelector('#contact [data-enquiry-form]');
+  const enquiryIntro = document.querySelector('#contact .enquiry__intro');
+  const defaultForm = enquiryForm ? {
+    title: headingHtml(enquiryIntro?.querySelector('.enquiry__title')),
+    subtitle: headingHtml(enquiryIntro?.querySelector('.enquiry__note')),
+    button: legacyStatisticValue(enquiryForm.querySelector('[type="submit"]').firstChild),
+    fields: [...enquiryForm.querySelectorAll('.field')].map(container => {
+      const input = container.querySelector('input, select, textarea');
+      const liveLabel = container.querySelector('label');
+      const labelHtml = headingHtml(liveLabel);
+      const template = document.createElement('template'); template.innerHTML = labelHtml; template.content.querySelector('abbr')?.remove();
+      const options = input.tagName === 'SELECT' ? [...input.options] : [];
+      return { id: input.name, label: template.innerHTML.trim(), type: input.tagName === 'TEXTAREA' ? 'textarea' : input.tagName === 'SELECT' ? 'select' : input.type,
+        placeholder: options.length ? legacyStatisticValue(options[0].firstChild) : legacyAttribute(input, 'placeholder'),
+        required: input.required, wide: container.classList.contains('field--wide'), help: '',
+        options: options.slice(1).map(option => legacyStatisticValue(option.firstChild)),
+      };
+    }),
+  } : null;
+  let renderedForm;
+  if (enquiryForm) {
+    fields.forEach(field => { const node = targets.get(field.key)?.node; if (node && (enquiryForm.contains(node) || enquiryIntro?.contains(node))) field.managed = true; });
+    fields.push({ key: 'contact:form', group: 'contact', type: 'contact-form', category: 'Enquiry form', label: 'Enquiry form', value: JSON.stringify(defaultForm) });
+  }
   const gallery = document.querySelector('#gallery .gallery-rows');
   const defaultPhotos = gallery ? [...gallery.querySelectorAll('.hscroll__track > .hscroll__half:first-child img')].map((image, index) => ({ id: `gallery-${index}`, src: legacyAttribute(image, 'src'), alt: legacyAttribute(image, 'alt') })) : [];
   if (gallery) {
@@ -262,8 +295,9 @@
     const node = document.querySelector(selector);
     if (!node) continue;
     const original = type === 'text' ? node.textContent : node.getAttribute(type);
-    targets.set(key, { node, type, original });
-    fields.push({ key, group: 'seo', type: 'text', label, value: original });
+    const fieldKey = isAboutPage ? key.replace('seo:', 'about-seo:') : key;
+    targets.set(fieldKey, { node, type, original });
+    fields.push({ key: fieldKey, group: 'seo', type: isAboutPage ? 'plain' : 'text', category: isAboutPage ? 'Search settings' : undefined, label, value: original });
   }
   const settings = [
     ['--brass', 'Brand accent', '#ebf212'],
@@ -274,12 +308,13 @@
   ];
   settings.forEach(([key, label, value]) => fields.push({ key: `theme:${key}`, group: 'theme', type: 'color', label, value }));
   fields.push({ key: 'motion:enabled', group: 'theme', type: 'visible', label: 'Enable animations', value: 'true' });
-  fields.push({ key: 'doctrine:background', group: 'doctrine', type: 'src', label: 'Background photograph', value: 'assets/img/background/bg-3.jpg' });
+  if (document.getElementById('doctrine') && !isAboutPage) fields.push({ key: 'doctrine:background', group: 'doctrine', type: 'src', label: 'Background photograph', value: 'assets/img/background/bg-3.jpg' });
   function apply(values = {}) {
     targets.forEach((target, key) => {
       const { node, type, original } = target;
       const value = typeof values[key] === 'string' ? values[key] : original;
-      if (type === 'text') {
+      if (type === 'html') node.replaceChildren(richFragment(value));
+      else if (type === 'text') {
         const rich = (values[`${key}:format`] === 'html' && Object.hasOwn(values, key) && node.nodeType !== Node.ELEMENT_NODE) || target.rich;
         if (rich) {
           if (!target.rich) {
@@ -305,7 +340,7 @@
           node.textContent = Number(value).toLocaleString('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
         }
       }
-      else if (!['src', 'href'].includes(type) || allowedUrl(value)) node.setAttribute(type, value);
+      else if (!['src', 'href'].includes(type) || allowedUrl(value)) node.setAttribute(type, isAboutPage && ['src', 'href'].includes(type) && /^(assets\/|html\/|index\.html)/.test(value) ? window.SITE.url(value) : value);
     });
     groupedHeadings.forEach(heading => {
       const raw = values[`${heading.group}:heading`] ?? JSON.stringify(heading.defaults);
@@ -321,6 +356,38 @@
         heading.rendered = raw;
       } catch (_) { /* Preserve valid heading if saved input is malformed. */ }
     });
+    if (enquiryForm) {
+      const raw = values['contact:form'] ?? JSON.stringify(defaultForm);
+      if (raw !== renderedForm) {
+        try {
+          const config = JSON.parse(raw);
+          if (!Array.isArray(config.fields) || config.fields.length > 20 || new Set(config.fields.map(field => field.id)).size !== config.fields.length) throw new Error('Invalid form');
+          const fragment = document.createDocumentFragment();
+          config.fields.forEach(field => {
+            if (!/^[a-zA-Z0-9_-]{1,100}$/.test(field.id) || !['text', 'email', 'tel', 'textarea', 'select'].includes(field.type)) throw new Error('Invalid field');
+            const container = document.createElement('div'); container.className = `field${field.wide ? ' field--wide' : ''}`;
+            const label = document.createElement('label'); label.className = 'field__label'; label.htmlFor = `enquiry-${field.id}`; label.append(richFragment(String(field.label || '')));
+            if (field.required) { const marker = document.createElement('abbr'); marker.title = 'required'; marker.textContent = ' *'; label.append(marker); }
+            const input = document.createElement(field.type === 'textarea' ? 'textarea' : field.type === 'select' ? 'select' : 'input');
+            input.id = label.htmlFor; input.name = field.id; input.required = Boolean(field.required);
+            input.className = `field__input${field.type === 'textarea' ? ' field__input--area' : field.type === 'select' ? ' field__input--select' : ''}`;
+            if (field.type === 'select') {
+              const prompt = document.createElement('option'); prompt.value = ''; prompt.textContent = field.placeholder || 'Select an option'; input.append(prompt);
+              (field.options || []).forEach(text => { const option = document.createElement('option'); option.textContent = text; option.value = text; input.append(option); });
+            } else { input.placeholder = field.placeholder || ''; if (field.type === 'textarea') input.rows = 4; else input.type = field.type; }
+            if (['name', 'email', 'phone'].includes(field.id)) input.autocomplete = { name: 'name', email: 'email', phone: 'tel' }[field.id];
+            container.append(label, input);
+            if (field.help) { const help = document.createElement('p'); help.className = 'field__help'; help.id = `${input.id}-help`; help.append(richFragment(String(field.help))); input.setAttribute('aria-describedby', help.id); container.append(help); }
+            fragment.append(container);
+          });
+          const actions = enquiryForm.querySelector('.enquiry__actions');
+          enquiryForm.querySelectorAll('.field').forEach(field => field.remove()); enquiryForm.insertBefore(fragment, actions);
+          actions.querySelector('[type="submit"]').textContent = config.button || 'Send enquiry';
+          for (const [selector, key] of [['.enquiry__title', 'title'], ['.enquiry__note', 'subtitle']]) { const node = enquiryIntro?.querySelector(selector); if (node) { const content = richFragment(String(config[key] || '')); node.hidden = !content.textContent.trim(); node.replaceChildren(content); } }
+          renderedForm = raw;
+        } catch (_) { /* Preserve the previous form for malformed settings. */ }
+      }
+    }
     if (gallery) {
       const raw = values['gallery:images'] ?? JSON.stringify(defaultPhotos);
       if (raw !== renderedPhotos) {
@@ -383,12 +450,12 @@
     });
     [...targets.entries()].filter(([, target]) => target.type === 'order')
       .sort(([a, first], [b, second]) => (Number(values[a] ?? first.original) || 0) - (Number(values[b] ?? second.original) || 0))
-      .forEach(([, target]) => target.node.parentElement.append(target.node));
+      .forEach(([, target]) => { const parent = target.node.parentElement; const closing = isAboutPage ? parent.querySelector(':scope > .about-close') : null; parent.insertBefore(target.node, closing); });
     document.querySelectorAll('.topnav a, nav[aria-label="Section navigation"] a, .hero__actions a').forEach(link => {
       const url = new URL(link.href, location.href);
       if (url.origin !== location.origin || url.pathname !== location.pathname || !url.hash) return;
-      const group = url.hash.slice(1) === 'prelude' ? 'about' : url.hash.slice(1);
-      if (roots.some(root => root.dataset.cmsSection === group)) link.hidden = values[`${group}:deleted`] === 'true' || values[`${group}:visible`] === 'false';
+      const section = roots.find(root => root.id === url.hash.slice(1) || root.dataset.cmsSection === (url.hash.slice(1) === 'prelude' ? 'about' : url.hash.slice(1)));
+      if (section) { const group = section.dataset.cmsSection; link.hidden = values[`${group}:deleted`] === 'true' || values[`${group}:visible`] === 'false'; }
     });
     settings.forEach(([key, , original]) => {
       const value = values[`theme:${key}`] || original;
@@ -398,7 +465,8 @@
         document.querySelector('.content')?.style.setProperty(key, value);
       }
     });
-    const background = values['doctrine:background'];
+    const savedBackground = values['doctrine:background'];
+    const background = isAboutPage && savedBackground && /^assets\//.test(savedBackground) ? window.SITE.url(savedBackground) : savedBackground;
     editorStyle.textContent = '[hidden]{display:none!important}' +
       (background && allowedUrl(background) ? `#doctrine::before{background-image:linear-gradient(rgba(8,8,6,.82),rgba(8,8,6,.82)),url(${JSON.stringify(background).replace(/</g, '')})}` : '') +
       (values['motion:enabled'] === 'false' ? '*,*::before,*::after{animation:none!important;transition:none!important}[data-reveal],[data-ripple]{opacity:1!important;transform:none!important}.hero-camera{transform:none!important}' : '');
@@ -422,4 +490,6 @@
     document.addEventListener('submit', event => { event.preventDefault(); event.stopImmediatePropagation(); }, true);
   }
   if (!editing) apply(published?.values);
+  window.projectContentReady = true;
+  window.dispatchEvent(new Event('ehsan:projects-ready'));
 })();

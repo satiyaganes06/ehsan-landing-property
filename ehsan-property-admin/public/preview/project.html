@@ -8,8 +8,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600&family=Azeret+Mono:wght@300;400;500&family=Fraunces:ital,opsz,wght@0,9..144,300..500;1,9..144,300..500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/live-site/css/content.css">
+<link rel="stylesheet" href="/live-site/css/content.css?v=20261001.9">
 <link rel="stylesheet" href="/live-site/css/project-detail.css?v=20260915.9">
+<link rel="stylesheet" href="/live-site/css/project-mobile.css?v=20261002.31">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 fill=%27%230a0b0d%27/%3E%3Cpath d=%27M6 24V8h20v4H11v3h12v4H11v3h15v2z%27 fill=%27%23d18829%27/%3E%3C/svg%3E">
 <script>
 /* Injected by scripts/sync-preview-templates.mjs -- do not edit here. */
@@ -29,7 +30,7 @@
   var realFetch = window.fetch.bind(window);
   window.fetch = function (input, init) {
     var url = typeof input === 'string' ? input : (input && input.url) || '';
-    if (/\/data\/(projects|events)\.json/.test(url)) {
+    if (window.parent !== window && /\/(?:data|api\/public)\/(projects|events)\.json/.test(url)) {
       return draft.then(function (payload) {
         return new Response(JSON.stringify(payload), {
           status: 200,
@@ -48,6 +49,15 @@
   window.addEventListener('load', announceReady);
 })();
 </script>
+<script>
+/* Preview only: the registration form must not reach the real endpoint. */
+document.addEventListener('submit', function (event) {
+  if (event.target && event.target.matches('form')) {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+  }
+}, true);
+</script>
 </head>
 <body>
 
@@ -56,6 +66,7 @@
 <div class="grain" aria-hidden="true"></div>
 
 <!-- The dedicated Widuri experience is populated only for project proj-15. -->
+<p class="project-loading" role="status">Loading project…</p>
 <main class="widuri-experience" id="widuriExperience" hidden></main>
 
 <!-- Hero Section with Carousel -->
@@ -201,14 +212,17 @@
 <div data-component="assistant"></div>
 
 <!-- Page chrome: registry first, then each component, then mount. -->
-<script src="/live-site/components/registry.js"></script>
-<script src="/live-site/components/navbar.js"></script>
-<script src="/live-site/components/footer.js"></script>
+<script src="/live-site/components/registry.js?v=20261002.e2e"></script>
+<script src="/live-site/components/navbar.js?v=20261002.7"></script>
+<script src="/live-site/components/footer.js?v=20261002.e2e"></script>
 <script src="/live-site/components/assistant.js"></script>
 <script src="/live-site/components/mount.js"></script>
 
 <!-- Page behaviour — runs after the chrome is in the DOM. -->
-<script src="/live-site/js/project-detail.js?v=20260915.6"></script>
+<script src="/live-site/js/page-share.js?v=20261002.17"></script>
+<script src="/live-site/js/project-page.js?v=20261002.29"></script>
+<script src="/live-site/js/project-detail.js?v=20261002.18"></script>
 <script src="/live-site/js/content.js"></script>
+<script src="/live-site/js/project-enquiry.js?v=20261002.30"></script>
 </body>
 </html>
