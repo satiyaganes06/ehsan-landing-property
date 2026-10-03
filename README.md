@@ -97,3 +97,31 @@ SITE.url('data/events.json')   // → <root>/data/events.json, from any page
 
 Use it for cross-page links, fetches, and image paths built in JavaScript.
 Paths written directly in a page's own HTML stay plain relative (`../css/…`).
+# Content snapshots
+
+Admin content is stored in the database, not in Git. To export the current
+content (with the local admin running on port 3001), run from
+`ehsan-property-admin`:
+
+```sh
+node --env-file=.env --env-file=.env.local scripts/content-snapshot.cjs export
+```
+
+This writes `data/content-snapshot.json` in the admin and refreshed public
+JSON files in the root `data/` directory. Public uploads are also copied to
+`assets/img/admin-uploads/`. Accounts, passwords, sessions, enquiries,
+analytics and audit records are deliberately excluded. Removed testimonials
+are not exported. The website uses the public landing snapshot when the admin
+service is unavailable; sending enquiries still needs the admin service.
+
+To restore the reviewed content snapshot into a configured admin database:
+
+```sh
+node --env-file=.env --env-file=.env.local scripts/content-snapshot.cjs restore --apply
+```
+
+Back up the destination first: this updates matching content records without
+deleting unrelated records or changing accounts. Configure environment files
+and run database migrations separately. Pushing to GitHub does not restore a
+deployed database automatically. Local media uploads in the admin `uploads/`
+directory must also be available for editing uploaded images.

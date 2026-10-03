@@ -1,0 +1,1784 @@
+{
+  "values": {
+    "theme:--brass": "#f5dd62",
+    "about:statistics": "[{\"id\":\"stat-0\",\"value\":\"RM 1.307b\",\"title\":\"Gross development value\"},{\"id\":\"stat-1\",\"value\":\"3,442\",\"title\":\"Housing units developed & planned\"},{\"id\":\"stat-2\",\"value\":\"16\",\"title\":\"Projects on the work record\"},{\"id\":\"stat-3\",\"value\":\"15\",\"title\":\"Companies in the Ehsan Group\"},{\"id\":\"stat-4\",\"value\":\"12\",\"title\":\"National & regional awards\"}]",
+    "about:0.3.0:text:0": "<p>About&nbsp;Us</p>",
+    "hero:0.1.0.0:text:2": " Ehsan Plant & Property ",
+    "hero:0.1.0.2:text:0": " A Malaysian property developer delivering quality residential, commercial and mixed use developments. ",
+    "about-founder:0.1.0.0:alt": "Portrait of Dato' Haji Abdul Hamid Bin P.V Abdu, Chief Executive Officer",
+    "about:0.3.0:text:0:format": "html",
+    "about:0.0.0.0:text:0:format": "html"
+  },
+  "projects": {
+    "proj-15": {
+      "featured": true,
+      "sortOrder": 1,
+      "createdAt": "2026-09-27T08:15:26.382Z",
+      "name": "Ehsan Widuri",
+      "slug": "ehsan-widuri",
+      "enquiry": {
+        "enabled": true,
+        "interest": "Ehsan Widuri",
+        "sections": {
+          "shuttle": true,
+          "amenities": true
+        }
+      },
+      "location": "Nilai, Negeri Sembilan",
+      "coordinates": {
+        "lat": 2.73,
+        "lng": 101.84
+      },
+      "year": "",
+      "yearEnd": "2028",
+      "status": "Ongoing",
+      "description": "A freehold serviced apartment in Bandar Baru Nilai, created for connected living near leading universities, everyday retail and the KLIA corridor.",
+      "units": "490 units",
+      "area": "2 acres",
+      "priceRange": "From RM296,000",
+      "occupancy": "Under construction",
+      "amenities": [
+        "30 lifestyle facilities",
+        "Swimming and wading pools",
+        "Indoor and outdoor gym",
+        "Freehold ownership",
+        "Retail and office spaces"
+      ],
+      "certificate": "Under construction",
+      "media": {
+        "thumbnail": "widuri/elevation-front.jpg",
+        "image": [
+          "widuri/elevation-front.jpg",
+          "gallery/BusinessEntrance-DESKTOP-OB2275O-1.webp",
+          "gallery/SwimmingPool2_A-DESKTOP-OB2275O-scaled.webp",
+          "gallery/GazeboAndBBQ-DESKTOP-OB2275O-scaled.webp",
+          "gallery/GuessWaiting-DESKTOP-OB2275O-scaled.webp",
+          "gallery/IndoorGym_1-DESKTOP-OB2275O-scaled.webp",
+          "gallery/OutdoorGym-DESKTOP-OB2275O-scaled.webp",
+          "gallery/OfficeSpace-DESKTOP-OB2275O-scaled.webp",
+          "gallery/TableGame-DESKTOP-OB2275O-scaled.webp",
+          "gallery/OfficeLiftLobby-DESKTOP-OB2275O-scaled.webp"
+        ],
+        "blueprint": []
+      }
+    },
+    "proj-13": {
+      "featured": true,
+      "sortOrder": 2,
+      "createdAt": "2026-09-27T08:15:26.364Z",
+      "name": "Taman Universiti Bestari",
+      "slug": "taman-universiti-bestari",
+      "content": {
+        "facts": [
+          [
+            "House size",
+            "20′ × 70′"
+          ],
+          [
+            "Bedrooms",
+            "4"
+          ],
+          [
+            "Bathrooms",
+            "2"
+          ],
+          [
+            "Starting price",
+            "RM 247,000"
+          ],
+          [
+            "Development",
+            "8 phases"
+          ]
+        ],
+        "access": [
+          "3.5 km to primary and secondary schools",
+          "9 km to Bedong, Semeling, Gurun and Sungai Petani",
+          "12 km to Sungai Petani North Toll, Laguna Merbok, Amanjaya Mall and TF Mart",
+          "50 km to Alor Setar and Seberang Jaya, Penang"
+        ],
+        "updates": [
+          "The supplied project update lists phases 1–4 as sold out, phase 5 under construction and phase 7 to be launched."
+        ],
+        "template": "widuri-sections-v1",
+        "facilities": [
+          "Developer-paid Sale and Purchase Agreement legal fees",
+          "Developer-paid Bank Loan Agreement legal fees",
+          "Developer-paid stamp duty"
+        ],
+        "sourceOnly": true,
+        "locationText": "Show house available for viewing: No. 43, Jalan BLM 6/2, Bandar Laguna Merbok, 08000 Sungai Petani, Kedah.",
+        "neighbourhood": [
+          {
+            "items": [
+              "AIMST University",
+              "UiTM Merbok"
+            ],
+            "title": "Education nearby"
+          }
+        ]
+      },
+      "enquiry": {
+        "enabled": false,
+        "interest": "",
+        "sections": {
+          "cta": false,
+          "fit": false,
+          "shuttle": false,
+          "certificate": false
+        }
+      },
+      "location": "Sungai Petani, Kedah",
+      "coordinates": null,
+      "year": "",
+      "yearEnd": "",
+      "status": "Ongoing",
+      "description": "An eight-phase development of single-storey terrace and semi-detached homes near AIMST University in Sungai Petani. Homes have four bedrooms and two bathrooms, with prices starting from RM 247,000.",
+      "units": "",
+      "area": "20′ × 70′",
+      "priceRange": "RM 247,000",
+      "occupancy": "",
+      "amenities": [
+        "Developer-paid Sale and Purchase Agreement legal fees",
+        "Developer-paid Bank Loan Agreement legal fees",
+        "Developer-paid stamp duty"
+      ],
+      "certificate": null,
+      "media": {
+        "thumbnail": "project-imports/taman-universiti-bestari/images/01_project-cover-bestari.jpg",
+        "image": [
+          "project-imports/taman-universiti-bestari/images/01_project-cover-bestari.jpg",
+          "project-imports/taman-universiti-bestari/images/03_WhatsApp-Image-2024-12-11-at-09.40.33_a49088d5.jpg",
+          "project-imports/taman-universiti-bestari/images/04_WhatsApp-Image-2024-12-11-at-09.40.33_a1d1b6ca.jpg",
+          "project-imports/taman-universiti-bestari/images/05_WhatsApp-Image-2024-12-11-at-09.40.35_9225aa9a.jpg",
+          "project-imports/taman-universiti-bestari/images/06_WhatsApp-Image-2024-12-11-at-09.40.34_656305f3.jpg",
+          "project-imports/taman-universiti-bestari/images/07_WhatsApp-Image-2024-12-11-at-09.40.35_5f916867.jpg",
+          "project-imports/taman-universiti-bestari/images/08_WhatsApp-Image-2024-12-11-at-09.40.35_2fcfdaf1.jpg",
+          "project-imports/taman-universiti-bestari/images/09_WhatsApp-Image-2024-12-11-at-09.43.23_c9659213.jpg",
+          "project-imports/taman-universiti-bestari/images/10_WhatsApp-Image-2024-12-11-at-09.43.27_d770eb20.jpg",
+          "project-imports/taman-universiti-bestari/images/11_WhatsApp-Image-2024-12-11-at-09.43.22_91596fa0.jpg",
+          "project-imports/taman-universiti-bestari/images/12_WhatsApp-Image-2024-12-11-at-09.43.23_c472da8a.jpg",
+          "project-imports/taman-universiti-bestari/images/13_WhatsApp-Image-2024-12-11-at-09.43.24_5cfaf8ac.jpg",
+          "project-imports/taman-universiti-bestari/images/14_WhatsApp-Image-2024-12-11-at-09.43.24_6138f942.jpg"
+        ],
+        "blueprint": [],
+        "logo": [
+          "project-imports/taman-universiti-bestari/images/02_LOGO-TUB-1.png"
+        ],
+        "location": [],
+        "shuttle": [],
+        "facilities": [],
+        "interior": []
+      }
+    },
+    "proj-14": {
+      "featured": true,
+      "sortOrder": 3,
+      "createdAt": "2026-09-27T08:15:26.373Z",
+      "name": "Residensi Mutiara Austin",
+      "slug": "residensi-mutiara-austin",
+      "content": {
+        "facts": [
+          [
+            "Homes",
+            "650 serviced apartments"
+          ],
+          [
+            "Layouts",
+            "5 types"
+          ],
+          [
+            "Layout sizes",
+            "743–1,353 sq ft"
+          ],
+          [
+            "Facilities",
+            "21"
+          ]
+        ],
+        "access": [
+          "3 minutes to Pasir Gudang Highway",
+          "3 minutes to Tebrau Highway",
+          "7 minutes to North–South Highway",
+          "8 minutes to EDL Highway",
+          "18 minutes to Danga Bay",
+          "19 minutes to Johor Bahru city",
+          "20 minutes to Woodlands Checkpoint",
+          "30 minutes to Senai Airport"
+        ],
+        "template": "widuri-sections-v1",
+        "facilities": [
+          "Herbs garden and chill area",
+          "Children’s playground",
+          "Water play area",
+          "Swimming pool",
+          "Multipurpose hall",
+          "Gym",
+          "Surau"
+        ],
+        "sourceOnly": true,
+        "neighbourhood": [
+          {
+            "items": [
+              "Sunway College Johor Bahru",
+              "SMK Desa Tebrau",
+              "SMK Taman Pelangi Indah",
+              "SMK Taman Daya"
+            ],
+            "title": "Education"
+          },
+          {
+            "items": [
+              "Hospital Sultan Ismail",
+              "Johor Bahru Specialist Hospital"
+            ],
+            "title": "Healthcare"
+          },
+          {
+            "items": [
+              "AEON Tebrau City",
+              "Lotus Tebrau City",
+              "Toppen Shopping Mall",
+              "IKEA Tebrau",
+              "Austin Heights Water Theme Park"
+            ],
+            "title": "Shopping and leisure"
+          },
+          {
+            "items": [
+              "Austin Heights Golf & Hotel Resort",
+              "Ponderosa Golf & Country Club",
+              "Starhill Golf & Country Club"
+            ],
+            "title": "Golf"
+          }
+        ]
+      },
+      "enquiry": {
+        "enabled": false,
+        "interest": "",
+        "sections": {
+          "cta": false,
+          "fit": false,
+          "shuttle": false,
+          "certificate": false
+        }
+      },
+      "location": "Mount Austin, Johor Bahru, Johor",
+      "coordinates": null,
+      "year": "",
+      "yearEnd": "",
+      "status": "Ongoing",
+      "description": "A serviced apartment development in Mount Austin with 650 homes and five layouts ranging from 743 to 1,353 sq ft. Shared facilities include garden, play, fitness and community spaces.",
+      "units": "650 serviced apartments",
+      "area": "",
+      "priceRange": "",
+      "occupancy": "",
+      "amenities": [
+        "Herbs garden and chill area",
+        "Children’s playground",
+        "Water play area",
+        "Swimming pool",
+        "Multipurpose hall",
+        "Gym",
+        "Surau"
+      ],
+      "certificate": null,
+      "media": {
+        "thumbnail": "project-imports/mutiara-austin-residence/images/01_Entrance-scaled.jpg",
+        "image": [
+          "project-imports/mutiara-austin-residence/images/01_Entrance-scaled.jpg",
+          "project-imports/mutiara-austin-residence/images/03_Front-scaled.jpg",
+          "project-imports/mutiara-austin-residence/images/04_Arial-scaled.jpg",
+          "project-imports/mutiara-austin-residence/images/05_Far_new-scaled.jpg",
+          "project-imports/mount-austin-johor/images/01_2-1024x478.jpg",
+          "project-imports/mount-austin-johor/images/02_Y2506-MO-003B1.jpg",
+          "project-imports/mount-austin-johor/images/03_Y2506-MO-003B8.jpg",
+          "project-imports/mount-austin-johor/images/04_Y2506-MO-003B7.jpg",
+          "project-imports/mount-austin-johor/images/05_Y2506-MO-003B6.jpg",
+          "project-imports/mount-austin-johor/images/06_Y2506-MO-003B5.jpg",
+          "project-imports/mount-austin-johor/images/07_Y2506-MO-003B4.jpg",
+          "project-imports/mount-austin-johor/images/08_Y2506-MO-003B3.jpg",
+          "project-imports/mount-austin-johor/images/09_Y2506-MO-003B2.jpg"
+        ],
+        "blueprint": [],
+        "logo": [
+          "project-imports/mutiara-austin-residence/images/02_LOGO-FILE.png"
+        ],
+        "location": [],
+        "shuttle": [],
+        "facilities": [
+          "project-imports/mutiara-austin-residence/images/06_Garden-scaled.jpg",
+          "project-imports/mutiara-austin-residence/images/07_WaterPlay-scaled.jpg"
+        ],
+        "interior": []
+      }
+    },
+    "proj-12": {
+      "featured": false,
+      "sortOrder": 4,
+      "createdAt": "2026-09-27T08:15:26.354Z",
+      "name": "Taman Mawar Ehsan",
+      "slug": "taman-mawar-ehsan",
+      "content": {
+        "facts": [
+          [
+            "Tenure",
+            "Malay Reserved"
+          ],
+          [
+            "Development",
+            "4 phases"
+          ]
+        ],
+        "access": [
+          "6 km to Pasaraya",
+          "7 km to IPD and Bomba",
+          "7.5 km to JPJ Pedas",
+          "2 minutes to Pedas Toll",
+          "15 minutes to Seremban",
+          "30 minutes to Nilai and Ayer Keroh",
+          "60 minutes to Kuala Lumpur"
+        ],
+        "layouts": [
+          {
+            "name": "Single-storey terrace",
+            "details": [
+              "1,100 sq ft",
+              "3 bedrooms",
+              "2 bathrooms"
+            ]
+          },
+          {
+            "name": "Double-storey terrace",
+            "details": [
+              "2,000 sq ft",
+              "4 bedrooms",
+              "3 bathrooms"
+            ]
+          }
+        ],
+        "template": "widuri-sections-v1",
+        "facilities": [
+          "Surau",
+          "Community area",
+          "Kindergarten area",
+          "Open space",
+          "Playground",
+          "Guarded community area"
+        ],
+        "sourceOnly": true,
+        "neighbourhood": [
+          {
+            "items": [
+              "SMK Pedas",
+              "SK Pedas",
+              "SM Sains Rembau",
+              "UiTM",
+              "Kolej Komuniti",
+              "KTM Rembau",
+              "Hospital Rembau",
+              "Masjid",
+              "Balai Polis",
+              "Zee Mart"
+            ],
+            "title": "Nearby amenities"
+          }
+        ]
+      },
+      "enquiry": {
+        "enabled": false,
+        "interest": "",
+        "sections": {
+          "cta": false,
+          "fit": false,
+          "shuttle": false,
+          "certificate": false
+        }
+      },
+      "location": "Rembau, Negeri Sembilan",
+      "coordinates": null,
+      "year": "",
+      "yearEnd": "",
+      "status": "Ongoing",
+      "description": "Malay Reserved landed homes in Rembau, comprising single-storey and double-storey terrace houses across four phases.",
+      "units": "",
+      "area": "",
+      "priceRange": "",
+      "occupancy": "",
+      "amenities": [
+        "Surau",
+        "Community area",
+        "Kindergarten area",
+        "Open space",
+        "Playground",
+        "Guarded community area"
+      ],
+      "certificate": null,
+      "media": {
+        "thumbnail": "project-imports/taman-mawar-ehsan-rembau/images/01_home-pic2.png",
+        "image": [
+          "project-imports/taman-mawar-ehsan-rembau/images/01_home-pic2.png",
+          "project-imports/taman-mawar-ehsan-rembau/images/03_taman-mewah-ehsan02.jpg",
+          "project-imports/taman-mawar-ehsan-rembau/images/04_taman-mewah-ehsan03.jpg",
+          "project-imports/taman-mawar-ehsan-rembau/images/05_taman-mewah-ehsan01.jpg"
+        ],
+        "blueprint": [],
+        "logo": [
+          "project-imports/taman-mawar-ehsan-rembau/images/02_TME_LOGO.png"
+        ],
+        "location": [],
+        "shuttle": [],
+        "facilities": [],
+        "interior": []
+      }
+    },
+    "proj-8": {
+      "featured": false,
+      "sortOrder": 5,
+      "createdAt": "2026-09-27T08:15:26.312Z",
+      "name": "Ehsan Residence",
+      "slug": "ehsan-residence",
+      "content": {
+        "facts": [
+          [
+            "Tenure",
+            "Freehold"
+          ],
+          [
+            "Area",
+            "1,090 sq ft built-up"
+          ],
+          [
+            "Bedrooms",
+            "4"
+          ],
+          [
+            "Bathrooms",
+            "2"
+          ],
+          [
+            "Starting price",
+            "RM 338,000"
+          ]
+        ],
+        "template": "widuri-sections-v1",
+        "sourceOnly": true
+      },
+      "enquiry": {
+        "enabled": false,
+        "interest": "",
+        "sections": {
+          "cta": false,
+          "fit": false,
+          "shuttle": false,
+          "certificate": false
+        }
+      },
+      "location": "Sepang, Selangor",
+      "coordinates": null,
+      "year": "",
+      "yearEnd": "",
+      "status": "Completed",
+      "description": "Completed freehold homes in Sepang with four bedrooms, two bathrooms and a built-up area of 1,090 sq ft.",
+      "units": "",
+      "area": "1,090 sq ft built-up",
+      "priceRange": "RM 338,000",
+      "occupancy": "",
+      "amenities": [],
+      "certificate": null,
+      "media": {
+        "thumbnail": "project-imports/ehsan-residence-sepang/images/01_project-ehsan-residence-cover.jpg",
+        "image": [
+          "project-imports/ehsan-residence-sepang/images/01_project-ehsan-residence-cover.jpg",
+          "project-imports/ehsan-residence-sepang/images/02_Ehsan-Residence-1.jpg",
+          "project-imports/ehsan-residence-sepang/images/03_Ehsan-Residence-3.jpg",
+          "project-imports/ehsan-residence-sepang/images/04_Ehsan-Residence-6.jpg",
+          "project-imports/ehsan-residence-sepang/images/05_Ehsan-Residence-10.jpg",
+          "project-imports/ehsan-residence-sepang/images/06_Ehsan-Residence-12.jpg",
+          "project-imports/ehsan-residence-sepang/images/07_Ehsan-Residence-15.jpg",
+          "project-imports/ehsan-residence-sepang/images/08_Ehsan-Residence-17.jpg",
+          "project-imports/ehsan-residence-sepang/images/09_Ehsan-Residence-20.jpg",
+          "project-imports/ehsan-residence-sepang/images/10_Ehsan-Residence-25.jpg",
+          "project-imports/ehsan-residence-sepang/images/11_Ehsan-Residence-27.jpg",
+          "project-imports/ehsan-residence-sepang/images/12_Ehsan-Residence-30.jpg"
+        ],
+        "blueprint": [],
+        "logo": [],
+        "location": [
+          "project-imports/ehsan-residence-sepang/images/13_ehsan-residence-map.jpg"
+        ],
+        "shuttle": [],
+        "facilities": [
+          "project-imports/ehsan-residence-sepang/images/14_Ehsan-Residence-Facilities-194.jpg",
+          "project-imports/ehsan-residence-sepang/images/15_Ehsan-Residence-Facilities-193.jpg",
+          "project-imports/ehsan-residence-sepang/images/16_Ehsan-Residence-Facilities-180.jpg",
+          "project-imports/ehsan-residence-sepang/images/17_Ehsan-Residence-Facilities-175.jpg",
+          "project-imports/ehsan-residence-sepang/images/18_Ehsan-Residence-Facilities-173.jpg",
+          "project-imports/ehsan-residence-sepang/images/19_Ehsan-Residence-Facilities-167.jpg",
+          "project-imports/ehsan-residence-sepang/images/20_Ehsan-Residence-Facilities-100.jpg",
+          "project-imports/ehsan-residence-sepang/images/21_Ehsan-Residence-Facilities-92.jpg",
+          "project-imports/ehsan-residence-sepang/images/22_Ehsan-Residence-Facilities-79.jpg",
+          "project-imports/ehsan-residence-sepang/images/23_Ehsan-Residence-Facilities-77.jpg",
+          "project-imports/ehsan-residence-sepang/images/24_Ehsan-Residence-Facilities-54.jpg",
+          "project-imports/ehsan-residence-sepang/images/25_Ehsan-Residence-Facilities-49.jpg",
+          "project-imports/ehsan-residence-sepang/images/26_Ehsan-Residence-Facilities-46.jpg",
+          "project-imports/ehsan-residence-sepang/images/27_Ehsan-Residence-Facilities-40.jpg",
+          "project-imports/ehsan-residence-sepang/images/28_Ehsan-Residence-Facilities-24.jpg",
+          "project-imports/ehsan-residence-sepang/images/29_Ehsan-Residence-Facilities-13.jpg",
+          "project-imports/ehsan-residence-sepang/images/30_Ehsan-Residence-Facilities-11.jpg",
+          "project-imports/ehsan-residence-sepang/images/31_Ehsan-Residence-Facilities-5.jpg",
+          "project-imports/ehsan-residence-sepang/images/32_Ehsan-Residence-Facilities-206.jpg",
+          "project-imports/ehsan-residence-sepang/images/40_Ehsan-Residence-Facilities-130.jpg",
+          "project-imports/ehsan-residence-sepang/images/41_Ehsan-Residence-Facilities-125.jpg",
+          "project-imports/ehsan-residence-sepang/images/42_Ehsan-Residence-Facilities-114.jpg"
+        ],
+        "interior": [
+          "project-imports/ehsan-residence-sepang/images/33_Ehsan-Residence-Interior-38.jpg",
+          "project-imports/ehsan-residence-sepang/images/34_Ehsan-Residence-Interior-23.jpg",
+          "project-imports/ehsan-residence-sepang/images/35_Ehsan-Residence-Interior-18.jpg",
+          "project-imports/ehsan-residence-sepang/images/36_Ehsan-Residence-Interior-15.jpg",
+          "project-imports/ehsan-residence-sepang/images/37_Ehsan-Residence-Interior-12.jpg",
+          "project-imports/ehsan-residence-sepang/images/38_Ehsan-Residence-Interior-10.jpg",
+          "project-imports/ehsan-residence-sepang/images/39_Ehsan-Residence-Interior-4.jpg"
+        ]
+      }
+    },
+    "proj-1": {
+      "featured": false,
+      "sortOrder": 6,
+      "createdAt": "2026-09-27T08:15:26.203Z",
+      "name": "Luxurious Bungalow, Kota Warisan",
+      "slug": "luxurious-bungalow-kota-warisan",
+      "enquiry": {
+        "enabled": false,
+        "interest": "",
+        "sections": {}
+      },
+      "location": "Sepang, Selangor",
+      "coordinates": {
+        "lat": 2.7,
+        "lng": 101.5
+      },
+      "year": "2009",
+      "yearEnd": "2010",
+      "status": "Completed",
+      "description": "A detached house with swimming pool in Kota Warisan. Freehold title, 7,000 square feet.",
+      "units": "1 unit",
+      "area": "7,000 sq ft",
+      "priceRange": "RM 1.8M",
+      "occupancy": "Completed",
+      "amenities": [
+        "Swimming pool",
+        "Freehold land",
+        "Spacious lot",
+        "Modern architecture",
+        "Landscaped gardens"
+      ],
+      "certificate": null,
+      "media": {
+        "thumbnail": "proj-kota-warisan.jpg",
+        "image": [
+          "proj-kota-warisan.jpg",
+          "proj-dimensi.jpg",
+          "proj-ehsan-residence.jpg",
+          "proj-salam-nadiah.jpg",
+          "proj-markisa.jpg",
+          "proj-bestari.jpg",
+          "proj-widuri.jpg",
+          "proj-widuri-2.jpg",
+          "proj-kota-warisan.jpg",
+          "proj-dimensi.jpg",
+          "proj-ehsan-residence.jpg",
+          "proj-salam-nadiah.jpg"
+        ],
+        "blueprint": [
+          "proj-kota-warisan.jpg",
+          "proj-dimensi.jpg",
+          "proj-ehsan-residence.jpg"
+        ],
+        "logo": [],
+        "location": [],
+        "shuttle": [],
+        "facilities": [],
+        "interior": []
+      }
+    },
+    "proj-6": {
+      "featured": false,
+      "sortOrder": 7,
+      "createdAt": "2026-09-27T08:15:26.289Z",
+      "name": "Taman Salam Nadiah",
+      "slug": "taman-salam-nadiah",
+      "content": {
+        "facts": [
+          [
+            "Tenure",
+            "Malay Reserve"
+          ],
+          [
+            "Area",
+            "20′ × 65′"
+          ],
+          [
+            "Bedrooms",
+            "3"
+          ],
+          [
+            "Bathrooms",
+            "2"
+          ],
+          [
+            "Starting price",
+            "RM 193,500"
+          ]
+        ],
+        "template": "widuri-sections-v1",
+        "sourceOnly": true
+      },
+      "enquiry": {
+        "enabled": false,
+        "interest": "",
+        "sections": {
+          "cta": false,
+          "fit": false,
+          "shuttle": false,
+          "certificate": false
+        }
+      },
+      "location": "Tampin, Negeri Sembilan",
+      "coordinates": null,
+      "year": "",
+      "yearEnd": "",
+      "status": "Completed",
+      "description": "Completed Malay Reserve homes in Tampin with three bedrooms and two bathrooms.",
+      "units": "",
+      "area": "20′ × 65′",
+      "priceRange": "RM 193,500",
+      "occupancy": "",
+      "amenities": [],
+      "certificate": null,
+      "media": {
+        "thumbnail": "project-imports/taman-salam-nadiah-tampin/images/01_project-taman-salam-nadiah-cover.jpg",
+        "image": [
+          "project-imports/taman-salam-nadiah-tampin/images/01_project-taman-salam-nadiah-cover.jpg",
+          "project-imports/taman-salam-nadiah-tampin/images/02_Taman-Salam-Nadiah-68.jpg",
+          "project-imports/taman-salam-nadiah-tampin/images/03_Taman-Salam-Nadiah-63.jpg",
+          "project-imports/taman-salam-nadiah-tampin/images/04_Taman-Salam-Nadiah-60.jpg",
+          "project-imports/taman-salam-nadiah-tampin/images/05_Taman-Salam-Nadiah-56.jpg",
+          "project-imports/taman-salam-nadiah-tampin/images/06_Taman-Salam-Nadiah-52.jpg",
+          "project-imports/taman-salam-nadiah-tampin/images/07_Taman-Salam-Nadiah-48.jpg",
+          "project-imports/taman-salam-nadiah-tampin/images/08_Taman-Salam-Nadiah-41.jpg",
+          "project-imports/taman-salam-nadiah-tampin/images/09_Taman-Salam-Nadiah-31.jpg",
+          "project-imports/taman-salam-nadiah-tampin/images/10_Taman-Salam-Nadiah-30.jpg",
+          "project-imports/taman-salam-nadiah-tampin/images/11_Taman-Salam-Nadiah-24.jpg",
+          "project-imports/taman-salam-nadiah-tampin/images/12_Taman-Salam-Nadiah-22.jpg",
+          "project-imports/taman-salam-nadiah-tampin/images/13_Taman-Salam-Nadiah-13.jpg",
+          "project-imports/taman-salam-nadiah-tampin/images/14_Taman-Salam-Nadiah-11.jpg",
+          "project-imports/taman-salam-nadiah-tampin/images/15_Taman-Salam-Nadiah-9.jpg",
+          "project-imports/taman-salam-nadiah-tampin/images/16_Taman-Salam-Nadiah-6.jpg",
+          "project-imports/taman-salam-nadiah-tampin/images/17_Taman-Salam-Nadiah-1.jpg"
+        ],
+        "blueprint": [],
+        "logo": [],
+        "location": [],
+        "shuttle": [],
+        "facilities": [],
+        "interior": []
+      }
+    },
+    "proj-10": {
+      "featured": false,
+      "sortOrder": 8,
+      "createdAt": "2026-09-27T08:15:26.335Z",
+      "name": "2 Storey Shop Office, Ehsan Waterpark",
+      "slug": "2-storey-shop-office-ehsan-waterpark",
+      "enquiry": {
+        "enabled": false,
+        "interest": "",
+        "sections": {}
+      },
+      "location": "Port Dickson, Negeri Sembilan",
+      "coordinates": {
+        "lat": 2.74,
+        "lng": 101.83
+      },
+      "year": "2017",
+      "yearEnd": "2019",
+      "status": "Completed",
+      "description": "Two storey shop offices at Ehsan Waterpark on freehold land. Fully completed.",
+      "units": "Shop offices",
+      "area": "Freehold",
+      "priceRange": "RM 6.5M",
+      "occupancy": "Completed",
+      "amenities": [
+        "Shop offices",
+        "Freehold location",
+        "Two storeys",
+        "Retail",
+        "Dining"
+      ],
+      "certificate": "Completed",
+      "media": {
+        "thumbnail": "proj-shop-residence.jpg",
+        "image": [
+          "proj-shop-residence.jpg",
+          "proj-widuri.jpg",
+          "proj-widuri-2.jpg",
+          "proj-kota-warisan.jpg",
+          "proj-dimensi.jpg",
+          "proj-ehsan-residence.jpg",
+          "proj-salam-nadiah.jpg",
+          "proj-markisa.jpg",
+          "proj-bestari.jpg",
+          "proj-widuri.jpg"
+        ],
+        "blueprint": [
+          "proj-shop-residence.jpg",
+          "proj-widuri.jpg"
+        ],
+        "logo": [],
+        "location": [],
+        "shuttle": [],
+        "facilities": [],
+        "interior": []
+      }
+    },
+    "proj-2": {
+      "featured": false,
+      "sortOrder": 9,
+      "createdAt": "2026-09-27T08:15:26.232Z",
+      "name": "Madrasah, Jalan Reko",
+      "slug": "madrasah-jalan-reko",
+      "content": {
+        "facts": [
+          [
+            "Total floor area",
+            "8,800 sq ft"
+          ],
+          [
+            "Construction started",
+            "August 2010"
+          ],
+          [
+            "Completed",
+            "May 2011"
+          ],
+          [
+            "Gross development value",
+            "RM 2,500,000"
+          ]
+        ],
+        "template": "widuri-sections-v1",
+        "sourceOnly": true
+      },
+      "enquiry": {
+        "enabled": false,
+        "interest": "",
+        "sections": {
+          "cta": false,
+          "fit": false,
+          "shuttle": false,
+          "certificate": false
+        }
+      },
+      "location": "Kajang, Selangor",
+      "coordinates": null,
+      "year": "2010",
+      "yearEnd": "2011",
+      "status": "Completed",
+      "description": "Rebuilding a surau as a two-storey madrasah on Jalan Reko, Bandar Kajang, Selangor.",
+      "units": "",
+      "area": "8,800 sq ft",
+      "priceRange": "",
+      "occupancy": "",
+      "amenities": [],
+      "certificate": null,
+      "media": {
+        "thumbnail": "project-imports/madrasah/images/01_pic-madrasah-01.jpg",
+        "image": [
+          "project-imports/madrasah/images/01_pic-madrasah-01.jpg"
+        ],
+        "blueprint": [],
+        "logo": [],
+        "location": [],
+        "shuttle": [],
+        "facilities": [],
+        "interior": []
+      }
+    },
+    "proj-16": {
+      "featured": false,
+      "sortOrder": 10,
+      "createdAt": "2026-09-27T08:15:26.392Z",
+      "name": "Kampar, Perak",
+      "slug": "kampar-perak",
+      "content": {
+        "facts": [
+          [
+            "Development",
+            "Mixed development"
+          ],
+          [
+            "Units",
+            "2,038"
+          ],
+          [
+            "Stage",
+            "Future project"
+          ]
+        ],
+        "template": "widuri-sections-v1",
+        "sourceOnly": true
+      },
+      "enquiry": {
+        "enabled": false,
+        "interest": "",
+        "sections": {
+          "cta": false,
+          "fit": false,
+          "shuttle": false,
+          "certificate": false
+        }
+      },
+      "location": "Kampar, Perak",
+      "coordinates": null,
+      "year": "",
+      "yearEnd": "",
+      "status": "Future",
+      "description": "A planned mixed development of 2,038 units in Kampar, Perak.",
+      "units": "2,038 units",
+      "area": "",
+      "priceRange": "",
+      "occupancy": "",
+      "amenities": [],
+      "certificate": null,
+      "media": {
+        "thumbnail": "project-imports/kampar-perak/images/01_project-kampar-cover.jpg",
+        "image": [
+          "project-imports/kampar-perak/images/01_project-kampar-cover.jpg",
+          "project-imports/kampar-perak/images/02_2.jpg",
+          "project-imports/kampar-perak/images/03_1.jpg"
+        ],
+        "blueprint": [],
+        "logo": [],
+        "location": [],
+        "shuttle": [],
+        "facilities": [],
+        "interior": []
+      }
+    },
+    "proj-3": {
+      "featured": false,
+      "sortOrder": 11,
+      "createdAt": "2026-09-27T08:15:26.249Z",
+      "name": "Apartment Dimensi",
+      "slug": "apartment-dimensi",
+      "content": {
+        "facts": [
+          [
+            "Tenure",
+            "Freehold"
+          ],
+          [
+            "Area",
+            "900 sq ft"
+          ],
+          [
+            "Bedrooms",
+            "3"
+          ],
+          [
+            "Bathrooms",
+            "2"
+          ],
+          [
+            "Starting price",
+            "RM 128,000"
+          ]
+        ],
+        "template": "widuri-sections-v1",
+        "sourceOnly": true
+      },
+      "enquiry": {
+        "enabled": false,
+        "interest": "",
+        "sections": {
+          "cta": false,
+          "fit": false,
+          "shuttle": false,
+          "certificate": false
+        }
+      },
+      "location": "Taman Dimensi, Alor Gajah, Melaka",
+      "coordinates": null,
+      "year": "",
+      "yearEnd": "",
+      "status": "Completed",
+      "description": "Completed freehold apartments in Taman Dimensi, Alor Gajah, with three bedrooms and two bathrooms.",
+      "units": "",
+      "area": "900 sq ft",
+      "priceRange": "RM 128,000",
+      "occupancy": "",
+      "amenities": [],
+      "certificate": null,
+      "media": {
+        "thumbnail": "project-imports/apartment-dimensi-taman-dimensi-alor-gajah/images/01_project-apartment-dimensi-cover.jpg",
+        "image": [
+          "project-imports/apartment-dimensi-taman-dimensi-alor-gajah/images/01_project-apartment-dimensi-cover.jpg",
+          "project-imports/apartment-dimensi-taman-dimensi-alor-gajah/images/02_Apartment-Dimensi-29.jpg",
+          "project-imports/apartment-dimensi-taman-dimensi-alor-gajah/images/03_Apartment-Dimensi-23.jpg",
+          "project-imports/apartment-dimensi-taman-dimensi-alor-gajah/images/04_Apartment-Dimensi-20.jpg",
+          "project-imports/apartment-dimensi-taman-dimensi-alor-gajah/images/05_Apartment-Dimensi-17.jpg",
+          "project-imports/apartment-dimensi-taman-dimensi-alor-gajah/images/06_Apartment-Dimensi-13.jpg",
+          "project-imports/apartment-dimensi-taman-dimensi-alor-gajah/images/07_Apartment-Dimensi-9.jpg",
+          "project-imports/apartment-dimensi-taman-dimensi-alor-gajah/images/08_Apartment-Dimensi-7.jpg",
+          "project-imports/apartment-dimensi-taman-dimensi-alor-gajah/images/09_Apartment-Dimensi-3.jpg",
+          "project-imports/apartment-dimensi-taman-dimensi-alor-gajah/images/10_Apartment-Dimensi-1.jpg"
+        ],
+        "blueprint": [],
+        "logo": [],
+        "location": [],
+        "shuttle": [],
+        "facilities": [],
+        "interior": []
+      }
+    },
+    "proj-4": {
+      "featured": false,
+      "sortOrder": 12,
+      "createdAt": "2026-09-27T08:15:26.265Z",
+      "name": "Hotel Ehsan, Ampang",
+      "slug": "hotel-ehsan-ampang",
+      "content": {
+        "facts": [
+          [
+            "Total floor area",
+            "8,250 sq ft"
+          ],
+          [
+            "Tenure",
+            "Lease of State"
+          ],
+          [
+            "Construction started",
+            "March 2011"
+          ],
+          [
+            "Completed",
+            "May 2011"
+          ],
+          [
+            "Gross development value",
+            "RM 4,800,000"
+          ]
+        ],
+        "template": "widuri-sections-v1",
+        "sourceOnly": true
+      },
+      "enquiry": {
+        "enabled": false,
+        "interest": "",
+        "sections": {
+          "cta": false,
+          "fit": false,
+          "shuttle": false,
+          "certificate": false
+        }
+      },
+      "location": "No. 14, Jalan Mamanda 5, Ampang Point, Ampang, Selangor",
+      "coordinates": null,
+      "year": "2011",
+      "yearEnd": "2011",
+      "status": "Completed",
+      "description": "A shop office converted into a five-storey budget hotel at Ampang Point.",
+      "units": "",
+      "area": "8,250 sq ft",
+      "priceRange": "",
+      "occupancy": "",
+      "amenities": [],
+      "certificate": null,
+      "media": {
+        "thumbnail": "project-imports/ehsan-hotel/images/01_pic-ehsanhotel-01.jpg",
+        "image": [
+          "project-imports/ehsan-hotel/images/01_pic-ehsanhotel-01.jpg",
+          "project-imports/ehsan-hotel/images/02_pic-ehsanhotel-02.jpg",
+          "project-imports/ehsan-hotel/images/03_pic-ehsanhotel-11.jpg",
+          "project-imports/ehsan-hotel/images/04_pic-ehsanhotel-09.jpg",
+          "project-imports/ehsan-hotel/images/05_pic-ehsanhotel-03.jpg",
+          "project-imports/ehsan-hotel/images/06_pic-ehsanhotel-07.jpg",
+          "project-imports/ehsan-hotel/images/07_pic-ehsanhotel-10.jpg",
+          "project-imports/ehsan-hotel/images/08_pic-ehsanhotel-04.jpg",
+          "project-imports/ehsan-hotel/images/09_pic-ehsanhotel-13.jpg",
+          "project-imports/ehsan-hotel/images/10_pic-ehsanhotel-06.jpg",
+          "project-imports/ehsan-hotel/images/11_pic-ehsanhotel-05.jpg",
+          "project-imports/ehsan-hotel/images/12_pic-ehsanhotel-12.jpg",
+          "project-imports/ehsan-hotel/images/13_pic-ehsanhotel-08.jpg"
+        ],
+        "blueprint": [],
+        "logo": [],
+        "location": [],
+        "shuttle": [],
+        "facilities": [],
+        "interior": []
+      }
+    },
+    "proj-5": {
+      "featured": false,
+      "sortOrder": 13,
+      "createdAt": "2026-09-27T08:15:26.276Z",
+      "name": "Taman Pinggiran Markisa",
+      "slug": "taman-pinggiran-markisa",
+      "content": {
+        "facts": [
+          [
+            "Tenure",
+            "Malay Reserve"
+          ],
+          [
+            "Area",
+            "3,300 sq ft"
+          ],
+          [
+            "Bedrooms",
+            "5"
+          ],
+          [
+            "Bathrooms",
+            "4"
+          ],
+          [
+            "Starting price",
+            "RM 883,000"
+          ]
+        ],
+        "template": "widuri-sections-v1",
+        "sourceOnly": true
+      },
+      "enquiry": {
+        "enabled": false,
+        "interest": "",
+        "sections": {
+          "cta": false,
+          "fit": false,
+          "shuttle": false,
+          "certificate": false
+        }
+      },
+      "location": "",
+      "coordinates": null,
+      "year": "",
+      "yearEnd": "",
+      "status": "Completed",
+      "description": "Completed Malay Reserve homes with five bedrooms and four bathrooms.",
+      "units": "",
+      "area": "3,300 sq ft",
+      "priceRange": "RM 883,000",
+      "occupancy": "",
+      "amenities": [],
+      "certificate": null,
+      "media": {
+        "thumbnail": "project-imports/taman-pinggiran-markisa/images/01_project-taman-pinggiran-markisa-cover.jpg",
+        "image": [
+          "project-imports/taman-pinggiran-markisa/images/01_project-taman-pinggiran-markisa-cover.jpg",
+          "project-imports/taman-pinggiran-markisa/images/02_Taman-Markisar-30.jpg",
+          "project-imports/taman-pinggiran-markisa/images/03_project-taman-markisar1.jpg",
+          "project-imports/taman-pinggiran-markisa/images/04_Taman-Markisar-48.jpg",
+          "project-imports/taman-pinggiran-markisa/images/05_Taman-Markisar-43.jpg",
+          "project-imports/taman-pinggiran-markisa/images/06_Taman-Markisar-41.jpg",
+          "project-imports/taman-pinggiran-markisa/images/07_Taman-Markisar-38.jpg",
+          "project-imports/taman-pinggiran-markisa/images/08_Taman-Markisar-28.jpg",
+          "project-imports/taman-pinggiran-markisa/images/09_Taman-Markisar-25.jpg",
+          "project-imports/taman-pinggiran-markisa/images/10_Taman-Markisar-23.jpg",
+          "project-imports/taman-pinggiran-markisa/images/11_Taman-Markisar-21.jpg",
+          "project-imports/taman-pinggiran-markisa/images/12_Taman-Markisar-18.jpg",
+          "project-imports/taman-pinggiran-markisa/images/13_Taman-Markisar-15.jpg",
+          "project-imports/taman-pinggiran-markisa/images/14_Taman-Markisar-10.jpg",
+          "project-imports/taman-pinggiran-markisa/images/15_Taman-Markisar-9.jpg",
+          "project-imports/taman-pinggiran-markisa/images/16_Taman-Markisar-6.jpg",
+          "project-imports/taman-pinggiran-markisa/images/17_Taman-Markisar-3.jpg",
+          "project-imports/taman-pinggiran-markisa/images/18_Taman-Markisar-1.jpg"
+        ],
+        "blueprint": [],
+        "logo": [],
+        "location": [],
+        "shuttle": [],
+        "facilities": [],
+        "interior": []
+      }
+    },
+    "proj-7": {
+      "featured": false,
+      "sortOrder": 14,
+      "createdAt": "2026-09-27T08:15:26.302Z",
+      "name": "2 Storey Shop Office, Bandar Baru Tampin",
+      "slug": "2-storey-shop-office-bandar-baru-tampin",
+      "enquiry": {
+        "enabled": false,
+        "interest": "",
+        "sections": {}
+      },
+      "location": "Tampin, Negeri Sembilan",
+      "coordinates": {
+        "lat": 2.73,
+        "lng": 101.82
+      },
+      "year": "2015",
+      "yearEnd": "2017",
+      "status": "Completed",
+      "description": "13 units of two storey shop offices on Malay Reserve land and state leasehold.",
+      "units": "13 units",
+      "area": "Mixed tenure",
+      "priceRange": "RM 8M GDV",
+      "occupancy": "CCC issued",
+      "amenities": [
+        "Shop offices",
+        "Two storeys",
+        "Commercial space",
+        "Parking",
+        "Security"
+      ],
+      "certificate": "Certificate of Completion and Compliance",
+      "media": {
+        "thumbnail": "proj-shop-tampin.jpg",
+        "image": [
+          "proj-shop-tampin.jpg",
+          "proj-bestari.jpg",
+          "proj-widuri.jpg",
+          "proj-widuri-2.jpg",
+          "proj-kota-warisan.jpg",
+          "proj-dimensi.jpg",
+          "proj-ehsan-residence.jpg",
+          "proj-salam-nadiah.jpg",
+          "proj-markisa.jpg",
+          "proj-bestari.jpg",
+          "proj-widuri.jpg"
+        ],
+        "blueprint": [
+          "proj-shop-tampin.jpg",
+          "proj-bestari.jpg"
+        ],
+        "logo": [],
+        "location": [],
+        "shuttle": [],
+        "facilities": [],
+        "interior": []
+      }
+    },
+    "proj-9": {
+      "featured": false,
+      "sortOrder": 15,
+      "createdAt": "2026-09-27T08:15:26.322Z",
+      "name": "Taman Sri Ehsan",
+      "slug": "taman-sri-ehsan",
+      "content": {
+        "facts": [
+          [
+            "Tenure",
+            "Freehold"
+          ],
+          [
+            "Area",
+            "3,300 sq ft"
+          ],
+          [
+            "Bedrooms",
+            "5"
+          ],
+          [
+            "Bathrooms",
+            "3"
+          ],
+          [
+            "Starting price",
+            "RM 394,855.20"
+          ]
+        ],
+        "template": "widuri-sections-v1",
+        "sourceOnly": true
+      },
+      "enquiry": {
+        "enabled": false,
+        "interest": "",
+        "sections": {
+          "cta": false,
+          "fit": false,
+          "shuttle": false,
+          "certificate": false
+        }
+      },
+      "location": "Kluang, Johor",
+      "coordinates": null,
+      "year": "",
+      "yearEnd": "",
+      "status": "Completed",
+      "description": "Completed freehold homes in Kluang with five bedrooms and three bathrooms.",
+      "units": "",
+      "area": "3,300 sq ft",
+      "priceRange": "RM 394,855.20",
+      "occupancy": "",
+      "amenities": [],
+      "certificate": null,
+      "media": {
+        "thumbnail": "project-imports/taman-sri-ehsan-kluang/images/01_project-sri-ehsan-cover-1.jpg",
+        "image": [
+          "project-imports/taman-sri-ehsan-kluang/images/01_project-sri-ehsan-cover-1.jpg",
+          "project-imports/taman-sri-ehsan-kluang/images/02_Taman-Sri-Ehsan-29.jpg",
+          "project-imports/taman-sri-ehsan-kluang/images/03_Taman-Sri-Ehsan-26.jpg",
+          "project-imports/taman-sri-ehsan-kluang/images/04_Taman-Sri-Ehsan-34.jpg",
+          "project-imports/taman-sri-ehsan-kluang/images/05_Taman-Sri-Ehsan-23.jpg",
+          "project-imports/taman-sri-ehsan-kluang/images/06_Taman-Sri-Ehsan-37.jpg",
+          "project-imports/taman-sri-ehsan-kluang/images/07_Taman-Sri-Ehsan-1.jpg",
+          "project-imports/taman-sri-ehsan-kluang/images/08_Taman-Sri-Ehsan-19.jpg",
+          "project-imports/taman-sri-ehsan-kluang/images/09_Taman-Sri-Ehsan-17.jpg",
+          "project-imports/taman-sri-ehsan-kluang/images/10_Taman-Sri-Ehsan-16.jpg",
+          "project-imports/taman-sri-ehsan-kluang/images/11_Taman-Sri-Ehsan-14.jpg",
+          "project-imports/taman-sri-ehsan-kluang/images/12_Taman-Sri-Ehsan-12.jpg",
+          "project-imports/taman-sri-ehsan-kluang/images/13_Taman-Sri-Ehsan-9.jpg",
+          "project-imports/taman-sri-ehsan-kluang/images/14_Taman-Sri-Ehsan-5.jpg",
+          "project-imports/taman-sri-ehsan-kluang/images/28_Taman-Sri-Ehsan-32.jpg"
+        ],
+        "blueprint": [],
+        "logo": [],
+        "location": [],
+        "shuttle": [],
+        "facilities": [],
+        "interior": [
+          "project-imports/taman-sri-ehsan-kluang/images/15_Taman-Sri-Ehsan-Interior-2.jpg",
+          "project-imports/taman-sri-ehsan-kluang/images/16_Taman-Sri-Ehsan-Interior-19.jpg",
+          "project-imports/taman-sri-ehsan-kluang/images/17_Taman-Sri-Ehsan-Interior-17.jpg",
+          "project-imports/taman-sri-ehsan-kluang/images/18_Taman-Sri-Ehsan-Interior-14.jpg",
+          "project-imports/taman-sri-ehsan-kluang/images/19_Taman-Sri-Ehsan-Interior-12.jpg",
+          "project-imports/taman-sri-ehsan-kluang/images/20_Taman-Sri-Ehsan-Interior-9.jpg",
+          "project-imports/taman-sri-ehsan-kluang/images/21_Taman-Sri-Ehsan-Interior-6.jpg",
+          "project-imports/taman-sri-ehsan-kluang/images/22_Taman-Sri-Ehsan-Interior-27.jpg",
+          "project-imports/taman-sri-ehsan-kluang/images/23_Taman-Sri-Ehsan-Interior-26.jpg",
+          "project-imports/taman-sri-ehsan-kluang/images/24_Taman-Sri-Ehsan-Interior-23.jpg",
+          "project-imports/taman-sri-ehsan-kluang/images/25_Taman-Sri-Ehsan-Interior-21.jpg",
+          "project-imports/taman-sri-ehsan-kluang/images/26_Taman-Sri-Ehsan-Interior-5.jpg",
+          "project-imports/taman-sri-ehsan-kluang/images/27_Taman-Sri-Ehsan-Interior-3.jpg"
+        ]
+      }
+    },
+    "proj-11": {
+      "featured": false,
+      "sortOrder": 16,
+      "createdAt": "2026-09-27T08:15:26.343Z",
+      "name": "Shop Office, Ehsan Residence",
+      "slug": "shop-office-ehsan-residence",
+      "enquiry": {
+        "enabled": false,
+        "interest": "",
+        "sections": {}
+      },
+      "location": "Sepang, Selangor",
+      "coordinates": {
+        "lat": 2.75,
+        "lng": 101.53
+      },
+      "year": "2019",
+      "yearEnd": "2020",
+      "status": "Completed",
+      "description": "14 units of two storey shops on freehold land. Fully completed with CCC.",
+      "units": "14 units",
+      "area": "Freehold",
+      "priceRange": "RM 12M GDV",
+      "occupancy": "CCC issued",
+      "amenities": [
+        "Shop units",
+        "Two storeys",
+        "Freehold tenure",
+        "Central location",
+        "High traffic"
+      ],
+      "certificate": "Certificate of Completion and Compliance",
+      "media": {
+        "thumbnail": "proj-shop-residence.jpg",
+        "image": [
+          "proj-shop-residence.jpg",
+          "proj-dimensi.jpg",
+          "proj-ehsan-residence.jpg",
+          "proj-salam-nadiah.jpg",
+          "proj-markisa.jpg",
+          "proj-bestari.jpg",
+          "proj-widuri.jpg",
+          "proj-widuri-2.jpg",
+          "proj-kota-warisan.jpg",
+          "proj-dimensi.jpg",
+          "proj-ehsan-residence.jpg",
+          "proj-salam-nadiah.jpg",
+          "proj-markisa.jpg"
+        ],
+        "blueprint": [
+          "proj-shop-residence.jpg",
+          "proj-dimensi.jpg"
+        ],
+        "logo": [],
+        "location": [],
+        "shuttle": [],
+        "facilities": [],
+        "interior": []
+      }
+    }
+  },
+  "events": {
+    "event-1": {
+      "id": "event-1",
+      "title": "Residensi Mutiara Austin Grand Launch",
+      "slug": "residensi-mutiara-austin-grand-launch",
+      "category": "Property Launch",
+      "date": "September 15, 2024",
+      "dateTime": "Sep 15, 2024 · 2:00 PM",
+      "location": "Johor Bahru, Malaysia",
+      "image": "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1200&auto=format&fit=crop",
+      "price": "FREE",
+      "attendees": "200 Attendees",
+      "capacity": 200,
+      "registered": 87,
+      "description": "Join us for the grand launch of Residensi Mutiara Austin, a premium 650 unit high rise residential development in Johor Bahru. Experience the architecture, meet our team, and discover exclusive investment opportunities in one of the region's most anticipated property launches.",
+      "agenda": [
+        {
+          "time": "2:00 PM",
+          "title": "Welcome & Arrival",
+          "description": "Registration and networking"
+        },
+        {
+          "time": "2:30 PM",
+          "title": "Project Presentation",
+          "description": "Overview of Residensi Mutiara Austin"
+        },
+        {
+          "time": "3:15 PM",
+          "title": "Site Tour & Display",
+          "description": "Guided tour of show units"
+        },
+        {
+          "time": "4:00 PM",
+          "title": "Q&A Session",
+          "description": "Direct conversation with developers"
+        },
+        {
+          "time": "4:30 PM",
+          "title": "Light Refreshments",
+          "description": "Networking opportunity"
+        }
+      ],
+      "speakers": [
+        {
+          "bio": "20+ years in property development",
+          "name": "Tan Sri Ehsan",
+          "image": "https://i.pravatar.cc/150?u=ehsan-founder",
+          "title": "Founder & Chairman"
+        },
+        {
+          "bio": "Lead developer of Mutiara Austin",
+          "name": "Dato' Development Director",
+          "image": "https://i.pravatar.cc/150?u=ehsan-director",
+          "title": "Project Director"
+        }
+      ],
+      "highlights": [
+        "Exclusive preview of show units",
+        "Discounted pre launch pricing",
+        "Special financing options",
+        "Networking with investors",
+        "Complimentary refreshments",
+        "Exclusive event goody bag"
+      ],
+      "relatedEvents": [
+        "event-2",
+        "event-3"
+      ]
+    },
+    "event-2": {
+      "id": "event-2",
+      "title": "Ehsan Widuri Putra Nilai Open House",
+      "slug": "ehsan-widuri-putra-nilai-open-house",
+      "category": "Open House",
+      "date": "October 8, 2024",
+      "dateTime": "Oct 8, 2024 · 10:00 AM",
+      "location": "Nilai, Negeri Sembilan",
+      "image": "https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=1200&auto=format&fit=crop",
+      "price": "FREE",
+      "attendees": "300 Attendees",
+      "capacity": 300,
+      "registered": 145,
+      "description": "Explore Ehsan Widuri Putra Nilai, a 490 unit mixed use development in the heart of Nilai. Tour completed units, meet current residents, and learn about upcoming phases. This open house is your chance to experience the community and lifestyle we've built.",
+      "agenda": [
+        {
+          "time": "10:00 AM",
+          "title": "Registration & Welcome",
+          "description": "Check in and welcome briefing"
+        },
+        {
+          "time": "10:30 AM",
+          "title": "Completed Units Tour",
+          "description": "Walk through finished residences"
+        },
+        {
+          "time": "11:30 AM",
+          "title": "Resident Meet & Greet",
+          "description": "Chat with current residents"
+        },
+        {
+          "time": "12:00 PM",
+          "title": "Phase 2 Preview",
+          "description": "Upcoming development plans"
+        },
+        {
+          "time": "12:30 PM",
+          "title": "Lunch & Networking",
+          "description": "Casual dining and discussions"
+        }
+      ],
+      "speakers": [
+        {
+          "bio": "Overseeing Widuri's development",
+          "name": "Project Manager",
+          "image": "https://i.pravatar.cc/150?u=ehsan-pm",
+          "title": "Ehsan Widuri Lead"
+        },
+        {
+          "bio": "2 year Widuri resident",
+          "name": "Resident Ambassador",
+          "image": "https://i.pravatar.cc/150?u=ehsan-resident",
+          "title": "Happy Resident"
+        }
+      ],
+      "highlights": [
+        "Tour 3 different unit types",
+        "Meet current residents",
+        "Preview Phase 2 designs",
+        "Investment consultation",
+        "Free lunch provided",
+        "Parking available"
+      ],
+      "relatedEvents": [
+        "event-1",
+        "event-3"
+      ]
+    },
+    "event-3": {
+      "id": "event-3",
+      "title": "Property Investment Seminar 2024",
+      "slug": "property-investment-seminar-2024",
+      "category": "Seminar",
+      "date": "October 22, 2024",
+      "dateTime": "Oct 22, 2024 · 6:00 PM",
+      "location": "Kuala Lumpur, Malaysia",
+      "image": "https://images.unsplash.com/photo-1591115765373-5207764f72e7?q=80&w=1200&auto=format&fit=crop",
+      "price": "FREE",
+      "attendees": "400 Attendees",
+      "capacity": 400,
+      "registered": 256,
+      "description": "Learn investment strategies for Malaysian property from industry experts. Ehsan will present market insights, ROI strategies, and how to identify high potential developments. Perfect for both seasoned investors and those new to property investment.",
+      "agenda": [
+        {
+          "time": "6:00 PM",
+          "title": "Welcome & Keynote",
+          "description": "Market overview 2024-2025"
+        },
+        {
+          "time": "6:30 PM",
+          "title": "Investment Strategies",
+          "description": "Maximizing property ROI"
+        },
+        {
+          "time": "7:00 PM",
+          "title": "Panel Discussion",
+          "description": "Q&A with industry experts"
+        },
+        {
+          "time": "7:45 PM",
+          "title": "Networking Breaks",
+          "description": "Meet investors & developers"
+        },
+        {
+          "time": "8:30 PM",
+          "title": "Closing Remarks",
+          "description": "Next steps & opportunities"
+        }
+      ],
+      "speakers": [
+        {
+          "bio": "Investment strategy expert",
+          "name": "Chief Investment Officer",
+          "image": "https://i.pravatar.cc/150?u=ehsan-cio",
+          "title": "Ehsan CIO"
+        },
+        {
+          "bio": "Market trends analyst",
+          "name": "Market Analyst",
+          "image": "https://i.pravatar.cc/150?u=ehsan-analyst",
+          "title": "Real Estate Specialist"
+        }
+      ],
+      "highlights": [
+        "Market insights & trends",
+        "Investment case studies",
+        "ROI calculation methods",
+        "Risk management strategies",
+        "Exclusive offers",
+        "Networking dinner"
+      ],
+      "relatedEvents": [
+        "event-1",
+        "event-2"
+      ]
+    },
+    "event-4": {
+      "id": "event-4",
+      "title": "Taman Mawar Ehsan Phase 4 Preview",
+      "slug": "taman-mawar-ehsan-phase-4-preview",
+      "category": "Property Launch",
+      "date": "November 9, 2024",
+      "dateTime": "Nov 9, 2024 · 11:00 AM",
+      "location": "Rembau, Negeri Sembilan",
+      "image": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1200&auto=format&fit=crop",
+      "price": "FREE",
+      "attendees": "160 Attendees",
+      "capacity": 160,
+      "registered": 64,
+      "description": "A first look at the final phase of Taman Mawar Ehsan — 57 units of single and two storey terrace houses on 99 year leasehold land, from RM 299,800. Phases 1 to 3 are complete and occupied, so you can walk a finished street before you commit.",
+      "agenda": [
+        {
+          "time": "11:00 AM",
+          "title": "Registration",
+          "description": "Check in and site briefing"
+        },
+        {
+          "time": "11:30 AM",
+          "title": "Phase 4 Masterplan",
+          "description": "Layouts, pricing and handover schedule"
+        },
+        {
+          "time": "12:15 PM",
+          "title": "Completed Street Walk",
+          "description": "Tour Phases 1 to 3"
+        },
+        {
+          "time": "1:00 PM",
+          "title": "Lunch & Booking Desk",
+          "description": "Meet the sales and loan panel"
+        }
+      ],
+      "speakers": [
+        {
+          "bio": "Led the Mawar Ehsan rollout",
+          "name": "Sales Director",
+          "image": "https://i.pravatar.cc/150?u=ehsan-sales",
+          "title": "Negeri Sembilan Region"
+        }
+      ],
+      "highlights": [
+        "Walk finished Phase 1–3 streets",
+        "Phase 4 launch pricing",
+        "On site loan panel",
+        "Bumiputera unit allocation",
+        "Lunch provided"
+      ],
+      "relatedEvents": [
+        "event-1",
+        "event-2"
+      ]
+    },
+    "event-5": {
+      "id": "event-5",
+      "title": "Taman Universiti Bestari Site Day",
+      "slug": "taman-universiti-bestari-site-day",
+      "category": "Open House",
+      "date": "November 23, 2024",
+      "dateTime": "Nov 23, 2024 · 9:30 AM",
+      "location": "Sungai Petani, Kedah",
+      "image": "https://images.unsplash.com/photo-1448630360428-65456885c650?q=80&w=1200&auto=format&fit=crop",
+      "price": "FREE",
+      "attendees": "250 Attendees",
+      "capacity": 250,
+      "registered": 98,
+      "description": "Spend a morning on the 53 acre Taman Universiti Bestari site in Kedah. Phases 1 to 4 are handed over, Phase 5 is under construction, and Phases 6 to 8 are open for registration of interest. Hard hats provided for the construction walk.",
+      "agenda": [
+        {
+          "time": "9:30 AM",
+          "title": "Arrival & Safety Briefing",
+          "description": "Hard hats and site rules"
+        },
+        {
+          "time": "10:00 AM",
+          "title": "Phase 5 Construction Walk",
+          "description": "See the build in progress"
+        },
+        {
+          "time": "11:00 AM",
+          "title": "Show Unit Viewing",
+          "description": "1,140 to 2,800 sq ft layouts"
+        },
+        {
+          "time": "12:00 PM",
+          "title": "Phases 6–8 Briefing",
+          "description": "Register your interest early"
+        }
+      ],
+      "speakers": [
+        {
+          "bio": "On site since groundbreaking",
+          "name": "Site Manager",
+          "image": "https://i.pravatar.cc/150?u=ehsan-site",
+          "title": "Bestari Phase 5"
+        }
+      ],
+      "highlights": [
+        "Live construction walk",
+        "Four show unit layouts",
+        "Phases 6–8 early registration",
+        "Hard hats and safety gear provided",
+        "Free shuttle from Sungai Petani town"
+      ],
+      "relatedEvents": [
+        "event-2",
+        "event-4"
+      ]
+    },
+    "event-6": {
+      "id": "event-6",
+      "title": "First Time Buyer Financing Clinic",
+      "slug": "first-time-buyer-financing-clinic",
+      "category": "Seminar",
+      "date": "December 7, 2024",
+      "dateTime": "Dec 7, 2024 · 10:00 AM",
+      "location": "Kuala Lumpur, Malaysia",
+      "image": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1200&auto=format&fit=crop",
+      "price": "FREE",
+      "attendees": "120 Attendees",
+      "capacity": 120,
+      "registered": 71,
+      "description": "A working session for first time buyers, not a sales pitch. Bring your payslips and we will walk you through loan eligibility, the LPPSA and bank panels, government schemes, and the real cost of buying beyond the sticker price.",
+      "agenda": [
+        {
+          "time": "10:00 AM",
+          "title": "What You Can Actually Borrow",
+          "description": "DSR, CCRIS and CTOS explained"
+        },
+        {
+          "time": "10:45 AM",
+          "title": "Schemes & Subsidies",
+          "description": "What is available and who qualifies"
+        },
+        {
+          "time": "11:30 AM",
+          "title": "The Hidden Costs",
+          "description": "Legal fees, stamp duty, MOT"
+        },
+        {
+          "time": "12:15 PM",
+          "title": "One to One Desk",
+          "description": "Bring documents for a personal review"
+        }
+      ],
+      "speakers": [
+        {
+          "bio": "Handles Ehsan's loan panel",
+          "name": "Mortgage Advisor",
+          "image": "https://i.pravatar.cc/150?u=ehsan-mortgage",
+          "title": "Panel Bank Liaison"
+        }
+      ],
+      "highlights": [
+        "Personal eligibility check",
+        "Bring your own documents",
+        "Government scheme walkthrough",
+        "Full cost breakdown worksheet",
+        "No obligation to buy"
+      ],
+      "relatedEvents": [
+        "event-3",
+        "event-4"
+      ]
+    }
+  },
+  "awards": [
+    {
+      "reference": "award-1",
+      "year": 2014,
+      "name": "Selangor Excellence Business Awards",
+      "description": "Recognized for business excellence and contribution to the Selangor community.",
+      "image": "/assets/img/awards/Award logo vector-01.png"
+    },
+    {
+      "reference": "award-2",
+      "year": 2015,
+      "name": "ASEAN Outstanding Business Awards",
+      "description": "Acknowledged for outstanding business practices across the ASEAN region.",
+      "image": "/assets/img/awards/Award logo vector-02.png"
+    },
+    {
+      "reference": "award-3",
+      "year": 2016,
+      "name": "MIMCOIN SME Congress & Golden Dinar Awards",
+      "description": "Honored for SME development and business innovation.",
+      "image": "/assets/img/awards/Award logo vector-03.png"
+    },
+    {
+      "reference": "award-4",
+      "year": 2019,
+      "name": "MIMCOIN SME Congress & Golden Dinar Awards",
+      "description": "Continued recognition for exceptional SME contributions and growth.",
+      "image": "/assets/img/awards/Award logo vector-04.png"
+    },
+    {
+      "reference": "award-5",
+      "year": 2014,
+      "name": "Global Leadership Awards",
+      "description": "Recognized for outstanding leadership in property development.",
+      "image": "/assets/img/awards/Award logo vector-05.png"
+    },
+    {
+      "reference": "award-6",
+      "year": 2015,
+      "name": "SME Recognition Awards",
+      "description": "Acknowledged for significant contributions to SME sector growth.",
+      "image": "/assets/img/awards/Award logo vector-06.png"
+    },
+    {
+      "reference": "award-7",
+      "year": 2017,
+      "name": "MIMCOIN SME Congress & Golden Dinar Awards",
+      "description": "Honored for sustained excellence in SME innovation.",
+      "image": "/assets/img/awards/Award logo vector-07.png"
+    },
+    {
+      "reference": "award-8",
+      "year": 2022,
+      "name": "Bumiputera Business Excellence Awards",
+      "description": "Recognized for excellence in Bumiputera business practices.",
+      "image": "/assets/img/awards/Award logo vector-08.png"
+    },
+    {
+      "reference": "award-9",
+      "year": 2017,
+      "name": "Malaysia Top Achiever Awards",
+      "description": "Acknowledged as a top achiever in property development.",
+      "image": "/assets/img/awards/Award logo vector-09.png"
+    },
+    {
+      "reference": "award-10",
+      "year": 2018,
+      "name": "Global Leadership Awards",
+      "description": "Honored for global leadership and innovative strategies.",
+      "image": "/assets/img/awards/Award logo vector-10.png"
+    },
+    {
+      "reference": "award-11",
+      "year": 2023,
+      "name": "Nambikhai Business Icon Awards",
+      "description": "Recognized as a business icon for excellence and impact.",
+      "image": "/assets/img/awards/Award logo vector-11.png"
+    },
+    {
+      "reference": "award-12",
+      "year": 2023,
+      "name": "Consumer's Choice Award",
+      "description": "Awarded by consumers for outstanding service quality.",
+      "image": "/assets/img/awards/Award logo vector-12.png"
+    }
+  ]
+}

@@ -5,8 +5,12 @@
   const isAboutPage = window.SITE?.page === 'about.html';
   let published;
   try {
-    const response = await fetch(`${adminOrigin}/api/public/landing.json`, { cache: 'no-store' });
-    if (response.ok) { published = await response.json(); window.EhsanPublicData?.saveLanding(published); }
+    if (window.EhsanPublicData?.loadLanding) published = await window.EhsanPublicData.loadLanding();
+    else {
+      const response = await fetch(`${adminOrigin}/api/public/landing.json`, { cache: 'no-store' });
+      if (response.ok) published = await response.json();
+    }
+    if (published) window.EhsanPublicData?.saveLanding(published);
   } catch (_) { /* A complete static fallback remains available offline. */ }
   const imageUrl = value => value && (value.startsWith('/media/') || value.startsWith('/live-site/')) ? adminOrigin + value : value;
   const plain = value => String(value).replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>');

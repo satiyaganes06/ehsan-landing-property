@@ -11,7 +11,8 @@ function setup({ cached, embedded = false, fail = false } = {}) {
   runInNewContext(source, { window, URL, URLSearchParams, Date, location: { hostname: 'localhost', origin: 'http://localhost:8899', pathname: '/html/project-detail.html', search: '?project=proj-15' },
     document: { currentScript: { src: 'http://localhost:8899/js/public-data.js' }, createElement: () => ({}), head: { append: node => preloads.push(node) } },
     sessionStorage: { getItem: () => stored, setItem: (_, value) => { stored = value; } },
-    fetch: async url => { requests.push(String(url)); if (fail && requests.length === 1) throw new Error('Offline'); return { ok: true, json: async () => projects }; },
+    AbortSignal,
+    fetch: async url => { requests.push(String(url)); if (fail && String(url).includes('localhost:3001')) throw new Error('Offline'); return { ok: true, json: async () => String(url).includes('landing.json') ? {projects,values:{}} : projects }; },
   });
   return { api: window.EhsanPublicData, requests, preloads, projects, saved: () => stored };
 }
@@ -42,4 +43,12 @@ test('preview drafts never reuse or write public session storage', async () => {
 test('unavailable service falls back to static project data', async () => {
   const ctx = setup({ fail: true }); await ctx.api.getProjects();
   assert.equal(ctx.requests.length, 2); assert.match(ctx.requests[1], /data\/projects.json/);
+});
+test('admin outage retains published landing and project enquiry settings', async () => {
+  const ctx = setup({fail:true});
+  await ctx.api.getProjects();
+  const landing = await ctx.api.loadLanding();
+  assert.equal(landing.projects['proj-15'].name,'Widuri');
+  assert.match(ctx.requests.at(-1), /data\/landing.json/);
+  assert.equal(ctx.api.getLanding().projects['proj-15'].name,'Widuri');
 });

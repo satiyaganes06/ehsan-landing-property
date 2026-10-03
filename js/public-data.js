@@ -28,14 +28,30 @@
     if (cached?.projects) { preloadHero(cached.projects); return Promise.resolve(cached.projects); }
     if (!projectsRequest) projectsRequest = (async () => {
       let response;
-      try { response = await fetch(`${admin}/api/public/projects.json`); if (!response.ok) throw new Error('Project service unavailable'); }
+      try { response = await fetch(`${admin}/api/public/projects.json`, {signal:AbortSignal.timeout(3000)}); if (!response.ok) throw new Error('Project service unavailable'); }
       catch { response = await fetch(new URL('data/projects.json?v=20260915.1', base)); }
       if (!response.ok) throw new Error('Failed to load projects');
       const projects = await response.json(); save(projects); preloadHero(projects); return projects;
     })();
     return projectsRequest;
   };
-  window.EhsanPublicData = { getProjects, getLanding: () => read()?.landing, saveLanding: landing => save(landing.projects, landing) };
+  const loadLanding = async () => {
+    const cached = read()?.landing;
+    if (cached) return cached;
+    let landing;
+    try {
+      const response = await fetch(`${admin}/api/public/landing.json`, {cache:'no-store', signal:AbortSignal.timeout(3000)});
+      if (!response.ok) throw new Error('Landing service unavailable');
+      landing = await response.json();
+    } catch {
+      const response = await fetch(new URL('data/landing.json', base), {cache:'no-store'});
+      if (!response.ok) throw new Error('Landing snapshot unavailable');
+      landing = await response.json();
+    }
+    save(landing.projects, landing);
+    return landing;
+  };
+  window.EhsanPublicData = { getProjects, loadLanding, getLanding: () => read()?.landing, saveLanding: landing => save(landing.projects, landing) };
   // Start before fonts and the page's presentation scripts finish loading.
   if (/\/project-detail\.html$|\/projects\/[^/]+\/?$|\/preview\/project\.html$/.test(location.pathname)) getProjects().catch(() => {});
 })();

@@ -6,9 +6,9 @@
   if (!admin) return;
   let payload;
   try {
-    payload = window.EhsanPublicData?.getLanding();
+    payload = window.EhsanPublicData?.loadLanding ? await window.EhsanPublicData.loadLanding() : window.EhsanPublicData?.getLanding();
     if (!payload) { const response = await fetch(`${admin}/api/public/landing.json`, { cache: 'no-store' }); if (!response.ok) return; payload = await response.json(); window.EhsanPublicData?.saveLanding(payload); }
-  } catch { return; }
+  } catch { payload = {projects}; }
   const settings = payload.projects?.[reference]?.enquiry;
   if (!settings?.enabled || !settings.interest) return;
   const defaults = {
@@ -79,6 +79,7 @@
   const status = document.createElement('p'); status.className = 'enquiry__status'; status.setAttribute('role', 'status');
   actions.append(button, status); form.append(trap, actions); layout.append(intro, form); inner.append(header, layout); section.append(inner);
   document.querySelector('footer')?.before(section);
+  document.querySelector('.topnav__cta')?.setAttribute('href', '#project-enquiry');
   // Project calls to action should lead to the on-page form when enabled.
   document.querySelectorAll('#widuriExperience a[href="#enquire"], #widuriExperience a[href="../index.html#contact"]').forEach(link => {
     link.setAttribute('href', '#project-enquiry');
