@@ -26,7 +26,6 @@ SITE.define('navbar', (SITE) => {
     const current = match.includes(SITE.page) ? ' class="is-current"' : '';
     return `<a href="${SITE.url(href)}"${current}>${label}</a>`;
   }).join('\n    ');
-  const projectPage = SITE.page === 'project-detail.html' || SITE.page === 'project.html';
 
   return `
 <header class="topnav" id="topnav">
@@ -34,10 +33,25 @@ SITE.define('navbar', (SITE) => {
     <img src="${SITE.url('assets/logo/epp_logo.png')}" alt="Ehsan Plant &amp; Property logo" width="32" height="32" decoding="async">
     <span class="topnav__brand-full">Ehsan Plant &amp; Property</span>
   </a>
-  <nav class="topnav__links${projectPage ? ' topnav__links--replaced' : ''}" aria-label="Primary">
+  <nav class="topnav__links" aria-label="Primary">
     ${links}
   </nav>
-  <a class="topnav__cta" href="${SITE.url('#contact')}">Enquire</a>
-  ${projectPage ? `<details class="project-nav"><summary aria-label="Main menu"><svg class="project-nav__icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path class="project-nav__line project-nav__line--top" d="M4 7h16"/><path class="project-nav__line project-nav__line--middle" d="M4 12h16"/><path class="project-nav__line project-nav__line--bottom" d="M4 17h16"/></svg></summary><nav aria-label="Main menu">${links}</nav></details>` : ''}
+  <details class="project-nav"><summary aria-label="Main menu"><svg class="project-nav__icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path class="project-nav__line project-nav__line--top" d="M4 7h16"/><path class="project-nav__line project-nav__line--middle" d="M4 12h16"/><path class="project-nav__line project-nav__line--bottom" d="M4 17h16"/></svg></summary><nav aria-label="Main menu">${links}</nav></details>
 </header>`;
+});
+
+// Native details supports touch and keyboard; also dismiss after navigation,
+// an outside click, or Escape without trapping focus in a hidden dropdown.
+document.addEventListener('click', event => {
+  document.querySelectorAll('.project-nav[open]').forEach(menu => {
+    if (!menu.contains(event.target) || event.target.closest('a')) menu.open = false;
+  });
+});
+document.addEventListener('keydown', event => {
+  if (event.key !== 'Escape') return;
+  document.querySelectorAll('.project-nav[open]').forEach(menu => {
+    const restoreFocus = menu.contains(document.activeElement);
+    menu.open = false;
+    if (restoreFocus) menu.querySelector('summary').focus();
+  });
 });

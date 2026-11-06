@@ -799,6 +799,26 @@ html.reveal-armed [data-reveal].is-revealed {
 }
 .topnav__cta:hover { background: var(--brass); transform: translateY(-1px); }
 
+/* Shared mobile/tablet navigation, including pages without project styles. */
+.project-nav { display: none; position: relative; flex: none; }
+.project-nav summary { display: flex; align-items: center; justify-content: center; list-style: none; cursor: pointer; border-radius: 50%; padding: 0; width: 44px; height: 44px; background: var(--brass); color: #181a15; box-sizing: border-box; }
+.project-nav summary::-webkit-details-marker { display: none; }
+.project-nav__line { transform-origin: 12px 12px; }
+.project-nav[open] .project-nav__line--top { transform: translateY(5px) rotate(45deg); transform-origin: 12px 7px; }
+.project-nav[open] .project-nav__line--middle { opacity: 0; }
+.project-nav[open] .project-nav__line--bottom { transform: translateY(-5px) rotate(-45deg); transform-origin: 12px 17px; }
+.project-nav nav { position: absolute; top: calc(100% + .75rem); right: 0; width: min(270px, calc(100vw - 2.5rem)); max-height: calc(100dvh - 100px); overflow-y: auto; padding: .6rem; background: #fff; border: 1px solid #dde2d3; border-radius: 16px; box-shadow: 0 12px 40px #0002; }
+.project-nav nav a { display: block; padding: .85rem 1rem; border-radius: 10px; color: #303829; text-decoration: none; font: 500 .95rem/1.4 var(--sans); }
+.project-nav nav a:hover, .project-nav nav a.is-current { background: #f0f4e5; }
+.project-nav summary:focus-visible, .project-nav nav a:focus-visible { outline: 2px solid #657000; outline-offset: 3px; }
+@media (max-width: 1024px) {
+  .topnav { gap: .75rem; }
+  .topnav__brand { margin-right: auto; }
+  .topnav__brand-full, .topnav__links { display: none; }
+  .project-nav { display: block; }
+  .topnav__cta { min-height: 44px; box-sizing: border-box; align-items: center; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .topnav { transition: none; }
 }
