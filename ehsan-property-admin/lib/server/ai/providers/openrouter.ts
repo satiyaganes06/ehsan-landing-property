@@ -61,17 +61,20 @@ export class OpenRouterProvider implements AiProvider {
     }
 
     if (!res.ok) {
-      throw new AiError(`OpenRouter returned ${res.status}: ${await res.text()}`, this.id);
+      throw new AiError(`OpenRouter returned HTTP ${res.status}`, this.id);
     }
 
-    const payload = (await res.json()) as any;
-    const content: string | undefined = payload?.choices?.[0]?.message?.content;
-    if (!content) throw new AiError('OpenRouter returned no content', this.id);
+    const payload = (await res.json()) as {
+      choices?: { message?: { content?: unknown } }[];
+      usage?: { prompt_tokens?: number; completion_tokens?: number };
+    };
+    const content = payload?.choices?.[0]?.message?.content;
+    if (typeof content !== 'string' || !content.trim()) throw new AiError('OpenRouter returned no content', this.id);
 
     const parsed = req.schema.safeParse(extractJson(content, this.id));
     if (!parsed.success) {
       throw new AiError(
-        `OpenRouter output did not match schema "${req.name}": ${parsed.error.message}`,
+        `OpenRouter output did not match schema "${req.name}"`,
         this.id,
       );
     }

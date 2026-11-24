@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import type { ColumnDef } from '@tanstack/react-table';
@@ -25,6 +25,12 @@ export default function EventsPage() {
   // still need editing.
   const [when, setWhen] = useState<When>('upcoming');
 
+  const [now, setNow] = useState(Date.now);
+  useEffect(() => {
+    const timer = window.setInterval(() => setNow(Date.now()), 60_000);
+    return () => window.clearInterval(timer);
+  }, []);
+
   const query = useQuery({
     queryKey: ['events'],
     queryFn: () => api.get<Paginated<EventListItem>>('/api/events?perPage=100'),
@@ -33,13 +39,12 @@ export default function EventsPage() {
   const rows = useMemo(() => {
     const items = query.data?.items ?? [];
     if (when === 'all') return items;
-    const now = Date.now();
     return items.filter((item) =>
       when === 'upcoming'
         ? new Date(item.startsAt).getTime() >= now
         : new Date(item.startsAt).getTime() < now,
     );
-  }, [query.data, when]);
+  }, [query.data, when, now]);
 
   const columns = useMemo<ColumnDef<EventListItem, unknown>[]>(
     () => [

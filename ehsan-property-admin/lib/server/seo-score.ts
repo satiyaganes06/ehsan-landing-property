@@ -21,7 +21,7 @@ export interface SeoScoreInput {
   internalLinkCount: number;
 }
 
-export interface RuleResult {
+export type RuleResult = {
   id: string;
   label: string;
   weight: number;
@@ -54,7 +54,6 @@ export function evaluateSeo(input: SeoScoreInput): SeoScoreResult {
   const title = input.title.trim();
   const description = input.description.trim();
   const kw = input.focusKeyword?.trim().toLowerCase() || '';
-  const bodyLower = input.bodyText.toLowerCase();
   const first100 = input.bodyText.trim().split(/\s+/).slice(0, 100).join(' ').toLowerCase();
 
   const titleLen = title.length;

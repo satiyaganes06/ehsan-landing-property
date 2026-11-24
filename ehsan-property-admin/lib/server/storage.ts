@@ -1,6 +1,7 @@
 import 'server-only';
-import { mkdir, writeFile, unlink, readFile } from 'node:fs/promises';
+import { writeFile, unlink } from 'node:fs/promises';
 import path from 'node:path';
+import { mediaPath, readMedia } from './local-media.cjs';
 import { randomUUID } from 'node:crypto';
 
 /**
@@ -28,10 +29,10 @@ export interface StoredFile {
 
 export async function putUpload(
   buffer: Buffer,
-  filename: string,
+  format: string,
   contentType: string,
 ): Promise<StoredFile> {
-  const ext = (filename.split('.').pop() || 'bin').toLowerCase();
+  const ext = format === 'jpeg' ? 'jpg' : format;
   const now = new Date();
   const relPath = `${now.getFullYear()}/${String(now.getMonth() + 1).padStart(2, '0')}/${randomUUID()}.${ext}`;
 
@@ -47,9 +48,8 @@ export async function putUpload(
     return { storageKey: `blob:${blob.url}` };
   }
 
-  const abs = path.join(UPLOAD_ROOT, relPath);
-  await mkdir(path.dirname(abs), { recursive: true });
-  await writeFile(abs, buffer);
+  const abs = await mediaPath(UPLOAD_ROOT, relPath, true);
+  await writeFile(abs, buffer, { flag: 'wx' });
   return { storageKey: `upload:${relPath}` };
 }
 
@@ -62,14 +62,13 @@ export async function deleteUpload(storageKey: string): Promise<void> {
     return;
   }
   if (storageKey.startsWith('upload:')) {
-    await unlink(path.join(UPLOAD_ROOT, storageKey.slice('upload:'.length))).catch(() => {});
+    await mediaPath(UPLOAD_ROOT, storageKey.slice('upload:'.length)).then(unlink).catch(error => {
+      if (error.code !== 'ENOENT') throw error;
+    });
   }
 }
 
 /** Reads a locally-stored upload for the /media/uploads route to serve. */
 export async function readLocalUpload(relPath: string): Promise<Buffer | null> {
-  const abs = path.join(UPLOAD_ROOT, relPath);
-  // Refuse anything that escapes the upload root.
-  if (!abs.startsWith(UPLOAD_ROOT + path.sep)) return null;
-  return readFile(abs).catch(() => null);
+  return readMedia(UPLOAD_ROOT, relPath).catch(() => null);
 }

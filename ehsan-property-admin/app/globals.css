@@ -80,6 +80,7 @@
 }
 
 :root {
+  --font-montserrat: Montserrat, Arial, sans-serif;
   --radius: 0.5rem;
 
   /* Brand constants — identical in both themes. Brass is brass. */

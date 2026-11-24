@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { formatDistanceToNow } from 'date-fns';
 import { toast } from 'sonner';
@@ -33,10 +33,7 @@ export default function EnquiriesPage() {
   });
 
   const items = query.data?.items ?? [];
-  const selected = useMemo(
-    () => items.find((e) => e.id === selectedId) ?? null,
-    [items, selectedId],
-  );
+  const selected = items.find((item) => item.id === selectedId) ?? null;
 
   const { page: enquiryPage, bindings: enquiryBindings } = usePagination(items);
 

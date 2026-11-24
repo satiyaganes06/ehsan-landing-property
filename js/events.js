@@ -1,18 +1,3 @@
-/* Where published content comes from.
-
-   Unset, the site reads the checked-in data/*.json exactly as before, so
-   nothing changes until you decide to switch. Point it at the deployed panel
-   to serve content straight from the CMS:
-
-     <script>window.EHSAN_CMS_ORIGIN = 'https://admin.ehsanproperty.com';</script>
-
-   Set it before this script loads (a <script> tag in the page head does it).
-*/
-function cmsUrl(file, fallback) {
-  const origin = window.EHSAN_CMS_ORIGIN || window.SITE?.adminOrigin;
-  return origin ? origin.replace(/\/$/, '') + '/api/public/' + file : SITE.url(fallback);
-}
-
 /* =========================================================================
    events.js — the full event listing.
 
@@ -38,16 +23,16 @@ function cmsUrl(file, fallback) {
   /* ---------- render ---------- */
 
   const card = ([id, ev], i) => `
-    <a href="${SITE.recordUrl('events', ev)}" class="event-card" style="--i:${i}">
+    <a href="${SITE.escapeHtml(SITE.recordUrl('events', ev))}" class="event-card" style="--i:${i}">
       <div class="event-image-wrapper">
-        <img src="${ev.image}" alt="${ev.title}" loading="lazy" decoding="async" referrerpolicy="no-referrer">
-        <span class="event-category">${ev.category}</span>
+        <img src="${SITE.escapeHtml(ev.image)}" alt="${SITE.escapeHtml(ev.title)}" loading="lazy" decoding="async" referrerpolicy="no-referrer">
+        <span class="event-category">${SITE.escapeHtml(ev.category)}</span>
       </div>
       <div class="event-body">
-        <h2 class="event-title">${ev.title}</h2>
+        <h2 class="event-title">${SITE.escapeHtml(ev.title)}</h2>
         <div class="event-meta">
           <div class="event-speaker">
-            <img src="${ev.speakers?.[0]?.image || ''}" alt="" referrerpolicy="no-referrer">
+            <img src="${SITE.escapeHtml(ev.speakers?.[0]?.image || '')}" alt="" referrerpolicy="no-referrer">
             <div>
               <div class="event-speaker-label">Hosted by</div>
               <div class="event-speaker-name">Ehsan Team</div>
@@ -55,13 +40,13 @@ function cmsUrl(file, fallback) {
           </div>
           <div class="event-date">
             <div class="event-date-label">Date</div>
-            <div class="event-date-value">${ev.date}</div>
+            <div class="event-date-value">${SITE.escapeHtml(ev.date)}</div>
           </div>
         </div>
         <div class="event-stats">
-          <span>${ev.location}</span>
-          <span>${ev.attendees}</span>
-          <span>${ev.price}</span>
+          <span>${SITE.escapeHtml(ev.location)}</span>
+          <span>${SITE.escapeHtml(ev.attendees)}</span>
+          <span>${SITE.escapeHtml(ev.price)}</span>
         </div>
         <span class="event-cta">Learn more</span>
       </div>
@@ -91,7 +76,7 @@ function cmsUrl(file, fallback) {
 
     filterEl.innerHTML = cats.map((c) => `
       <button type="button" class="events-filter__btn${c === active ? ' is-active' : ''}"
-              data-cat="${c}" aria-pressed="${c === active}">${c}</button>
+              data-cat="${SITE.escapeHtml(c)}" aria-pressed="${c === active}">${SITE.escapeHtml(c)}</button>
     `).join('');
   }
 
@@ -105,11 +90,7 @@ function cmsUrl(file, fallback) {
 
   /* ---------- load ---------- */
 
-  fetch(cmsUrl('events.json', 'data/events.json'))
-    .then((r) => {
-      if (!r.ok) throw new Error(`events.json → ${r.status}`);
-      return r.json();
-    })
+  SITE.loadEvents()
     .then((data) => {
       events = Object.entries(data).map(([id, event]) => [id, { ...event, image: event.image?.startsWith('/media/') ? SITE.adminOrigin + event.image : event.image, speakers: event.speakers?.map(speaker => ({ ...speaker, image: speaker.image?.startsWith('/media/') ? SITE.adminOrigin + speaker.image : speaker.image })) }]);
       renderFilter();

@@ -5,8 +5,11 @@ import { mediaUrl } from '@/lib/server/media-url';
 
 export const runtime = 'nodejs';
 export const GET = publicRoute(async () => {
-  const block = await prisma.textBlock.findUnique({ where: { key: 'landing.customization' }, include: { translations: { where: { locale: 'EN' } } } });
-  const [projects, events, awards, testimonials] = await Promise.all([
+  const [block, projects, events, awards, testimonials] = await Promise.all([
+    prisma.textBlock.findUnique({
+      where: { key: 'landing.customization' },
+      select: { translations: { where: { locale: 'EN' }, select: { value: true } } },
+    }),
     buildProjectsPayload(), buildEventsPayload(),
     prisma.award.findMany({ where: { publishState: 'PUBLISHED' }, orderBy: { sortOrder: 'asc' }, include: { translations: { where: { locale: 'EN' } }, media: true } }),
     prisma.testimonial.findMany({ where: { publishState: 'PUBLISHED' }, orderBy: { sortOrder: 'asc' }, include: { translations: { where: { locale: 'EN' } }, media: true } }),

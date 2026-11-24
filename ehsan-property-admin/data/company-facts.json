@@ -1,0 +1,17 @@
+{
+  "title": "Ehsan Property company facts",
+  "introduction": "Ehsan Plant & Property Sdn Bhd is a Malaysian Bumiputera property developer and CIDB G7 contractor. Its portfolio includes homes, serviced apartments and commercial developments.",
+  "reviewed": "2026-11-19",
+  "facts": [
+    {"label":"Registered company","value":"Ehsan Plant & Property Sdn Bhd (817795-X)"},
+    {"label":"Established","value":"15 May 2008"},
+    {"label":"Founder and chief executive","value":"Dato’ Haji Abdul Hamid Bin P.V Abdu"},
+    {"label":"Head office","value":"Suite C-20-3A, Level 20, Block C, Megan Avenue II, Jalan Yap Kwan Seng, 50450 Kuala Lumpur, Malaysia."},
+    {"label":"Sales enquiries","value":"03-2162 6649 · info@ehsanproperty.com"}
+  ],
+  "questions": [
+    {"label":"Where can I check the developer licence for a particular phase?","value":"Open Project Licensing and select the project and phase. The listing gives the named developer, licence and advertising permit particulars supplied for that phase. Check the validity dates and confirm current details with the team."},
+    {"label":"How do I check prices and available units?","value":"Use the enquiry form and include the project name, preferred layout and budget in Malaysian ringgit. Ask the sales team to confirm the current price and available units for that phase."},
+    {"label":"How can I arrange a viewing?","value":"Send a project enquiry with the development name and your preferred date. The sales team can confirm the location and appointment with you."}
+  ]
+}

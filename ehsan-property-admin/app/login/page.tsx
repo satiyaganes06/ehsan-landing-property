@@ -21,10 +21,17 @@ function LoginForm() {
   const signIn = useMutation({
     mutationFn: () => api.post('/api/auth/login', { email, password }),
     onMutate: () => setError(null),
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ['me'] });
+    onSuccess: () => {
+      queryClient.clear();
       const next = params.get('next');
-      router.replace(next && next.startsWith('/') ? next : '/');
+      let destination = '/';
+      if (next?.startsWith('/') && !next.startsWith('//') && !/[\\\s]/.test(next)) {
+        const url = new URL(next, window.location.origin);
+        if (url.origin === window.location.origin && !url.pathname.startsWith('//')) {
+          destination = url.pathname + url.search + url.hash;
+        }
+      }
+      router.replace(destination);
     },
     onError: (err) => {
       setError(err instanceof ApiError ? err.message : 'Something went wrong. Try again.');

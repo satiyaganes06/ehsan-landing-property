@@ -55,6 +55,7 @@ export function DataTable<TData>({
   label = 'records',
   reorder,
 }: DataTableProps<TData>) {
+  "use no memo"; // TanStack Table exposes mutable state through stable callbacks.
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState('');
   const [draggedId, setDraggedId] = useState<string | null>(null);
@@ -62,6 +63,7 @@ export function DataTable<TData>({
   const pointerStart = useRef<{ x: number; y: number; moved: boolean } | null>(null);
   const canReorder = Boolean(reorder && !reorder.disabled && !globalFilter && !sorting.length);
 
+  // eslint-disable-next-line react-hooks/incompatible-library -- this component explicitly opts out of compiler memoization above.
   const table = useReactTable({
     data: data ?? [],
     columns,

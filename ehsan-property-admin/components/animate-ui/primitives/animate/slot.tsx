@@ -58,31 +58,31 @@ function mergeProps<T extends HTMLElement>(
   return merged;
 }
 
+const motionTypes = new Map<React.ElementType, React.ElementType>();
+
+function getMotionType(type: React.ElementType): React.ElementType {
+  if (isMotionComponent(type)) return type;
+  const cached = motionTypes.get(type);
+  if (cached) return cached;
+  const component = motion.create(type);
+  motionTypes.set(type, component);
+  return component;
+}
+
 function Slot<T extends HTMLElement = HTMLElement>({
   children,
   ref,
   ...props
 }: SlotProps<T>) {
-  const isAlreadyMotion =
-    typeof children.type === 'object' &&
-    children.type !== null &&
-    isMotionComponent(children.type);
-
-  const Base = React.useMemo(
-    () =>
-      isAlreadyMotion
-        ? (children.type as React.ElementType)
-        : motion.create(children.type as React.ElementType),
-    [isAlreadyMotion, children.type],
-  );
-
   if (!React.isValidElement(children)) return null;
+  const Base = getMotionType(children.type as React.ElementType);
 
   const { ref: childRef, ...childProps } = children.props as AnyProps;
 
   const mergedProps = mergeProps(childProps, props);
 
   return (
+    // eslint-disable-next-line react-hooks/static-components -- the module cache preserves the wrapper identity for each child type.
     <Base {...mergedProps} ref={mergeRefs(childRef as React.Ref<T>, ref)} />
   );
 }

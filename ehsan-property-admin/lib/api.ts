@@ -56,7 +56,7 @@ async function request<T>(method: string, path: string, body?: unknown): Promise
     const message = typeof record?.message === 'string' ? record.message : fallbackMessage(res.status);
     const code = typeof record?.error === 'string' ? record.error : undefined;
 
-    if (res.status === 401) announceSessionExpiry();
+    if (res.status === 401 && path !== '/api/auth/login') announceSessionExpiry();
     throw new ApiError(res.status, message, code);
   }
 

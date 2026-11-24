@@ -46,8 +46,8 @@ export async function recomputeSeo(input: SeoInput): Promise<void> {
     where: { entityType_entityId_locale: { entityType: input.entityType, entityId: input.entityId, locale: input.locale } },
     create: {
       entityType: input.entityType, entityId: input.entityId, locale: input.locale,
-      score: result.score, band: result.band, scoreDetail: result.rules as any, scoredAt: new Date(),
+      score: result.score, band: result.band, scoreDetail: result.rules, scoredAt: new Date(),
     },
-    update: { score: result.score, band: result.band, scoreDetail: result.rules as any, scoredAt: new Date() },
+    update: { score: result.score, band: result.band, scoreDetail: result.rules, scoredAt: new Date() },
   });
 }

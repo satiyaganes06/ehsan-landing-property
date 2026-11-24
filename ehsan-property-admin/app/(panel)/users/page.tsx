@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { formatDistanceToNow } from 'date-fns';
 import { toast } from 'sonner';
@@ -41,17 +41,18 @@ export default function UsersPage() {
     queryFn: () => api.get<UserRow[]>('/api/users'),
   });
 
-  useEffect(() => {
-    if (!editing) return;
+  function editUser(editing: UserRow) {
+    setEditing(editing);
     setName(editing.name);
     setEmail(editing.email);
     setRoleKeys(editing.roles);
     setIsActive(editing.isActive);
-  }, [editing]);
+  }
 
+  const canManageOwners = Boolean(me?.roles.includes('owner'));
   const owners = (query.data ?? []).filter((u) => u.roles.includes('owner') && u.isActive);
   const isLastOwner =
-    editing != null && editing.roles.includes('owner') && owners.length <= 1;
+    editing?.isActive && editing.roles.includes('owner') && owners.length <= 1;
   const isSelf = editing?.id === me?.id;
 
   function close() {
@@ -119,8 +120,8 @@ export default function UsersPage() {
             <button
               key={user.id}
               type="button"
-              disabled={!can('user', 'update')}
-              onClick={() => setEditing(user)}
+              disabled={!can('user', 'update') || (user.roles.includes('owner') && !canManageOwners)}
+              onClick={() => editUser(user)}
               className="hover:bg-muted/50 flex w-full items-center gap-3 px-4 py-3 text-left transition-colors disabled:cursor-default"
             >
               <span className="bg-muted text-muted-foreground flex size-9 shrink-0 items-center justify-center rounded-full text-xs font-medium">
@@ -235,7 +236,7 @@ export default function UsersPage() {
               <div className="space-y-1.5 pt-1">
                 {ROLES.map((role) => {
                   const checked = roleKeys.includes(role.key);
-                  const locked = isLastOwner && role.key === 'owner';
+                  const locked = role.key === 'owner' && (isLastOwner || !canManageOwners);
                   return (
                     <label
                       key={role.key}

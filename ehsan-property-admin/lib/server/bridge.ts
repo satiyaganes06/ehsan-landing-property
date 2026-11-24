@@ -21,6 +21,7 @@
    --------------------------------------------------------------------------- */
 
 import { writeFile, rename, mkdir, readFile } from 'node:fs/promises';
+import { mirrorCompanyFacts } from './company-facts-mirror';
 import { slugify } from './slug';
 import { readFeaturedProjects } from './featured-projects';
 import path from 'node:path';
@@ -73,15 +74,14 @@ function siteImagePath(storageKey: string): string {
 }
 
 export async function buildProjectsPayload(): Promise<Record<string, unknown>> {
-  const featured = await readFeaturedProjects();
-  const projects = await prisma.project.findMany({
+  const [featured, projects] = await Promise.all([readFeaturedProjects(), prisma.project.findMany({
     where: { publishState: 'PUBLISHED' },
     orderBy: { sortOrder: 'asc' },
     include: {
       translations: { where: { locale: 'EN' } },
-      media: { orderBy: { sortOrder: 'asc' }, include: { media: true } },
+      media: { orderBy: { sortOrder: 'asc' }, select: { role: true, media: { select: { storageKey: true } } } },
     },
-  });
+  })]);
 
   const enquiryBlocks = await prisma.textBlock.findMany({ where: { key: { in: projects.flatMap(p => [projectEnquiryKey(p.reference), `project.content.${p.reference}`]) } }, include: { translations: { where: { locale: 'EN' } } } });
   const enquiryByKey = new Map(enquiryBlocks.map(block => [block.key, block.translations[0]?.value]));
@@ -187,7 +187,9 @@ async function mirrorToDisk(filename: string, data: unknown): Promise<boolean> {
 
 export async function rebuildProjectsJson(): Promise<{ count: number; mirrored: boolean }> {
   const out = await buildProjectsPayload();
-  return { count: Object.keys(out).length, mirrored: await mirrorToDisk('projects.json', out) };
+  const mirrored = await mirrorToDisk('projects.json', out);
+  if (mirrored) await mirrorCompanyFacts(out);
+  return { count: Object.keys(out).length, mirrored };
 }
 
 export async function rebuildEventsJson(): Promise<{ count: number; mirrored: boolean }> {

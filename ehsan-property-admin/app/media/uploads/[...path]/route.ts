@@ -23,6 +23,7 @@ export const GET = publicRoute<{ path: string[] }>(async ({ params }) => {
   return new NextResponse(new Uint8Array(bytes), {
     headers: {
       'Content-Type': TYPES[ext] ?? 'application/octet-stream',
+      'Content-Security-Policy': "sandbox; default-src 'none'",
       'Cache-Control': 'public, max-age=31536000, immutable',
     },
   });

@@ -27,20 +27,25 @@ export const GET = route({ resource: 'project', action: 'read' }, async ({ reque
   if (q.publishState) where.publishState = q.publishState;
   if (q.status) where.status = q.status;
 
-  const [total, projects] = await Promise.all([
+  const [total, projects, featured] = await Promise.all([
     prisma.project.count({ where }),
     prisma.project.findMany({
       where, orderBy: [{ sortOrder: 'asc' }, { id: 'asc' }],
       skip: (page - 1) * perPage, take: perPage,
-      include: { translations: { where: { locale: 'EN' } } },
+      select: {
+        id: true, reference: true, status: true, publishState: true, createdAt: true,
+        yearStart: true, yearEnd: true, sortOrder: true,
+        translations: { where: { locale: 'EN' }, select: { name: true, location: true } },
+      },
     }),
+    readFeaturedProjects(),
   ]);
 
   const seoRows = await prisma.seoMeta.findMany({
+    select: { entityId: true, score: true, band: true },
     where: { entityType: 'project', entityId: { in: projects.map((p) => p.id) }, locale: 'EN' },
   });
   const seoByProject = new Map(seoRows.map((s) => [s.entityId, s]));
-  const featured = await readFeaturedProjects();
 
   return json({
     page, perPage, total, featuredCount: featured.length,

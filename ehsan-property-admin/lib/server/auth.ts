@@ -39,7 +39,7 @@ export async function createSession(
 
 export async function destroySession(token: string): Promise<void> {
   // Logout is idempotent: a token that is already gone is still logged out.
-  await prisma.session.delete({ where: { id: hashToken(token) } }).catch(() => {});
+  await prisma.session.deleteMany({ where: { id: hashToken(token) } });
 }
 
 export async function setSessionCookie(token: string): Promise<void> {
@@ -79,12 +79,15 @@ export async function loadAuthedUser(): Promise<AuthedUser | null> {
 
   const session = await prisma.session.findUnique({
     where: { id: hashToken(token) },
-    include: {
+    select: {
+      expiresAt: true,
       user: {
-        include: {
-          roles: {
-            include: { role: { include: { permissions: { include: { permission: true } } } } },
-          },
+        select: {
+          id: true, email: true, name: true, isActive: true,
+          roles: { select: { role: { select: {
+            key: true,
+            permissions: { select: { permission: { select: { resource: true, action: true } } } },
+          } } } },
         },
       },
     },

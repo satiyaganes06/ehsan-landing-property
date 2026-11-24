@@ -1,7 +1,8 @@
 /* Content only: never export users, passwords, sessions, enquiries or analytics. */
 const {PrismaClient} = require('@prisma/client');
-const {readFile, writeFile, mkdir, copyFile} = require('node:fs/promises');
+const {readFile, writeFile} = require('node:fs/promises');
 const path = require('node:path');
+const { copyMedia } = require('../lib/server/local-media.cjs');
 const root = path.resolve(__dirname, '../..');
 const snapshotPath = path.join(root, 'ehsan-property-admin/data/content-snapshot.json');
 const prisma = new PrismaClient();
@@ -32,10 +33,7 @@ async function exportContent() {
     };
     const publicPayload = localize(payload);
     for (const relative of uploads) {
-      if (relative.split('/').includes('..')) throw new Error('Invalid upload path');
-      const target = path.join(root,'assets/img/admin-uploads',relative);
-      await mkdir(path.dirname(target),{recursive:true});
-      await copyFile(path.join(root,'ehsan-property-admin/uploads',relative),target);
+      await copyMedia(path.join(root, 'ehsan-property-admin/uploads'), path.join(root, 'assets/img/admin-uploads'), relative);
     }
     await writeFile(path.join(root,'data',`${kind}.json`),JSON.stringify(publicPayload,null,2)+'\n');
   }

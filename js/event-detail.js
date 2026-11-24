@@ -1,18 +1,3 @@
-/* Where published content comes from.
-
-   Unset, the site reads the checked-in data/*.json exactly as before, so
-   nothing changes until you decide to switch. Point it at the deployed panel
-   to serve content straight from the CMS:
-
-     <script>window.EHSAN_CMS_ORIGIN = 'https://admin.ehsanproperty.com';</script>
-
-   Set it before this script loads (a <script> tag in the page head does it).
-*/
-function cmsUrl(file, fallback) {
-  const origin = window.EHSAN_CMS_ORIGIN || window.SITE?.adminOrigin;
-  return origin ? origin.replace(/\/$/, '') + '/api/public/' + file : SITE.url(fallback);
-}
-
 /* =========================================================================
    event-detail.js — Event detail page data binding & interactions
    ========================================================================= */
@@ -29,7 +14,7 @@ function getEventFromURL() {
 }
 
 function loadEventData(eventId) {
-  const data = EVENTS_DATA[eventId];
+  const data = Object.hasOwn(EVENTS_DATA, eventId) ? EVENTS_DATA[eventId] : null;
   if (data) SITE.canonical('events', data);
   if (!data) {
     console.error(`Event ${eventId} not found`);
@@ -75,10 +60,10 @@ function renderEventContent(data) {
   // Agenda
   setHTML('eventAgenda', (data.agenda || []).map(item => `
     <div class="event-agenda__item">
-      <div class="event-agenda__time">${item.time}</div>
+      <div class="event-agenda__time">${SITE.escapeHtml(item.time)}</div>
       <div>
-        <h4 class="event-agenda__title">${item.title}</h4>
-        <p class="event-agenda__desc">${item.description}</p>
+        <h4 class="event-agenda__title">${SITE.escapeHtml(item.title)}</h4>
+        <p class="event-agenda__desc">${SITE.escapeHtml(item.description)}</p>
       </div>
     </div>
   `).join(''));
@@ -86,15 +71,15 @@ function renderEventContent(data) {
   // Speakers
   setHTML('eventSpeakers', (data.speakers || []).map(speaker => `
     <div class="event-speaker-card">
-      <img src="${speaker.image}" alt="${speaker.name}" class="event-speaker-avatar" referrerpolicy="no-referrer">
-      <h4 class="event-speaker-name">${speaker.name}</h4>
-      <p class="event-speaker-title">${speaker.title}</p>
-      <p class="event-speaker-bio">${speaker.bio}</p>
+      <img src="${SITE.escapeHtml(speaker.image)}" alt="${SITE.escapeHtml(speaker.name)}" class="event-speaker-avatar" referrerpolicy="no-referrer">
+      <h4 class="event-speaker-name">${SITE.escapeHtml(speaker.name)}</h4>
+      <p class="event-speaker-title">${SITE.escapeHtml(speaker.title)}</p>
+      <p class="event-speaker-bio">${SITE.escapeHtml(speaker.bio)}</p>
     </div>
   `).join(''));
 
   // Highlights
-  setHTML('eventHighlights', (data.highlights || []).map(h => `<li>${h}</li>`).join(''));
+  setHTML('eventHighlights', (data.highlights || []).map(h => `<li>${SITE.escapeHtml(h)}</li>`).join(''));
 
   // Sidebar stats
   setText('eventCapacity', `${data.capacity}`);
@@ -106,11 +91,11 @@ function renderEventContent(data) {
     const relEvent = EVENTS_DATA[eventId];
     if (!relEvent) return '';
     return `
-      <a href="${SITE.recordUrl('events', relEvent)}" class="event-related-card">
-        <img src="${relEvent.image}" alt="${relEvent.title}" class="event-related-img" referrerpolicy="no-referrer">
+      <a href="${SITE.escapeHtml(SITE.recordUrl('events', relEvent))}" class="event-related-card">
+        <img src="${SITE.escapeHtml(relEvent.image)}" alt="${SITE.escapeHtml(relEvent.title)}" class="event-related-img" referrerpolicy="no-referrer">
         <div class="event-related-info">
-          <h4 class="event-related-title">${relEvent.title}</h4>
-          <p class="event-related-date">${relEvent.date}</p>
+          <h4 class="event-related-title">${SITE.escapeHtml(relEvent.title)}</h4>
+          <p class="event-related-date">${SITE.escapeHtml(relEvent.date)}</p>
         </div>
       </a>
     `;
@@ -177,9 +162,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   window.addEventListener('scroll', handleScroll, { passive: true });
 
   try {
-    const res = await fetch(cmsUrl('events.json', 'data/events.json'));
-    if (!res.ok) throw new Error(`events.json → ${res.status}`);
-    EVENTS_DATA = await res.json();
+    EVENTS_DATA = await SITE.loadEvents();
     Object.values(EVENTS_DATA).forEach(event => {
       if (event.image?.startsWith('/media/')) event.image = SITE.adminOrigin + event.image;
       event.speakers?.forEach(speaker => { if (speaker.image?.startsWith('/media/')) speaker.image = SITE.adminOrigin + speaker.image; });

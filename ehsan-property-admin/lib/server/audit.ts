@@ -1,3 +1,4 @@
+import type { Prisma } from '@prisma/client';
 import { prisma } from './prisma';
 
 export interface AuditInput {
@@ -19,7 +20,7 @@ export function recordAudit(input: AuditInput): void {
         action: input.action,
         entityType: input.entityType,
         entityId: input.entityId,
-        diff: input.diff as any,
+        diff: input.diff as Prisma.InputJsonValue,
         ip: input.ip,
       },
     })
@@ -31,6 +32,6 @@ export function recordAudit(input: AuditInput): void {
     row it sits beside. */
 export function recordRevision(entityType: string, entityId: string, snapshot: unknown, createdById: string | null): void {
   prisma.revision
-    .create({ data: { entityType, entityId, snapshot: snapshot as any, createdById } })
+    .create({ data: { entityType, entityId, snapshot: snapshot as Prisma.InputJsonValue, createdById } })
     .catch((err) => console.error('revision write failed', err));
 }

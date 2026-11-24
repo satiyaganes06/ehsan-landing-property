@@ -184,7 +184,7 @@ const [RenderedTooltipProvider, useRenderedTooltip] =
 
 type FloatingContextType = {
   context: UseFloatingReturn['context'];
-  arrowRef: React.RefObject<SVGSVGElement | null>;
+  setArrowElement: (element: SVGSVGElement | null) => void;
 };
 
 const [FloatingProvider, useFloatingContext] =
@@ -205,15 +205,20 @@ function TooltipArrow({
   ...props
 }: TooltipArrowProps) {
   const { side, align, open } = useRenderedTooltip();
-  const { context, arrowRef } = useFloatingContext();
+  const { context, setArrowElement } = useFloatingContext();
   const { transition, globalId } = useGlobalTooltip();
+  const arrowRef = React.useRef<SVGSVGElement | null>(null);
   React.useImperativeHandle(ref, () => arrowRef.current as SVGSVGElement);
+  const attachArrow = React.useCallback((element: SVGSVGElement | null) => {
+    arrowRef.current = element;
+    setArrowElement(element);
+  }, [setArrowElement]);
 
   const deg = { top: 0, right: 90, bottom: 180, left: -90 }[side];
 
   return (
     <MotionTooltipArrow
-      ref={arrowRef}
+      ref={attachArrow}
       context={context}
       data-state={open ? 'open' : 'closed'}
       data-side={side}
@@ -240,14 +245,19 @@ function TooltipOverlay() {
   const [rendered, setRendered] = React.useState<{
     data: TooltipData | null;
     open: boolean;
-  }>({ data: null, open: false });
+  }>({ data: currentTooltip, open: Boolean(currentTooltip) });
 
-  const arrowRef = React.useRef<SVGSVGElement | null>(null);
+  const [arrowElement, setArrowElement] = React.useState<SVGSVGElement | null>(null);
+  const [previousTooltip, setPreviousTooltip] = React.useState(currentTooltip);
+  if (previousTooltip !== currentTooltip) {
+    setPreviousTooltip(currentTooltip);
+    setRendered({ data: currentTooltip ?? rendered.data, open: Boolean(currentTooltip) });
+  }
 
   const side = rendered.data?.side ?? 'top';
   const align = rendered.data?.align ?? 'center';
 
-  const { refs, x, y, strategy, context, update } = useFloating({
+  const { refs: { setReference, setFloating }, x, y, strategy, context, update } = useFloating({
     placement: align === 'center' ? side : `${side}-${align}`,
     whileElementsMounted: autoUpdate,
     middleware: [
@@ -257,24 +267,17 @@ function TooltipOverlay() {
       }),
       flip(),
       shift({ padding: 8 }),
-      floatingArrow({ element: arrowRef }),
+      floatingArrow({ element: arrowElement }),
     ],
   });
 
-  React.useEffect(() => {
-    if (currentTooltip) {
-      setRendered({ data: currentTooltip, open: true });
-    } else {
-      setRendered((p) => (p.data ? { ...p, open: false } : p));
-    }
-  }, [currentTooltip]);
 
   React.useLayoutEffect(() => {
     if (referenceElRef.current) {
-      refs.setReference(referenceElRef.current);
+      setReference(referenceElRef.current);
       update();
     }
-  }, [referenceElRef, refs, update, rendered.data]);
+  }, [referenceElRef, setReference, update, rendered.data]);
 
   const ready = x != null && y != null;
   const Component = rendered.data?.contentAsChild ? Slot : motion.div;
@@ -285,7 +288,7 @@ function TooltipOverlay() {
       {rendered.data && ready && (
         <TooltipPortal>
           <div
-            ref={refs.setFloating}
+            ref={setFloating}
             data-slot="tooltip-overlay"
             data-side={resolvedSide}
             data-align={rendered.data.align}
@@ -298,7 +301,7 @@ function TooltipOverlay() {
               transform: `translate3d(${x!}px, ${y!}px, 0)`,
             }}
           >
-            <FloatingProvider value={{ context, arrowRef }}>
+            <FloatingProvider value={{ context, setArrowElement }}>
               <RenderedTooltipProvider
                 value={{
                   side: resolvedSide,
@@ -333,7 +336,7 @@ function TooltipOverlay() {
                   }}
                   onAnimationComplete={() => {
                     if (!rendered.open)
-                      setRendered({ data: null, open: false });
+                      setRendered((latest) => latest.open ? latest : { data: null, open: false });
                   }}
                   transition={transition}
                   {...rendered.data.contentProps}

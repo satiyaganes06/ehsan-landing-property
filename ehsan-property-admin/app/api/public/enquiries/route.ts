@@ -1,3 +1,4 @@
+import { readBoundedJson } from '@/lib/server/bounded-json';
 import { z } from 'zod';
 import { prisma } from '@/lib/server/prisma';
 import { enquiryRateLimited, hashIp } from '@/lib/server/rate-limit';
@@ -40,7 +41,11 @@ const CORS = {
 export const OPTIONS = publicRoute(async () => new Response(null, { status: 204, headers: CORS }));
 
 export const POST = publicRoute(async ({ request }) => {
-  const parsed = PublicEnquiryBody.safeParse(await request.json().catch(() => null));
+  const body = await readBoundedJson(request, 64 * 1024);
+  if (!body.ok && body.status === 413) {
+    return Response.json({ message: 'Request body too large.' }, { status: 413, headers: CORS });
+  }
+  const parsed = PublicEnquiryBody.safeParse(body.ok ? body.value : null);
   if (!parsed.success) {
     return Response.json(
       { error: 'bad_request', message: 'Please complete the required fields.' },

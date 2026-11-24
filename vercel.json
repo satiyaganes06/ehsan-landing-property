@@ -1,4 +1,11 @@
 {
+  "functions": {"api/company-facts.mjs": {"includeFiles": "ai-instructions/index.html"}},
+  "headers": [
+    {"source":"/(.*)","headers":[
+      {"key":"X-Content-Type-Options","value":"nosniff"},
+      {"key":"Referrer-Policy","value":"strict-origin-when-cross-origin"}
+    ]}
+  ],
   "redirects": [
     {"source":"/index.html","destination":"/","permanent":true},
     {"source":"/html/about.html","destination":"/about","permanent":true},
@@ -7,6 +14,7 @@
     {"source":"/html/news.html","destination":"/news","permanent":true}
   ],
   "rewrites": [
+    {"source":"/ai-instructions","destination":"/api/company-facts"},
     {"source":"/about","destination":"/html/about.html"},
     {"source":"/projects","destination":"/html/projects.html"},
     {"source":"/events","destination":"/html/events.html"},

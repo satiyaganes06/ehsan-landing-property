@@ -40,6 +40,7 @@ export default function DashboardPage() {
 }
 
 function DashboardContent({ data }: { data: DashboardSummary }) {
+  const { can } = useSession();
   const { publishState, enquiries, needsAttention, upcomingEvents, activity } = data;
 
   const stats = [
@@ -47,7 +48,7 @@ function DashboardContent({ data }: { data: DashboardSummary }) {
     { label: 'Draft projects', value: publishState.draftProjects, href: '/projects' },
     { label: 'Draft events', value: publishState.draftEvents, href: '/events' },
     { label: 'Scheduled', value: publishState.scheduledCount, href: '/events' },
-  ];
+  ].filter(stat => stat.href !== '/enquiries' || can('enquiry', 'read'));
 
   return (
     <div className="space-y-8">
@@ -167,7 +168,7 @@ function DashboardContent({ data }: { data: DashboardSummary }) {
           </div>
         </section>
 
-        <section className="space-y-3">
+        {can('audit', 'read') && <section className="space-y-3">
           <h2 className="text-sm font-medium">Recent activity</h2>
           <div className="bg-card overflow-hidden rounded-lg border">
             {activity.length === 0 ? (
@@ -188,7 +189,7 @@ function DashboardContent({ data }: { data: DashboardSummary }) {
               </ul>
             )}
           </div>
-        </section>
+        </section>}
       </div>
     </div>
   );

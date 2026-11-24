@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { Check, X } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -27,6 +28,35 @@ export interface SeoDraft {
   canonicalUrl: string;
   robotsIndex: boolean;
   robotsFollow: boolean;
+}
+
+export function useSeoDraft(id: string, row: SeoMeta | undefined) {
+  const [edit, setEdit] = useState<{ id: string; fields: Partial<SeoDraft> } | null>(null);
+  const saved = row && {
+    metaTitle: row.metaTitle ?? '',
+    metaDescription: row.metaDescription ?? '',
+    focusKeyword: row.focusKeyword ?? '',
+    canonicalUrl: row.canonicalUrl ?? '',
+    robotsIndex: row.robotsIndex,
+    robotsFollow: row.robotsFollow,
+  };
+  const fields = edit?.id === id ? edit.fields : {};
+  const draft = saved && { ...saved, ...fields };
+  const dirty = Boolean(saved && (Object.keys(fields) as (keyof SeoDraft)[])
+    .some((key) => fields[key] !== saved[key]));
+
+  function update(patch: Partial<SeoDraft>) {
+    setEdit((current) => ({
+      id,
+      fields: { ...(current?.id === id ? current.fields : {}), ...patch },
+    }));
+  }
+
+  function acceptSaved() {
+    setEdit((current) => current === edit ? null : current);
+  }
+
+  return { draft, dirty, update, acceptSaved };
 }
 
 export function SeoPanel({ seo, draft, onChange, previewUrl }: SeoPanelProps) {

@@ -1,0 +1,9 @@
+# The root Vercel project serves the public website only.
+ehsan-property-admin/
+app/
+docs/
+scripts/
+tools/
+.agents/
+.claude/
+.env*

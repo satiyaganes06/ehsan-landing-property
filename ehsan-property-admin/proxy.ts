@@ -6,7 +6,7 @@ import { NextResponse, type NextRequest } from 'next/server';
  * watches a panel skeleton render before finding out they are signed out.
  *
  * It is NOT authorization. The cookie's validity, the user's roles and every
- * permission check live in the Fastify API; presence of a cookie here only
+ * permission check live in the API route handlers; presence of a cookie here only
  * decides which screen to paint first.
  */
 const SESSION_COOKIE = 'ehsan_session';
@@ -25,16 +25,9 @@ export function proxy(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  if (hasSession && isLogin) {
-    const url = request.nextUrl.clone();
-    url.pathname = '/';
-    url.search = '';
-    return NextResponse.redirect(url);
-  }
-
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ['/((?!api|media|live-site|_next/static|_next/image|favicon.ico).*)'],
+  matcher: ['/((?!api|media|live-site|fonts/|_next/static|_next/image|favicon.ico).*)'],
 };

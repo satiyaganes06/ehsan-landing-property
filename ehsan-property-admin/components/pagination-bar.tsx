@@ -1,7 +1,7 @@
 'use client';
 
 import { ModernSelect } from "@/components/modern-select";
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -125,9 +125,7 @@ export function usePagination<T>(items: T[], initialSize: number = DEFAULT_PAGE_
   const pageCount = Math.max(1, Math.ceil(items.length / pageSize));
   const pageIndex = Math.min(requestedIndex, pageCount - 1);
 
-  useEffect(() => {
-    if (requestedIndex > pageCount - 1) setPageIndex(0);
-  }, [requestedIndex, pageCount]);
+  if (requestedIndex !== pageIndex) setPageIndex(pageIndex);
 
   const page = useMemo(
     () => items.slice(pageIndex * pageSize, pageIndex * pageSize + pageSize),

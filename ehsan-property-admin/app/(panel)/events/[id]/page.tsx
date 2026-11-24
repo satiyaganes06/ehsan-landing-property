@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import {
-  ChevronLeft, ExternalLink, GripVertical, Image as ImageIcon, Loader2, Plus, Save, Trash2,
+  ChevronLeft, GripVertical, Image as ImageIcon, Loader2, Plus, Save, Trash2,
 } from 'lucide-react';
 
 import {
@@ -23,7 +23,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { PublishPill } from '@/components/state-pills';
 import { PermissionButton } from '@/components/permission-button';
 import { ErrorState } from '@/components/states';
-import { SeoPanel, type SeoDraft } from '@/components/seo-panel';
+import { SeoPanel, useSeoDraft } from '@/components/seo-panel';
 import { LivePreview } from '@/components/live-preview';
 import { toSiteEvent, toHeroSrc } from '@/lib/preview';
 import { api, ApiError } from '@/lib/api';
@@ -79,7 +79,6 @@ export default function EventEditPage({ params }: { params: Promise<{ id: string
   });
 
   const [draft, setDraft] = useState<Draft | null>(null);
-  const [seoDraft, setSeoDraft] = useState<SeoDraft | null>(null);
   const [pickerOpen, setPickerOpen] = useState(false);
 
   // Seed the editable copy once per record. Publishing (and any other write)
@@ -113,20 +112,8 @@ export default function EventEditPage({ params }: { params: Promise<{ id: string
     });
   }, [event.data]);
 
-  useEffect(() => {
-    const row = seo.data?.find((x) => x.locale === 'EN');
-    if (!row) return;
-    setSeoDraft({
-      metaTitle: row.metaTitle ?? '',
-      metaDescription: row.metaDescription ?? '',
-      focusKeyword: row.focusKeyword ?? '',
-      canonicalUrl: row.canonicalUrl ?? '',
-      robotsIndex: row.robotsIndex,
-      robotsFollow: row.robotsFollow,
-    });
-  }, [seo.data]);
-
   const seoRow = seo.data?.find((x) => x.locale === 'EN');
+  const { draft: seoDraft, dirty: seoDirty, update: updateSeo, acceptSaved } = useSeoDraft(id, seoRow);
 
   // Switching the agenda off publishes no agenda, without clearing the rows.
   const agendaToSave = draft?.agendaEnabled ? draft.agenda : [];
@@ -155,18 +142,6 @@ export default function EventEditPage({ params }: { params: Promise<{ id: string
       draft.heroImageUrl !== (data.heroImageUrl ?? '')
     );
   }, [event.data, draft]);
-
-  const seoDirty = useMemo(() => {
-    if (!seoRow || !seoDraft) return false;
-    return (
-      seoDraft.metaTitle !== (seoRow.metaTitle ?? '') ||
-      seoDraft.metaDescription !== (seoRow.metaDescription ?? '') ||
-      seoDraft.focusKeyword !== (seoRow.focusKeyword ?? '') ||
-      seoDraft.canonicalUrl !== (seoRow.canonicalUrl ?? '') ||
-      seoDraft.robotsIndex !== seoRow.robotsIndex ||
-      seoDraft.robotsFollow !== seoRow.robotsFollow
-    );
-  }, [seoRow, seoDraft]);
 
   const hasChanges = isDirty || seoDirty;
 
@@ -253,6 +228,7 @@ export default function EventEditPage({ params }: { params: Promise<{ id: string
         queryClient.invalidateQueries({ queryKey: ['events'] }),
         queryClient.invalidateQueries({ queryKey: ['seo', 'event', id] }),
       ]);
+      if (seoDirty) acceptSaved();
       toast.success('Changes saved.', {
         description:
           event.data?.publishState === 'PUBLISHED'
@@ -696,8 +672,8 @@ export default function EventEditPage({ params }: { params: Promise<{ id: string
               <SeoPanel
                 seo={seoRow}
                 draft={seoDraft}
-                onChange={(patch) => setSeoDraft((d) => (d ? { ...d, ...patch } : d))}
-                previewUrl={`ehsanproperty.com/event/${
+                onChange={updateSeo}
+                previewUrl={`ehsanproperty.com/events/${
                   data?.translations.find((t) => t.locale === 'EN')?.slug ?? ''
                 }`}
               />

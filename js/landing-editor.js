@@ -10,25 +10,24 @@
       const response = await fetch(`${adminOrigin}/api/public/landing.json`, { cache: 'no-store' });
       if (response.ok) published = await response.json();
     }
-    if (published) window.EhsanPublicData?.saveLanding(published);
   } catch (_) { /* A complete static fallback remains available offline. */ }
   const imageUrl = value => value && (value.startsWith('/media/') || value.startsWith('/live-site/')) ? adminOrigin + value : value;
   const plain = value => String(value).replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>');
   const setText = (root, selector, value) => { const node = root.querySelector(selector); if (node && value != null) node.textContent = plain(value); };
   const setImage = (root, value, alt) => { if (!value) return; const image = root.querySelector('img'); if (image) { image.src = imageUrl(value); if (alt) image.alt = plain(alt); } };
   if (published) {
-    const projectTemplate = document.querySelector('[data-project-id]');
+    const projectCards = [...document.querySelectorAll('[data-project-id]')];
+    const projectTemplate = projectCards[0];
+    const projectIds = new Set(projectCards.map(card => card.dataset.projectId));
     Object.keys(published.projects || {}).forEach(reference => {
-      if (!projectTemplate || [...document.querySelectorAll('[data-project-id]')].some(card => card.dataset.projectId === reference)) return;
+      if (!projectTemplate || projectIds.has(reference)) return;
       const card = projectTemplate.cloneNode(true);
       card.dataset.projectId = reference;
-      card.tabIndex = 0; card.setAttribute('role', 'link');
-      card.addEventListener('keydown', event => { if (event.key === 'Enter') card.click(); });
       card.removeAttribute('data-reveal');
-      card.addEventListener('click', () => { if (!new URLSearchParams(location.search).has('landing-editor')) location.href = card.dataset.publicUrl || SITE.recordUrl('projects', published.projects[reference]); });
       projectTemplate.parentElement.append(card);
+      projectCards.push(card);
     });
-    document.querySelectorAll('[data-project-id]').forEach(card => {
+    projectCards.forEach(card => {
       const project = published.projects?.[card.dataset.projectId];
       if (!project) { card.hidden = true; return; }
       if (location.pathname === '/' || /\/index\.html$/.test(location.pathname)) card.hidden = !project.featured;
@@ -44,7 +43,7 @@
         if (project.year && project.yearEnd) { const end = document.createElement('small'); end.textContent = project.yearEnd; year.append(end); }
       }
       card.dataset.cmsOrder = String(project.sortOrder ?? Number.MAX_SAFE_INTEGER);
-      card.dataset.publicUrl = SITE.recordUrl('projects', project);
+      card.href = SITE.recordUrl('projects', project);
       const thumbnail = project.media?.thumbnail || project.media?.image?.[0];
       if (thumbnail) setImage(card, /^https?:|^\//.test(thumbnail) ? thumbnail : window.SITE.url(`assets/img/${thumbnail}`), project.name);
     });
@@ -53,15 +52,18 @@
     if (ledger) [...ledger.querySelectorAll(':scope > .pcard')]
       .sort((a, b) => position(a) - position(b))
       .forEach(card => ledger.append(card));
-    const eventTemplate = document.querySelector('.event-card');
+    const eventCards = [...document.querySelectorAll('.event-card')];
+    const eventTemplate = eventCards[0];
+    const eventIds = new Set(eventCards.map(card => new URL(card.href).searchParams.get('event')));
     Object.keys(published.events || {}).forEach(reference => {
-      if (!eventTemplate || [...document.querySelectorAll('.event-card')].some(card => new URL(card.href).searchParams.get('event') === reference)) return;
+      if (!eventTemplate || eventIds.has(reference)) return;
       const card = eventTemplate.cloneNode(true);
       card.href = `html/event-detail.html?event=${encodeURIComponent(reference)}`;
       card.removeAttribute('data-reveal');
       eventTemplate.parentElement.append(card);
+      eventCards.push(card);
     });
-    document.querySelectorAll('.event-card').forEach(card => {
+    eventCards.forEach(card => {
       const event = published.events?.[new URL(card.href).searchParams.get('event')];
       if (!event) { card.hidden = true; return; }
       card.dataset.cmsRecord = event.id;

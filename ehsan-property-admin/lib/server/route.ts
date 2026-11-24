@@ -58,6 +58,10 @@ type NextRouteArgs<P> = { params: Promise<P> };
 export function route<P = Record<string, never>>(options: RouteOptions, handler: Handler<P>) {
   return async (request: NextRequest, segment: NextRouteArgs<P>): Promise<Response> => {
     try {
+      if (!['GET', 'HEAD', 'OPTIONS'].includes(request.method) &&
+          request.headers.get('sec-fetch-site') === 'cross-site') {
+        return fail(403, 'forbidden', 'Cross-site account requests are not allowed.');
+      }
       const needsUser = options.auth || options.resource !== undefined;
       const user = needsUser ? await loadAuthedUser() : null;
 
@@ -79,7 +83,9 @@ export function route<P = Record<string, never>>(options: RouteOptions, handler:
       // no handler has to remember to.
       const params = (await segment.params) as P;
 
-      return await handler({ request, user: user as AuthedUser, params });
+      const response = await handler({ request, user: user as AuthedUser, params });
+      if (needsUser) response.headers.set('Cache-Control', 'private, no-store');
+      return response;
     } catch (err) {
       return handleError(err);
     }

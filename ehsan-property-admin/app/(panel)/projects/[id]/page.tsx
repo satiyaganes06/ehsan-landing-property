@@ -7,7 +7,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import {
-  ChevronLeft, ExternalLink, Image as ImageIcon, Loader2, Plus, Save, Trash2,
+  ChevronLeft, Image as ImageIcon, Loader2, Plus, Save, Trash2,
 } from 'lucide-react';
 
 import {
@@ -20,8 +20,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { Skeleton } from '@/components/ui/skeleton';
 import { PublishPill } from '@/components/state-pills';
 import { PermissionButton } from '@/components/permission-button';
-import { ErrorState, EmptyState } from '@/components/states';
-import { SeoPanel, type SeoDraft } from '@/components/seo-panel';
+import { ErrorState } from '@/components/states';
+import { SeoPanel, useSeoDraft } from '@/components/seo-panel';
 import { LivePreview } from '@/components/live-preview';
 import { MediaPicker } from '@/components/media-picker';
 import { ConfirmDialog } from '@/components/confirm-dialog';
@@ -31,7 +31,6 @@ import { mediaSrc } from '@/lib/media';
 import { api, ApiError } from '@/lib/api';
 import { useSession } from '@/lib/session';
 import type { MediaItem, ProjectDetail, SeoMeta } from '@/lib/types';
-import { cn } from '@/lib/utils';
 import { ProjectEnquirySettings } from '@/components/project-enquiry-settings';
 import { ProjectSectionContent } from '@/components/project-section-content';
 
@@ -67,7 +66,6 @@ export default function ProjectEditPage({ params }: { params: Promise<{ id: stri
   });
 
   const [content, setContent] = useState<ContentDraft | null>(null);
-  const [seoDraft, setSeoDraft] = useState<SeoDraft | null>(null);
 
   // Seed the editable copy once the record arrives. Keyed on the loaded id so
   // navigating between projects reseeds rather than carrying the old draft.
@@ -98,20 +96,8 @@ export default function ProjectEditPage({ params }: { params: Promise<{ id: stri
     });
   }, [project.data]);
 
-  useEffect(() => {
-    const row = seo.data?.find((x) => x.locale === 'EN');
-    if (!row) return;
-    setSeoDraft({
-      metaTitle: row.metaTitle ?? '',
-      metaDescription: row.metaDescription ?? '',
-      focusKeyword: row.focusKeyword ?? '',
-      canonicalUrl: row.canonicalUrl ?? '',
-      robotsIndex: row.robotsIndex,
-      robotsFollow: row.robotsFollow,
-    });
-  }, [seo.data]);
-
   const seoRow = seo.data?.find((x) => x.locale === 'EN');
+  const { draft: seoDraft, dirty: seoDirty, update: updateSeo, acceptSaved } = useSeoDraft(id, seoRow);
 
   const isDirty = useMemo(() => {
     const data = project.data;
@@ -131,18 +117,6 @@ export default function ProjectEditPage({ params }: { params: Promise<{ id: stri
       content.certificate !== (t?.certificate ?? '')
     );
   }, [project.data, content]);
-
-  const seoDirty = useMemo(() => {
-    if (!seoRow || !seoDraft) return false;
-    return (
-      seoDraft.metaTitle !== (seoRow.metaTitle ?? '') ||
-      seoDraft.metaDescription !== (seoRow.metaDescription ?? '') ||
-      seoDraft.focusKeyword !== (seoRow.focusKeyword ?? '') ||
-      seoDraft.canonicalUrl !== (seoRow.canonicalUrl ?? '') ||
-      seoDraft.robotsIndex !== seoRow.robotsIndex ||
-      seoDraft.robotsFollow !== seoRow.robotsFollow
-    );
-  }, [seoRow, seoDraft]);
 
   const hasChanges = isDirty || seoDirty;
 
@@ -191,6 +165,7 @@ export default function ProjectEditPage({ params }: { params: Promise<{ id: stri
         queryClient.invalidateQueries({ queryKey: ['projects'] }),
         queryClient.invalidateQueries({ queryKey: ['seo', 'project', id] }),
       ]);
+      if (seoDirty) acceptSaved();
       toast.success('Changes saved.', {
         description: project.data?.publishState === 'PUBLISHED'
           ? 'Publish again to push them to the live site.'
@@ -327,8 +302,8 @@ export default function ProjectEditPage({ params }: { params: Promise<{ id: stri
             <SeoPanel
               seo={seoRow}
               draft={seoDraft}
-              onChange={(patch) => setSeoDraft((d) => (d ? { ...d, ...patch } : d))}
-              previewUrl={`ehsanproperty.com/project/${
+              onChange={updateSeo}
+              previewUrl={`ehsanproperty.com/projects/${
                 data?.translations.find((t) => t.locale === 'EN')?.slug ?? ''
               }`}
             />

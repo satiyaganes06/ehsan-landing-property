@@ -17,8 +17,9 @@
    already has a production site to import from.
    --------------------------------------------------------------------------- */
 
+import { parseEventStart } from './event-start.cjs';
 import { randomBytes } from 'node:crypto';
-import { PrismaClient } from '@prisma/client';
+import { type Prisma, PrismaClient } from '@prisma/client';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -98,10 +99,6 @@ async function seedOwner() {
   console.log(`✓ owner account created`);
   console.log(`  email:    ${email}`);
   console.log(`  password: ${password}${process.env.SEED_OWNER_PASSWORD ? '' : '   (generated -- save this, it will not be shown again)'}`);
-}
-
-function randomPassword(): string {
-  return Array.from({ length: 4 }, () => Math.random().toString(36).slice(2, 8)).join('-');
 }
 
 interface ProjectCardFixture {
@@ -204,7 +201,7 @@ async function seedProjects() {
       create: {
         entityType: 'project', entityId: project.id, locale: 'EN',
         metaTitle, metaDescription, score: scored.score, band: scored.band,
-        scoreDetail: scored.rules as any, scoredAt: new Date(),
+        scoreDetail: scored.rules, scoredAt: new Date(),
       },
       update: {},
     });
@@ -215,17 +212,8 @@ async function seedProjects() {
 interface JsonEvent {
   id: string; title: string; category: string; date: string; dateTime: string;
   location: string; image: string; price: string; attendees: string; capacity: number;
-  registered: number; description: string; agenda: unknown; speakers: unknown;
-  highlights: unknown; relatedEvents: string[];
-}
-
-function parseEventStart(dateTime: string): Date {
-  // "Sep 15, 2024 · 2:00 PM" -- built by fmtDateTime in lib/bridge.ts, so
-  // parsing it back is just `new Date` on the same locale-formatted string
-  // with the separator normalised to something Date can read.
-  const cleaned = dateTime.replace('·', '').trim();
-  const parsed = new Date(cleaned);
-  return isNaN(parsed.getTime()) ? new Date() : parsed;
+  registered: number; description: string; agenda: Prisma.InputJsonValue; speakers: Prisma.InputJsonValue;
+  highlights: Prisma.InputJsonValue; relatedEvents: string[];
 }
 
 async function seedEvents() {
@@ -248,7 +236,7 @@ async function seedEvents() {
       create: {
         eventId: event.id, locale: 'EN', slug: ref, title: e.title, category: e.category,
         location: e.location, description: e.description,
-        agenda: e.agenda as any, speakers: e.speakers as any, highlights: e.highlights as any,
+        agenda: e.agenda, speakers: e.speakers, highlights: e.highlights,
       },
       update: {},
     });
@@ -265,7 +253,7 @@ async function seedEvents() {
       create: {
         entityType: 'event', entityId: event.id, locale: 'EN',
         metaTitle, metaDescription, score: scored.score, band: scored.band,
-        scoreDetail: scored.rules as any, scoredAt: new Date(),
+        scoreDetail: scored.rules, scoredAt: new Date(),
       },
       update: {},
     });
@@ -338,7 +326,7 @@ async function seedTestimonials() {
   console.log(`✓ ${items.length} testimonials imported (flagged isPlaceholder)`);
 }
 
-interface TextBlockFixture { key: string; label: string; kind: string; group: string; value: unknown }
+interface TextBlockFixture { key: string; label: string; kind: string; group: string; value: Prisma.InputJsonValue }
 
 async function seedTextBlocks() {
   const blocks = await readJson<TextBlockFixture[]>(path.join(SEED_DATA, 'text-blocks.json'));
@@ -351,7 +339,7 @@ async function seedTextBlocks() {
     });
     await prisma.textBlockTranslation.upsert({
       where: { textBlockId_locale: { textBlockId: block.id, locale: 'EN' } },
-      create: { textBlockId: block.id, locale: 'EN', value: b.value as any },
+      create: { textBlockId: block.id, locale: 'EN', value: b.value },
       update: {},
     });
   }

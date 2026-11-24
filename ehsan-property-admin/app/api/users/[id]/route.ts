@@ -1,6 +1,6 @@
+import { Prisma } from '@prisma/client';
 import { z } from 'zod';
 import { prisma } from '@/lib/server/prisma';
-import { recordAudit } from '@/lib/server/audit';
 import { clientIp, json, route } from '@/lib/server/route';
 
 export const runtime = 'nodejs';
@@ -21,21 +21,47 @@ export const PATCH = route<{ id: string }>(
       return json({ error: 'bad_request', message: 'You cannot deactivate your own account.' }, 400);
     }
 
-    const data: Record<string, unknown> = {};
-    if (body.name !== undefined) data.name = body.name;
-    if (body.isActive !== undefined) data.isActive = body.isActive;
-
-    if (body.roleKeys) {
-      const roles = await prisma.role.findMany({ where: { key: { in: body.roleKeys } } });
-      await prisma.userRole.deleteMany({ where: { userId: params.id } });
-      data.roles = { create: roles.map((r) => ({ roleId: r.id })) };
+    try {
+      return await prisma.$transaction(async tx => {
+        const target = await tx.user.findUnique({
+          where: { id: params.id },
+          select: { isActive: true, roles: { select: { role: { select: { key: true } } } } },
+        });
+        if (!target) return json({ error: 'not_found', message: 'User not found.' }, 404);
+        const targetIsOwner = target.roles.some(({ role }) => role.key === 'owner');
+        if ((targetIsOwner || body.roleKeys?.includes('owner')) && !user.roleKeys.includes('owner')) {
+          return json({ error: 'forbidden', message: 'Only an owner can manage owner accounts.' }, 403);
+        }
+        if (targetIsOwner && target.isActive &&
+            (body.isActive === false || (body.roleKeys && !body.roleKeys.includes('owner')))) {
+          const others = await tx.user.count({
+            where: { id: { not: params.id }, isActive: true, roles: { some: { role: { key: 'owner' } } } },
+          });
+          if (!others) return json({ error: 'conflict', message: 'Keep at least one active owner.' }, 409);
+        }
+        const data: Prisma.UserUpdateInput = { name: body.name, isActive: body.isActive };
+        if (body.roleKeys) {
+          const roles = await tx.role.findMany({ where: { key: { in: body.roleKeys } }, select: { id: true } });
+          if (roles.length !== new Set(body.roleKeys).size) {
+            return json({ error: 'bad_request', message: 'One or more roles are invalid.' }, 400);
+          }
+          data.roles = { deleteMany: {}, create: roles.map(role => ({ roleId: role.id })) };
+        }
+        if (body.isActive === false) await tx.session.deleteMany({ where: { userId: params.id } });
+        const updated = await tx.user.update({
+          where: { id: params.id }, data, select: { id: true, email: true, isActive: true },
+        });
+        await tx.auditEntry.create({ data: {
+          actorId: user.id, action: 'user.updated', entityType: 'user',
+          entityId: updated.id, diff: body, ip: clientIp(request),
+        } });
+        return json(updated);
+      }, { isolationLevel: Prisma.TransactionIsolationLevel.Serializable });
+    } catch (error) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2034') {
+        return json({ error: 'conflict', message: 'Another account change occurred. Refresh and try again.' }, 409);
+      }
+      throw error;
     }
-
-    const updated = await prisma.user.update({ where: { id: params.id }, data });
-    recordAudit({
-      actorId: user.id, action: 'user.updated', entityType: 'user',
-      entityId: updated.id, diff: body, ip: clientIp(request),
-    });
-    return json({ id: updated.id, email: updated.email, isActive: updated.isActive });
   },
 );

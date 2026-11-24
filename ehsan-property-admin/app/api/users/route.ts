@@ -16,7 +16,10 @@ const CreateUserBody = z.object({
 export const GET = route({ resource: 'user', action: 'read' }, async () => {
   const users = await prisma.user.findMany({
     orderBy: { createdAt: 'asc' },
-    include: { roles: { include: { role: true } } },
+    select: {
+      id: true, email: true, name: true, isActive: true, lastSeenAt: true, createdAt: true,
+      roles: { select: { role: { select: { key: true } } } },
+    },
   });
   return json(
     users.map((u) => ({
@@ -30,13 +33,17 @@ export const GET = route({ resource: 'user', action: 'read' }, async () => {
 export const POST = route({ resource: 'user', action: 'create' }, async ({ request, user }) => {
   const { email, name, password, roleKeys } = CreateUserBody.parse(await request.json());
 
+  if (roleKeys.includes('owner') && !user.roleKeys.includes('owner')) {
+    return json({ error: 'forbidden', message: 'Only an owner can assign the owner role.' }, 403);
+  }
+
   if (await prisma.user.findUnique({ where: { email } })) {
     return json({ error: 'conflict', message: 'That email is already registered.' }, 409);
   }
 
   const roles = await prisma.role.findMany({ where: { key: { in: roleKeys } } });
-  if (roles.length === 0) {
-    return json({ error: 'bad_request', message: 'No valid roles given.' }, 400);
+  if (roles.length !== new Set(roleKeys).size) {
+    return json({ error: 'bad_request', message: 'One or more roles are invalid.' }, 400);
   }
 
   const created = await prisma.user.create({

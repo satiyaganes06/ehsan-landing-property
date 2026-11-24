@@ -7,9 +7,12 @@ export const runtime = 'nodejs';
 const EntityType = z.enum(['project', 'event']);
 
 export const GET = route<{ entityType: string; entityId: string }>(
-  { resource: 'project', action: 'read' },
-  async ({ params }) => {
+  { auth: true },
+  async ({ params, user }) => {
     const entityType = EntityType.parse(params.entityType);
+    if (!user.permissions.has(`${entityType}:read`)) {
+      return json({ error: 'forbidden', message: 'Permission denied.' }, 403);
+    }
     const rows = await prisma.seoMeta.findMany({
       where: { entityType, entityId: params.entityId },
     });
