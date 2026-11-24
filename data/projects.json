@@ -49,6 +49,23 @@
         "gallery/OfficeLiftLobby-DESKTOP-OB2275O-scaled.webp"
       ],
       "blueprint": []
+    },
+    "seo": {
+      "metaTitle": "Ehsan Widuri serviced apartments in Nilai",
+      "metaDescription": "Explore Ehsan Widuri in Bandar Baru Nilai, a freehold project with 490 serviced apartments near local universities and the KLIA corridor.",
+      "focusKeyword": "Ehsan Widuri"
+    },
+    "imageAlts": {
+      "widuri/elevation-front.jpg": "Front elevation of Ehsan Widuri",
+      "gallery/BusinessEntrance-DESKTOP-OB2275O-1.webp": "Business entrance at Ehsan Widuri",
+      "gallery/SwimmingPool2_A-DESKTOP-OB2275O-scaled.webp": "Swimming pool at Ehsan Widuri",
+      "gallery/GazeboAndBBQ-DESKTOP-OB2275O-scaled.webp": "Gazebo and barbecue area at Ehsan Widuri",
+      "gallery/GuessWaiting-DESKTOP-OB2275O-scaled.webp": "Guest waiting lounge at Ehsan Widuri",
+      "gallery/IndoorGym_1-DESKTOP-OB2275O-scaled.webp": "Indoor gym at Ehsan Widuri",
+      "gallery/OutdoorGym-DESKTOP-OB2275O-scaled.webp": "Outdoor gym at Ehsan Widuri",
+      "gallery/OfficeSpace-DESKTOP-OB2275O-scaled.webp": "Office space at Ehsan Widuri",
+      "gallery/TableGame-DESKTOP-OB2275O-scaled.webp": "Games table at Ehsan Widuri",
+      "gallery/OfficeLiftLobby-DESKTOP-OB2275O-scaled.webp": "Office lift lobby at Ehsan Widuri"
     }
   },
   "proj-13": {
@@ -158,7 +175,13 @@
       "shuttle": [],
       "facilities": [],
       "interior": []
-    }
+    },
+    "seo": {
+      "metaTitle": "Taman Universiti Bestari homes in Sungai Petani",
+      "metaDescription": "Explore terrace and semi-detached homes at Taman Universiti Bestari in Sungai Petani. See the four-bedroom layouts near AIMST University.",
+      "focusKeyword": "Taman Universiti Bestari"
+    },
+    "imageAlts": {}
   },
   "proj-14": {
     "featured": true,
@@ -301,7 +324,13 @@
         "project-imports/mutiara-austin-residence/images/07_WaterPlay-scaled.jpg"
       ],
       "interior": []
-    }
+    },
+    "seo": {
+      "metaTitle": "Residensi Mutiara Austin | Mount Austin apartments",
+      "metaDescription": "Explore Residensi Mutiara Austin in Johor Bahru. The project has 650 serviced apartments and five layouts ranging from 743 to 1,353 sq ft.",
+      "focusKeyword": "Residensi Mutiara Austin"
+    },
+    "imageAlts": {}
   },
   "proj-12": {
     "featured": false,
@@ -420,7 +449,13 @@
       "shuttle": [],
       "facilities": [],
       "interior": []
-    }
+    },
+    "seo": {
+      "metaTitle": "Taman Mawar Ehsan terrace homes in Rembau",
+      "metaDescription": "Discover Taman Mawar Ehsan in Rembau, a four-phase development of Malay Reserved land with single-storey and double-storey terrace homes.",
+      "focusKeyword": "Taman Mawar Ehsan"
+    },
+    "imageAlts": {}
   },
   "proj-8": {
     "featured": false,
@@ -531,7 +566,13 @@
         "project-imports/ehsan-residence-sepang/images/38_Ehsan-Residence-Interior-10.jpg",
         "project-imports/ehsan-residence-sepang/images/39_Ehsan-Residence-Interior-4.jpg"
       ]
-    }
+    },
+    "seo": {
+      "metaTitle": "Ehsan Residence | Freehold homes in Sepang",
+      "metaDescription": "Explore the completed Ehsan Residence project in Sepang. Homes have four bedrooms, two bathrooms and 1,090 sq ft of built-up space.",
+      "focusKeyword": "Ehsan Residence"
+    },
+    "imageAlts": {}
   },
   "proj-1": {
     "featured": false,
@@ -591,6 +632,21 @@
       "shuttle": [],
       "facilities": [],
       "interior": []
+    },
+    "seo": {
+      "metaTitle": "Kota Warisan bungalow in Sepang | Ehsan Property",
+      "metaDescription": "View the Kota Warisan bungalow in Sepang, Selangor. This detached freehold property includes a swimming pool and spans 7,000 sq ft.",
+      "focusKeyword": "Kota Warisan"
+    },
+    "imageAlts": {
+      "proj-kota-warisan.jpg": "Covered driveway beside the illuminated entrance of a bungalow",
+      "proj-dimensi.jpg": "Apartment blocks with tiled roofs along a residential street",
+      "proj-ehsan-residence.jpg": "Outdoor swimming pool in front of an apartment block",
+      "proj-salam-nadiah.jpg": "Row of houses with covered porches beside an unfinished verge",
+      "proj-markisa.jpg": "Covered porch and front door of a house",
+      "proj-bestari.jpg": "Aerial view of parallel rows of homes beside woodland",
+      "proj-widuri.jpg": "Twin residential towers above a multistorey podium",
+      "proj-widuri-2.jpg": "Street-level view of a high-rise podium"
     }
   },
   "proj-6": {
@@ -674,7 +730,13 @@
       "shuttle": [],
       "facilities": [],
       "interior": []
-    }
+    },
+    "seo": {
+      "metaTitle": "Taman Salam Nadiah terrace homes in Tampin",
+      "metaDescription": "View Taman Salam Nadiah in Tampin, Negeri Sembilan. The project includes Malay Reserve homes with three bedrooms and two bathrooms.",
+      "focusKeyword": "Taman Salam Nadiah"
+    },
+    "imageAlts": {}
   },
   "proj-10": {
     "featured": false,
@@ -731,6 +793,22 @@
       "shuttle": [],
       "facilities": [],
       "interior": []
+    },
+    "seo": {
+      "metaTitle": "Ehsan Waterpark shop offices in Port Dickson",
+      "metaDescription": "Explore the completed two-storey shop offices at Ehsan Waterpark in Port Dickson, Negeri Sembilan. Read about this freehold development.",
+      "focusKeyword": "Ehsan Waterpark"
+    },
+    "imageAlts": {
+      "proj-shop-residence.jpg": "Street view of shop offices with red and grey upper facades",
+      "proj-widuri.jpg": "Twin residential towers above a multistorey podium",
+      "proj-widuri-2.jpg": "Street-level view of a high-rise podium",
+      "proj-kota-warisan.jpg": "Covered driveway beside the illuminated entrance of a bungalow",
+      "proj-dimensi.jpg": "Apartment blocks with tiled roofs along a residential street",
+      "proj-ehsan-residence.jpg": "Outdoor swimming pool in front of an apartment block",
+      "proj-salam-nadiah.jpg": "Row of houses with covered porches beside an unfinished verge",
+      "proj-markisa.jpg": "Covered porch and front door of a house",
+      "proj-bestari.jpg": "Aerial view of parallel rows of homes beside woodland"
     }
   },
   "proj-2": {
@@ -794,7 +872,13 @@
       "shuttle": [],
       "facilities": [],
       "interior": []
-    }
+    },
+    "seo": {
+      "metaTitle": "Jalan Reko madrasah in Kajang | Ehsan Property",
+      "metaDescription": "View the Jalan Reko project in Bandar Kajang, Selangor. Ehsan rebuilt a surau as a two-storey madrasah at this site on Jalan Reko.",
+      "focusKeyword": "Jalan Reko"
+    },
+    "imageAlts": {}
   },
   "proj-16": {
     "featured": false,
@@ -855,7 +939,13 @@
       "shuttle": [],
       "facilities": [],
       "interior": []
-    }
+    },
+    "seo": {
+      "metaTitle": "Kampar mixed development in Perak | Ehsan Property",
+      "metaDescription": "Explore Ehsan’s planned mixed development in Kampar, Perak. The project record lists 2,038 units and provides a contact for project enquiries.",
+      "focusKeyword": "Kampar"
+    },
+    "imageAlts": {}
   },
   "proj-3": {
     "featured": false,
@@ -931,7 +1021,13 @@
       "shuttle": [],
       "facilities": [],
       "interior": []
-    }
+    },
+    "seo": {
+      "metaTitle": "Apartment Dimensi | Freehold homes in Alor Gajah",
+      "metaDescription": "View Apartment Dimensi in Taman Dimensi, Alor Gajah, Melaka. These completed freehold apartments have three bedrooms and two bathrooms.",
+      "focusKeyword": "Apartment Dimensi"
+    },
+    "imageAlts": {}
   },
   "proj-4": {
     "featured": false,
@@ -1010,7 +1106,13 @@
       "shuttle": [],
       "facilities": [],
       "interior": []
-    }
+    },
+    "seo": {
+      "metaTitle": "Hotel Ehsan at Ampang Point | Ehsan Property",
+      "metaDescription": "Discover how a shop office at Ampang Point became Hotel Ehsan, a five-storey budget hotel in Selangor. View the location and project details.",
+      "focusKeyword": "Hotel Ehsan"
+    },
+    "imageAlts": {}
   },
   "proj-5": {
     "featured": false,
@@ -1094,7 +1196,13 @@
       "shuttle": [],
       "facilities": [],
       "interior": []
-    }
+    },
+    "seo": {
+      "metaTitle": "Taman Pinggiran Markisa homes in Nilai",
+      "metaDescription": "Explore Taman Pinggiran Markisa in Nilai, Negeri Sembilan. The project includes Malay Reserve homes with five bedrooms and four bathrooms.",
+      "focusKeyword": "Taman Pinggiran Markisa"
+    },
+    "imageAlts": {}
   },
   "proj-7": {
     "featured": false,
@@ -1152,6 +1260,23 @@
       "shuttle": [],
       "facilities": [],
       "interior": []
+    },
+    "seo": {
+      "metaTitle": "Bandar Baru Tampin shop offices | Ehsan Property",
+      "metaDescription": "View the completed Bandar Baru Tampin project in Negeri Sembilan, with 13 two-storey shop offices on Malay Reserve land and state leasehold.",
+      "focusKeyword": "Bandar Baru Tampin"
+    },
+    "buyerNotes": "This completed development in Bandar Baru Tampin, Negeri Sembilan, comprises 13 two-storey shop offices. The project record lists the development period as 2015 to 2017. The count refers to the development as a whole. To enquire about a particular shop office, identify the unit or street address so the team can check the correct property.\n\nThe project record mentions both Malay Reserve land and state leasehold. Ask for the title particulars for the individual lot you are considering. If you need to confirm tenure or restrictions, use those particulars when requesting the relevant documents. The portfolio entry gives an overview of the development and does not identify which particulars apply to each of the 13 units.\n\nFor a viewing or a question about availability, include the project name, the unit you are interested in and your preferred dates in your enquiry. Ask the team to confirm the current asking price and availability for that unit before arranging your visit.",
+    "imageAlts": {
+      "proj-shop-tampin.jpg": "Two shop entrances on the ground floor at Bandar Baru Tampin",
+      "proj-bestari.jpg": "Aerial view of parallel rows of homes beside woodland",
+      "proj-widuri.jpg": "Twin residential towers above a multistorey podium",
+      "proj-widuri-2.jpg": "Street-level view of a high-rise podium",
+      "proj-kota-warisan.jpg": "Covered driveway beside the illuminated entrance of a bungalow",
+      "proj-dimensi.jpg": "Apartment blocks with tiled roofs along a residential street",
+      "proj-ehsan-residence.jpg": "Outdoor swimming pool in front of an apartment block",
+      "proj-salam-nadiah.jpg": "Row of houses with covered porches beside an unfinished verge",
+      "proj-markisa.jpg": "Covered porch and front door of a house"
     }
   },
   "proj-9": {
@@ -1247,7 +1372,13 @@
         "project-imports/taman-sri-ehsan-kluang/images/26_Taman-Sri-Ehsan-Interior-5.jpg",
         "project-imports/taman-sri-ehsan-kluang/images/27_Taman-Sri-Ehsan-Interior-3.jpg"
       ]
-    }
+    },
+    "seo": {
+      "metaTitle": "Taman Sri Ehsan | Freehold homes in Kluang",
+      "metaDescription": "Explore Taman Sri Ehsan in Kluang, Johor. This completed freehold housing project includes homes with five bedrooms and three bathrooms.",
+      "focusKeyword": "Taman Sri Ehsan"
+    },
+    "imageAlts": {}
   },
   "proj-11": {
     "featured": false,
@@ -1307,6 +1438,22 @@
       "shuttle": [],
       "facilities": [],
       "interior": []
+    },
+    "seo": {
+      "metaTitle": "Shop offices at Ehsan Residence in Sepang",
+      "metaDescription": "View the completed shop offices at Ehsan Residence in Sepang. The project includes 14 two-storey units on freehold land and has CCC.",
+      "focusKeyword": "Ehsan Residence"
+    },
+    "imageAlts": {
+      "proj-shop-residence.jpg": "Street view of shop offices with red and grey upper facades",
+      "proj-dimensi.jpg": "Apartment blocks with tiled roofs along a residential street",
+      "proj-ehsan-residence.jpg": "Outdoor swimming pool in front of an apartment block",
+      "proj-salam-nadiah.jpg": "Row of houses with covered porches beside an unfinished verge",
+      "proj-markisa.jpg": "Covered porch and front door of a house",
+      "proj-bestari.jpg": "Aerial view of parallel rows of homes beside woodland",
+      "proj-widuri.jpg": "Twin residential towers above a multistorey podium",
+      "proj-widuri-2.jpg": "Street-level view of a high-rise podium",
+      "proj-kota-warisan.jpg": "Covered driveway beside the illuminated entrance of a bungalow"
     }
   }
 }

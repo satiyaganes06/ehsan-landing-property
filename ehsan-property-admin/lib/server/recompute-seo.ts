@@ -1,4 +1,5 @@
 import { prisma } from './prisma';
+import { slugify } from './slug';
 import { evaluateSeo } from './seo-score';
 
 export interface SeoInput {
@@ -30,11 +31,12 @@ export async function recomputeSeo(input: SeoInput): Promise<void> {
 
   const title = existing?.metaTitle ?? '';
   const description = existing?.metaDescription ?? '';
-  const slug =
+  const translation =
     input.entityType === 'project'
-      ? (await prisma.projectTranslation.findFirst({ where: { projectId: input.entityId, locale: input.locale } }))?.slug
-      : (await prisma.eventTranslation.findFirst({ where: { eventId: input.entityId, locale: input.locale } }))?.slug;
+      ? (await prisma.projectTranslation.findFirst({ where: { projectId: input.entityId, locale: input.locale } }))
+      : (await prisma.eventTranslation.findFirst({ where: { eventId: input.entityId, locale: input.locale } }));
 
+  const slug = translation && "name" in translation && /^proj-\d+$/.test(translation.slug) ? slugify(translation.name) : translation?.slug;
   const result = evaluateSeo({
     title, description, slug: slug ?? '', focusKeyword: existing?.focusKeyword ?? null,
     bodyText: input.bodyText, imageCount: input.imageCount, imagesWithAlt: input.imagesWithAlt,
@@ -46,8 +48,8 @@ export async function recomputeSeo(input: SeoInput): Promise<void> {
     where: { entityType_entityId_locale: { entityType: input.entityType, entityId: input.entityId, locale: input.locale } },
     create: {
       entityType: input.entityType, entityId: input.entityId, locale: input.locale,
-      score: result.score, band: result.band, scoreDetail: result.rules as any, scoredAt: new Date(),
+      score: result.score, band: result.band, scoreDetail: result.rules, scoredAt: new Date(),
     },
-    update: { score: result.score, band: result.band, scoreDetail: result.rules as any, scoredAt: new Date() },
+    update: { score: result.score, band: result.band, scoreDetail: result.rules, scoredAt: new Date() },
   });
 }

@@ -22,13 +22,9 @@ export interface Ctx<P = Record<string, never>> {
   params: P;
 }
 
-interface RouteOptions {
-  /** Require a signed-in user, without a specific permission. */
-  auth?: boolean;
-  /** Require `resource:action`. Implies `auth`. */
-  resource?: Resource;
-  action?: Action;
-}
+type RouteOptions =
+  | { auth: true; resource?: never; action?: never }
+  | { resource: Resource; action: Action; auth?: true };
 
 export function json(body: unknown, status = 200) {
   return NextResponse.json(body, { status });
@@ -58,14 +54,17 @@ type NextRouteArgs<P> = { params: Promise<P> };
 export function route<P = Record<string, never>>(options: RouteOptions, handler: Handler<P>) {
   return async (request: NextRequest, segment: NextRouteArgs<P>): Promise<Response> => {
     try {
-      const needsUser = options.auth || options.resource !== undefined;
-      const user = needsUser ? await loadAuthedUser() : null;
+      if (!['GET', 'HEAD', 'OPTIONS'].includes(request.method) &&
+          request.headers.get('sec-fetch-site') === 'cross-site') {
+        return fail(403, 'forbidden', 'Cross-site account requests are not allowed.');
+      }
+      const user = await loadAuthedUser();
 
-      if (needsUser && !user) {
+      if (!user) {
         return fail(401, 'unauthenticated', 'Sign in required.');
       }
 
-      if (options.resource && options.action && user) {
+      if (options.resource) {
         if (!user.permissions.has(`${options.resource}:${options.action}`)) {
           return fail(
             403,
@@ -79,7 +78,9 @@ export function route<P = Record<string, never>>(options: RouteOptions, handler:
       // no handler has to remember to.
       const params = (await segment.params) as P;
 
-      return await handler({ request, user: user as AuthedUser, params });
+      const response = await handler({ request, user, params });
+      response.headers.set('Cache-Control', 'private, no-store');
+      return response;
     } catch (err) {
       return handleError(err);
     }

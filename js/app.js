@@ -55,6 +55,7 @@ function onScroll() {
   if (!stage || stage.hidden) return;
   const rect = stage.getBoundingClientRect();
   cameraTarget = REDUCED.matches ? 0 : Math.min(Math.max(-rect.top / rect.height, 0), 1);
+  if (!cameraFrame && cameraProgress === cameraTarget) return;
   if (REDUCED.matches || rect.bottom <= 0 || document.hidden) {
     cancelAnimationFrame(cameraFrame);
     cameraFrame = 0;
@@ -71,7 +72,10 @@ window.addEventListener('scroll', () => {
   queued = true;
   requestAnimationFrame(() => { queued = false; onScroll(); });
 }, { passive: true });
-window.addEventListener('resize', onScroll, { passive: true });
+window.addEventListener('resize', () => {
+  if (stage) paintCamera();
+  onScroll();
+}, { passive: true });
 REDUCED.addEventListener('change', onScroll);
 document.addEventListener('visibilitychange', onScroll);
 onScroll();

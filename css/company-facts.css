@@ -1,0 +1,14 @@
+body { background: #fff; color: #21251e; }
+.company-facts { max-width: 68rem; margin: auto; padding: 8rem clamp(1.25rem,5vw,4rem) 5rem; line-height: 1.6; }
+.company-facts h1, .company-facts h2 { font-family: Georgia, serif; font-weight: 400; line-height: 1.12; }
+.company-facts h1 { font-size: clamp(2.6rem,6vw,4.8rem); }
+.company-facts h2 { font-size: clamp(1.8rem,4vw,2.6rem); margin-bottom: 1rem; }
+.company-facts header p { max-width: 48rem; font-size: 1.18rem; margin-top: 1rem; }
+.company-facts section { margin: 3rem 0; }
+.company-facts a { color: #35562b; text-decoration: underline; text-underline-offset: .18em; }
+.company-facts dl > div, .facts-projects article { border-top: 1px solid #d7dcd1; padding: .9rem 0; }
+.company-facts dt, .facts-projects h3 { font-weight: 600; }
+.company-facts dd { margin: .25rem 0 0; }
+.facts-projects { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,21rem),1fr)); column-gap: 2rem; }
+.company-facts .location { font-size: .9rem; color: #53614c; margin: .3rem 0; }
+.company-facts nav { display: flex; flex-wrap: wrap; gap: 1.5rem; }

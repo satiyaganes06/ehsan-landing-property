@@ -1,9 +1,13 @@
 'use client';
 
+import { useState } from 'react';
 import { Check, X } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import { MediaPicker } from './media-picker';
+import { mediaSrc } from '@/lib/media';
+import { Button } from '@/components/ui/button';
 import { SeoPill } from '@/components/state-pills';
 import type { SeoMeta } from '@/lib/types';
 import { cn } from '@/lib/utils';
@@ -18,9 +22,13 @@ interface SeoPanelProps {
   onChange: (patch: Partial<SeoDraft>) => void;
   /** Public URL the record will live at, for the SERP preview. */
   previewUrl: string;
+  cover?: string;
 }
 
 export interface SeoDraft {
+  ogTitle: string;
+  ogDescription: string;
+  ogMediaId: string;
   metaTitle: string;
   metaDescription: string;
   focusKeyword: string;
@@ -29,13 +37,47 @@ export interface SeoDraft {
   robotsFollow: boolean;
 }
 
-export function SeoPanel({ seo, draft, onChange, previewUrl }: SeoPanelProps) {
+export function useSeoDraft(id: string, row: SeoMeta | undefined) {
+  const [edit, setEdit] = useState<{ id: string; fields: Partial<SeoDraft> } | null>(null);
+  const saved = row && {
+    ogTitle: row.ogTitle ?? '', ogDescription: row.ogDescription ?? '', ogMediaId: row.ogMediaId ?? '',
+    metaTitle: row.metaTitle ?? '',
+    metaDescription: row.metaDescription ?? '',
+    focusKeyword: row.focusKeyword ?? '',
+    canonicalUrl: row.canonicalUrl ?? '',
+    robotsIndex: row.robotsIndex,
+    robotsFollow: row.robotsFollow,
+  };
+  const fields = edit?.id === id ? edit.fields : {};
+  const draft = saved && { ...saved, ...fields };
+  const dirty = Boolean(saved && (Object.keys(fields) as (keyof SeoDraft)[])
+    .some((key) => fields[key] !== saved[key]));
+
+  function update(patch: Partial<SeoDraft>) {
+    setEdit((current) => ({
+      id,
+      fields: { ...(current?.id === id ? current.fields : {}), ...patch },
+    }));
+  }
+
+  function acceptSaved() {
+    setEdit((current) => current === edit ? null : current);
+  }
+
+  return { draft, dirty, update, acceptSaved };
+}
+
+export function SeoPanel({ seo, draft, onChange, previewUrl, cover }: SeoPanelProps) {
+  const [picker, setPicker] = useState(false);
+  const [picked, setPicked] = useState({id:'',url:''});
+  const image = draft.ogMediaId ? (picked.id === draft.ogMediaId ? picked.url : mediaSrc(seo.ogMedia?.storageKey)) : cover;
+
   return (
     <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_20rem]">
       <div className="space-y-5">
         <Field
           label="Search result title"
-          hint="Shown as the blue headline on Google."
+          hint="Suggested headline for search results."
           value={draft.metaTitle}
           max={TITLE_MAX}
           onChange={(metaTitle) => onChange({ metaTitle })}
@@ -64,6 +106,19 @@ export function SeoPanel({ seo, draft, onChange, previewUrl }: SeoPanelProps) {
             </p>
           </div>
 
+        </div>
+        <section className="space-y-3"><h3 className="text-sm font-medium">Social sharing</h3>
+          <Label htmlFor="social-title">Social title</Label>
+          <Input id="social-title" placeholder={draft.metaTitle} value={draft.ogTitle} onChange={e=>onChange({ogTitle:e.target.value})}/>
+          <Label htmlFor="social-description">Social description</Label>
+          <Textarea id="social-description" placeholder={draft.metaDescription} value={draft.ogDescription} onChange={e=>onChange({ogDescription:e.target.value})}/>
+          <Button type="button" variant="outline" onClick={()=>setPicker(true)}>Choose share image</Button>
+          {draft.ogMediaId && <Button type="button" variant="ghost" onClick={()=>onChange({ogMediaId:''})}>Use cover image</Button>}
+          <MediaPicker open={picker} onOpenChange={setPicker} selectedId={draft.ogMediaId} onSelect={m=>{
+            setPicked({id:m.id,url:mediaSrc(m.storageKey,m.url)});onChange({ogMediaId:m.id});
+          }}/>
+        </section>
+        <details className="space-y-3"><summary className="cursor-pointer text-sm font-medium">Advanced search settings</summary>
           <div className="space-y-2">
             <Label htmlFor="canonical">Canonical URL</Label>
             <Input
@@ -76,7 +131,6 @@ export function SeoPanel({ seo, draft, onChange, previewUrl }: SeoPanelProps) {
               Set this only when the same content lives at another address.
             </p>
           </div>
-        </div>
 
         <fieldset className="space-y-2">
           <legend className="text-sm font-medium">Search engine visibility</legend>
@@ -92,12 +146,12 @@ export function SeoPanel({ seo, draft, onChange, previewUrl }: SeoPanelProps) {
               onChange={(robotsFollow) => onChange({ robotsFollow })}
             />
           </div>
-        </fieldset>
+        </fieldset></details>
       </div>
 
       <aside className="space-y-5">
         <section className="space-y-2">
-          <h3 className="text-sm font-medium">How it will look</h3>
+          <h3 className="text-sm font-medium">Search preview</h3>
           <div className="bg-card space-y-1 rounded-lg border p-3">
             <p className="text-muted-foreground truncate font-mono text-[0.6875rem]">{previewUrl}</p>
             <p className="line-clamp-2 text-[0.9375rem] leading-snug text-[#1a0dab] dark:text-[#8ab4f8]">
@@ -109,6 +163,14 @@ export function SeoPanel({ seo, draft, onChange, previewUrl }: SeoPanelProps) {
           </div>
         </section>
 
+        <section className="space-y-2"><h3 className="text-sm font-medium">Social preview</h3>
+          <div className="overflow-hidden rounded-lg border">
+            {image && <img src={image} alt="" className="aspect-[1.91] w-full object-cover"/>}
+            <div className="space-y-1 p-3"><strong>{draft.ogTitle || draft.metaTitle}</strong>
+            <p className="line-clamp-2 text-sm">{draft.ogDescription || draft.metaDescription}</p>
+            <small>ehsanproperty.com</small></div>
+          </div>
+        </section>
         <section className="space-y-2">
           <div className="flex items-center justify-between gap-2">
             <h3 className="text-sm font-medium">Checks</h3>
@@ -121,15 +183,15 @@ export function SeoPanel({ seo, draft, onChange, previewUrl }: SeoPanelProps) {
                 <span
                   className={cn(
                     'mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-full',
-                    rule.passed ? 'bg-brass text-[#12110d]' : 'bg-rust-soft text-rust',
+                    rule.passed ? 'bg-brass text-[#12110d]' : rule.id === 'content-depth' ? 'bg-muted text-muted-foreground' : 'bg-rust-soft text-rust',
                   )}
                   aria-hidden
                 >
                   {rule.passed ? <Check className="size-2.5" /> : <X className="size-2.5" />}
                 </span>
                 <div className="min-w-0">
-                  <p className="text-xs font-medium">{rule.label}</p>
-                  <p className="text-muted-foreground text-xs">{rule.message}</p>
+                  <p className="text-xs font-medium">{rule.id === 'content-depth' ? 'Content depth suggestion' : rule.label}</p>
+                  <p className="text-muted-foreground text-xs">{rule.id === 'content-depth' && !rule.passed ? 'Add details when they help a buyer decide.' : rule.message}</p>
                 </div>
               </li>
             ))}
@@ -194,7 +256,7 @@ function Field({
       </div>
 
       <p className="text-muted-foreground text-xs">
-        {over ? `Google will cut this off after about ${max} characters.` : hint}
+        {over ? `May be shortened on smaller screens.` : hint}
       </p>
     </div>
   );

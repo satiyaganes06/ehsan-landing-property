@@ -40,7 +40,7 @@ const SHIM = `<script>
   var draft = new Promise(function (resolve) { resolveDraft = resolve; });
 
   window.addEventListener('message', function (event) {
-    if (event.source !== window.parent) return;
+    if (event.source !== window.parent || event.origin !== window.location.origin) return;
     if (!event.data || event.data.type !== 'ehsan:preview-data') return;
     resolveDraft(event.data.payload);
   });

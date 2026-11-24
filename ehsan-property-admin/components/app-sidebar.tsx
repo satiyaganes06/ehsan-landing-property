@@ -1,12 +1,12 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useTheme } from 'next-themes';
 import { useQuery } from '@tanstack/react-query';
 import {
   Building2, CalendarDays, ChevronsUpDown, Images, Inbox, LayoutDashboard,
-  LogOut, Monitor, Moon, ScrollText, Sun, Trophy, Settings2, Users,
+  KeyRound, LogOut, Monitor, Moon, ScrollText, Sun, Trophy, Settings2, Users,
 } from 'lucide-react';
 
 import {
@@ -21,7 +21,6 @@ import {
 import { api } from '@/lib/api';
 import { useSession } from '@/lib/session';
 import { primaryRole, roleLabel, type Action, type Resource } from '@/lib/permissions';
-import type { DashboardSummary } from '@/lib/types';
 
 interface NavItem {
   href: string;
@@ -42,6 +41,7 @@ const NAV: Array<{ group: string; items: NavItem[] }> = [
     items: [
       { href: '/landing', label: 'Page builder', icon: Monitor, need: ['block', 'read'] },
       { href: '/about', label: 'About page', icon: Building2, need: ['block', 'read'] },
+      { href: '/company-facts', label: 'Company Facts', icon: ScrollText, need: ['block', 'read'] },
       { href: '/project-licensing', label: 'Project Licensing', icon: ScrollText, need: ['block', 'read'] },
       { href: '/website', label: 'Website settings', icon: Settings2, need: ['block', 'read'] },
       { href: '/media', label: 'Media library', icon: Images, need: ['media', 'read'] },
@@ -78,18 +78,19 @@ function isActivePath(pathname: string, href: string) {
 }
 
 export function AppSidebar() {
+  const router = useRouter();
   const pathname = usePathname();
   const { me, can, signOut } = useSession();
   const { theme, setTheme } = useTheme();
 
-  const { data: summary } = useQuery({
-    queryKey: ['dashboard', 'summary'],
-    queryFn: () => api.get<DashboardSummary>('/api/dashboard/summary'),
+  const { data: count } = useQuery({
+    queryKey: ['enquiries', 'unread-count'],
+    queryFn: () => api.get<{ unread: number }>('/api/enquiries/unread-count'),
     enabled: can('enquiry', 'read'),
     staleTime: 60_000,
   });
 
-  const unread = summary?.enquiries.unread ?? 0;
+  const unread = count?.unread ?? 0;
   const role = me ? primaryRole(me.roles) : undefined;
   const initials = (me?.name ?? '')
     .split(' ')
@@ -193,6 +194,9 @@ export function AppSidebar() {
                 ))}
 
                 <DropdownMenuSeparator />
+                <DropdownMenuItem onSelect={() => router.push('/account/password')}>
+                  <KeyRound className="size-4" />Change password
+                </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => void signOut()}>
                   <LogOut className="size-4" />
                   Sign out

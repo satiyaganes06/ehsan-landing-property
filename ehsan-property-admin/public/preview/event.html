@@ -7,7 +7,7 @@
   var draft = new Promise(function (resolve) { resolveDraft = resolve; });
 
   window.addEventListener('message', function (event) {
-    if (event.source !== window.parent) return;
+    if (event.source !== window.parent || event.origin !== window.location.origin) return;
     if (!event.data || event.data.type !== 'ehsan:preview-data') return;
     resolveDraft(event.data.payload);
   });
@@ -211,14 +211,14 @@ document.addEventListener('submit', function (event) {
 
 <!-- Page chrome: registry first, then each component, then mount. -->
 <script src="/live-site/js/phone-codes.js?v=20261002.51"></script>
-<script src="/live-site/components/registry.js?v=20261002.49"></script>
+<script src="/live-site/components/registry.js?v=20261119.1"></script>
 <script src="/live-site/components/navbar.js?v=20261106.2"></script>
 <script src="/live-site/components/footer.js?v=20261002.49"></script>
 <script src="/live-site/components/assistant.js"></script>
 <script src="/live-site/components/mount.js"></script>
 
 <!-- Page behaviour — runs after the chrome is in the DOM. -->
-<script src="/live-site/js/event-detail.js?v=20261002.49"></script>
+<script src="/live-site/js/event-detail.js?v=20261119.1"></script>
 <script src="/live-site/js/content.js?v=20261002.51"></script>
 </body>
 </html>

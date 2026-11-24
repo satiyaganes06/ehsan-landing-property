@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { formatDistanceToNow } from 'date-fns';
 import { toast } from 'sonner';
@@ -16,6 +16,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { api, ApiError } from '@/lib/api';
 import { useSession } from '@/lib/session';
 import type { Enquiry, EnquiryStatus, Paginated } from '@/lib/types';
+import { campaignField, enquirySource } from '@/lib/enquiry-source';
 import { cn } from '@/lib/utils';
 
 const STATUSES: EnquiryStatus[] = ['NEW', 'READ', 'REPLIED', 'ARCHIVED', 'SPAM'];
@@ -33,10 +34,10 @@ export default function EnquiriesPage() {
   });
 
   const items = query.data?.items ?? [];
-  const selected = useMemo(
-    () => items.find((e) => e.id === selectedId) ?? null,
-    [items, selectedId],
-  );
+  const selected = items.find((item) => item.id === selectedId) ?? null;
+
+  const campaign = campaignField(selected?.utm, 'utm_campaign');
+  const medium = campaignField(selected?.utm, 'utm_medium');
 
   const { page: enquiryPage, bindings: enquiryBindings } = usePagination(items);
 
@@ -141,6 +142,7 @@ export default function EnquiriesPage() {
                       {formatDistanceToNow(new Date(enquiry.createdAt), { addSuffix: true })}
                     </span>
                   </div>
+                  <p className="mt-1 truncate text-xs font-medium">{enquirySource(enquiry)}</p>
                   <p className="text-muted-foreground mt-0.5 line-clamp-1 text-xs">
                     {enquiry.message}
                   </p>
@@ -184,6 +186,11 @@ export default function EnquiriesPage() {
                 </header>
 
                 <div className="flex-1 space-y-4 p-5">
+                  <div>
+                    <p className="text-muted-foreground text-xs font-medium">Source</p>
+                    <p className="break-words text-sm">{enquirySource(selected)}</p>
+                    {(medium || campaign) && <p className="text-muted-foreground break-words text-xs">{[medium, campaign].filter(Boolean).join(' · ')}</p>}
+                  </div>
                   {selected.interest ? (
                     <div>
                       <p className="text-muted-foreground text-xs font-medium">Interested in</p>

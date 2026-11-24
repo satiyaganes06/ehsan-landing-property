@@ -17,6 +17,8 @@ import { api } from '@/lib/api';
 import { useSession } from '@/lib/session';
 import type { Paginated, ProjectListItem, ProjectStatus } from '@/lib/types';
 import { cn } from '@/lib/utils';
+import descriptions from '@/data/project-image-descriptions.json';
+import listings from '@/data/project-search-listings.json';
 import { moveProject } from '@/lib/project-order';
 
 const STATUS_LABEL: Record<ProjectStatus, string> = {
@@ -37,6 +39,27 @@ export default function ProjectsPage() {
     queryKey: ['projects'],
     // Fetch a full admin page; moves are applied to the complete order on the server.
     queryFn: () => api.get<Paginated<ProjectListItem> & { featuredCount: number }>('/api/projects?perPage=100'),
+  });
+  const optimize = useMutation({
+    mutationFn: async () => {
+      if (can('media','update')) {
+        const images = await api.get<{id:string; storageKey:string}[]>('/api/media?missingAlt=true');
+        for (const image of images) {
+          const key = image.storageKey.replace(/^legacy:img\//, '');
+          const altText = descriptions[key as keyof typeof descriptions];
+          if (altText) await api.patch('/api/media/' + image.id + '/alt', {altText});
+        }
+      }
+      for (const project of query.data?.items ?? []) {
+        const listing = listings[project.reference as keyof typeof listings];
+        if (listing && (project.seoScore ?? 0) < 90) {
+          await api.put(`/api/seo/project/${project.id}/EN`, listing);
+        }
+      }
+    },
+    onSuccess: () => toast.success('Search listings updated'),
+    onError: (error: Error) => toast.error(error.message),
+    onSettled: () => queryClient.invalidateQueries({queryKey: ['projects']}),
   });
   const feature = useMutation({
     mutationFn: (project: ProjectListItem) => api.patch(`/api/projects/${project.id}/featured`, { featured: !project.featured }),
@@ -130,12 +153,13 @@ export default function ProjectsPage() {
       <PageHeader
         title="Projects"
         description={`Drag to set the website order — top appears first. Star up to three landing-page projects (${featuredCount}/3 selected).`}
-        actions={
+        actions={<>
+          <PermissionButton resource="project" action="update" disabled={!query.data || optimize.isPending} onClick={() => optimize.mutate()}>{optimize.isPending ? "Updating…" : "Improve search listings"}</PermissionButton>
           <PermissionButton resource="project" action="create" onClick={() => router.push('/projects/new')}>
             <Plus className="size-3.5" />
             New project
           </PermissionButton>
-        }
+        </>}
       />
 
       <DataTable

@@ -43,7 +43,6 @@ export function AltTextField({ mediaId, value, invalidate = [], onSaved }: AltTe
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState(value ?? '');
 
-  useEffect(() => setDraft(value ?? ''), [value]);
   useEffect(() => {
     if (editing) inputRef.current?.focus();
   }, [editing]);
@@ -83,7 +82,10 @@ export function AltTextField({ mediaId, value, invalidate = [], onSaved }: AltTe
     return (
       <button
         type="button"
-        onClick={() => setEditing(true)}
+        onClick={() => {
+          setDraft(value ?? '');
+          setEditing(true);
+        }}
         title={value || 'Add a description'}
         className={cn(
           'group/alt flex w-full items-center gap-1 text-left text-xs',

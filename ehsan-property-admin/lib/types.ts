@@ -222,6 +222,8 @@ export interface RoleInfo {
 }
 
 export interface Enquiry {
+  utm?: unknown;
+  referrer?: string | null;
   id: string;
   name: string;
   email: string;
@@ -278,6 +280,7 @@ export interface SeoMeta {
   robotsFollow: boolean;
   ogTitle?: string | null;
   ogDescription?: string | null;
+  ogMedia?: {storageKey:string} | null;
   ogMediaId?: string | null;
   score: number;
   band: SeoBand;

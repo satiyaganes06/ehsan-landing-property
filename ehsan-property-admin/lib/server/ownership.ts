@@ -7,6 +7,6 @@ import type { AuthedUser } from './auth';
  * matrix cannot express. Any higher role bypasses the check entirely.
  */
 export function canActOnOwnRecord(user: AuthedUser, createdById: string | null): boolean {
-  if (user.roleKeys.some((k) => k !== 'contributor')) return true;
+  if (user.roleKeys.some((key) => ['owner', 'admin', 'editor'].includes(key))) return true;
   return createdById === user.id;
 }

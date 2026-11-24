@@ -2,6 +2,7 @@
 
 import { createContext, use, useCallback } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import { api } from '@/lib/api';
 import { hasPermission, type Action, type Resource } from '@/lib/permissions';
@@ -35,11 +36,12 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
   );
 
   const signOut = useCallback(async () => {
-    await api.post('/api/auth/logout').catch(() => {
-      // Signing out must always land on the login screen, even if the network
-      // call fails -- the cookie is cleared server-side or it isn't, but the
-      // person asked to leave.
-    });
+    try {
+      await api.post('/api/auth/logout');
+    } catch {
+      toast.error('Sign-out failed. Please try again.');
+      return;
+    }
     queryClient.clear();
     router.replace('/login');
   }, [queryClient, router]);

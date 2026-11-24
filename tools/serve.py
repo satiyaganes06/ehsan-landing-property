@@ -8,7 +8,7 @@ import re
 import time
 import unicodedata
 from pathlib import Path
-from urllib.parse import urlsplit, parse_qs, quote
+from urllib.parse import urlsplit, parse_qs, parse_qsl, urlencode, quote
 from urllib.request import urlopen
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 
@@ -39,12 +39,16 @@ class Handler(SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=str(ROOT), **kwargs)
 
+    def list_directory(self, path):
+        self.send_error(404)
+        return None
+
     def do_GET(self):
         parsed = urlsplit(self.path)
         path = parsed.path
         query = ('?' + parsed.query) if parsed.query else ''
         legacy = {'/index.html': '/', **{f'/html/{name}.html': f'/{name}' for name in PAGES}}
-        if path in legacy and 'landing-editor' not in parse_qs(parsed.query):
+        if path in legacy and 'landing-editor' not in parse_qs(parsed.query, keep_blank_values=True):
             return self.redirect(legacy[path] + query)
         match = re.fullmatch(r'/html/(project|event|news)-detail\.html', path)
         if match:
@@ -52,9 +56,11 @@ class Handler(SimpleHTTPRequestHandler):
             reference = parse_qs(parsed.query).get(match[1], [''])[0].rstrip('.,;')
             record = records(kind).get(reference)
             if record:
-                params = parse_qs(parsed.query)
+                params = parse_qs(parsed.query, keep_blank_values=True)
                 if 'landing-editor' not in params:
-                    return self.redirect(f'/{kind}/{slug(record)}')
+                    remaining = [(k, v) for k, v in parse_qsl(parsed.query, keep_blank_values=True) if k != match[1]]
+                    suffix = '?' + urlencode(remaining) if remaining else ''
+                    return self.redirect(f'/{kind}/{slug(record)}' + suffix)
         if path.rstrip('/') in [f'/{name}' for name in PAGES]:
             if path.endswith('/'):
                 return self.redirect(path.rstrip('/') + query)
@@ -67,12 +73,31 @@ class Handler(SimpleHTTPRequestHandler):
             if not any(slug(record) == name for record in records(kind).values()):
                 self.send_error(404, 'This page is not available')
                 return
+            generated = ROOT / kind / name / 'index.html'
+            if generated.is_file():
+                return self.page(generated)
             detail = {'projects': 'project', 'events': 'event', 'news': 'news'}[kind]
             return self.page(f'html/{detail}-detail.html')
+        if path == '/ai-instructions/':
+            try:
+                with urlopen('http://localhost:3001/api/public/company-facts', timeout=4) as response:
+                    if response.headers.get_content_type() == 'text/html':
+                        return self.html(response.read())
+            except OSError:
+                pass
+            return self.page('ai-instructions/index.html')
+        target = Path(self.translate_path(path)).resolve()
+        if not target.is_relative_to(ROOT):
+            return self.send_error(404)
+        parts = target.relative_to(ROOT).parts
+        public = {'assets', 'components', 'css', 'data', 'html', 'js', 'project-licensing', 'ai-instructions', *PAGES}
+        if parts and (parts[0] not in public | {'index.html', 'robots.txt', 'sitemap.xml'} or any(part.startswith('.') for part in parts)):
+            return self.send_error(404)
+        if self.command == 'HEAD':
+            return super().do_HEAD()
         super().do_GET()
 
     def do_HEAD(self):
-        self.head_only = True
         self.do_GET()
 
     def redirect(self, destination):
@@ -82,12 +107,14 @@ class Handler(SimpleHTTPRequestHandler):
         self.end_headers()
 
     def page(self, source):
-        body = (ROOT / source).read_bytes()
+        return self.html((ROOT / source).read_bytes())
+
+    def html(self, body):
         self.send_response(200)
         self.send_header('Content-Type', 'text/html; charset=utf-8')
         self.send_header('Content-Length', str(len(body)))
         self.end_headers()
-        if not getattr(self, 'head_only', False):
+        if self.command != 'HEAD':
             self.wfile.write(body)
 
 if __name__ == '__main__':

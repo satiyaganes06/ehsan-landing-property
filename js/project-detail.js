@@ -671,7 +671,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     SITE.canonical('projects', projectData);
     const isWiduri = projectKey === 'proj-15';
     document.body.classList.toggle('project--widuri', isWiduri);
-    document.title = `${projectData.name} | Ehsan Plant & Property`;
+    document.title = projectData.seo?.metaTitle || `${projectData.name} | Ehsan Plant & Property`;
 
     if (isWiduri) {
       renderWiduriExperience(projectData);

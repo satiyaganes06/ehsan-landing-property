@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { formatDistanceToNow } from 'date-fns';
 import { toast } from 'sonner';
@@ -9,6 +9,11 @@ import { Loader2, ShieldCheck, UserPlus } from 'lucide-react';
 import {
   Sheet, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle,
 } from '@/components/animate-ui/components/radix/sheet';
+import Link from 'next/link';
+import { PasswordForm } from '@/components/password-form';
+import { ConfirmDialog } from '@/components/confirm-dialog';
+import { isProtectedAccount } from '@/lib/account-protection';
+import { ActiveSessions } from '@/components/active-sessions';
 import { PageHeader } from '@/components/page-header';
 import { ErrorState } from '@/components/states';
 import { PermissionButton } from '@/components/permission-button';
@@ -28,6 +33,8 @@ export default function UsersPage() {
   const { me, can } = useSession();
 
   const [editing, setEditing] = useState<UserRow | null>(null);
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [resetting, setResetting] = useState(false);
   const [inviting, setInviting] = useState(false);
 
   const [name, setName] = useState('');
@@ -41,21 +48,24 @@ export default function UsersPage() {
     queryFn: () => api.get<UserRow[]>('/api/users'),
   });
 
-  useEffect(() => {
-    if (!editing) return;
+  function editUser(editing: UserRow) {
+    setEditing(editing);
     setName(editing.name);
     setEmail(editing.email);
     setRoleKeys(editing.roles);
     setIsActive(editing.isActive);
-  }, [editing]);
+  }
 
+  const canManageOwners = Boolean(me?.roles.includes('owner'));
   const owners = (query.data ?? []).filter((u) => u.roles.includes('owner') && u.isActive);
   const isLastOwner =
-    editing != null && editing.roles.includes('owner') && owners.length <= 1;
+    editing?.isActive && editing.roles.includes('owner') && owners.length <= 1;
   const isSelf = editing?.id === me?.id;
 
   function close() {
+    setConfirmDelete(false);
     setEditing(null);
+    setResetting(false);
     setInviting(false);
     setName('');
     setEmail('');
@@ -83,6 +93,17 @@ export default function UsersPage() {
       }),
   });
 
+  const remove = useMutation({
+    mutationFn: (id: string) => api.delete(`/api/users/${id}`),
+    onSuccess: () => {
+      close();
+      void queryClient.invalidateQueries({ queryKey: ['users'] });
+      void queryClient.invalidateQueries({ queryKey: ['active-sessions'] });
+      toast.success('Person deleted.');
+    },
+    onError: (error: Error) => toast.error(error.message),
+  });
+
   function toggleRole(key: string) {
     setRoleKeys((current) =>
       current.includes(key) ? current.filter((k) => k !== key) : [...current, key],
@@ -95,7 +116,7 @@ export default function UsersPage() {
     <div className="mx-auto w-full max-w-4xl space-y-6">
       <PageHeader
         title="Users & roles"
-        description="Who can sign in, and what each of them is allowed to do."
+        description="Manage accounts, roles and signed-in devices."
         actions={
           <PermissionButton resource="user" action="create" onClick={() => setInviting(true)}>
             <UserPlus className="size-3.5" />
@@ -103,6 +124,8 @@ export default function UsersPage() {
           </PermissionButton>
         }
       />
+      <section aria-labelledby="people-heading" className="space-y-3">
+      <h2 id="people-heading" className="text-lg font-semibold">People {query.data && <span className="text-muted-foreground text-sm font-normal">({query.data.length})</span>}</h2>
 
       {query.isError ? (
         <ErrorState error={query.error} onRetry={() => query.refetch()} />
@@ -119,8 +142,8 @@ export default function UsersPage() {
             <button
               key={user.id}
               type="button"
-              disabled={!can('user', 'update')}
-              onClick={() => setEditing(user)}
+              disabled={!can('user', 'update') || (user.roles.includes('owner') && !canManageOwners)}
+              onClick={() => editUser(user)}
               className="hover:bg-muted/50 flex w-full items-center gap-3 px-4 py-3 text-left transition-colors disabled:cursor-default"
             >
               <span className="bg-muted text-muted-foreground flex size-9 shrink-0 items-center justify-center rounded-full text-xs font-medium">
@@ -165,12 +188,15 @@ export default function UsersPage() {
         </div>
       )}
 
-      <section className="space-y-3">
-        <h2 className="flex items-center gap-2 text-sm font-medium">
-          <ShieldCheck className="text-muted-foreground size-4" />
+      </section>
+      {can('user', 'read') && <ActiveSessions />}
+
+      <details className="rounded-lg border p-4">
+        <summary className="cursor-pointer text-sm font-medium">
+          <ShieldCheck className="text-muted-foreground mr-1 inline size-4" />
           What each role can do
-        </h2>
-        <dl className="bg-card divide-border divide-y overflow-hidden rounded-lg border">
+        </summary>
+        <dl className="mt-3 divide-y">
           {ROLES.map((role) => (
             <div key={role.key} className="flex flex-wrap gap-x-4 gap-y-1 px-4 py-3">
               <dt className="w-24 shrink-0 text-sm font-medium">{role.label}</dt>
@@ -178,7 +204,7 @@ export default function UsersPage() {
             </div>
           ))}
         </dl>
-      </section>
+      </details>
 
       <Sheet
         open={inviting || Boolean(editing)}
@@ -186,14 +212,15 @@ export default function UsersPage() {
       >
         <SheetContent side="right" className="flex w-full flex-col sm:max-w-md">
           <SheetHeader>
-            <SheetTitle>{inviting ? 'Add person' : 'Edit access'}</SheetTitle>
+            <SheetTitle>{resetting ? 'Reset password' : inviting ? 'Add person' : 'Edit access'}</SheetTitle>
             <SheetDescription>
-              {inviting
+              {resetting ? editing?.email : inviting
                 ? 'They can sign in as soon as you create the account.'
                 : 'Changes take effect the next time they load the panel.'}
             </SheetDescription>
           </SheetHeader>
 
+          {resetting && editing ? <div className="px-4"><PasswordForm userId={editing.id} self={false} onDone={close} /></div> : <>
           <div className="flex-1 space-y-4 overflow-y-auto px-4">
             <div className="space-y-2">
               <Label htmlFor="user-name">Name</Label>
@@ -225,17 +252,20 @@ export default function UsersPage() {
                   onChange={(e) => setPassword(e.target.value)}
                 />
                 <p className="text-muted-foreground text-xs">
-                  At least 8 characters. Share it with them directly and ask them to change it.
+                  Use at least 8 characters. After signing in, they can open their account menu and choose Change password.
                 </p>
               </div>
             ) : null}
 
+            {editing && (isSelf
+              ? <Link className="text-sm underline" href="/account/password">Change my password</Link>
+              : <Button variant="outline" size="sm" onClick={() => setResetting(true)}>Reset password</Button>)}
             <fieldset className="space-y-2">
               <legend className="text-sm font-medium">Roles</legend>
               <div className="space-y-1.5 pt-1">
                 {ROLES.map((role) => {
                   const checked = roleKeys.includes(role.key);
-                  const locked = isLastOwner && role.key === 'owner';
+                  const locked = role.key === 'owner' && (isLastOwner || !canManageOwners);
                   return (
                     <label
                       key={role.key}
@@ -293,7 +323,13 @@ export default function UsersPage() {
             ) : null}
           </div>
 
-          <SheetFooter className="flex-row justify-end gap-2">
+          <SheetFooter className="flex-row flex-wrap justify-end gap-2">
+            {editing && !isSelf && can('user', 'delete') && !isProtectedAccount(editing.email, editing.roles) && (
+              <Button variant="ghost" size="sm" className="text-destructive mr-auto"
+                disabled={remove.isPending || save.isPending} onClick={() => setConfirmDelete(true)}>
+                Delete person
+              </Button>
+            )}
             <Button variant="ghost" size="sm" onClick={close}>
               Cancel
             </Button>
@@ -301,7 +337,7 @@ export default function UsersPage() {
               size="sm"
               onClick={() => save.mutate()}
               disabled={
-                save.isPending ||
+                save.isPending || remove.isPending ||
                 !name.trim() ||
                 roleKeys.length === 0 ||
                 (inviting && (!email.trim() || password.length < 8))
@@ -311,8 +347,13 @@ export default function UsersPage() {
               {save.isPending ? 'Saving…' : inviting ? 'Create account' : 'Save'}
             </Button>
           </SheetFooter>
+          </>}
         </SheetContent>
       </Sheet>
+      {editing && <ConfirmDialog open={confirmDelete} onOpenChange={setConfirmDelete}
+        title={`Delete ${editing.name}?`}
+        description={`This permanently deletes the account for ${editing.email} and ends all their sessions.`}
+        confirmLabel="Delete person" onConfirm={() => remove.mutate(editing.id)} />}
     </div>
   );
 }

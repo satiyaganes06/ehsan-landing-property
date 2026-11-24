@@ -1,38 +1,11 @@
-/* -------------------------------------------------------------------------
-   components/assistant.js — the floating chat launcher.
-
-   Markup only. The behaviour (open/close, canned replies) stays in
-   js/content.js, which finds this widget through [data-assistant]. mount.js
-   injects every component before content.js runs, so that lookup still
-   succeeds — see the script order at the foot of each page.
-   ------------------------------------------------------------------------- */
+/* Shared floating WhatsApp contact link. */
 
 SITE.define('assistant', () => `
-<div class="assistant" data-assistant>
-  <button class="assistant__fab" type="button" data-assistant-toggle aria-expanded="false" aria-controls="assistantPanel">
+<div class="assistant">
+  <a class="assistant__fab" href="https://wa.me/60321626649" target="_blank" rel="noopener noreferrer" aria-label="Chat with Ehsan Property on WhatsApp at +60 3-2162 6649">
     <span class="assistant__ring" aria-hidden="true"></span>
-    <svg class="assistant__icon assistant__icon--chat" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-      <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+    <svg class="assistant__icon" viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden="true">
+      <path d="M20.52 3.48A11.91 11.91 0 0 0 12.05 0C5.46 0 .1 5.36.1 11.95c0 2.11.55 4.17 1.6 5.98L0 24l6.24-1.64a11.93 11.93 0 0 0 5.81 1.48h.01c6.58 0 11.94-5.36 11.94-11.95 0-3.19-1.24-6.19-3.48-8.41zM12.06 21.82h-.01a9.92 9.92 0 0 1-5.05-1.38l-.36-.21-3.7.97.99-3.61-.24-.37a9.9 9.9 0 0 1-1.52-5.27C2.17 6.48 6.61 2.04 12.06 2.04a9.82 9.82 0 0 1 7 2.9 9.83 9.83 0 0 1 2.9 7c0 5.45-4.44 9.88-9.9 9.88zm5.42-7.4c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.49s1.07 2.89 1.22 3.09c.15.2 2.1 3.2 5.08 4.49.71.31 1.27.49 1.7.63.71.22 1.36.19 1.87.12.57-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.07-.12-.27-.2-.57-.35z"/>
     </svg>
-    <svg class="assistant__icon assistant__icon--close" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-      <path d="M6 6l12 12M18 6L6 18"/>
-    </svg>
-    <span class="sr-only">Open chat assistant</span>
-  </button>
-
-  <div class="assistant__panel" id="assistantPanel" role="dialog" aria-label="Ehsan Property assistant" hidden>
-    <header class="assistant__head">
-      <p class="assistant__title">Ehsan Assistant</p>
-      <p class="assistant__status"><span aria-hidden="true"></span> Placeholder — replies are canned, not live</p>
-    </header>
-    <div class="assistant__log" data-assistant-log>
-      <p class="assistant__msg assistant__msg--bot">Hi — I'm a placeholder assistant standing in for the real thing. Ask about a project, or leave a question and our team will follow up by email.</p>
-    </div>
-    <form class="assistant__form" data-assistant-form>
-      <input class="assistant__input" type="text" placeholder="Type a message…" aria-label="Message" data-assistant-input autocomplete="off">
-      <button class="assistant__send" type="submit" aria-label="Send">
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16M13 5l7 7-7 7"/></svg>
-      </button>
-    </form>
-  </div>
+  </a>
 </div>`);

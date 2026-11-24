@@ -43,12 +43,12 @@
       const fragment = document.createDocumentFragment();
       items.forEach(article => {
         const card = document.createElement('a'); card.className = 'news-card'; card.href = SITE.recordUrl('news', article);
-        const thumbnail = article.thumbnail ?? article.images[0];
+        const thumbnail = article.thumbnail ?? article.images?.[0];
         if (thumbnail) { const image = document.createElement('img'); image.src = imageUrl(thumbnail); image.alt = article.title; image.loading = 'lazy'; image.decoding = 'async'; card.append(image); }
         const body = document.createElement('div'); body.className = 'news-card__body';
         const time = document.createElement('time'); time.dateTime = article.date; time.textContent = date(article.date);
         const title = document.createElement('h3'); title.textContent = article.title;
-        const excerpt = document.createElement('p'); excerpt.textContent = article.subtitle || '';
+        const excerpt = document.createElement('p'); excerpt.textContent = article.subtitle || article.excerpt || '';
         const more = document.createElement('span'); more.className = 'news-card__more'; more.textContent = 'Read more ↗';
         body.append(time, title, excerpt, more); card.append(body); fragment.append(card);
       });
@@ -64,7 +64,9 @@
     search?.addEventListener('input', () => { page = 0; paint(); }); paint();
   }
   if (detail) {
-    const article = articles.find(item => item.id === SITE.recordId('news', Object.fromEntries(articles.map(item => [item.id, item]))));
+    const records = Object.fromEntries(articles.map(item => [item.id, item]));
+    const id = SITE.recordId('news', records);
+    const article = id && Object.hasOwn(records, id) ? records[id] : null;
     if (!article) { detail.textContent = 'This article is not available.'; return; }
     SITE.canonical('news', article);
     document.title = `${article.title} — Ehsan News`;
@@ -73,11 +75,11 @@
     const title = document.createElement('h1'); title.className = 'section__title'; title.textContent = article.title; header.append(time, title);
     const summary = document.createElement('p'); summary.className = 'section__lede'; summary.textContent = article.excerpt; header.append(summary);
     const hero = document.createElement('figure'); hero.className = 'news-article__hero';
-    const leadImage = article.thumbnail || article.images[0];
+    const leadImage = article.thumbnail || article.images?.[0];
     if (leadImage) { const image = document.createElement('img'); image.src = imageUrl(leadImage); image.alt = article.title; image.fetchPriority = 'high'; image.decoding = 'async'; hero.append(image); }
     const body = document.createElement('div'); body.className = 'news-body'; body.append(safeBody(article.body));
     const gallery = document.createElement('div'); gallery.className = 'news-gallery';
-    article.images.filter(path => path !== leadImage).forEach((path, i) => { const image = document.createElement('img'); image.src = imageUrl(path); image.alt = `${article.title} — additional photo ${i + 1}`; image.loading = 'lazy'; image.decoding = 'async'; gallery.append(image); });
+    (article.images || []).filter(path => path !== leadImage).forEach((path, i) => { const image = document.createElement('img'); image.src = imageUrl(path); image.alt = `${article.title} — additional photo ${i + 1}`; image.loading = 'lazy'; image.decoding = 'async'; gallery.append(image); });
     const videos = document.createElement('div'); videos.className = 'news-gallery';
     (article.videos || []).filter(path => { try { return ['http:', 'https:'].includes(new URL(path).protocol); } catch (_) { return false; } }).forEach(path => { const video = document.createElement('video'); video.src = path; video.controls = true; video.preload = 'none'; videos.append(video); });
     detail.replaceChildren(header);
@@ -85,7 +87,7 @@
     detail.append(body);
     if (gallery.childElementCount) { const galleryHeading = document.createElement('h2'); galleryHeading.className = 'news-article__gallery-title'; galleryHeading.textContent = 'In pictures'; detail.append(galleryHeading, gallery); }
     if (videos.childElementCount) detail.append(videos);
-    window.EhsanShare?.render({ kind: 'news', id: article.id, title: article.title, description: article.subtitle || article.excerpt, image: imageUrl(article.thumbnail || article.images[0] || 'assets/logo/epp_logo.png') }, header);
+    window.EhsanShare?.render({ kind: 'news', id: article.id, title: article.title, description: article.subtitle || article.excerpt, image: imageUrl(article.thumbnail || article.images?.[0] || 'assets/logo/epp_logo.png') }, header);
     try { const source = new URL(article.source); if (['https:', 'http:'].includes(source.protocol)) { const link = document.createElement('a'); link.className = 'topnav__cta news-related'; link.href = source.href; link.target = '_blank'; link.rel = 'noopener noreferrer'; link.textContent = 'Read related article ↗'; detail.append(link); } } catch (_) { /* Optional link is hidden when empty or invalid. */ }
   }
 })();

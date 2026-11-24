@@ -1,5 +1,3 @@
-import Script from 'next/script';
-
 /**
  * Browser extensions that scan the page stamp their own attributes onto the
  * server-rendered HTML before React hydrates. React then compares that mutated
@@ -23,7 +21,7 @@ import Script from 'next/script';
  *
  * This cannot be done from an effect: hydration has already failed by then.
  */
-const SCRIPT = `(function () {
+export const stripInjectedAttributes = `(function () {
   var NOISE = /^(bis_skin_checked|bis_register|bis_size|bis_id|cz-shortcut-listen|data-lt-installed)$|^__processed_[0-9a-fA-F-]+__$|^data-(new-)?gr-/;
 
   var nativeSetAttribute = Element.prototype.setAttribute;
@@ -75,13 +73,3 @@ const SCRIPT = `(function () {
   if (document.readyState === 'complete') setTimeout(stop, 1500);
   else addEventListener('load', function () { setTimeout(stop, 1500); });
 })();`;
-
-export function StripInjectedAttributes() {
-  return (
-    <Script
-      id="strip-injected-attributes"
-      strategy="beforeInteractive"
-      dangerouslySetInnerHTML={{ __html: SCRIPT }}
-    />
-  );
-}

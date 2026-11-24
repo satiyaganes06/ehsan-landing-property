@@ -295,29 +295,6 @@
     });
   }
 
-  /* ---------- 8. card navigation ----------
-     Navigate to the project detail page on card click.
-
-     Through SITE.url, not a bare relative path. The detail page lives in
-     /html/ while the ledger that links to it is at the root, so a plain
-     "project-detail.html" resolved to /project-detail.html and 404'd. A plain
-     "html/project-detail.html" would fix the root case and break everywhere
-     else — this file is loaded by all five pages, four of which are already
-     inside /html/ and would resolve it to /html/html/. SITE.url anchors the
-     path to the project root regardless of which page is asking. */
-
-  document.querySelectorAll('.pcard[data-project-id]').forEach((row) => {
-    row.tabIndex = 0; row.setAttribute('role', 'link');
-    row.addEventListener('keydown', event => { if (event.key === 'Enter') row.click(); });
-    row.addEventListener('click', () => {
-      const projectId = row.dataset.projectId;
-      if (projectId) {
-        window.location.href =
-          row.dataset.publicUrl || SITE.url(`html/project-detail.html?project=${encodeURIComponent(projectId)}`);
-      }
-    });
-  });
-
   /* ---------- 9. enquiry form ----------
      The homepage and project pages submit to the same lead inbox. */
 
@@ -353,7 +330,7 @@
       const extra = [...enquiry.querySelectorAll('.field')].filter(field => !['name', 'email', 'phone', 'phoneCountry', 'interest', 'message'].includes(field.querySelector('[name]')?.name)).map(field => `${field.querySelector('label')?.textContent || 'Additional information'}: ${field.querySelector('[name]')?.value || ''}`).join('\n');
       try {
         const admin = (window.EHSAN_CMS_ORIGIN || window.SITE?.adminOrigin || 'http://localhost:3001').replace(/\/$/, '');
-        const response = await fetch(`${admin}/api/public/enquiries`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: values.name, email: values.email, phone, interest: values.interest, message: `${values.message || ''}${extra ? '\n\n' + extra : ''}`, website: values.website, renderedAt, utm: Object.fromEntries([...new URLSearchParams(location.search)].filter(([key]) => key.startsWith('utm_'))) }) });
+        const response = await fetch(`${admin}/api/public/enquiries`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: values.name, email: values.email, phone, interest: values.interest, message: `${values.message || ''}${extra ? '\n\n' + extra : ''}`, website: values.website, renderedAt, ...window.SITE?.enquiryAttribution }) });
         const result = await response.json(); if (!response.ok) throw new Error(result.message || 'Could not send your enquiry. Please try again.');
         report('Thank you. Your enquiry has been received and our team will contact you.', 'ok');
         enquiry.reset(); enquiry.classList.remove('is-validated');

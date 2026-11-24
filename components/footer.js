@@ -27,7 +27,7 @@ SITE.define('footer', SITE => {
       </div>
       <div class="footer-landscape__bottom">
         <p>&copy; <span data-footer-year>${year()}</span> Ehsan Plant &amp; Property Sdn Bhd. All rights reserved.</p>
-        <nav aria-label="Footer"><a href="${SITE.url('about')}">About</a><a href="${SITE.url('projects')}">Projects</a><a href="${SITE.url('project-licensing/')}">Project Licensing</a><a href="https://www.instagram.com/ehsan_property/" target="_blank" rel="noopener noreferrer">Instagram ↗</a><a href="https://www.tiktok.com/@ehsanproperties" target="_blank" rel="noopener noreferrer">TikTok ↗</a></nav>
+        <nav aria-label="Footer"><a href="${SITE.url('about')}">About</a><a href="${SITE.url('projects')}">Projects</a><a href="${SITE.url('project-licensing/')}">Project Licensing</a><a href="https://www.instagram.com/ehsan_property/" target="_blank" rel="noopener noreferrer">Instagram ↗</a><a href="https://www.tiktok.com/@ehsanproperties" target="_blank" rel="noopener noreferrer">TikTok ↗</a><a href="${SITE.url('ai-instructions/')}">Company Facts</a></nav>
       </div>
     </div>
   </footer>`;

@@ -142,9 +142,8 @@ function DropdownMenuSubTrigger({
   const [, highlightedRef] = useDataState<HTMLDivElement>(
     'highlighted',
     undefined,
-    (value) => {
+    (value, el) => {
       if (value === true) {
-        const el = highlightedRef.current;
         const v = el?.dataset.value || el?.id || null;
         if (v) setHighlightedValue(v);
       }
@@ -357,9 +356,8 @@ function DropdownMenuItem({
   const [, highlightedRef] = useDataState<HTMLDivElement>(
     'highlighted',
     undefined,
-    (value) => {
+    (value, el) => {
       if (value === true) {
-        const el = highlightedRef.current;
         const v = el?.dataset.value || el?.id || null;
         if (v) setHighlightedValue(v);
       }
@@ -401,9 +399,8 @@ function DropdownMenuCheckboxItem({
   const [, highlightedRef] = useDataState<HTMLDivElement>(
     'highlighted',
     undefined,
-    (value) => {
+    (value, el) => {
       if (value === true) {
-        const el = highlightedRef.current;
         const v = el?.dataset.value || el?.id || null;
         if (v) setHighlightedValue(v);
       }
@@ -446,9 +443,8 @@ function DropdownMenuRadioItem({
   const [, highlightedRef] = useDataState<HTMLDivElement>(
     'highlighted',
     undefined,
-    (value) => {
+    (value, el) => {
       if (value === true) {
-        const el = highlightedRef.current;
         const v = el?.dataset.value || el?.id || null;
         if (v) setHighlightedValue(v);
       }

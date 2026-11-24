@@ -1,4 +1,11 @@
 {
+  "functions": {"api/public-page.mjs": {"includeFiles": "{html/*.html,data/*.json}"}, "api/company-facts.mjs": {"includeFiles": "ai-instructions/index.html"}},
+  "headers": [
+    {"source":"/(.*)","headers":[
+      {"key":"X-Content-Type-Options","value":"nosniff"},
+      {"key":"Referrer-Policy","value":"strict-origin-when-cross-origin"}
+    ]}
+  ],
   "redirects": [
     {"source":"/index.html","destination":"/","permanent":true},
     {"source":"/html/about.html","destination":"/about","permanent":true},
@@ -7,12 +14,17 @@
     {"source":"/html/news.html","destination":"/news","permanent":true}
   ],
   "rewrites": [
+    {"source":"/api/public/events.json","destination":"/api/public-page?kind=events&view=feed"},
+    {"source":"/api/public/news.json","destination":"/api/public-page?kind=news&view=feed"},
+    {"source":"/api/public/projects.json","destination":"/api/public-page?kind=projects&view=feed"},
+    {"source":"/sitemap.xml","destination":"/api/public-page?kind=sitemap"},
+    {"source":"/ai-instructions","destination":"/api/company-facts"},
     {"source":"/about","destination":"/html/about.html"},
     {"source":"/projects","destination":"/html/projects.html"},
-    {"source":"/events","destination":"/html/events.html"},
-    {"source":"/news","destination":"/html/news.html"},
-    {"source":"/projects/:slug","destination":"/html/project-detail.html"},
-    {"source":"/events/:slug","destination":"/html/event-detail.html"},
-    {"source":"/news/:slug","destination":"/html/news-detail.html"}
+    {"source":"/events","destination":"/api/public-page?kind=events&view=archive"},
+    {"source":"/news","destination":"/api/public-page?kind=news&view=archive"},
+    {"source":"/projects/:slug","destination":"/api/public-page?kind=projects&name=:slug"},
+    {"source":"/events/:slug","destination":"/api/public-page?kind=events&name=:slug"},
+    {"source":"/news/:slug","destination":"/api/public-page?kind=news&name=:slug"}
   ]
 }

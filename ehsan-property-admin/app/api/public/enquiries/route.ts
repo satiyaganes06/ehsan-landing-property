@@ -1,3 +1,4 @@
+import { readBoundedJson } from '@/lib/server/bounded-json';
 import { z } from 'zod';
 import { prisma } from '@/lib/server/prisma';
 import { enquiryRateLimited, hashIp } from '@/lib/server/rate-limit';
@@ -26,6 +27,7 @@ const PublicEnquiryBody = z.object({
   // faster than a human can read and fill five fields is not a human.
   renderedAt: z.number().optional(),
   utm: z.record(z.string(), z.string()).optional(),
+  referralOrigin: z.string().max(300).optional(),
 });
 
 const MIN_FILL_MS = 2500;
@@ -40,7 +42,11 @@ const CORS = {
 export const OPTIONS = publicRoute(async () => new Response(null, { status: 204, headers: CORS }));
 
 export const POST = publicRoute(async ({ request }) => {
-  const parsed = PublicEnquiryBody.safeParse(await request.json().catch(() => null));
+  const body = await readBoundedJson(request, 64 * 1024);
+  if (!body.ok && body.status === 413) {
+    return Response.json({ message: 'Request body too large.' }, { status: 413, headers: CORS });
+  }
+  const parsed = PublicEnquiryBody.safeParse(body.ok ? body.value : null);
   if (!parsed.success) {
     return Response.json(
       { error: 'bad_request', message: 'Please complete the required fields.' },
@@ -48,7 +54,7 @@ export const POST = publicRoute(async ({ request }) => {
     );
   }
 
-  const { website, renderedAt, utm, projectReference, consent, ...data } = parsed.data;
+  const { website, renderedAt, utm, referralOrigin, projectReference, consent, ...data } = parsed.data;
 
   // A bot given a rejection learns to adjust; one given a quiet success moves
   // on. Both traps answer 200 without writing a row.
@@ -71,11 +77,24 @@ export const POST = publicRoute(async ({ request }) => {
     if (!settings?.enabled || project?.publishState !== 'PUBLISHED') return Response.json({ message: 'Enquiries are not available for this project.' }, { status: 400, headers: CORS });
     data.interest = settings.interest;
   }
+  let referrer: string | undefined;
+  if (referralOrigin) {
+    try {
+      const referral = new URL(referralOrigin);
+      if (['http:', 'https:'].includes(referral.protocol)) referrer = referral.origin;
+    } catch { /* Ignore malformed attribution without blocking the enquiry. */ }
+  }
+  const campaign = Object.fromEntries(
+    ['utm_source', 'utm_medium', 'utm_campaign'].flatMap(key => {
+      const value = utm?.[key]?.trim().slice(0, 200);
+      return value ? [[key, value]] : [];
+    }),
+  );
   await prisma.enquiry.create({
     data: {
       ...data,
-      utm: utm as never,
-      referrer: request.headers.get('referer') ?? undefined,
+      utm: campaign,
+      referrer,
       ipHash,
       userAgent: request.headers.get('user-agent') ?? undefined,
       consentAt: consent === true ? new Date() : null,

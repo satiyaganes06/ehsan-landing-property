@@ -93,7 +93,7 @@
     const phone = window.EhsanPhone?.number(phoneNumber, values.phoneCountry) || phoneNumber;
     const extra = fields.filter(field => !['name', 'email', 'phone', 'interest', 'message'].includes(field.id)).map(field => `${text(field.label)}: ${values[field.id] || ''}`).join('\n');
     try {
-      const response = await fetch(`${admin}/api/public/enquiries`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: values.name, email: values.email, phone, message: `${values.message}${extra ? '\n\n' + extra : ''}`, interest: settings.interest, projectReference: reference, website: values.website, renderedAt }) });
+      const response = await fetch(`${admin}/api/public/enquiries`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: values.name, email: values.email, phone, message: `${values.message}${extra ? '\n\n' + extra : ''}`, interest: settings.interest, projectReference: reference, website: values.website, renderedAt, ...window.SITE?.enquiryAttribution }) });
       const result = await response.json(); if (!response.ok) throw new Error(result.message || 'Could not send your enquiry.');
       form.reset(); form.elements.namedItem('interest').value = settings.interest; status.textContent = 'Thank you. Your enquiry has been received and our team will contact you.';
     } catch (error) { status.textContent = error.message || 'Could not send your enquiry. Please try again.'; }

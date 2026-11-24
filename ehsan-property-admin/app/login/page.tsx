@@ -21,10 +21,17 @@ function LoginForm() {
   const signIn = useMutation({
     mutationFn: () => api.post('/api/auth/login', { email, password }),
     onMutate: () => setError(null),
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ['me'] });
+    onSuccess: () => {
+      queryClient.clear();
       const next = params.get('next');
-      router.replace(next && next.startsWith('/') ? next : '/');
+      let destination = '/';
+      if (next?.startsWith('/') && !next.startsWith('//') && !/[\\\s]/.test(next)) {
+        const url = new URL(next, window.location.origin);
+        if (url.origin === window.location.origin && !url.pathname.startsWith('//')) {
+          destination = url.pathname + url.search + url.hash;
+        }
+      }
+      router.replace(destination);
     },
     onError: (err) => {
       setError(err instanceof ApiError ? err.message : 'Something went wrong. Try again.');
@@ -39,12 +46,7 @@ function LoginForm() {
         signIn.mutate();
       }}
     >
-      <div className="flex flex-col gap-1.5">
-        <h1 className="font-display text-3xl font-semibold tracking-tight">Sign in</h1>
-        <p className="text-muted-foreground text-sm">
-          Manage the content on the Ehsan Plant &amp; Property site.
-        </p>
-      </div>
+      <h1 className="font-display text-3xl font-semibold tracking-tight">Sign in</h1>
 
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-2">
@@ -108,30 +110,10 @@ function LoginForm() {
 export default function LoginPage() {
   return (
     <main className="grid min-h-screen lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
-      {/* Deliberately the panel's dark register: the sign-in screen is the one
-          place with no content to compete with, so it carries the brand. */}
-      <aside className="relative hidden flex-col justify-between bg-[#1a1f22] p-12 text-[#d8dcd4] lg:flex">
-        <div className="bg-brass absolute inset-y-0 left-0 w-0.5" aria-hidden />
-
-        <div>
-          <p className="eyebrow text-[#8f9689]">Ehsan Plant &amp; Property</p>
-          <p className="font-display mt-2 text-2xl font-semibold tracking-tight text-[#f6f6f0]">
-            Admin
-          </p>
+      <aside className="relative hidden overflow-hidden bg-[#192124] text-white lg:block" style={{ backgroundImage: "linear-gradient(180deg, rgba(13,20,22,.8), transparent 50%, rgba(13,20,22,.88)), url('/login-skyline.webp')", backgroundSize: 'cover', backgroundPosition: 'center' }}>
+        <div className="absolute inset-x-0 top-0 p-12">
+          <p className="eyebrow text-white">Ehsan Plant &amp; Property</p>
         </div>
-
-        <div className="max-w-sm">
-          <p className="font-display text-3xl leading-tight font-medium tracking-tight text-[#f6f6f0]">
-            Projects, events and the words on the page — edited in one place.
-          </p>
-          <p className="mt-4 text-sm leading-relaxed text-[#8f9689]">
-            Changes are saved as drafts and only reach the live site when you publish them.
-          </p>
-        </div>
-
-        <p className="font-mono text-[0.6875rem] tracking-wide text-[#6a7168]">
-          Content management system
-        </p>
       </aside>
 
       <div className="flex items-center justify-center px-6 py-16">

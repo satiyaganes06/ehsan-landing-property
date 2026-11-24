@@ -1,18 +1,10 @@
 import type { Metadata } from 'next';
-import { Montserrat } from 'next/font/google';
+import Script from 'next/script';
+import './fonts.css';
 import { Toaster } from '@/components/ui/sonner';
-import { StripInjectedAttributes } from '@/components/strip-injected-attributes';
+import { stripInjectedAttributes } from '@/components/strip-injected-attributes';
 import { Providers } from './providers';
 import './globals.css';
-
-// Montserrat carries the whole panel. It has no serif or monospace cousin, so
-// the display and mono roles point at it too; numeric alignment is handled
-// with tabular figures in globals.css rather than a second family.
-const montserrat = Montserrat({
-  variable: '--font-montserrat',
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700'],
-});
 
 export const metadata: Metadata = {
   title: 'Ehsan Admin',
@@ -21,16 +13,13 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    /* The font variable has to live on <html>: globals.css sets
-       `html { font-family: var(--font-sans) }`, and a variable declared on
-       <body> is not visible to the element above it. */
-    <html lang="en" className={montserrat.variable} suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       {/* Extensions (Grammarly, Bitdefender) write their markers onto <body>
           via dataset assignment, which bypasses the setAttribute patch in
           StripInjectedAttributes. Suppressing here covers this element's own
           attributes; it does not extend to children, so it hides nothing real. */}
       <body className="antialiased" suppressHydrationWarning>
-        <StripInjectedAttributes />
+        <Script id="strip-injected-attributes" strategy="beforeInteractive" dangerouslySetInnerHTML={{ __html: stripInjectedAttributes }} />
         <Providers>
           {children}
           <Toaster position="bottom-right" richColors closeButton />

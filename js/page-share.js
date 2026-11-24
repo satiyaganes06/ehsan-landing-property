@@ -5,6 +5,7 @@
       if (!target) return;
       const url = document.querySelector('link[rel="canonical"]')?.href || location.href.split('#')[0];
       const setMeta = (name, content, property = true) => {
+        if (document.querySelector('meta[name="robots"]') && document.head.querySelector('meta[property="og:image"]')) return;
         const attribute = property ? 'property' : 'name';
         let tag = document.head.querySelector(`meta[${attribute}="${name}"]`);
         if (!tag) { tag = document.createElement('meta'); tag.setAttribute(attribute, name); document.head.append(tag); }
@@ -20,8 +21,11 @@
       const copy = document.createElement('button'); copy.type = 'button'; copy.textContent = 'Copy link';
       const links = document.createElement('div'); links.className = 'page-share'; links.hidden = true;
       const status = document.createElement('span'); status.className = 'page-share__status'; status.setAttribute('role', 'status');
+      const whatsappUrl = new URL(url, location.href);
+      whatsappUrl.searchParams.set('utm_source', 'whatsapp');
+      whatsappUrl.searchParams.set('utm_medium', 'social');
       const encoded = encodeURIComponent(url), caption = encodeURIComponent(title);
-      for (const [label, href] of [['WhatsApp', `https://wa.me/?text=${encodeURIComponent(title + ' ' + url)}`], ['Facebook', `https://www.facebook.com/sharer/sharer.php?u=${encoded}`], ['LinkedIn', `https://www.linkedin.com/sharing/share-offsite/?url=${encoded}`], ['X', `https://twitter.com/intent/tweet?url=${encoded}&text=${caption}`]]) {
+      for (const [label, href] of [['WhatsApp', `https://wa.me/?text=${encodeURIComponent(title + ' ' + whatsappUrl.href)}`], ['Facebook', `https://www.facebook.com/sharer/sharer.php?u=${encoded}`], ['LinkedIn', `https://www.linkedin.com/sharing/share-offsite/?url=${encoded}`], ['X', `https://twitter.com/intent/tweet?url=${encoded}&text=${caption}`]]) {
         const link = document.createElement('a'); link.textContent = label; link.href = href; link.target = '_blank'; link.rel = 'noopener noreferrer'; link.setAttribute('aria-label', `Share on ${label} (opens a new tab)`); links.append(link);
       }
       share.setAttribute('aria-expanded', 'false');

@@ -91,6 +91,9 @@ return `<header class="project-lead${src ? ' project-lead--has-image' : ''}" dat
   function enhance(data, isWiduri) {
     const root = document.getElementById('widuriExperience');
     document.body.classList.add('project--modern');
+    if (data.buyerNotes) root.insertAdjacentHTML('beforeend', section('buyer-notes','Buyer information',data.buyerNotes.split(/\n\n/).map(text => '<p>' + escape(text) + '</p>').join('')));
+    const imageLabels = new Map(Object.entries(data.imageAlts || {}).map(([key,label]) => [new URL(imgUrl(key), location.href).href,label]));
+    for (const image of root.querySelectorAll('img')) { const label = imageLabels.get(image.src); if (label) image.alt = label; }
     const navbar = document.querySelector('.topnav');
     const alignHero = () => { if (navbar) document.body.style.setProperty('--project-nav-height', `${navbar.getBoundingClientRect().height}px`); };
     alignHero();
@@ -206,7 +209,7 @@ return `<header class="project-lead${src ? ' project-lead--has-image' : ''}" dat
       if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
       event.preventDefault(); moveViewer(event.key === 'ArrowLeft' ? -1 : 1);
     });
-    window.EhsanShare?.render({ kind: 'project', id: new URLSearchParams(location.search).get('project'), title: data.name, description: data.description || data.location, image: imgUrl(data.media.thumbnail || data.media.image[0] || '../../assets/logo/epp_logo.png') }, root.querySelector('[data-project-share]'));
+    window.EhsanShare?.render({ kind: 'project', id: new URLSearchParams(location.search).get('project'), title: data.seo?.metaTitle || data.name, description: data.seo?.metaDescription || data.description || data.location, image: imgUrl(data.media.thumbnail || data.media.image[0] || '../../assets/logo/epp_logo.png') }, root.querySelector('[data-project-share]'));
     if (data.enquiry?.enabled) {
       root.querySelectorAll('a[href="#enquire"], a[href="../index.html#contact"]').forEach(link => link.href = '#project-enquiry');
       document.querySelector('.topnav__cta')?.setAttribute('href', '#project-enquiry');

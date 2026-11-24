@@ -23,12 +23,12 @@ import { ContactFormEditor } from '@/components/contact-form-editor';
 
 type Field = { key: string; group: string; type: string; label: string; value: string; category?: string; managed?: boolean };
 const site = process.env.NEXT_PUBLIC_LANDING_URL || 'http://localhost:8899';
-const NAMES: Record<string, string> = { hero: 'Hero', about: 'About Ehsan', gallery: 'Gallery', record: 'Projects', news: 'News', events: 'Events', awards: 'Awards', testimonials: 'Voices', commitment: 'Commitments', doctrine: 'Vision and mission', contact: 'Contact', topnav: 'Navigation', assistant: 'Chat assistant', seo: 'Search settings', theme: 'Colours and motion' };
+const NAMES: Record<string, string> = { hero: 'Hero', about: 'About Ehsan', gallery: 'Gallery', record: 'Projects', news: 'News', events: 'Events', awards: 'Awards', testimonials: 'Voices', commitment: 'Commitments', doctrine: 'Vision and mission', contact: 'Contact', topnav: 'Navigation', seo: 'Search settings', theme: 'Colours and motion' };
 const COLLECTIONS: Record<string, string> = { record: '/projects', news: '/news', events: '/events', awards: '/awards', testimonials: '/testimonials' };
 const CATEGORIES = ['Heading', 'Content', 'Statistics', 'Images', 'Links and buttons', 'Enquiry form', 'Form labels', 'Search settings', 'Accessibility'];
 const ABOUT_NAMES: Record<string, string> = { 'about-company': 'Company, founder and team', 'about-group': 'Group of companies' };
 const nameOf = (group: string) => ABOUT_NAMES[group] || NAMES[group] || (group.startsWith('chrome') ? 'Footer' : group);
-const settingsGroup = (group: string) => ['topnav', 'assistant', 'seo', 'theme'].includes(group) || group.startsWith('chrome');
+const settingsGroup = (group: string) => ['topnav', 'seo', 'theme'].includes(group) || group.startsWith('chrome');
 
 export function LandingEditor({ mode = 'page', initialSection, page = 'home' }: { mode?: 'page' | 'settings' | 'section'; initialSection?: string; page?: 'home' | 'about' }) {
   const frame = useRef<HTMLIFrameElement>(null);
@@ -79,7 +79,7 @@ export function LandingEditor({ mode = 'page', initialSection, page = 'home' }: 
     }).catch(error => { if (active) setFailure(error.message); });
     const receive = (event: MessageEvent) => {
       if (event.origin !== origin || event.source !== frame.current?.contentWindow) return;
-      if (event.data?.type === 'ehsan:landing-fields' && Array.isArray(event.data.fields)) setFields(event.data.fields);
+      if (event.data?.type === 'ehsan:landing-fields' && Array.isArray(event.data.fields)) setFields(event.data.fields.filter((field: Field) => field.group !== 'assistant'));
     };
     window.addEventListener('message', receive);
     return () => { active = false; window.removeEventListener('message', receive); };

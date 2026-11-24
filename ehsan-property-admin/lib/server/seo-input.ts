@@ -1,4 +1,6 @@
 import 'server-only';
+import notes from '../../data/project-buyer-notes.json';
+import { readProjectContent } from './project-content';
 import { prisma } from './prisma';
 
 /**
@@ -18,11 +20,18 @@ export async function scoringInputFor(
       prisma.projectMedia.findMany({ where: { projectId: entityId }, include: { media: true } }),
       prisma.project.findUnique({ where: { id: entityId } }),
     ]);
+    const sections = project && locale === 'EN' ? await readProjectContent(project.reference) : null;
+    const sectionText = sections ? [
+      ...sections.facts.flat(), sections.locationText, ...sections.access, ...sections.shuttle,
+      ...sections.facilities, ...sections.fit, ...sections.updates,
+      ...sections.layouts.flatMap(layout => [layout.name,...layout.details]),
+      ...sections.neighbourhood.flatMap(group => [group.title,...group.items]),
+    ].join(' ') : '';
     return {
-      bodyText: t?.description ?? '',
+      bodyText: [t?.name, t?.location, t?.description, ...(Array.isArray(t?.amenities) ? t.amenities.filter(item => typeof item === 'string') : []), sectionText, notes[project?.reference as keyof typeof notes]].filter(Boolean).join(' '),
       imageCount: media.length,
       imagesWithAlt: media.filter((m) => Boolean(m.media.altText)).length,
-      internalLinkCount: ((project?.relatedReferences as string[]) ?? []).length,
+      internalLinkCount: 1 + ((project?.relatedReferences as string[]) ?? []).length, // Every public project links to the buyer guide.
     };
   }
 

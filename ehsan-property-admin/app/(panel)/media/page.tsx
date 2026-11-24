@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
+import { Suspense, useMemo, useRef, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
@@ -52,9 +52,10 @@ function MediaLibrary() {
     queryFn: () => api.get<MediaItem[]>('/api/media'),
   });
 
-  useEffect(() => {
-    setAlt(selected?.altText ?? '');
-  }, [selected]);
+  function selectMedia(item: MediaItem) {
+    setAlt(item.altText ?? '');
+    setSelected(item);
+  }
 
   const items = useMemo(() => {
     let list = query.data ?? [];
@@ -214,7 +215,7 @@ function MediaLibrary() {
             <button
               key={item.id}
               type="button"
-              onClick={() => setSelected(item)}
+              onClick={() => selectMedia(item)}
               className="group bg-card hover:border-brass-line/60 overflow-hidden rounded-lg border text-left transition-colors"
             >
               <div className="bg-muted aspect-square">

@@ -33,14 +33,13 @@ export default function LicensingPage() {
   return <div className="mx-auto w-full max-w-5xl space-y-6">
     <PageHeader title="Project Licensing" description="Edit developer licences, advertising permits and development particulars. Saved changes appear on the public page."
       actions={<div className="flex gap-2"><Button variant="outline" asChild><a href={`${process.env.NEXT_PUBLIC_LANDING_URL || 'http://localhost:8899'}/project-licensing/`} target="_blank" rel="noopener">View page</a></Button><Button disabled={!editable || !draft || save.isPending} onClick={() => data && save.mutate(data)}><Save className="size-4" />{save.isPending ? 'Saving…' : 'Save changes'}</Button></div>} />
-    <div className="rounded-lg border border-amber-500/30 bg-amber-500/5 p-4 text-sm leading-relaxed">Review the supplied dates before publishing: Mutiara Austin Phase 1 and Universiti Bestari Phase 5 include validity dates earlier than October 2026. Source formatting is preserved, including the Widuri price “RM 386,900.000” and permit punctuation. Confirm corrections against the original documents.</div>
     {query.isError ? <ErrorState error={query.error} onRetry={() => query.refetch()} /> : !data ? <p>Loading licensing details…</p> : <>
       <fieldset disabled={!editable || save.isPending} className="space-y-4">
         <div className="rounded-xl border bg-card p-5 space-y-4">
           <div className="space-y-2"><Label htmlFor="licensing-title">Page title</Label><Input id="licensing-title" value={data.title} onChange={event => change(next => { next.title = event.target.value; })} /></div>
           <div className="space-y-2"><Label htmlFor="licensing-intro">Introduction</Label><Textarea id="licensing-intro" value={data.intro} onChange={event => change(next => { next.intro = event.target.value; })} /></div>
         </div>
-        {data.records.map((record, index) => <details key={record.id} open={index === 0 ? true : undefined} className="rounded-xl border bg-card">
+        {data.records.map((record, index) => <details key={record.id} className="rounded-xl border bg-card">
           <summary className="cursor-pointer p-5 font-medium">{record.project || 'New project'} · {record.phase || 'New phase'}{!record.published ? ' — Hidden' : ''}</summary>
           <div className="space-y-5 border-t p-5">
             <div className="grid gap-4 sm:grid-cols-2">

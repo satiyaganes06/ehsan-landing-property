@@ -26,20 +26,27 @@ export interface AuthedUser {
 
 export async function createSession(
   userId: string,
+  verifiedHash: string,
   ip: string | undefined,
   userAgent: string | undefined,
-): Promise<string> {
+): Promise<string | null> {
   const token = randomBytes(32).toString('base64url');
   const expiresAt = new Date(Date.now() + SESSION_DAYS * 24 * 60 * 60 * 1000);
-  await prisma.session.create({
-    data: { id: hashToken(token), userId, expiresAt, ip, userAgent },
+  return prisma.$transaction(async tx => {
+    // Serialize sign-in with password resets so an old password cannot start a new session.
+    const valid = await tx.user.updateMany({
+      where: { id: userId, passwordHash: verifiedHash, isActive: true },
+      data: { lastSeenAt: new Date() },
+    });
+    if (!valid.count) return null;
+    await tx.session.create({ data: { id: hashToken(token), userId, expiresAt, ip, userAgent } });
+    return token;
   });
-  return token;
 }
 
 export async function destroySession(token: string): Promise<void> {
   // Logout is idempotent: a token that is already gone is still logged out.
-  await prisma.session.delete({ where: { id: hashToken(token) } }).catch(() => {});
+  await prisma.session.deleteMany({ where: { id: hashToken(token) } });
 }
 
 export async function setSessionCookie(token: string): Promise<void> {
@@ -79,12 +86,15 @@ export async function loadAuthedUser(): Promise<AuthedUser | null> {
 
   const session = await prisma.session.findUnique({
     where: { id: hashToken(token) },
-    include: {
+    select: {
+      expiresAt: true,
       user: {
-        include: {
-          roles: {
-            include: { role: { include: { permissions: { include: { permission: true } } } } },
-          },
+        select: {
+          id: true, email: true, name: true, isActive: true,
+          roles: { select: { role: { select: {
+            key: true,
+            permissions: { select: { permission: { select: { resource: true, action: true } } } },
+          } } } },
         },
       },
     },

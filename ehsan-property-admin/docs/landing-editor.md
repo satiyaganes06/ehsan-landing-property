@@ -47,7 +47,7 @@ an empty gallery are hidden. Removing an image from the gallery does not delete
 the media library asset. Image paths are validated when saving. Existing image
 overrides seed the initial list.
 
-Navigation, footer, chat assistant, colours, motion and SEO belong in
+Navigation, footer, colours, motion and SEO belong in
 **Website settings** (`/website`), not the page content editor. Projects, Events,
 Awards and Testimonials each have a **Homepage section** shortcut for their
 section heading and visibility. Their cards remain editable in the respective

@@ -1,3 +1,4 @@
+import { readBoundedJson } from '@/lib/server/bounded-json';
 import { z } from 'zod';
 import { prisma } from '@/lib/server/prisma';
 import { publicRoute } from '@/lib/server/route';
@@ -13,7 +14,11 @@ export const OPTIONS = publicRoute(async ({ request }) => {
 export const POST = publicRoute(async ({ request }) => {
   const origin = request.headers.get('origin') || '';
   if (!origins.has(origin)) return new Response(null, { status: 403 });
-  const parsed = bodySchema.safeParse(await request.json().catch(() => null));
+  const body = await readBoundedJson(request, 4 * 1024);
+  if (!body.ok && body.status === 413) {
+    return Response.json({ message: 'Request body too large.' }, { status: 413, headers: headers(origin) });
+  }
+  const parsed = bodySchema.safeParse(body.ok ? body.value : null);
   if (!parsed.success) return Response.json({ message: 'Invalid page view.' }, { status: 400, headers: headers(origin) });
   if (/bot|crawler|spider|headless/i.test(request.headers.get('user-agent') || '')) return new Response(null, { status: 204, headers: headers(origin) });
   const since = new Date(Date.now() - 60_000);

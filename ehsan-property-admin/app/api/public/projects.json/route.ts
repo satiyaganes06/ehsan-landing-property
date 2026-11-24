@@ -3,9 +3,7 @@ import { buildProjectsPayload } from '@/lib/server/bridge';
 import { publicRoute } from '@/lib/server/route';
 
 export const runtime = 'nodejs';
-// Rebuilt at most once a minute; publishing is rare and the landing site is
-// the hot path, so it should not hit Postgres on every visitor.
-export const revalidate = 60;
+export const dynamic = 'force-dynamic';
 
 /**
  * What the landing site reads instead of the checked-in data/projects.json.

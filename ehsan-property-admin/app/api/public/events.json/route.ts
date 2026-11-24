@@ -3,7 +3,7 @@ import { buildEventsPayload } from '@/lib/server/bridge';
 import { publicRoute } from '@/lib/server/route';
 
 export const runtime = 'nodejs';
-export const revalidate = 60;
+export const dynamic = 'force-dynamic';
 
 /** Published events, in the shape js/event-detail.js already expects. */
 export const GET = publicRoute(async () =>

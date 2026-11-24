@@ -28,11 +28,15 @@ export const GET = route({ resource: 'event', action: 'read' }, async ({ request
     prisma.event.findMany({
       where, orderBy: { startsAt: 'asc' },
       skip: (page - 1) * perPage, take: perPage,
-      include: { translations: { where: { locale: 'EN' } } },
+      select: {
+        id: true, reference: true, startsAt: true, publishState: true, capacity: true, registered: true,
+        translations: { where: { locale: 'EN' }, select: { title: true, category: true } },
+      },
     }),
   ]);
 
   const seoRows = await prisma.seoMeta.findMany({
+    select: { entityId: true, score: true, band: true },
     where: { entityType: 'event', entityId: { in: events.map((e) => e.id) }, locale: 'EN' },
   });
   const seoByEvent = new Map(seoRows.map((s) => [s.entityId, s]));

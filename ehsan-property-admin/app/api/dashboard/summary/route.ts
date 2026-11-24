@@ -3,7 +3,9 @@ import { json, route } from '@/lib/server/route';
 
 export const runtime = 'nodejs';
 
-export const GET = route({ resource: 'project', action: 'read' }, async () => {
+export const GET = route({ resource: 'project', action: 'read' }, async ({ user }) => {
+  const readEnquiries = user.permissions.has('enquiry:read');
+  const readAudit = user.permissions.has('audit:read');
   const [
     seoBad, missingAlt, draftProjects, draftEvents, scheduledProjects, scheduledEvents,
     newEnquiries, recentEnquiries, upcomingEvents, recentActivity, lastPublish,
@@ -14,22 +16,23 @@ export const GET = route({ resource: 'project', action: 'read' }, async () => {
     prisma.event.count({ where: { publishState: 'DRAFT' } }),
     prisma.project.count({ where: { publishState: 'SCHEDULED' } }),
     prisma.event.count({ where: { publishState: 'SCHEDULED' } }),
-    prisma.enquiry.count({ where: { status: 'NEW' } }),
-    prisma.enquiry.findMany({ orderBy: { createdAt: 'desc' }, take: 5 }),
+    readEnquiries ? prisma.enquiry.count({ where: { status: 'NEW' } }) : 0,
+    readEnquiries ? prisma.enquiry.findMany({ orderBy: { createdAt: 'desc' }, take: 5 }) : [],
     prisma.event.findMany({
       where: { publishState: 'PUBLISHED', startsAt: { gte: new Date() } },
       orderBy: { startsAt: 'asc' },
       take: 3,
       include: { translations: { where: { locale: 'EN' } } },
     }),
-    prisma.auditEntry.findMany({
+    readAudit ? prisma.auditEntry.findMany({
       orderBy: { createdAt: 'desc' }, take: 10,
-      include: { actor: { select: { name: true } } },
-    }),
-    prisma.auditEntry.findFirst({
+      select: { id: true, action: true, entityType: true, entityId: true, createdAt: true, actor: { select: { name: true } } },
+    }) : [],
+    readAudit ? prisma.auditEntry.findFirst({
       where: { action: { in: ['project.published', 'event.published'] } },
+      select: { createdAt: true },
       orderBy: { createdAt: 'desc' },
-    }),
+    }) : null,
   ]);
 
   // Titles for the low-scoring records, resolved separately -- SeoMeta is
@@ -47,10 +50,10 @@ export const GET = route({ resource: 'project', action: 'read' }, async () => {
   // 30-day enquiry trend, bucketed by day in JS: Prisma's groupBy cannot
   // bucket by day portably, and 30 rows is cheap to reduce here.
   const since = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
-  const forTrend = await prisma.enquiry.findMany({
+  const forTrend = readEnquiries ? await prisma.enquiry.findMany({
     where: { createdAt: { gte: since } },
     select: { createdAt: true },
-  });
+  }) : [];
   const trend = new Map<string, number>();
   for (const e of forTrend) {
     const day = e.createdAt.toISOString().slice(0, 10);

@@ -21,6 +21,8 @@
    --------------------------------------------------------------------------- */
 
 import { writeFile, rename, mkdir, readFile } from 'node:fs/promises';
+import { mirrorCompanyFacts } from './company-facts-mirror';
+import notes from '../../data/project-buyer-notes.json';
 import { slugify } from './slug';
 import { readFeaturedProjects } from './featured-projects';
 import path from 'node:path';
@@ -72,17 +74,28 @@ function siteImagePath(storageKey: string): string {
   return mediaUrl(storageKey);
 }
 
+async function publicListings(entityType: string, ids: string[]) {
+  const rows = await prisma.seoMeta.findMany({
+    where:{entityType, locale:'EN', entityId:{in:ids}},
+    select:{entityId:true, metaTitle:true, metaDescription:true, canonicalUrl:true, robotsIndex:true, robotsFollow:true,
+      ogTitle:true, ogDescription:true, ogMedia:{select:{storageKey:true,altText:true}}},
+  });
+  return new Map(rows.map(({entityId,ogMedia,...seo}) => [entityId, {
+    ...seo, ogImage:ogMedia && siteImagePath(ogMedia.storageKey), ogImageAlt:ogMedia?.altText,
+  }]));
+}
+
 export async function buildProjectsPayload(): Promise<Record<string, unknown>> {
-  const featured = await readFeaturedProjects();
-  const projects = await prisma.project.findMany({
+  const [featured, projects] = await Promise.all([readFeaturedProjects(), prisma.project.findMany({
     where: { publishState: 'PUBLISHED' },
     orderBy: { sortOrder: 'asc' },
     include: {
       translations: { where: { locale: 'EN' } },
-      media: { orderBy: { sortOrder: 'asc' }, include: { media: true } },
+      media: { orderBy: { sortOrder: 'asc' }, select: { role: true, media: { select: { storageKey: true, altText: true } } } },
     },
-  });
+  })]);
 
+  const listings = await publicListings('project', projects.map(p => p.id));
   const enquiryBlocks = await prisma.textBlock.findMany({ where: { key: { in: projects.flatMap(p => [projectEnquiryKey(p.reference), `project.content.${p.reference}`]) } }, include: { translations: { where: { locale: 'EN' } } } });
   const enquiryByKey = new Map(enquiryBlocks.map(block => [block.key, block.translations[0]?.value]));
   const out: Record<string, unknown> = {};
@@ -95,6 +108,9 @@ export async function buildProjectsPayload(): Promise<Record<string, unknown>> {
       sortOrder: p.sortOrder,
       createdAt: p.createdAt.toISOString(),
       name: t.name,
+      buyerNotes: notes[p.reference as keyof typeof notes],
+      imageAlts: Object.fromEntries(p.media.filter(m => m.media.altText).map(m => [siteImagePath(m.media.storageKey), m.media.altText])),
+      seo: listings.get(p.id),
       slug: /^proj-\d+$/.test(t.slug) ? slugify(t.name) : t.slug,
       ...(p.reference !== 'proj-15' && enquiryByKey.has(`project.content.${p.reference}`) ? { content: enquiryByKey.get(`project.content.${p.reference}`) } : {}),
       enquiry: projectEnquirySchema.parse(enquiryByKey.get(projectEnquiryKey(p.reference)) ?? { enabled: false, interest: '' }),
@@ -130,12 +146,14 @@ export async function buildEventsPayload(): Promise<Record<string, unknown>> {
   });
 
   const out: Record<string, unknown> = {};
+  const listings = await publicListings('event', events.map(e => e.id));
   for (const e of events) {
     const t = e.translations[0];
     if (!t) continue;
 
     out[e.reference] = {
       id: e.reference,
+      seo: listings.get(e.id),
       title: t.title,
       slug: /^event-\d+$/.test(t.slug) ? slugify(t.title) : t.slug,
       category: t.category,
@@ -187,7 +205,9 @@ async function mirrorToDisk(filename: string, data: unknown): Promise<boolean> {
 
 export async function rebuildProjectsJson(): Promise<{ count: number; mirrored: boolean }> {
   const out = await buildProjectsPayload();
-  return { count: Object.keys(out).length, mirrored: await mirrorToDisk('projects.json', out) };
+  const mirrored = await mirrorToDisk('projects.json', out);
+  if (mirrored) await mirrorCompanyFacts(out);
+  return { count: Object.keys(out).length, mirrored };
 }
 
 export async function rebuildEventsJson(): Promise<{ count: number; mirrored: boolean }> {
